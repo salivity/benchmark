@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Reviewers Check CPU IHS Flatness With a Razor Blade - benchmark</title>
+    <meta name="description" content="Hardware reviewers routinely use a razor blade to inspect the flatness of a processor&#39;s Integrated Heat Spreader (IHS) prior to benchmarking to ensure accurate and consistent thermal data. This article provides a straightforward look at how the razor test">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-reviewers-check-cpu-ihs-flatness-with-a-razor-blade">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Reviewers Check CPU IHS Flatness With a Razor Blade - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-reviewers-check-cpu-ihs-flatness-with-a-razor-blade" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware reviewers routinely use a razor blade to inspect the flatness of a processor&#39;s Integrated Heat Spreader (IHS) prior to benchmarking to ensure accurate and consistent thermal data. This article provides a straightforward look at how the razor test" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-reviewers-check-cpu-ihs-flatness-with-a-razor-blade">Why
+Reviewers Check CPU IHS Flatness With a Razor Blade</h1>
+<p>Hardware reviewers routinely use a razor blade to inspect the
+flatness of a processor's Integrated Heat Spreader (IHS) prior to
+benchmarking to ensure accurate and consistent thermal data. This
+article provides a straightforward look at how the razor test works, the
+physics of thermal transfer between a CPU and its cooler, and how
+motherboard socket pressure can warp a processor. Understanding this
+pre-benchmarking step explains why physical surface variations can
+drastically alter CPU temperature readings and affect final hardware
+review conclusions.</p>
+<h3 id="the-physics-of-thermal-transfer">The Physics of Thermal
+Transfer</h3>
+<p>The Integrated Heat Spreader (IHS) is the metal lid on top of a CPU
+that protects the fragile silicon dies beneath it and transfers heat to
+the CPU cooler. For efficient cooling, the metal baseplate of the cooler
+and the metal IHS must make flush, physical contact.</p>
+<p>Microscopic air gaps between these two surfaces act as thermal
+insulators, trapping heat and causing the CPU to throttle its
+performance. While thermal paste is applied to fill these microscopic
+gaps, thermal paste is significantly less conductive than the copper or
+nickel used in the hardware itself. The flatter the IHS, the more direct
+metal-to-metal contact occurs, requiring less thermal paste to bridge
+the gap and resulting in vastly superior heat transfer.</p>
+<h3 id="how-the-razor-blade-test-works">How the Razor Blade Test
+Works</h3>
+<p>A standard razor blade—or a machinist's straightedge—serves as a
+reliable, perfectly flat reference tool. Reviewers place the edge of the
+blade perpendicular to the surface of the IHS and hold the CPU up in
+front of a bright light source.</p>
+<p>By looking at the seam where the blade meets the CPU, the reviewer
+can instantly spot warping:</p>
+<ul>
+<li><strong>Concave (Bowed Inward):</strong> Light passes through the
+center, under the blade, while the outer edges touch the metal.</li>
+<li><strong>Convex (Bulged Outward):</strong> Light passes under the
+outer left and right edges of the blade, while the blade pivots on a
+high spot in the center of the CPU.</li>
+</ul>
+<p>Reviewers typically check the IHS across multiple axes—horizontally,
+vertically, and diagonally—to map the entire surface topography of the
+chip.</p>
+<h3 id="manufacturing-tolerances-and-socket-pressure">Manufacturing
+Tolerances and Socket Pressure</h3>
+<p>IHS warping happens for two main reasons: manufacturing tolerances
+and motherboard socket pressure. During manufacturing, the process of
+soldering the IHS to the silicon die can result in slight curvature.</p>
+<p>More commonly, the motherboard's retention mechanism causes the
+warping. Modern CPU sockets, particularly rectangular designs, apply
+immense, localized clamping force to hold the processor in place. When
+the retention arm is locked down, this uneven pressure can physically
+bend the CPU substrate and the IHS, turning a relatively flat CPU into a
+concave one. Reviewers often use the razor test both before and after
+mounting the CPU to measure how much the socket itself deforms the heat
+spreader.</p>
+<h3 id="ensuring-benchmark-accuracy">Ensuring Benchmark Accuracy</h3>
+<p>The primary reason reviewers perform this inspection is to maintain
+scientific rigor and eliminate variables during testing.</p>
+<p>If a reviewer is benchmarking ten different CPU coolers, they need to
+know the exact condition of the CPU they are using as a heat source.
+Some CPU coolers are manufactured with flat baseplates, while others are
+intentionally machined to be slightly convex to dig into concave
+CPUs.</p>
+<p>If a reviewer tests a flat-bottomed cooler on a severely concave CPU,
+the thermal results will be terrible due to poor contact in the center
+of the chip, right above the hot silicon die. By checking the IHS with a
+razor blade beforehand, the reviewer knows if their test CPU is flawed.
+This allows them to either replace the CPU, use an aftermarket contact
+frame to flatten the chip, or accurately explain to their audience why
+certain coolers are performing better or worse than expected during the
+benchmark.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-reviewers-check-cpu-ihs-flatness-with-a-razor-blade';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

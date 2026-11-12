@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why SSD Conditioning is Vital for Steady-State Benchmarking - benchmark</title>
+    <meta name="description" content="This article explains the critical necessity of conditioning Solid State Drives (SSDs) with a full drive write prior to conducting steady-state hardware benchmarks. Brand-new or freshly erased SSDs operate in an artificially fast state that does not refle">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-ssd-conditioning-is-vital-for-steady-state-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why SSD Conditioning is Vital for Steady-State Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-ssd-conditioning-is-vital-for-steady-state-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the critical necessity of conditioning Solid State Drives (SSDs) with a full drive write prior to conducting steady-state hardware benchmarks. Brand-new or freshly erased SSDs operate in an artificially fast state that does not refle" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-ssd-conditioning-is-vital-for-steady-state-benchmarking">Why
+SSD Conditioning is Vital for Steady-State Benchmarking</h1>
+<p>This article explains the critical necessity of conditioning Solid
+State Drives (SSDs) with a full drive write prior to conducting
+steady-state hardware benchmarks. Brand-new or freshly erased SSDs
+operate in an artificially fast state that does not reflect real-world,
+long-term performance. By writing to the entire drive capacity before
+testing, reviewers and engineers force the SSD's garbage collection,
+wear-leveling algorithms, and cache mechanisms into their normal
+operating routines, ensuring that benchmark data accurately represents
+sustained, steady-state performance.</p>
+<h2 id="the-fresh-out-of-the-box-fob-illusion">The "Fresh Out of the
+Box" (FOB) Illusion</h2>
+<p>When an SSD is brand new, or has just undergone a Secure Erase
+command, all of its NAND flash memory blocks are completely empty and
+ready to accept data. In this Fresh Out of the Box (FOB) state, the
+drive can write data directly to the flash cells without any
+preparation.</p>
+<p>Benchmarking an SSD in this state yields exceptionally high
+performance numbers. However, this performance is temporary. Once a user
+fills the drive with data over normal use, the SSD can never return to
+this initial speed without wiping the entire drive. Therefore, FOB
+benchmarks are misleading for evaluating sustained workloads.</p>
+<h2 id="the-physics-of-nand-flash-and-garbage-collection">The Physics of
+NAND Flash and Garbage Collection</h2>
+<p>The primary reason SSDs slow down after a full drive write lies in
+how NAND flash memory handles data.</p>
+<ul>
+<li><strong>Writing Data:</strong> SSDs write data in small units called
+<strong>pages</strong> (typically 4KB to 16KB).</li>
+<li><strong>Erasing Data:</strong> SSDs can only erase data in much
+larger units called <strong>blocks</strong>, which consist of hundreds
+of pages.</li>
+<li><strong>No Direct Overwrites:</strong> Unlike traditional hard
+drives, NAND flash cannot overwrite existing data directly. The old data
+must be erased before new data can be written to the same location.</li>
+</ul>
+<p>When an SSD is conditioned with a full drive write, every physical
+page on the drive ends up containing either valid data or invalid
+(deleted) data. To write new data during a subsequent benchmark, the SSD
+controller must perform <strong>Garbage Collection</strong>.</p>
+<p>During this process, the controller reads the valid data from a
+mostly full block, moves it to a new location, erases the entire old
+block, and finally writes the new data. This process, known as the
+Read-Modify-Erase-Write cycle, introduces significant latency and
+reduces write speeds compared to an empty drive.</p>
+<h2 id="exhausting-the-slc-cache">Exhausting the SLC Cache</h2>
+<p>Modern consumer and enterprise SSDs utilize a portion of their
+storage as a high-speed buffer, known as a pseudo-SLC (Single-Level
+Cell) cache. When data is written to the drive, it goes to this fast
+cache first, masking the slower native speeds of the underlying TLC
+(Triple-Level Cell) or QLC (Quad-Level Cell) memory.</p>
+<p>Short benchmarks on an unconditioned drive only test the speed of
+this SLC cache. Conditioning the drive with a full sequential write
+completely saturates the SLC cache. This forces the SSD to write
+directly to the slower native NAND while simultaneously trying to flush
+the cache, revealing the drive's true sustained performance
+bottlenecks.</p>
+<h2 id="triggering-write-amplification-and-wear-leveling">Triggering
+Write Amplification and Wear Leveling</h2>
+<p>A full drive write also forces the SSD's controller to actively
+manage drive health and data placement through two mechanisms that
+impact performance:</p>
+<ol type="1">
+<li><strong>Write Amplification:</strong> Because the drive must move
+existing data around to clear full blocks for new data, the actual
+amount of data written to the physical NAND becomes greater than the
+amount of data sent by the host computer. This overhead consumes
+bandwidth and lowers benchmark scores to realistic levels.</li>
+<li><strong>Wear Leveling:</strong> The SSD controller actively
+distributes writes evenly across all physical blocks to prevent
+premature wear. This background management only becomes complex and
+resource-intensive once the entire drive has been written to at least
+once.</li>
+</ol>
+<h2 id="achieving-true-steady-state">Achieving True Steady-State</h2>
+<p>Steady-state is the phase where an SSD's performance stabilizes and
+becomes predictable under a specific continuous workload. Without
+pre-conditioning the drive via a full drive write, a benchmark will
+record the transition from the artificially fast FOB state down to the
+steady-state, skewing the average results. Conditioning the drive
+ensures the transition phase is bypassed, allowing hardware testers to
+measure the exact, consistent performance a user will experience under
+heavy, long-term workloads.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-ssd-conditioning-is-vital-for-steady-state-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

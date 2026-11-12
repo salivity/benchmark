@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking Keyboard Scan Rate and Debounce Latency - benchmark</title>
+    <meta name="description" content="This article outlines the precise hardware and software methodologies used to benchmark keyboard scan rates and debounce latency. By examining the internal matrix polling of a keyboard&#39;s microcontroller and measuring the physical-to-digital signal delay u">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/benchmarking-keyboard-scan-rate-and-debounce-latency">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Benchmarking Keyboard Scan Rate and Debounce Latency - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/benchmarking-keyboard-scan-rate-and-debounce-latency" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article outlines the precise hardware and software methodologies used to benchmark keyboard scan rates and debounce latency. By examining the internal matrix polling of a keyboard&#39;s microcontroller and measuring the physical-to-digital signal delay u" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="benchmarking-keyboard-scan-rate-and-debounce-latency">Benchmarking
+Keyboard Scan Rate and Debounce Latency</h1>
+<p>This article outlines the precise hardware and software methodologies
+used to benchmark keyboard scan rates and debounce latency. By examining
+the internal matrix polling of a keyboard's microcontroller and
+measuring the physical-to-digital signal delay using high-precision
+tools like oscilloscopes and logic analyzers, hardware testers can
+accurately determine a keyboard's true responsiveness. Understanding
+these testing protocols helps separate marketing claims from actual
+hardware performance.</p>
+<h2 id="required-testing-equipment">Required Testing Equipment</h2>
+<p>To accurately measure internal keyboard metrics without relying on
+flawed software-only timers, a hardware testing rig is required. The
+standard benchmarking toolkit includes:</p>
+<ul>
+<li><strong>Digital Storage Oscilloscope (DSO) or Logic
+Analyzer:</strong> Capable of sampling at a minimum of 10 MHz to capture
+microsecond-level voltage changes.</li>
+<li><strong>Programmable Microcontroller:</strong> An Arduino, Teensy,
+or Raspberry Pi Pico used to automate keypresses and detect USB
+packets.</li>
+<li><strong>Optocouplers or Solid-State Relays:</strong> To
+electronically bridge switch contacts without introducing extra
+mechanical bounce.</li>
+<li><strong>USB Protocol Analyzer:</strong> Hardware-based or
+software-based (such as Wireshark with USBPcap) to monitor USB Human
+Interface Device (HID) reports.</li>
+<li><strong>Soldering Station and Test Probes:</strong> For attaching
+leads directly to the keyboard’s printed circuit board (PCB).</li>
+</ul>
+<h2 id="methodology-for-testing-scan-rate">Methodology for Testing Scan
+Rate</h2>
+<p>The scan rate is the frequency at which the keyboard's internal
+microcontroller (MCU) checks the key matrix for actuated switches. It is
+entirely independent of the USB polling rate.</p>
+<h3 id="method-1-direct-matrix-probing-most-accurate">Method 1: Direct
+Matrix Probing (Most Accurate)</h3>
+<ol type="1">
+<li><strong>Disassembly:</strong> Remove the keyboard PCB from its
+housing to expose the switch solder joints and diodes.</li>
+<li><strong>Probing:</strong> Attach the ground clip of an oscilloscope
+or logic analyzer to the PCB ground plane. Attach the signal probe to
+the driving pin (either the row or column, depending on the matrix
+direction) of a single key switch.</li>
+<li><strong>Measurement:</strong> Power on the keyboard. The MCU will
+continuously send voltage pulses through the rows/columns to check for
+completed circuits.</li>
+<li><strong>Calculation:</strong> Measure the time interval (period)
+between the rising edges of two consecutive voltage pulses on that
+specific pin. Calculate the scan rate using the formula <span
+class="math inline">\(Frequency = 1 / Period\)</span>. For example, if
+the MCU pulses the pin every 0.5 milliseconds, the scan rate is 2000
+Hz.</li>
+</ol>
+<h3
+id="method-2-automated-pulse-width-testing-non-invasive-to-matrix">Method
+2: Automated Pulse Width Testing (Non-Invasive to Matrix)</h3>
+<p>If the matrix traces are obscured or the keyboard uses
+optical/Hall-effect sensors that sleep when idle, testers use pulse
+width modulation to deduce the scan rate.</p>
+<ol type="1">
+<li><strong>Wiring:</strong> Solder an optocoupler across the two pins
+of a mechanical switch, wired to an external microcontroller.</li>
+<li><strong>Execution:</strong> Program the external microcontroller to
+"press" the key by closing the circuit for a specific, microscopic
+duration (e.g., 2 milliseconds) and repeat this 100 times.</li>
+<li><strong>Reduction:</strong> Gradually reduce the duration of the
+simulated keypress (1ms, 0.5ms, 0.25ms).</li>
+<li><strong>Analysis:</strong> When the simulated keypress duration
+becomes shorter than the keyboard's scan interval, the keyboard will
+begin missing inputs. By analyzing the percentage of missed inputs
+against the pulse duration, testers can mathematically deduce the
+internal scan rate.</li>
+</ol>
+<h2 id="methodology-for-testing-debounce-latency">Methodology for
+Testing Debounce Latency</h2>
+<p>When a mechanical switch is pressed, the metal leaves bounce against
+each other, creating multiple electrical signals (chatter) before
+settling. Debounce latency is the intentional firmware delay added by
+the manufacturer to filter out this noise and register only a single
+keypress.</p>
+<h3 id="step-1-isolating-the-switch-and-usb-output">Step 1: Isolating
+the Switch and USB Output</h3>
+<ol type="1">
+<li><strong>Channel 1 (Physical Input):</strong> Connect the first probe
+of the oscilloscope directly to the sensing pin of the key switch on the
+keyboard PCB. This captures the exact microsecond the switch physically
+closes the circuit.</li>
+<li><strong>Channel 2 (Digital Output):</strong> Connect the second
+probe to the USB D+ or D- data line, or use a dedicated latency-testing
+microcontroller configured as a USB host to intercept the incoming HID
+packet and output a high voltage signal to Channel 2 upon receipt.</li>
+</ol>
+<h3 id="step-2-actuation-and-capture">Step 2: Actuation and Capture</h3>
+<ol type="1">
+<li><strong>Triggering:</strong> Set the oscilloscope to trigger on the
+falling or rising edge of Channel 1 (depending on whether the matrix is
+active-low or active-high).</li>
+<li><strong>Testing:</strong> Actuate the switch. To measure true
+debounce behavior, the switch must be pressed physically (using a linear
+actuator or finger) so that natural mechanical chatter occurs, rather
+than bypassing the switch electrically.</li>
+<li><strong>Data Collection:</strong> Record the time delta (<span
+class="math inline">\(\Delta t\)</span>) between the initial physical
+contact on Channel 1 and the start of the USB data packet on Channel
+2.</li>
+</ol>
+<h3 id="step-3-calculating-the-debounce-delay">Step 3: Calculating the
+Debounce Delay</h3>
+<p>A single measurement is insufficient because the keypress might occur
+midway through a scan cycle or a USB polling cycle.</p>
+<ol type="1">
+<li><strong>Sample Size:</strong> Repeat the actuation test at least 100
+times at random intervals to account for scan rate variance and USB
+polling desynchronization.</li>
+<li><strong>Isolating the Variables:</strong> The total measured latency
+consists of three parts: <span class="math display">\[\text{Total
+Latency} = \text{Scan Delay} + \text{Debounce Delay} + \text{USB Polling
+Delay}\]</span></li>
+<li><strong>Finding the Baseline:</strong> Set the keyboard to its
+maximum USB polling rate (e.g., 1000 Hz or 8000 Hz) to minimize USB
+delay. Look at the <strong>minimum</strong> latency value recorded
+across the 100-test sample. The minimum value represents a scenario
+where the keypress aligned perfectly with both the matrix scan and the
+USB poll.</li>
+<li><strong>Result:</strong> Subtract the known MCU processing overhead
+(typically &lt;0.2ms) from this minimum value. The remaining time is the
+keyboard's configured firmware debounce latency. If the minimum recorded
+latency is consistently ~0.2ms, the keyboard is using an "eager"
+debounce algorithm (sending the signal on the first contact and ignoring
+subsequent bounces). If the minimum latency is consistently 5ms, the
+keyboard is using a "defer" algorithm (waiting 5ms for bouncing to stop
+before sending the signal).</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/benchmarking-keyboard-scan-rate-and-debounce-latency';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoronix Test Suite: The Standard for Linux Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores the significance of the Phoronix Test Suite (PTS) as the premier open-source platform for automated computer hardware benchmarking on Linux. It covers how the software standardizes hardware testing across fragmented Linux distributio">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/phoronix-test-suite-the-standard-for-linux-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Phoronix Test Suite: The Standard for Linux Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/phoronix-test-suite-the-standard-for-linux-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the significance of the Phoronix Test Suite (PTS) as the premier open-source platform for automated computer hardware benchmarking on Linux. It covers how the software standardizes hardware testing across fragmented Linux distributio" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="phoronix-test-suite-the-standard-for-linux-benchmarking">Phoronix
+Test Suite: The Standard for Linux Benchmarking</h1>
+<p>This article explores the significance of the Phoronix Test Suite
+(PTS) as the premier open-source platform for automated computer
+hardware benchmarking on Linux. It covers how the software standardizes
+hardware testing across fragmented Linux distributions, eliminates human
+error through complete automation, integrates with a massive global
+database for instant performance comparisons, and provides critical
+regression testing for both individual enthusiasts and enterprise
+hardware vendors.</p>
+<h2 id="standardization-across-a-fragmented-ecosystem">Standardization
+Across a Fragmented Ecosystem</h2>
+<p>The Linux ecosystem consists of ratusan of distributions, different
+kernel versions, and varying compiler flags. Before the Phoronix Test
+Suite, accurately comparing hardware performance between an Ubuntu
+system and a Fedora system was nearly impossible due to these underlying
+software differences.</p>
+<p>PTS solves this by standardizing the testing process. It uses
+extensible XML-based test profiles that download the exact same source
+code for a benchmark, compile it using uniform parameters, and execute
+it under strictly controlled conditions. This ensures that hardware
+benchmarks remain reproducible and scientifically valid, regardless of
+the host Linux distribution.</p>
+<h2 id="complete-end-to-end-automation">Complete End-to-End
+Automation</h2>
+<p>Manual benchmarking is time-consuming and prone to human error. A
+user must find the benchmark, resolve software dependencies, run the
+test multiple times, and manually record the results. PTS automates this
+entire workflow from start to finish:</p>
+<ul>
+<li><strong>Dependency Resolution:</strong> PTS automatically detects
+the host operating system and installs the required libraries and
+compilers needed for a specific test.</li>
+<li><strong>Execution and Statistical Accuracy:</strong> It runs
+benchmarks multiple times automatically. If the standard deviation
+between runs is too high, PTS dynamically increases the run count until
+a statistically significant result is achieved.</li>
+<li><strong>System Monitoring:</strong> While tests run, PTS
+simultaneously logs hardware sensors, including CPU temperature, clock
+speeds, power consumption, and system memory usage.</li>
+</ul>
+<h2 id="comprehensive-hardware-coverage">Comprehensive Hardware
+Coverage</h2>
+<p>The Phoronix Test Suite is not just a single benchmark; it is a
+framework providing access to hundreds of distinct test profiles and
+suites. This allows users to isolate specific hardware components or
+test the system as a whole.</p>
+<p>Users can evaluate CPU performance through code compilation, video
+encoding, and rendering tests. Storage speed is measured using
+industry-standard I/O workloads. Graphics cards are pushed to their
+limits via both synthetic compute tests and real-world Linux gaming
+benchmarks. Network throughput, memory bandwidth, and even motherboard
+thermal performance can be evaluated within the same unified
+interface.</p>
+<h2 id="integration-with-openbenchmarkingorg">Integration with
+OpenBenchmarking.org</h2>
+<p>A benchmark score is meaningless without context. One of the most
+significant features of the Phoronix Test Suite is its seamless
+integration with OpenBenchmarking.org, a massive, crowd-sourced
+repository of millions of test results.</p>
+<p>When a test finishes, users can compare their hardware directly
+against existing results in the database with a single command. Whether
+you want to see how a new processor compares to last generation's model,
+or verify if your current hardware is underperforming compared to
+identical setups, the data is immediately accessible. The platform also
+generates detailed, easy-to-read graphs showing performance alongside
+performance-per-watt and performance-per-dollar metrics.</p>
+<h2 id="enterprise-and-developer-regression-testing">Enterprise and
+Developer Regression Testing</h2>
+<p>Beyond individual hardware enthusiasts, the Phoronix Test Suite is a
+vital tool for the technology industry. Hardware manufacturers like
+Intel and AMD, alongside Linux kernel developers, use PTS for automated
+regression testing.</p>
+<p>Included with PTS is <strong>Phoromatic</strong>, a remote management
+system that allows administrators to schedule and orchestrate benchmarks
+across dozens or hundreds of machines simultaneously. For example, a
+company can configure Phoromatic to automatically pull the latest daily
+Linux kernel build, install it on a fleet of test servers, run a suite
+of hardware benchmarks, and alert engineers if the new code caused a
+drop in hardware performance. This makes PTS an indispensable tool for
+continuous integration and continuous deployment (CI/CD) in hardware and
+OS development.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/phoronix-test-suite-the-standard-for-linux-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

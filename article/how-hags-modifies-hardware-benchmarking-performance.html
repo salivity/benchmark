@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How HAGS Modifies Hardware Benchmarking Performance - benchmark</title>
+    <meta name="description" content="Hardware-Accelerated GPU Scheduling (HAGS) is a Windows feature that transfers the task of managing graphics memory and scheduling workloads from the Central Processing Unit (CPU) directly to a dedicated processor on the Graphics Processing Unit (GPU). Th">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-hags-modifies-hardware-benchmarking-performance">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How HAGS Modifies Hardware Benchmarking Performance - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-hags-modifies-hardware-benchmarking-performance" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware-Accelerated GPU Scheduling (HAGS) is a Windows feature that transfers the task of managing graphics memory and scheduling workloads from the Central Processing Unit (CPU) directly to a dedicated processor on the Graphics Processing Unit (GPU). Th" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-hags-modifies-hardware-benchmarking-performance">How HAGS
+Modifies Hardware Benchmarking Performance</h1>
+<p>Hardware-Accelerated GPU Scheduling (HAGS) is a Windows feature that
+transfers the task of managing graphics memory and scheduling workloads
+from the Central Processing Unit (CPU) directly to a dedicated processor
+on the Graphics Processing Unit (GPU). This article provides an overview
+of how HAGS modifies computer hardware benchmarking by altering
+CPU-to-GPU communication, reducing system latency, shifting performance
+bottlenecks in synthetic and real-world tests, and unlocking specific
+frame-generation technologies that dramatically skew benchmark
+results.</p>
+<h2 id="offloading-the-cpu">Offloading the CPU</h2>
+<p>Traditionally, the Windows Display Driver Model (WDDM) relies on the
+CPU to batch and prioritize rendering commands before sending them to
+the GPU. HAGS bypasses this by allowing the GPU to manage its own video
+memory (VRAM) and command queues.</p>
+<p>In hardware benchmarking, this directly modifies CPU performance
+metrics:</p>
+<ul>
+<li><strong>CPU-Bound Scenarios:</strong> Benchmarks that intentionally
+bottleneck the CPU (such as running games at 1080p on low settings)
+often show a 1% to 5% performance increase with HAGS enabled, as the CPU
+has more free cycles to process game logic and physics.</li>
+<li><strong>GPU-Bound Scenarios:</strong> In tests running at 4K
+resolution with maximum settings, the GPU is already at 100%
+utilization. HAGS shows minimal to zero impact on average frame rates in
+these benchmarks, Often falling within the standard margin of
+error.</li>
+</ul>
+<h2 id="latency-and-frame-pacing-metrics">Latency and Frame Pacing
+Metrics</h2>
+<p>Benchmarking is not just about average frames per second (FPS); it
+also measures frame pacing (1% and 0.1% lows) and system latency.
+Because HAGS eliminates the middleman (the CPU scheduler), frames are
+queued and rendered faster.</p>
+<p>Hardware testers using tools like NVIDIA FrameView or Intel
+PresentMon will observe lower render latency with HAGS enabled. In many
+benchmarks, while the average FPS remains static, the 1% low FPS metrics
+improve, indicating a smoother workload distribution and fewer
+micro-stutters.</p>
+<h2 id="mandatory-requirement-for-frame-generation">Mandatory
+Requirement for Frame Generation</h2>
+<p>The most drastic modification HAGS brings to modern benchmarking is
+its requirement for NVIDIA DLSS 3 Frame Generation. Without HAGS enabled
+in Windows, Frame Generation cannot be activated.</p>
+<p>When benchmarking modern GPUs like the GeForce RTX 40-series,
+enabling HAGS allows the hardware to utilize optical flow accelerators
+and AI to insert generated frames between rendered ones. This
+fundamentally changes benchmark results, often doubling the output FPS
+and shifting the benchmark from a test of raw rasterization power to a
+test of AI-assisted rendering capabilities.</p>
+<h2 id="api-and-architecture-variance">API and Architecture
+Variance</h2>
+<p>HAGS does not modify all benchmarks equally. Its impact depends
+heavily on the graphics Application Programming Interface (API) and the
+age of the hardware being tested:</p>
+<ul>
+<li><strong>DirectX 12 and Vulkan:</strong> These modern APIs are
+designed for low-level hardware access. Benchmarks utilizing them
+generally see the best stability and slight performance gains with HAGS
+turned on.</li>
+<li><strong>DirectX 11 and Older:</strong> Older APIs were built around
+traditional CPU scheduling. Benchmarking legacy software with HAGS
+enabled can occasionally result in performance regressions, lower
+scores, or frame stuttering.</li>
+<li><strong>VRAM Limitations:</strong> Because the GPU must allocate a
+small amount of its own resources to manage the scheduling queue,
+graphics cards with limited VRAM (8GB or less) may actually score
+slightly lower in memory-intensive benchmarks when HAGS is active.</li>
+</ul>
+<h2 id="impact-on-background-recording-and-multi-tasking">Impact on
+Background Recording and Multi-Tasking</h2>
+<p>Hardware benchmarkers frequently use capture software, such as OBS
+Studio, or monitoring overlays while running tests. HAGS alters how
+Windows prioritizes GPU allocation between a foreground benchmark and a
+background recording task. If a benchmark pushes the GPU to 99%
+utilization, HAGS may starve the background recording software of
+resources, resulting in dropped frames in the captured video or skewed
+benchmark results if the system struggles to balance the two
+hardware-accelerated workloads.</p>
+<h2 id="standardization-in-hardware-testing">Standardization in Hardware
+Testing</h2>
+<p>Because HAGS alters the baseline behavior of both the CPU and GPU, it
+acts as a critical variable in hardware testing. To maintain accuracy,
+benchmarkers must standardize their testing environments by explicitly
+keeping HAGS either enabled or disabled across all tested components,
+ensuring that performance deltas are the result of the hardware itself
+rather than changes in the operating system's scheduling method.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-hags-modifies-hardware-benchmarking-performance';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

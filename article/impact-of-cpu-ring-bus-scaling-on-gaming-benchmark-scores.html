@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact of CPU Ring Bus Scaling on Gaming Benchmark Scores - benchmark</title>
+    <meta name="description" content="This article explores the impact of CPU ring bus and uncore frequency scaling on gaming benchmark scores. While primary CPU core clocks dominate hardware discussions, the uncore—comprising the ring bus, L3 cache, and integrated memory controller—plays a v">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/impact-of-cpu-ring-bus-scaling-on-gaming-benchmark-scores">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Impact of CPU Ring Bus Scaling on Gaming Benchmark Scores - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/impact-of-cpu-ring-bus-scaling-on-gaming-benchmark-scores" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the impact of CPU ring bus and uncore frequency scaling on gaming benchmark scores. While primary CPU core clocks dominate hardware discussions, the uncore—comprising the ring bus, L3 cache, and integrated memory controller—plays a v" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="impact-of-cpu-ring-bus-scaling-on-gaming-benchmark-scores">Impact of
+CPU Ring Bus Scaling on Gaming Benchmark Scores</h1>
+<p>This article explores the impact of CPU ring bus and uncore frequency
+scaling on gaming benchmark scores. While primary CPU core clocks
+dominate hardware discussions, the uncore—comprising the ring bus, L3
+cache, and integrated memory controller—plays a vital role in internal
+data transfer speeds. Adjusting these frequencies primarily reduces
+memory latency and boosts L3 cache bandwidth. In hardware benchmarking,
+this translates to minor increases in average frame rates, stronger
+synthetic CPU scores, and noticeable improvements in 1% and 0.1% low
+frame times during CPU-bound gaming scenarios.</p>
+<h2 id="understanding-the-ring-bus-and-uncore">Understanding the Ring
+Bus and Uncore</h2>
+<p>To understand how scaling affects benchmarks, it is necessary to
+define the components. "Uncore" is a term used to describe the parts of
+a processor that are not in the CPU core itself but are essential for
+performance. This includes the L3 cache, the integrated memory
+controller (IMC), and the interconnect that links them together.</p>
+<p>The "ring bus" is the specific interconnect architecture (most
+notably used by Intel) that allows CPU cores to communicate with each
+other, the L3 cache, and system RAM. The frequency at which this
+interconnect operates is the ring clock or uncore frequency. Because the
+L3 cache and the ring bus run at the same frequency, overclocking the
+ring bus directly overclocks the L3 cache.</p>
+<h2 id="bandwidth-and-latency-improvements">Bandwidth and Latency
+Improvements</h2>
+<p>Scaling the uncore frequency upward has two immediate hardware
+effects:</p>
+<ul>
+<li><strong>Increased L3 Cache Bandwidth:</strong> A faster ring bus
+allows data to move into and out of the L3 cache at a higher rate.</li>
+<li><strong>Reduced Memory Latency:</strong> Because the ring bus
+connects the cores to the memory controller, a higher frequency reduces
+the time it takes for a core to fetch data from the system RAM if it
+misses the cache.</li>
+</ul>
+<p>In synthetic memory benchmarks, such as AIDA64, scaling the ring bus
+yields immediate, linear improvements in L3 cache read, write, and copy
+speeds, alongside a measurable drop in memory latency (measured in
+nanoseconds).</p>
+<h2 id="effects-on-synthetic-gaming-benchmarks">Effects on Synthetic
+Gaming Benchmarks</h2>
+<p>Synthetic gaming benchmarks like 3DMark Time Spy and Fire Strike
+include dedicated CPU and physics tests. These specific tests are
+designed to push the processor's instruction pipeline, cache, and memory
+subsystem to their limits.</p>
+<p>When you increase the ring bus frequency, synthetic CPU scores scale
+reliably. A 300 MHz to 500 MHz increase in uncore frequency normally
+results in a 1% to 4% increase in the dedicated CPU score, even if the
+main core clock remains completely static. This happens because physics
+calculations require constant, rapid access to the L3 cache and system
+memory.</p>
+<h2 id="effects-on-real-world-gaming-benchmarks">Effects on Real-World
+Gaming Benchmarks</h2>
+<p>In actual game benchmarks, the impact of ring bus scaling depends
+entirely on the bottleneck and the metrics being measured.</p>
+<ul>
+<li><strong>Average Frame Rates (FPS):</strong> Scaling the uncore
+yields minimal gains in average FPS. Gamers and benchmarkers can expect
+a 1% to 3% improvement at most, and only in titles that are heavily
+dependent on cache and memory speeds, such as simulation games, RTS
+titles, and competitive shooters.</li>
+<li><strong>1% and 0.1% Lows (Frame Pacing):</strong> This is where ring
+bus scaling makes the biggest difference. Frame drops and micro-stutters
+often occur when the CPU cores are stalled, waiting for data to arrive
+from the L3 cache or RAM. A faster ring bus resolves these stalls more
+quickly, leading to significantly higher 1% and 0.1% low scores. The
+benchmark graph will appear much flatter and more consistent.</li>
+<li><strong>Resolution Dependency:</strong> Uncore scaling only affects
+gaming scores when the system is CPU-bound. Benchmarks run at 1080p with
+a high-end graphics card will show the benefits of a higher ring clock.
+At 4K resolution, the workload shifts almost entirely to the GPU,
+reducing the impact of ring bus scaling on the final score to zero.</li>
+</ul>
+<h2 id="diminishing-returns-and-overclocking-limits">Diminishing Returns
+and Overclocking Limits</h2>
+<p>While a higher ring bus improves scores, it is secondary to the main
+CPU core frequency. In most modern architectures, the CPU cores and the
+ring bus share the same voltage rail.</p>
+<p>Pushing the ring bus too high causes instability and requires extra
+voltage, which generates more heat. If increasing the ring bus by 200
+MHz forces you to lower your main CPU core clock by 100 MHz to maintain
+stability, your gaming benchmark scores will actually decrease. For
+optimal benchmarking scores, hardware enthusiasts generally tune the
+main CPU cores to their maximum stable limit first, and then raise the
+ring bus as high as it will go without requiring additional
+voltage—typically settling 300 MHz to 500 MHz below the primary core
+clock.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/impact-of-cpu-ring-bus-scaling-on-gaming-benchmark-scores';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking Server Security Hardware with Phoronix OpenSSL - benchmark</title>
+    <meta name="description" content="This article explores the critical role of the Phoronix Test Suite, specifically the pts/openssl test profile and its broader cryptography suites, in benchmarking computer hardware for server security. It explains how these standardized tools measure a pr">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/benchmarking-server-security-hardware-with-phoronix-open-ssl">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Benchmarking Server Security Hardware with Phoronix OpenSSL - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/benchmarking-server-security-hardware-with-phoronix-open-ssl" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the critical role of the Phoronix Test Suite, specifically the pts/openssl test profile and its broader cryptography suites, in benchmarking computer hardware for server security. It explains how these standardized tools measure a pr" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="benchmarking-server-security-hardware-with-phoronix-openssl">Benchmarking
+Server Security Hardware with Phoronix OpenSSL</h1>
+<p>This article explores the critical role of the Phoronix Test Suite,
+specifically the <code>pts/openssl</code> test profile and its broader
+cryptography suites, in benchmarking computer hardware for server
+security. It explains how these standardized tools measure a processor's
+capacity to handle intense encryption, decryption, and key generation
+workloads. By examining how these benchmarks test hardware acceleration,
+multi-core scaling, and algorithmic throughput, this guide clarifies how
+system architects evaluate and select server hardware capable of
+maintaining robust security without sacrificing network or application
+performance.</p>
+<h2
+id="understanding-ptsopenssl-and-the-cryptography-suite">Understanding
+pts/openssl and the Cryptography Suite</h2>
+<p>The Phoronix Test Suite (PTS) is an automated, open-source
+benchmarking platform. Within this platform, the
+<code>pts/openssl</code> profile and the overarching
+<code>pts/cryptography</code> suite serve as industry standards for
+evaluating how computer hardware handles security-related workloads.</p>
+<ul>
+<li><strong>pts/openssl:</strong> This specific test profile utilizes
+the built-in benchmarking tool of the OpenSSL library
+(<code>openssl speed</code>). It stresses the CPU by executing
+continuous cryptographic operations and measuring the output in bytes
+per second or operations per second.</li>
+<li><strong>pts/cryptography:</strong> This is a collection of tests
+that includes OpenSSL alongside other cryptographic libraries and
+algorithms, such as Botan, Gcrypt, Blake2, Nettle, and Cryptsetup. It
+provides a holistic view of a server's cryptographic performance across
+different software implementations.</li>
+</ul>
+<h2 id="evaluating-hardware-acceleration">Evaluating Hardware
+Acceleration</h2>
+<p>Modern server processors do not rely solely on general-purpose
+computing cores to handle encryption. They include dedicated silicon and
+instruction sets designed to offload and accelerate cryptographic math.
+A primary role of Phoronix cryptography benchmarks is to verify the
+efficiency of these hardware-level features.</p>
+<p>The benchmarks heavily test instruction sets such as:</p>
+<ul>
+<li><strong>Intel and AMD AES-NI (Advanced Encryption Standard New
+Instructions):</strong> Accelerates symmetric encryption used in bulk
+data transfer.</li>
+<li><strong>AVX-512 and VAES (Vector AES):</strong> Allows the CPU to
+process larger chunks of cryptographic data simultaneously.</li>
+<li><strong>ARMv8 Cryptographic Extensions:</strong> The equivalent
+acceleration hardware found in ARM-based server processors like AWS
+Graviton and Ampere Altra.</li>
+</ul>
+<p>By running <code>pts/openssl</code>, hardware reviewers and systems
+engineers can immediately see the generational improvements in these
+instruction sets when comparing older server CPUs against newer
+releases.</p>
+<h2 id="key-metrics-for-server-workloads">Key Metrics for Server
+Workloads</h2>
+<p>Server security relies on different types of cryptography for
+different tasks. The Phoronix OpenSSL benchmark isolates these tasks to
+show exactly where a piece of hardware excels or bottlenecks.</p>
+<h3 id="asymmetric-encryption-rsa">Asymmetric Encryption (RSA)</h3>
+<p>When a client connects to a secure server via HTTPS, an SSL/TLS
+handshake occurs. This relies heavily on asymmetric algorithms like RSA.
+The <code>pts/openssl</code> benchmark measures <strong>RSA 4096-bit
+sign and verify</strong> operations per second. High performance in this
+metric indicates that a server CPU can handle thousands of new,
+simultaneous user connections without slowing down.</p>
+<h3 id="symmetric-encryption-aes-and-chacha20">Symmetric Encryption (AES
+and ChaCha20)</h3>
+<p>Once a secure connection is established, the server uses symmetric
+encryption to transfer data rapidly. The benchmark tests algorithms like
+<strong>AES-128-GCM</strong>, <strong>AES-256-GCM</strong>, and
+<strong>ChaCha20-Poly1305</strong>. High throughput here ensures that
+the server can encrypt database traffic, VPN tunnels, and file transfers
+at line rate without maxing out CPU usage.</p>
+<h3 id="hashing-sha">Hashing (SHA)</h3>
+<p>Data integrity and password verification rely on hashing algorithms.
+The benchmark measures throughput for <strong>SHA256</strong> and
+<strong>SHA512</strong>. Strong performance here is vital for servers
+managing authentication databases, blockchain nodes, or secure file
+repositories.</p>
+<h2 id="assessing-multi-core-scaling-and-efficiency">Assessing
+Multi-Core Scaling and Efficiency</h2>
+<p>Servers rarely run single-threaded workloads. A critical role of the
+Phoronix suite is to execute these cryptographic tests across all
+available CPU cores and threads simultaneously.</p>
+<p>Cryptographic workloads are "embarrassingly parallel," meaning they
+should scale linearly with the addition of more CPU cores. If a 64-core
+server does not achieve roughly double the OpenSSL score of a 32-core
+server from the same generation, the benchmark exposes underlying
+hardware bottlenecks. These bottlenecks usually involve thermal
+throttling, insufficient power delivery, or memory bandwidth
+limitations.</p>
+<p>Furthermore, Phoronix can monitor CPU power consumption during the
+<code>pts/openssl</code> run, calculating performance-per-watt. For data
+centers, knowing how much electricity is required to encrypt a gigabyte
+of data is essential for managing operational costs.</p>
+<h2 id="cross-architecture-comparisons">Cross-Architecture
+Comparisons</h2>
+<p>The server market consists of competing architectures, primarily
+x86_64 (Intel Xeon and AMD EPYC) and ARM64. Because the Phoronix Test
+Suite compiles the exact same version of OpenSSL with the same compiler
+flags across different operating systems and CPU architectures, it
+provides an unbiased, apples-to-apples comparison.</p>
+<p>System administrators use this data for hardware procurement. By
+reviewing Phoronix cryptography results, they can determine which
+specific CPU architecture delivers the highest TLS termination rates or
+VPN throughput for their budget, ensuring that security requirements do
+not degrade server responsiveness.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/benchmarking-server-security-hardware-with-phoronix-open-ssl';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

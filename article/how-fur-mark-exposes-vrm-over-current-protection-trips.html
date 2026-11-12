@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How FurMark Exposes VRM Over-Current Protection Trips - benchmark</title>
+    <meta name="description" content="This article explores how FurMark’s signature &quot;furry donut&quot; rendering acts as an extreme stress test to expose Voltage Regulator Module (VRM) Over-Current Protection (OCP) limits in graphics cards. It covers the mechanics of the FurMark workload, how VRMs">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-fur-mark-exposes-vrm-over-current-protection-trips">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How FurMark Exposes VRM Over-Current Protection Trips - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-fur-mark-exposes-vrm-over-current-protection-trips" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how FurMark’s signature &quot;furry donut&quot; rendering acts as an extreme stress test to expose Voltage Regulator Module (VRM) Over-Current Protection (OCP) limits in graphics cards. It covers the mechanics of the FurMark workload, how VRMs" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-furmark-exposes-vrm-over-current-protection-trips">How
+FurMark Exposes VRM Over-Current Protection Trips</h1>
+<p>This article explores how FurMark’s signature "furry donut" rendering
+acts as an extreme stress test to expose Voltage Regulator Module (VRM)
+Over-Current Protection (OCP) limits in graphics cards. It covers the
+mechanics of the FurMark workload, how VRMs manage electrical current,
+why this specific rendering causes massive power spikes, and what an OCP
+trip reveals about the stability and design of computer hardware.</p>
+<h2 id="the-mechanics-of-the-furmark-donut">The Mechanics of the FurMark
+"Donut"</h2>
+<p>In standard gaming benchmarks, a graphics processing unit (GPU)
+experiences fluctuating workloads. One moment it is rendering complex
+geometry, and the next it is rendering a simple skybox. This variance
+gives the hardware brief micro-seconds to cool down and stabilize power
+draw.</p>
+<p>FurMark eliminates these breaks. Its rotating "furry donut" (a torus
+covered in thousands of rendered hair strands) utilizes an aggressive
+OpenGL pixel shader workload combined with massive overdraw. Overdraw
+means the GPU is calculating and rendering multiple overlapping layers
+of pixels in the exact same spot before displaying the final frame.</p>
+<p>This specific rendering technique forces nearly every execution unit,
+shader core, and memory controller on the GPU to operate at 100%
+capacity simultaneously and continuously. Because the workload never
+lets up, the GPU demands absolute maximum electrical current from the
+moment the test begins.</p>
+<h2 id="the-role-of-the-vrm-and-ocp">The Role of the VRM and OCP</h2>
+<p>To understand how FurMark breaks hardware stability, you must
+understand how a GPU receives power:</p>
+<ul>
+<li><strong>The VRM (Voltage Regulator Module):</strong> The power
+supply unit (PSU) sends 12-volt power to the graphics card. The GPU
+core, however, operates at roughly 1 volt. The VRM steps down this 12V
+input to 1V. Because of the laws of physics (Power = Voltage × Current),
+dropping the voltage by a factor of 12 increases the electrical current
+(amperage) by a factor of 12. A GPU pulling 300 watts at 1 volt is
+forcing the VRM to handle 300 amps of current.</li>
+<li><strong>OCP (Over-Current Protection):</strong> OCP is a vital
+safety circuit built into the VRM controller and the power supply. If
+the amperage flowing through the VRM exceeds the safe physical limits of
+the components (MOSFETs and chokes), OCP instantly cuts power to prevent
+the silicon from melting or catching fire.</li>
+</ul>
+<h2 id="how-the-donut-exposes-ocp-flaws">How the Donut Exposes OCP
+Flaws</h2>
+<p>When a benchmark tester runs FurMark, the rendering of the donut
+interacts with the VRM and OCP in three distinct ways to expose hardware
+weaknesses:</p>
+<h3 id="1-sustained-peak-amperage">1. Sustained Peak Amperage</h3>
+<p>Because the fur shader saturates the entire GPU core without pause,
+the current draw hits a ceiling far higher than any normal game could
+produce. If a graphics card manufacturer used cheap VRM components or
+set the OCP threshold too low to save costs, the sheer volume of
+sustained amperage demanded by the donut will trip the OCP
+immediately.</p>
+<h3 id="2-thermal-runaway-in-the-vrm">2. Thermal Runaway in the VRM</h3>
+<p>As the FurMark donut spins, the VRM works overtime and generates
+intense heat. Silicon components become less efficient as they get
+hotter. As the VRM heats up, its internal resistance changes, requiring
+it to pull <em>even more</em> current to deliver the same amount of
+power to the GPU. This creates a thermal runaway loop. Within minutes,
+the rising heat drives the current past the safety limit, triggering an
+OCP shutdown. This exposes inadequate VRM cooling (such as missing
+thermal pads) on the graphics card.</p>
+<h3 id="3-initial-transient-spikes">3. Initial Transient Spikes</h3>
+<p>The exact moment the FurMark rendering window opens, the GPU
+transitions from an idle state (drawing around 15 watts) to an absolute
+maximum load state (drawing hundreds of watts) in milliseconds. This
+sudden demand creates a massive transient power spike. If the VRM
+controller cannot regulate this instantaneous surge of current fast
+enough, the spike will breach the OCP ceiling and crash the system
+instantly.</p>
+<h2 id="identifying-an-ocp-trip">Identifying an OCP Trip</h2>
+<p>When the FurMark donut successfully forces an OCP trip during
+benchmarking, it does not result in a standard software crash or a Blue
+Screen of Death (BSOD). Instead, hardware testers look for a specific
+behavior:</p>
+<ul>
+<li>The computer screen instantly goes black.</li>
+<li>The system shuts off completely, as if unplugged from the wall.</li>
+<li>GPU or case fans may spin at 100% speed while the screen remains
+blank.</li>
+<li>The PC will not turn back on until the power supply switch is
+flipped off for several seconds to discharge the tripped protection
+circuit.</li>
+</ul>
+<p>By using the FurMark donut to intentionally provoke this reaction,
+hardware reviewers and overclockers can effectively identify defective
+graphics cards, under-engineered VRMs, and failing power supplies that
+would otherwise remain hidden until a critical moment in a real-world
+application.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-fur-mark-exposes-vrm-over-current-protection-trips';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

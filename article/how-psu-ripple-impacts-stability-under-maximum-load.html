@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How PSU Ripple Impacts Stability Under Maximum Load - benchmark</title>
+    <meta name="description" content="This article explores the critical relationship between power supply unit (PSU) ripple and system stability during maximum load hardware benchmarking. It explains what voltage ripple is, how excessive fluctuations degrade voltage regulator module (VRM) pe">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-psu-ripple-impacts-stability-under-maximum-load">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How PSU Ripple Impacts Stability Under Maximum Load - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-psu-ripple-impacts-stability-under-maximum-load" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the critical relationship between power supply unit (PSU) ripple and system stability during maximum load hardware benchmarking. It explains what voltage ripple is, how excessive fluctuations degrade voltage regulator module (VRM) pe" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-psu-ripple-impacts-stability-under-maximum-load">How PSU
+Ripple Impacts Stability Under Maximum Load</h1>
+<p>This article explores the critical relationship between power supply
+unit (PSU) ripple and system stability during maximum load hardware
+benchmarking. It explains what voltage ripple is, how excessive
+fluctuations degrade voltage regulator module (VRM) performance, and why
+clean power delivery is essential to prevent system crashes, lower
+benchmark scores, and premature hardware failure when pushing computer
+components to their absolute limits.</p>
+<h2 id="what-is-power-supply-ripple">What is Power Supply Ripple?</h2>
+<p>Computer components require Direct Current (DC) to operate, while
+wall outlets supply Alternating Current (AC). The PSU converts AC to DC,
+but this conversion is never completely perfect. Power supply ripple
+refers to the tiny, residual AC voltage fluctuations that ride on top of
+the converted DC power rails (+12V, +5V, and +3.3V).</p>
+<p>According to the ATX specification, ripple must stay below 120
+millivolts (mV) on the +12V rail and below 50mV on the +5V and +3.3V
+rails. However, for extreme benchmarking, even ripple below these
+maximum limits can cause severe stability issues.</p>
+<h2 id="the-impact-of-maximum-load">The Impact of Maximum Load</h2>
+<p>During standard tasks, a PSU operates well within its capacity, and
+its internal capacitors easily filter out voltage fluctuations.
+Synthetic benchmarks, however, are designed to push the CPU, GPU, and
+RAM to 100% utilization simultaneously.</p>
+<p>As power draw reaches its peak, the PSU's filtering components are
+stressed to their limits. Consequently, the amplitude and frequency of
+the voltage ripple increase dramatically. A PSU that outputs a clean
+15mV ripple at idle might surge to 80mV or higher under a maximum
+torture test.</p>
+<h2 id="how-ripple-causes-instability-during-benchmarks">How Ripple
+Causes Instability During Benchmarks</h2>
+<p>When you are benchmarking—especially with overclocked hardware—your
+components are operating on razor-thin margins. High PSU ripple
+compromises stability in three specific ways:</p>
+<h3 id="1-transistor-logic-errors-and-crashes">1. Transistor Logic
+Errors and Crashes</h3>
+<p>Modern CPUs and GPUs contain billions of transistors that switch
+states (on and off) billions of times per second. These switches rely on
+precise voltage thresholds. Ripple introduces peaks (over-voltage) and
+troughs (under-voltage) into the power delivery.</p>
+<p>When a benchmark pushes a processor to its maximum clock speed, a
+sudden voltage trough caused by ripple will starve the silicon of the
+exact voltage it needs for a split second. A transistor will fail to
+switch states, resulting in a calculation error. This immediately
+manifests as a crashed benchmark application, a frozen screen, or a Blue
+Screen of Death (BSOD).</p>
+<h3 id="2-vrm-overload-and-thermal-throttling">2. VRM Overload and
+Thermal Throttling</h3>
+<p>The power from the PSU does not go directly into the CPU or GPU
+silicon; it first passes through the motherboard or graphics card's
+Voltage Regulator Modules (VRMs). The VRMs step down the 12V power to
+the roughly 1.1V to 1.4V the silicon actually uses, while also acting as
+a final filter to smooth out PSU ripple.</p>
+<p>If the PSU is sending "dirty" power with high ripple, the VRMs have
+to work significantly harder to clean it up. This extra work generates
+excessive heat. During a prolonged benchmark, overheated VRMs become
+less efficient and allow more ripple to pass through to the CPU or GPU.
+Furthermore, if the VRMs hit their thermal limit, they will force the
+processor to downclock (thermal throttle), instantly ruining your
+benchmark score.</p>
+<h3 id="3-compounded-voltage-droop-vdroop">3. Compounded Voltage Droop
+(Vdroop)</h3>
+<p>When a component suddenly shifts from a low load to a maximum load,
+the voltage naturally drops for a brief moment—a phenomenon known as
+Vdroop. Motherboards use Load-Line Calibration (LLC) to combat this.
+However, if a heavy transient load hits at the exact moment the PSU's
+ripple is in a downward trough, the combined drop in voltage will
+plummet below the minimum operating threshold of the hardware, causing
+an instant system reboot.</p>
+<h2 id="long-term-hardware-degradation">Long-Term Hardware
+Degradation</h2>
+<p>Beyond immediate crashes, benchmarking with high ripple causes
+permanent physical damage to hardware. The rapid voltage spikes (peaks)
+associated with high ripple overstress the microscopic pathways within
+the CPU and GPU silicon, accelerating a process called electromigration.
+Over time, the hardware will require more voltage to achieve the same
+clock speeds, permanently degrading its benchmarking potential.
+Additionally, the solid-state capacitors on your motherboard and GPU
+will wear out much faster as they continuously absorb the fluctuating
+current.</p>
+<h2 id="mitigating-ripple-for-maximum-stability">Mitigating Ripple for
+Maximum Stability</h2>
+<p>To ensure stability under maximum load, hardware enthusiasts must
+look beyond a PSU's total wattage rating.</p>
+<ul>
+<li><strong>Aim for Low-Ripple Units:</strong> Choose high-tier PSUs
+that are independently tested to keep +12V ripple under 30mV at full
+load, far below the 120mV ATX limit.</li>
+<li><strong>Maintain Wattage Headroom:</strong> Ripple increases
+exponentially as a PSU approaches 100% of its rated capacity. If your
+system pulls 750W during a benchmark, using a 1000W or 1200W PSU ensures
+the unit operates in a lower, cleaner range where ripple is naturally
+minimized.</li>
+<li><strong>Avoid Daisy-Chaining Cables:</strong> When benchmarking
+high-power GPUs, use dedicated PCIe power cables for each connector
+rather than a single cable with a split (pigtail) end. This reduces
+resistance and prevents localized voltage instability.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-psu-ripple-impacts-stability-under-maximum-load';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

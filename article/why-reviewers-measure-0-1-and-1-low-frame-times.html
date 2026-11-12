@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Reviewers Measure 0.1% and 1% Low Frame Times - benchmark</title>
+    <meta name="description" content="This article explains why computer hardware reviewers measure both 1% and 0.1% low frame times alongside average frame rates during benchmarks. While average frames per second (FPS) indicate overall performance, they fail to capture the stuttering and lag">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-reviewers-measure-0-1-and-1-low-frame-times">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Reviewers Measure 0.1% and 1% Low Frame Times - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-reviewers-measure-0-1-and-1-low-frame-times" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains why computer hardware reviewers measure both 1% and 0.1% low frame times alongside average frame rates during benchmarks. While average frames per second (FPS) indicate overall performance, they fail to capture the stuttering and lag" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-reviewers-measure-01-and-1-low-frame-times">Why Reviewers
+Measure 0.1% and 1% Low Frame Times</h1>
+<p>This article explains why computer hardware reviewers measure both 1%
+and 0.1% low frame times alongside average frame rates during
+benchmarks. While average frames per second (FPS) indicate overall
+performance, they fail to capture the stuttering and lag spikes that
+ruin a user's experience. By breaking down the math and practical
+differences between 1% lows and 0.1% lows, this guide illustrates how
+reviewers use these specific metrics to expose micro-stutters, hardware
+bottlenecks, and the true smoothness of a CPU or GPU.</p>
+<h2 id="the-problem-with-average-fps">The Problem with Average FPS</h2>
+<p>For years, average FPS was the standard metric for benchmarking PC
+hardware. However, averages hide inconsistencies. A system might average
+100 FPS over a 60-second benchmark, which sounds smooth. Yet, if that
+system renders frames at 120 FPS for 58 seconds and freezes completely
+for 2 seconds, the average is still high, even though the actual
+experience is terrible.</p>
+<p>To measure smoothness rather than just raw speed, reviewers look at
+"frame times"—the exact amount of time, in milliseconds, it takes for
+the hardware to render a single frame. The longest frame times are then
+converted back into an FPS figure to give us the 1% and 0.1% lows.</p>
+<h2 id="what-1-lows-tell-us">What 1% Lows Tell Us</h2>
+<p>To calculate the 1% low, benchmarking software records the frame time
+of every single frame rendered during a test, sorts them from fastest to
+slowest, and isolates the slowest 1% of those frames.</p>
+<p>For example, if a benchmark renders 10,000 frames, the 1% low is the
+average speed of the slowest 100 frames. This metric represents the
+noticeable dips in performance you feel during demanding moments in a
+game, such as a massive explosion or entering a crowded city. If a game
+has a 100 FPS average and an 80 FPS 1% low, the gameplay will feel very
+consistent.</p>
+<h2 id="why-reviewers-also-need-01-lows">Why Reviewers Also Need 0.1%
+Lows</h2>
+<p>While 1% lows are great for showing general performance dips, they
+are still an average of a group of frames, meaning they can hide brief,
+catastrophic hitches. This is why reviewers also measure 0.1% lows.</p>
+<p>Using the same 10,000-frame benchmark example, the 0.1% low looks at
+only the 10 slowest frames. This metric specifically targets
+micro-stutters and momentary freezes.</p>
+<p>Here is why reviewers cannot rely on 1% lows alone:</p>
+<ul>
+<li><strong>Exposing Micro-Stutters:</strong> A game might only stutter
+once every ten seconds. Because those stutters represent so few frames,
+they might get averaged out and hidden within the 1% low data. The 0.1%
+low catches these isolated spikes.</li>
+<li><strong>Identifying CPU Bottlenecks:</strong> Modern CPUs can hit
+100% utilization for a fraction of a second while loading background
+assets, causing a jarring hitch. This manifests immediately in the 0.1%
+low column, even if the 1% low looks acceptable.</li>
+<li><strong>Catching VRAM Limits:</strong> When a graphics card runs out
+of video memory (VRAM), it has to pull data from the much slower system
+RAM. This causes severe, split-second frame time spikes that tank the
+0.1% lows long before they heavily impact the 1% lows or average
+FPS.</li>
+<li><strong>Evaluating Engine Optimization:</strong> Sometimes, poor
+0.1% lows are the fault of the software, such as shader compilation
+stutter. Reviewers use 0.1% lows to warn consumers if a game is poorly
+optimized, regardless of how powerful the hardware is.</li>
+</ul>
+<h2 id="how-to-read-the-metrics-together">How to Read the Metrics
+Together</h2>
+<p>Reviewers present Average FPS, 1% lows, and 0.1% lows together to
+paint a complete picture of performance. When looking at a benchmark
+chart, the goal is to see all three numbers as close to each other as
+possible.</p>
+<p>A small gap between the 1% low and the 0.1% low means the hardware is
+delivering a stable, fluid experience. A massive drop between the 1% low
+and the 0.1% low tells the reviewer—and the consumer—that despite high
+frame rates, the hardware is suffering from severe, immersion-breaking
+stutters.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-reviewers-measure-0-1-and-1-low-frame-times';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

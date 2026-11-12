@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Capture Cards Beat Software for Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="When benchmarking computer hardware, achieving accurate and uncompromised performance metrics is the ultimate goal. This article explains why professional hardware reviewers and enthusiasts strongly prefer external capture cards over internal software rec">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-capture-cards-beat-software-for-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Capture Cards Beat Software for Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-capture-cards-beat-software-for-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When benchmarking computer hardware, achieving accurate and uncompromised performance metrics is the ultimate goal. This article explains why professional hardware reviewers and enthusiasts strongly prefer external capture cards over internal software rec" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-capture-cards-beat-software-for-hardware-benchmarking">Why
+Capture Cards Beat Software for Hardware Benchmarking</h1>
+<p>When benchmarking computer hardware, achieving accurate and
+uncompromised performance metrics is the ultimate goal. This article
+explains why professional hardware reviewers and enthusiasts strongly
+prefer external capture cards over internal software recording
+solutions. By offloading the video capture process to a dedicated
+external device, testers completely eliminate system resource overhead,
+prevent frame pacing distortion, and ensure reliable data collection,
+making external capture the undisputed gold standard for hardware
+evaluation.</p>
+<h2 id="eliminating-cpu-and-gpu-overhead">Eliminating CPU and GPU
+Overhead</h2>
+<p>The primary reason to use an external capture card is to avoid the
+"observer effect," where the act of measuring a system alters its
+performance. Software recording programs like OBS, Nvidia ShadowPlay, or
+AMD ReLive require system resources to function. Even when using
+dedicated hardware encoders on a graphics card (like NVENC), the
+recording software still consumes a percentage of GPU power, VRAM, and
+CPU cycles to capture, encode, and process the video feed.</p>
+<p>This resource consumption reduces the total performance available for
+the game or benchmark being tested, resulting in lower frame rates than
+the hardware would normally achieve on its own. An external capture card
+processes the video signal entirely outside of the test system, ensuring
+that 100% of the CPU and GPU power is dedicated solely to the
+benchmark.</p>
+<h2 id="preserving-frame-times-and-1-lows">Preserving Frame Times and 1%
+Lows</h2>
+<p>Average frame rate is only part of the benchmarking story; frame
+pacing and "1% lows" (which measure the worst frame drops and stutters)
+are equally critical. Software recorders often capture footage by
+"hooking" directly into the game engine or the operating system’s
+graphics pipeline.</p>
+<p>This intrusion can disrupt the natural flow of frames being sent from
+the CPU to the GPU, introducing artificial micro-stutters. Consequently,
+software recording can drastically skew 1% and 0.1% low metrics, making
+a piece of hardware look less stable than it actually is. An external
+capture card simply intercepts the HDMI or DisplayPort signal leaving
+the graphics card, leaving the internal rendering pipeline completely
+untouched.</p>
+<h2 id="preventing-storage-and-ram-bottlenecks">Preventing Storage and
+RAM Bottlenecks</h2>
+<p>Recording high-resolution, high-framerate video generates massive
+files that require significant write speeds and memory bandwidth. When
+using software recording, this video data is temporarily held in the
+system RAM and then written directly to the computer's internal storage
+drive.</p>
+<p>Modern games rely heavily on fast RAM and NVMe SSDs to stream
+textures and assets in real-time. If the storage drive is simultaneously
+writing gigabytes of video footage while trying to load game assets, it
+can create a data bottleneck. This leads to texture pop-in, longer load
+times, and traversal stutter during the benchmark. External capture
+cards record either to a separate computer or an onboard SD card,
+leaving the test system's memory and storage completely free.</p>
+<h2 id="capturing-pre-os-environments-and-crashes">Capturing Pre-OS
+Environments and Crashes</h2>
+<p>Hardware benchmarking frequently involves testing system stability,
+overclocking, and tweaking BIOS settings. Software recording only works
+once the operating system has fully loaded, meaning it cannot capture
+the boot sequence or the BIOS screen.</p>
+<p>Furthermore, if a benchmark pushes a CPU or GPU too far and causes a
+Blue Screen of Death (BSOD) or a system reboot, software recording will
+instantly fail, usually corrupting the video file in the process.
+Because an external capture card operates independently of the test
+computer's operating system, it can effortlessly record BIOS
+configurations, boot times, and exact visual evidence of system crashes
+without losing any footage.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-capture-cards-beat-software-for-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

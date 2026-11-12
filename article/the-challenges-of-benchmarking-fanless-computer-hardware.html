@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Challenges of Benchmarking Fanless Computer Hardware - benchmark</title>
+    <meta name="description" content="Benchmarking passive, fanless computer hardware presents unique difficulties that traditional testing methodologies fail to capture. Because fanless systems rely entirely on natural convection and thermal radiation to dissipate heat, their performance is">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/the-challenges-of-benchmarking-fanless-computer-hardware">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Challenges of Benchmarking Fanless Computer Hardware - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/the-challenges-of-benchmarking-fanless-computer-hardware" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Benchmarking passive, fanless computer hardware presents unique difficulties that traditional testing methodologies fail to capture. Because fanless systems rely entirely on natural convection and thermal radiation to dissipate heat, their performance is" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-challenges-of-benchmarking-fanless-computer-hardware">The
+Challenges of Benchmarking Fanless Computer Hardware</h1>
+<p>Benchmarking passive, fanless computer hardware presents unique
+difficulties that traditional testing methodologies fail to capture.
+Because fanless systems rely entirely on natural convection and thermal
+radiation to dissipate heat, their performance is heavily dictated by
+environmental factors, test duration, and physical orientation. This
+article explores the primary obstacles hardware reviewers and engineers
+face when evaluating silent, passively cooled systems, including delayed
+thermal throttling, ambient environment sensitivity, and the inadequacy
+of standard short-burst benchmark tools.</p>
+<h2 id="inadequate-benchmark-durations-and-thermal-soak">Inadequate
+Benchmark Durations and Thermal Soak</h2>
+<p>Standard benchmarking suites are designed for actively cooled
+systems, which reach their maximum operating temperatures within a few
+minutes. Passive heatsinks, however, often rely on large thermal mass to
+absorb heat before slowly releasing it into the air.</p>
+<p>A standard ten-minute stress test is rarely long enough to saturate a
+passive cooler. A fanless system might run at peak turbo boost speeds
+for fifteen minutes before the heatsink becomes completely heat-soaked,
+at which point the processor will severely throttle to prevent damage.
+To accurately benchmark fanless hardware, tests must be looped for hours
+to find the true "steady-state" performance, making the testing process
+significantly more time-consuming.</p>
+<h2 id="extreme-sensitivity-to-ambient-conditions">Extreme Sensitivity
+to Ambient Conditions</h2>
+<p>In a system with fans, active airflow brute-forces heat away from
+components, making minor changes in room conditions negligible. Fanless
+systems rely on buoyancy-driven natural convection, where hot air rises
+and pulls cooler air in from below.</p>
+<p>Because this natural airflow is extremely weak, external
+environmental factors can easily ruin benchmark repeatability. A slight
+draft from a room's air conditioning vent, a person walking past the
+test bench, or a two-degree shift in ambient room temperature can
+drastically alter the cooling efficiency of a passive chassis. Accurate
+benchmarking requires a sealed, draft-free environment with strictly
+controlled ambient temperatures.</p>
+<h2 id="the-impact-of-physical-orientation">The Impact of Physical
+Orientation</h2>
+<p>Because heat naturally rises, the physical orientation of a fanless
+device dictates how well it cools itself. Passive heatsinks feature fins
+designed to channel rising hot air in a specific direction.</p>
+<p>If a reviewer tests a fanless mini-PC lying flat on a desk, and
+another tests it mounted vertically behind a monitor, they will record
+entirely different performance metrics. Similarly, testing a passive
+component—such as a fanless graphics card or CPU cooler—on an open-air
+test bench will yield completely different results than testing it
+inside an enclosed case. Benchmarks must account for and strictly
+standardize the physical positioning of the hardware.</p>
+<h2 id="extended-cool-down-periods">Extended Cool-Down Periods</h2>
+<p>To ensure accurate data, hardware benchmarks are typically run
+multiple times to establish an average score. With actively cooled
+hardware, fans quickly bring temperatures back to baseline levels within
+a couple of minutes after a test ends.</p>
+<p>Passive hardware retains heat for a long time after the workload
+stops. If a tester runs a second benchmark immediately after the first,
+the system starts at a much higher baseline temperature, causing it to
+throttle much sooner and skewing the results. Testers must either wait a
+long time between runs for the hardware to naturally cool down or use
+external fans to manually cool the chassis before starting the next
+test.</p>
+<h2 id="narrow-thermal-margins-and-the-silicon-lottery">Narrow Thermal
+Margins and the Silicon Lottery</h2>
+<p>Passively cooled systems operate on razor-thin thermal and power
+margins. Manufacturers often configure fanless PCs with strict power
+limits to keep heat generation in check.</p>
+<p>Because the cooling capacity is fixed and low, minor manufacturing
+variations in processors—commonly referred to as the "silicon
+lottery"—have a magnified impact. A chip that requires slightly higher
+voltage to maintain a specific clock speed will hit the thermal ceiling
+faster than a more efficient chip of the exact same model. This makes it
+difficult to establish a universal performance baseline for a specific
+fanless product, as two identical units may throttle at different rates
+under the exact same workload.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/the-challenges-of-benchmarking-fanless-computer-hardware';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

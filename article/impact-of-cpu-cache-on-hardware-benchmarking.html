@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact of CPU Cache on Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="CPU cache size and latency play a critical role in hardware benchmarking by dictating how quickly a processor can access the data required to execute instructions. This article examines the structure of the CPU cache hierarchy, explains how cache capacity">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/impact-of-cpu-cache-on-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Impact of CPU Cache on Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/impact-of-cpu-cache-on-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CPU cache size and latency play a critical role in hardware benchmarking by dictating how quickly a processor can access the data required to execute instructions. This article examines the structure of the CPU cache hierarchy, explains how cache capacity" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="impact-of-cpu-cache-on-hardware-benchmarking">Impact of CPU
+Cache on Hardware Benchmarking</h1>
+<p>CPU cache size and latency play a critical role in hardware
+benchmarking by dictating how quickly a processor can access the data
+required to execute instructions. This article examines the structure of
+the CPU cache hierarchy, explains how cache capacity and access speeds
+directly alter benchmark scores, and clarifies why different software
+tests react uniquely to cache variations.</p>
+<h2 id="the-cpu-cache-hierarchy-explained">The CPU Cache Hierarchy
+Explained</h2>
+<p>To understand benchmark results, you must first understand the
+proximity and speed of CPU cache compared to main system memory (RAM).
+Modern processors use a three-tier cache hierarchy:</p>
+<ul>
+<li><strong>L1 Cache:</strong> The smallest and fastest memory, split
+into instruction and data caches. It is located closest to the CPU
+cores, operating with near-zero latency (typically 1 to 4 clock cycles),
+but only holds kilobytes of data.</li>
+<li><strong>L2 Cache:</strong> Larger than L1 (usually measured in
+megabytes per core) but slightly slower, taking roughly 10 to 15 clock
+cycles to access.</li>
+<li><strong>L3 Cache:</strong> The largest pool of memory on the chip,
+often shared across multiple cores. It holds tens or hundreds of
+megabytes of data, with latencies ranging from 30 to 70 clock
+cycles.</li>
+</ul>
+<p>When the CPU needs data, it checks L1, then L2, and finally L3.
+Finding the data in the cache is called a "cache hit." If the data is
+not in the L3 cache, a "cache miss" occurs, forcing the CPU to fetch the
+data from the system RAM. Accessing RAM takes hundreds of clock cycles,
+causing the CPU cores to sit idle while waiting for data.</p>
+<h2 id="how-cache-size-influences-benchmark-outcomes">How Cache Size
+Influences Benchmark Outcomes</h2>
+<p>The size of each cache level determines the "working set" of data a
+processor can hold locally. This capacity directly manipulates benchmark
+scores depending on the footprint of the test being run.</p>
+<p><strong>The Cache Fit Phenomenon</strong> If a benchmark's active
+dataset fits entirely within the L3 cache, the processor rarely has to
+access the slow system RAM. This results in exponentially higher
+benchmark scores. For example, file compression benchmarks (like 7-Zip)
+rely heavily on dictionary sizes. A CPU with a massive L3 cache can
+store the entire lookup table on the chip, yielding a benchmark score
+that drastically outperforms a CPU with a higher clock speed but smaller
+cache.</p>
+<p><strong>Cache Thrashing</strong> Conversely, if a benchmark pushes a
+dataset that is slightly larger than the CPU's L3 cache, "cache
+thrashing" occurs. The CPU constantly overwrites old cache data with new
+data from the RAM. In this scenario, the benchmark is no longer
+measuring the raw compute power of the CPU cores; it is instead
+measuring the bandwidth and latency of the system RAM.</p>
+<h2 id="the-impact-of-cache-latency">The Impact of Cache Latency</h2>
+<p>While a larger cache holds more data, it physically takes longer to
+search through a larger pool of memory. Therefore, increasing cache size
+often increases cache latency. This trade-off heavily influences
+specific types of benchmarks.</p>
+<p><strong>IPC and Single-Threaded Benchmarks</strong> Instructions Per
+Cycle (IPC) is a major factor in single-threaded benchmarks. If a CPU
+has high L1 or L2 latency, the execution engine stalls while waiting for
+instructions. Even a delay of two extra clock cycles at the L1 level can
+reduce a processor's score in latency-sensitive tests, such as code
+compilation or database querying, by significant margins.</p>
+<p><strong>Core-to-Core Communication</strong> In modern multi-core
+processors, the L3 cache is often divided into segments. If a benchmark
+thread on Core 1 needs data stored in the L3 cache segment located near
+Core 8, the data must travel across the CPU's internal interconnect.
+This increases latency. Benchmarks that rely on heavy thread
+synchronization will score much lower on CPUs with high cross-core L3
+latency.</p>
+<h2 id="synthetic-vs-real-world-testing-discrepancies">Synthetic vs.
+Real-World Testing Discrepancies</h2>
+<p>The interplay between cache size and latency creates major
+discrepancies between synthetic benchmarks and real-world application
+tests.</p>
+<p><strong>Synthetic Micro-Benchmarks</strong> Many synthetic benchmarks
+use small, repetitive code loops designed to test raw arithmetic or
+floating-point performance. Because the code is tiny, it fits entirely
+inside the L1 and L2 caches. Consequently, the CPU achieves a near-100%
+cache hit rate, producing a theoretical maximum performance score that
+you will rarely see in daily computing.</p>
+<p><strong>Gaming Benchmarks</strong> Video games are heavily dependent
+on L3 cache size and latency. Game engines constantly reuse small
+batches of data for physics calculations, AI logic, and draw calls.
+Because this data is erratic and cannot be easily predicted by the CPU,
+keeping it in a large L3 cache prevents sudden drops in performance.
+CPUs with massive L3 caches consistently win gaming benchmarks,
+particularly in "1% low" frame rate metrics, because they eliminate the
+stutters caused by fetching data from RAM.</p>
+<p><strong>Rendering and Encoding Benchmarks</strong> Workloads like 3D
+rendering (e.g., Cinebench) and video encoding stream massive amounts of
+continuous data that vastly exceed the capacity of any L3 cache. Because
+the data is only used once and then discarded, a larger cache offers
+very little benefit. Instead, these benchmarks rely on hardware
+prefetchers to pull data straight from RAM into the L1/L2 cache just in
+time to be processed. In these tests, core count and clock speed dictate
+the final score, rendering L3 cache size mostly irrelevant.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/impact-of-cpu-cache-on-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

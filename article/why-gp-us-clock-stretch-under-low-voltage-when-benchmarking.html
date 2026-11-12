@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why GPUs Clock Stretch Under Low Voltage When Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores the phenomenon of clock stretching in modern graphics cards when subjected to low voltage during hardware benchmarking. It explains the mechanics behind why a GPU reduces its actual operating frequency to prevent system crashes when">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-gp-us-clock-stretch-under-low-voltage-when-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why GPUs Clock Stretch Under Low Voltage When Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-gp-us-clock-stretch-under-low-voltage-when-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the phenomenon of clock stretching in modern graphics cards when subjected to low voltage during hardware benchmarking. It explains the mechanics behind why a GPU reduces its actual operating frequency to prevent system crashes when" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-gpus-clock-stretch-under-low-voltage-when-benchmarking">Why
+GPUs Clock Stretch Under Low Voltage When Benchmarking</h1>
+<p>This article explores the phenomenon of clock stretching in modern
+graphics cards when subjected to low voltage during hardware
+benchmarking. It explains the mechanics behind why a GPU reduces its
+actual operating frequency to prevent system crashes when starved of
+power, the difference between reported and effective clock speeds, why
+heavy benchmark workloads trigger this protective behavior, and how
+users can detect and resolve the issue to restore true performance.</p>
+<h3 id="what-is-clock-stretching">What is Clock Stretching?</h3>
+<p>Clock stretching is a hardware-level protection mechanism found in
+modern GPUs and CPUs. When a graphics card experiences clock stretching,
+it temporarily extends the duration of its clock cycles without updating
+the software-reported frequency. As a result, monitoring software
+displays a high target clock speed, while the actual, effective clock
+speed drops significantly. The GPU looks like it is running fast, but
+its actual work output decreases.</p>
+<h3 id="the-physics-of-low-voltage">The Physics of Low Voltage</h3>
+<p>Graphics cards consist of billions of microscopic transistors that
+require a specific amount of electrical voltage to switch states rapidly
+and reliably. When enthusiasts undervolt a GPU to reduce temperatures
+and power consumption, they reduce the safety margin of this voltage. If
+the voltage is set too low for a given frequency, the electrical signal
+slows down. The transistors cannot switch fast enough to keep up with
+the target clock speed, which normally leads to calculation errors and
+an immediate system crash.</p>
+<h3 id="hardware-protection-against-crashes">Hardware Protection Against
+Crashes</h3>
+<p>In older hardware, insufficient voltage simply caused a driver crash
+or a black screen. Modern GPU architectures, however, utilize
+fast-acting adaptive clocking systems. The graphics card constantly
+monitors its own voltage grid at the microsecond level. When it detects
+that the voltage is too low to sustain the requested frequency, it
+instantly stretches the clock signal—essentially skipping clock ticks.
+This gives the transistors the extra nanoseconds they need to complete
+their operations safely, prioritizing system stability over raw
+performance.</p>
+<h3 id="why-benchmarking-exposes-the-issue">Why Benchmarking Exposes the
+Issue</h3>
+<p>Synthetic benchmarks are designed to push computer hardware to its
+absolute limits, creating massive, sustained loads and sudden spikes in
+power demand (transients). These heavy loads cause brief, microsecond
+drops in voltage known as "voltage droop" (Vdroop).</p>
+<p>If a GPU is already operating on a razor-thin voltage margin due to a
+user-applied undervolt, the heavy load of a benchmark will cause the
+voltage to droop below the minimum stable threshold. The GPU's internal
+sensors detect this dip and aggressively stretch the clock to survive
+the benchmark. Consequently, the benchmark finishes without crashing,
+leading the user to believe their undervolt is stable, even though the
+final benchmark score is anomalously low.</p>
+<h3 id="how-to-detect-and-fix-clock-stretching">How to Detect and Fix
+Clock Stretching</h3>
+<p>Because standard monitoring overlays only read the requested clock
+state, clock stretching often goes unnoticed until a user sees a drop in
+benchmark scores or frame rates.</p>
+<p>To detect it, you must use advanced hardware monitoring software that
+tracks both the <strong>Core Clock</strong> (what the GPU requests) and
+the <strong>Effective Clock</strong> (what the GPU actually achieves
+based on real work done). While running a heavy benchmark at 100% GPU
+load, compare these two numbers. If the Effective Clock is more than 25
+to 50 MHz lower than the Core Clock, the graphics card is clock
+stretching.</p>
+<p>To fix the issue and reclaim lost performance, you must restore the
+voltage-to-frequency balance. You can do this by either slightly
+increasing the voltage curve in your tuning software or lowering the
+target clock frequency until the Effective Clock closely matches the
+Core Clock under full load.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-gp-us-clock-stretch-under-low-voltage-when-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

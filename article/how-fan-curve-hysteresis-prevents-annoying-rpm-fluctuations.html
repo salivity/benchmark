@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Fan Curve Hysteresis Prevents Annoying RPM Fluctuations - benchmark</title>
+    <meta name="description" content="This article explains how fan curve hysteresis eliminates distracting fan speed fluctuations when benchmarking computer hardware. By introducing deliberate temperature and time delays to a cooling system&#39;s response, hysteresis prevents fans from rapidly r">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-fan-curve-hysteresis-prevents-annoying-rpm-fluctuations">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Fan Curve Hysteresis Prevents Annoying RPM Fluctuations - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-fan-curve-hysteresis-prevents-annoying-rpm-fluctuations" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how fan curve hysteresis eliminates distracting fan speed fluctuations when benchmarking computer hardware. By introducing deliberate temperature and time delays to a cooling system&#39;s response, hysteresis prevents fans from rapidly r" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-fan-curve-hysteresis-prevents-annoying-rpm-fluctuations">How
+Fan Curve Hysteresis Prevents Annoying RPM Fluctuations</h1>
+<p>This article explains how fan curve hysteresis eliminates distracting
+fan speed fluctuations when benchmarking computer hardware. By
+introducing deliberate temperature and time delays to a cooling system's
+response, hysteresis prevents fans from rapidly ramping up and down
+during brief, variable load spikes. You will learn the mechanics of how
+this feature works, why variable benchmarks trigger erratic fan
+behavior, and how to apply both temperature-based and time-based
+hysteresis to achieve a quieter, more stable PC cooling profile.</p>
+<h2 id="the-problem-with-variable-benchmarking">The Problem with
+Variable Benchmarking</h2>
+<p>When benchmarking computer hardware, tests often simulate real-world
+scenarios with rapidly changing workloads. A processor or graphics card
+might hit 100% utilization for a few seconds, drop to 20% while loading
+the next test asset, and immediately spike back to 100%.</p>
+<p>Modern dense silicon reacts to these load changes in milliseconds,
+causing core temperatures to jump and drop by 10°C to 15°C almost
+instantly. On a standard fan curve, cooling fans are programmed to react
+directly to these exact temperatures. Because the human ear is much more
+sensitive to changes in pitch than a steady noise, the resulting cycle
+of fans constantly revving up and slowing down becomes extremely
+distracting.</p>
+<h2 id="what-is-fan-curve-hysteresis">What is Fan Curve Hysteresis?</h2>
+<p>Hysteresis is a control mechanism that makes a system's output
+dependent not just on its current state, but also on its recent history.
+In PC cooling, it acts as a buffer zone that tells the fan controller to
+ignore minor or temporary changes in temperature. Instead of forcing the
+fan to follow a single, rigid line on a temperature-to-RPM graph,
+hysteresis creates two separate paths: one for when the hardware is
+heating up, and another for when it is cooling down.</p>
+<h2 id="how-temperature-based-hysteresis-works">How Temperature-Based
+Hysteresis Works</h2>
+<p>Temperature hysteresis stops RPM fluctuations by assigning a specific
+degree buffer to the trigger points on your fan curve.</p>
+<ul>
+<li><strong>Without Hysteresis:</strong> If your fan is set to jump from
+40% to 80% speed at 70°C, a variable benchmark that causes your CPU to
+hover rapidly between 69°C and 70°C will cause the fan to violently
+oscillate between those two speeds.</li>
+<li><strong>With Hysteresis:</strong> If you apply a 5°C hysteresis
+value, the fan will still ramp up to 80% speed the moment the hardware
+hits 70°C. However, it will not drop back down to 40% speed until the
+temperature falls all the way to 65°C.</li>
+</ul>
+<p>This 5-degree cushion absorbs the rapid thermal fluctuations of a
+variable benchmark, keeping the fan locked at a steady, predictable RPM
+until the workload genuinely finishes.</p>
+<h2 id="how-time-based-hysteresis-works">How Time-Based Hysteresis
+Works</h2>
+<p>Many motherboard BIOS interfaces and fan control programs also
+utilize time-based hysteresis, often labeled as "Step-Up/Step-Down"
+times or "Fan Smoothing." This method uses a timer instead of a
+temperature buffer to prevent sudden RPM shifts.</p>
+<ul>
+<li><strong>Step-Up Delay:</strong> If a benchmark causes a sudden,
+half-second temperature spike, a 2-second step-up delay tells the fan to
+wait before reacting. If the temperature drops back down before the two
+seconds expire, the fan ignores the spike entirely and maintains its
+current speed.</li>
+<li><strong>Step-Down Delay:</strong> When a benchmark briefly pauses
+between scenes or tests, hardware temperatures plummet instantly. A
+4-second step-down delay forces the fans to maintain their current high
+speed for four seconds before slowing down. This prevents the fans from
+spinning down during a loading screen only to immediately roar back to
+life when the next benchmark test begins. It also helps clear residual
+heat from the heatsink fins.</li>
+</ul>
+<h2 id="ideal-settings-for-benchmarking">Ideal Settings for
+Benchmarking</h2>
+<p>To eliminate annoying RPM fluctuations during heavy testing without
+risking thermal throttling, apply a combination of both hysteresis
+methods in your BIOS or fan control software:</p>
+<ol type="1">
+<li><strong>Temperature Hysteresis:</strong> Set a buffer between
+<strong>3°C and 5°C</strong>. This is wide enough to catch minor
+benchmark fluctuations without letting the hardware overheat.</li>
+<li><strong>Step-Up Time:</strong> Set a delay of <strong>1 to 2
+seconds</strong>. This filters out instantaneous micro-spikes while
+still allowing the fans to react quickly to sustained heavy loads.</li>
+<li><strong>Step-Down Time:</strong> Set a delay of <strong>3 to 5
+seconds</strong>. This ensures steady, uninterrupted airflow and
+acoustic stability between variable phases of a benchmark.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-fan-curve-hysteresis-prevents-annoying-rpm-fluctuations';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

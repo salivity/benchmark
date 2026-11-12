@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How the Silicon Lottery Impacts Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores how the &quot;silicon lottery&quot; causes performance variations between identical computer hardware models during benchmarking. By examining the microscopic imperfections inherent in semiconductor manufacturing, this piece explains how sligh">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-the-silicon-lottery-impacts-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How the Silicon Lottery Impacts Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-the-silicon-lottery-impacts-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how the &quot;silicon lottery&quot; causes performance variations between identical computer hardware models during benchmarking. By examining the microscopic imperfections inherent in semiconductor manufacturing, this piece explains how sligh" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-the-silicon-lottery-impacts-hardware-benchmarking">How the
+Silicon Lottery Impacts Hardware Benchmarking</h1>
+<p>This article explores how the "silicon lottery" causes performance
+variations between identical computer hardware models during
+benchmarking. By examining the microscopic imperfections inherent in
+semiconductor manufacturing, this piece explains how slight differences
+in voltage requirements, thermal output, automatic boost algorithms, and
+overclocking potential lead to varying benchmark scores for the exact
+same processor or graphics card.</p>
+<h2 id="the-manufacturing-reality">The Manufacturing Reality</h2>
+<p>Microprocessors, such as CPUs and GPUs, are printed onto circular
+silicon wafers using a complex process called photolithography. Because
+this happens at a nanometer scale, it is physically impossible to create
+two chips that are 100% identical. Microscopic impurities in the
+silicon, slight variations in the laser etching process, and a chip's
+physical location on the wafer all create tiny structural
+differences.</p>
+<p>Manufacturers test these chips and sort them into categories—a
+process called "binning." So long as a chip meets the minimum threshold
+for a specific model (for example, an Intel Core i9 or an Nvidia RTX
+4080), it is packaged and sold as that model. However, some chips barely
+pass the threshold, while others exceed it significantly. Buying a piece
+of hardware and hoping for a top-performing chip is known as playing the
+silicon lottery.</p>
+<h2 id="voltage-requirements-and-power-leakage">Voltage Requirements and
+Power Leakage</h2>
+<p>The primary way the silicon lottery creates benchmarking variance is
+through voltage efficiency. Every transistor on a chip leaks a small
+amount of electrical current. Because of microscopic imperfections, some
+chips have higher electrical leakage than others.</p>
+<p>A higher-quality silicon die requires less voltage to hit a specific
+clock speed (frequency) stably. Conversely, a lower-quality die of the
+exact same model will demand more voltage to achieve that exact same
+clock speed.</p>
+<h2 id="thermal-output-and-dynamic-boost-clocks">Thermal Output and
+Dynamic Boost Clocks</h2>
+<p>In the past, processors ran at fixed speeds, meaning two identical
+CPUs would score the same in a benchmark regardless of silicon quality,
+provided neither overheated. Today, modern CPUs and GPUs use dynamic
+boosting algorithms (such as Intel Turbo Boost, AMD Precision Boost, and
+Nvidia GPU Boost) that automatically increase clock speeds until the
+chip hits a power limit or a temperature limit.</p>
+<p>This is where out-of-the-box benchmarking variance occurs:</p>
+<ol type="1">
+<li><strong>Heat Generation:</strong> A chip that won the silicon
+lottery uses less voltage. Less voltage results in lower power
+consumption and less heat generation.</li>
+<li><strong>Sustained Clocks:</strong> Because the superior chip runs
+cooler and uses less power, the dynamic boost algorithm allows it to
+boost to higher frequencies and hold those frequencies for longer
+periods during a heavy benchmark.</li>
+<li><strong>Score Discrepancy:</strong> A "loser" chip in the silicon
+lottery will require more voltage, hit its thermal or power limit
+faster, and throttle its speeds down. Consequently, two identical
+systems running the same benchmark at stock settings can yield scores
+that differ by 1% to 5%.</li>
+</ol>
+<h2 id="overclocking-headroom">Overclocking Headroom</h2>
+<p>When hardware enthusiasts and reviewers benchmark components using
+manual overclocks, the variance caused by the silicon lottery becomes
+massive. Overclocking involves manually pushing a chip past its factory
+limits to see how fast it can compute data before crashing.</p>
+<p>A "golden sample" (a chip in the top percentile of silicon quality)
+might easily achieve an extra 300 MHz on the core clock while staying at
+safe temperatures. A poor sample of the exact same model might crash if
+pushed just 50 MHz past its factory settings. In competitive
+benchmarking, this creates a wide performance gap between identical
+hardware models.</p>
+<h2 id="memory-controller-variance">Memory Controller Variance</h2>
+<p>The silicon lottery does not just affect the main processing cores;
+it also affects the Integrated Memory Controller (IMC) inside a CPU, or
+the VRAM chips on a graphics card.</p>
+<p>When benchmarking, system memory (RAM) speed heavily influences the
+final score. A CPU with a strong IMC can run ultra-fast RAM profiles
+stably, boosting benchmark results. A CPU of the exact same model with a
+weak IMC might fail to boot with fast RAM, forcing the user to run
+slower memory speeds, which directly results in lower benchmark
+scores.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-the-silicon-lottery-impacts-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

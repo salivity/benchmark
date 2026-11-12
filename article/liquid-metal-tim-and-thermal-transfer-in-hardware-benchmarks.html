@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Metal TIM and Thermal Transfer in Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores how liquid metal thermal interface material (TIM) revolutionizes heat dissipation during computer hardware benchmarking. By replacing conventional silicone-based thermal pastes with gallium-based liquid metal alloys, enthusiasts and">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/liquid-metal-tim-and-thermal-transfer-in-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Liquid Metal TIM and Thermal Transfer in Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/liquid-metal-tim-and-thermal-transfer-in-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how liquid metal thermal interface material (TIM) revolutionizes heat dissipation during computer hardware benchmarking. By replacing conventional silicone-based thermal pastes with gallium-based liquid metal alloys, enthusiasts and" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="liquid-metal-tim-and-thermal-transfer-in-hardware-benchmarks">Liquid
+Metal TIM and Thermal Transfer in Hardware Benchmarks</h1>
+<p>This article explores how liquid metal thermal interface material
+(TIM) revolutionizes heat dissipation during computer hardware
+benchmarking. By replacing conventional silicone-based thermal pastes
+with gallium-based liquid metal alloys, enthusiasts and professionals
+can achieve dramatically higher thermal transfer rates. The following
+sections break down the science of liquid metal conductivity, its impact
+on CPU and GPU clock speeds under synthetic loads, and the physical
+mechanics that allow it to prevent thermal throttling during extreme
+benchmarking sessions.</p>
+<h3 id="the-science-of-thermal-conductivity">The Science of Thermal
+Conductivity</h3>
+<p>The primary metric for any thermal interface material is its thermal
+conductivity, measured in Watts per meter-Kelvin (W/mK). Standard
+non-conductive thermal pastes, which use silicone or zinc oxide mixed
+with ceramic, carbon, or aluminum particles, typically offer a thermal
+conductivity between 4 and 12 W/mK.</p>
+<p>Liquid metal is a eutectic alloy consisting mostly of gallium,
+indium, and tin. Because it is purely metallic, it boasts a thermal
+conductivity ranging from 70 to 80 W/mK. This massive increase in
+conductivity drastically lowers the thermal resistance between the heat
+source and the heatsink, fundamentally changing the speed at which heat
+can exit the processor.</p>
+<h3 id="mechanics-of-heat-transfer">Mechanics of Heat Transfer</h3>
+<p>At a microscopic level, the surfaces of a processor and a cooler's
+baseplate are rough and uneven. These imperfections trap air, which is a
+terrible conductor of heat. While standard thermal paste fills these
+gaps, the paste itself becomes a bottleneck when a processor generates
+sudden, massive heat spikes during a benchmark.</p>
+<p>Liquid metal has a much lower viscosity and "wets" the surfaces it
+touches, filling microscopic valleys much more effectively than thick
+pastes. This creates a near-seamless metal-to-metal bond. Consequently,
+the thermal transfer rate becomes nearly instantaneous. Instead of heat
+pooling in the silicon while waiting to pass through a sluggish paste,
+the heat dumps straight into the cooler's cold plate the moment the
+benchmark begins.</p>
+<h3 id="direct-die-cooling-and-delidding">Direct-Die Cooling and
+Delidding</h3>
+<p>Liquid metal changes thermal transfer rates most noticeably when
+applied directly to the bare silicon die.</p>
+<p>For GPUs, which do not have an integrated heat spreader (IHS),
+applying liquid metal directly to the graphics die is straightforward
+and usually drops load temperatures by 5°C to 15°C.</p>
+<p>For CPUs, there are two transfer points: from the silicon die to the
+IHS, and from the IHS to the CPU cooler. Applying liquid metal only on
+top of the IHS yields minor improvements (1°C to 3°C) because the
+factory TIM underneath the IHS remains a bottleneck. To maximize thermal
+transfer, benchmarkers "delid" the CPU—removing the IHS to apply liquid
+metal directly to the silicon. This modification drastically accelerates
+heat transfer, routinely dropping CPU temperatures by 10°C to 20°C under
+synthetic benchmarking loads.</p>
+<h3 id="impact-on-benchmarking-performance">Impact on Benchmarking
+Performance</h3>
+<p>Benchmarking software pushes hardware to its absolute limits,
+generating far more heat than standard gaming or workstation tasks.
+Modern CPUs and GPUs utilize automated boosting algorithms that
+dynamically adjust clock speeds based on available thermal headroom.</p>
+<p>When using standard paste, a processor might instantly hit its
+thermal limit (often 90°C to 100°C) during a benchmark and immediately
+lower its clock speed and voltage to prevent damage—a process known as
+thermal throttling.</p>
+<p>Because liquid metal removes heat from the die at a much faster rate,
+it keeps the silicon cooler under the same electrical load. This changes
+benchmarking outcomes in three ways:</p>
+<ol type="1">
+<li><strong>Higher Sustained Boost Clocks:</strong> The hardware stays
+below its thermal throttle point, maintaining peak factory boost speeds
+for the entire duration of the benchmark.</li>
+<li><strong>Increased Overclocking Headroom:</strong> The 10°C to 20°C
+temperature drop gives overclockers the thermal budget needed to pump
+more voltage into the chip, achieving higher manual clock speeds.</li>
+<li><strong>Efficiency in Water Cooling:</strong> Liquid metal transfers
+heat so fast that it stops the processor die from overheating before the
+liquid in a custom water-cooling loop has even had a chance to warm up,
+utilizing the radiator's capacity much more efficiently.</li>
+</ol>
+<h3 id="material-compatibility-and-risks">Material Compatibility and
+Risks</h3>
+<p>While liquid metal drastically improves thermal transfer rates, its
+chemical properties introduce strict limitations.</p>
+<p>Gallium, the primary component in liquid metal, destroys aluminum
+through a chemical reaction that compromises the structural integrity of
+the metal. Therefore, liquid metal can never be used with aluminum
+heatsinks. It is compatible with bare copper, though the gallium will
+slowly alloy with the copper over time, leaving a dry stain that
+requires reapplication. The ideal surface for liquid metal is
+nickel-plated copper, which resists gallium absorption and maintains
+peak thermal transfer rates long-term.</p>
+<p>Additionally, liquid metal is 100% electrically conductive. Unlike
+standard pastes, if a single drop of liquid metal spills onto the
+exposed capacitors of a CPU or GPU during benchmarking preparation, it
+will cause a short circuit and permanently destroy the hardware. Users
+must insulate surrounding components with conformal coating or
+electrical tape before application.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/liquid-metal-tim-and-thermal-transfer-in-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

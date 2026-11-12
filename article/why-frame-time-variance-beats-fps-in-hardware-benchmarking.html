@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Frame Time Variance Beats FPS in Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores why frame time variance is a significantly better metric than traditional frames per second (FPS) counters when benchmarking computer hardware. While a standard FPS counter only provides a broad average of performance over a full sec">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-frame-time-variance-beats-fps-in-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Frame Time Variance Beats FPS in Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-frame-time-variance-beats-fps-in-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores why frame time variance is a significantly better metric than traditional frames per second (FPS) counters when benchmarking computer hardware. While a standard FPS counter only provides a broad average of performance over a full sec" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-frame-time-variance-beats-fps-in-hardware-benchmarking">Why
+Frame Time Variance Beats FPS in Hardware Benchmarking</h1>
+<p>This article explores why frame time variance is a significantly
+better metric than traditional frames per second (FPS) counters when
+benchmarking computer hardware. While a standard FPS counter only
+provides a broad average of performance over a full second, measuring
+the exact milliseconds between consecutive frames reveals
+micro-stuttering, hidden hardware bottlenecks, and the true visual
+smoothness of a system. Understanding this distinction allows hardware
+testers and consumers to accurately assess real-world computing
+performance rather than relying on flawed averages.</p>
+<h2 id="the-flaw-with-simple-fps-counters">The Flaw with Simple FPS
+Counters</h2>
+<p>Frames per second (FPS) is a measurement of how many total images a
+computer can render and display in one second. Because it summarizes a
+full second of work into a single number, it acts as an average.
+Averages inherently hide extremes.</p>
+<p>For a game running at a locked 60 FPS, the hardware should ideally
+deliver one frame every 16.67 milliseconds (1000 milliseconds in a
+second divided by 60 frames). However, a simple FPS counter only cares
+that 60 frames were completed before the one-second timer expired. It
+does not care <em>when</em> those frames were delivered within that
+second.</p>
+<h2 id="how-frame-time-variance-works">How Frame Time Variance
+Works</h2>
+<p>Frame time measures the exact duration, in milliseconds, it takes to
+render a single frame. Frame time variance measures the difference in
+rendering time between one frame and the very next frame.</p>
+<p>To understand why this matters, consider this scenario: A computer
+renders 59 frames in just 500 milliseconds (about 8.47ms per frame).
+Suddenly, the system hits a snag, and the 60th frame takes the remaining
+500 milliseconds to render.</p>
+<ul>
+<li><strong>What the FPS counter says:</strong> 60 FPS. The benchmark
+looks flawless.</li>
+<li><strong>What the user actually sees:</strong> Smooth motion followed
+by a massive, jarring half-second freeze.</li>
+<li><strong>What frame time variance shows:</strong> A jump from 8.47ms
+to 500ms, immediately exposing a catastrophic performance issue.</li>
+</ul>
+<p>Consistent frame times are required for the human eye to perceive
+smooth motion. Moving at a steady 45 FPS with near-zero frame time
+variance (every frame taking roughly 22.2ms) feels much smoother to a
+user than running at an average of 90 FPS where the frame times wildly
+fluctuate between 5ms and 50ms.</p>
+<h2 id="exposing-micro-stuttering">Exposing Micro-Stuttering</h2>
+<p>Micro-stuttering is the phenomenon where a game or application feels
+choppy despite reporting a high frame rate. This occurs when the pacing
+of frames is uneven.</p>
+<p>Simple FPS counters are completely blind to micro-stuttering because
+the stutters happen in fractions of a second—often lasting only 30 to 50
+milliseconds. By tracking the millisecond delta between consecutive
+frames, benchmarkers can graph these spikes. A flat frame time graph
+indicates a buttery-smooth experience, while a jagged graph resembling a
+heart monitor proves the system is struggling to pace its output,
+regardless of how high the average FPS might be.</p>
+<h2 id="pinpointing-specific-hardware-bottlenecks">Pinpointing Specific
+Hardware Bottlenecks</h2>
+<p>Measuring frame time variance is essential for diagnosing which
+specific component in a computer is failing to keep up. Different parts
+of a PC affect performance metrics in different ways:</p>
+<ul>
+<li><strong>Graphics Card (GPU):</strong> The GPU primarily dictates the
+average FPS. If a GPU is weak, every frame takes longer to draw,
+resulting in consistently high frame times (low FPS), but not
+necessarily high variance.</li>
+<li><strong>Processor (CPU) and RAM:</strong> The CPU prepares frame
+data before handing it to the GPU. If the CPU gets overloaded by
+background tasks, complex game physics, or slow system memory, it fails
+to feed the GPU on time. This causes sudden, sharp spikes in frame time
+variance.</li>
+<li><strong>Storage (SSD/HDD):</strong> As a user moves through a
+digital environment, the system loads new assets from the storage drive.
+Slow storage causes brief pauses in frame delivery, instantly visible on
+a frame time graph as isolated spikes.</li>
+</ul>
+<p>If you only benchmark using an FPS counter, a CPU bottleneck or a
+slow hard drive might only lower the average FPS by two or three frames,
+hiding the defect. A frame time variance chart will immediately
+highlight these hardware limitations as massive millisecond spikes.</p>
+<h2 id="the-connection-to-1-and-01-lows">The Connection to 1% and 0.1%
+Lows</h2>
+<p>Because raw frame time graphs can be difficult to summarize in a
+single chart, modern hardware reviewers convert frame time data into "1%
+low" and "0.1% low" FPS metrics.</p>
+<p>To get the 1% low, benchmarking software takes all the individual
+frame times recorded during a test, isolates the worst 1% of those
+frames (the longest millisecond delays), and converts that specific
+group back into an FPS figure. If a processor has a high average FPS of
+120, but a 1% low of 30 FPS, it means the frame time variance is high
+and the user will experience noticeable stuttering. This widely accepted
+industry standard is only possible by measuring individual frame times
+first.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-frame-time-variance-beats-fps-in-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

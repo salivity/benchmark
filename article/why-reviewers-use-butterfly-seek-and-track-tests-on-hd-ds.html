@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Reviewers Use Butterfly Seek and Track Tests on HDDs - benchmark</title>
+    <meta name="description" content="When benchmarking mechanical hard disk drives (HDDs), hardware reviewers rely on specialized evaluations like outer-to-inner track tests and butterfly seek tests to measure the physical limitations of the drive. Unlike solid-state drives (SSDs), which acc">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-reviewers-use-butterfly-seek-and-track-tests-on-hd-ds">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Reviewers Use Butterfly Seek and Track Tests on HDDs - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-reviewers-use-butterfly-seek-and-track-tests-on-hd-ds" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When benchmarking mechanical hard disk drives (HDDs), hardware reviewers rely on specialized evaluations like outer-to-inner track tests and butterfly seek tests to measure the physical limitations of the drive. Unlike solid-state drives (SSDs), which acc" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-reviewers-use-butterfly-seek-and-track-tests-on-hdds">Why
+Reviewers Use Butterfly Seek and Track Tests on HDDs</h1>
+<p>When benchmarking mechanical hard disk drives (HDDs), hardware
+reviewers rely on specialized evaluations like outer-to-inner track
+tests and butterfly seek tests to measure the physical limitations of
+the drive. Unlike solid-state drives (SSDs), which access data
+electronically with uniform speed, HDDs rely on spinning platters and
+moving mechanical read/write heads. This article explains how
+outer-to-inner track tests reveal how a drive slows down as it fills up
+with data, and how butterfly seek tests push the drive's mechanical
+actuator arm to its absolute limits to measure worst-case access
+times.</p>
+<h3 id="the-mechanics-of-a-hard-drive">The Mechanics of a Hard
+Drive</h3>
+<p>To understand why these specific tests are necessary, you must first
+understand the physical layout of an HDD. Inside the drive, data is
+stored on circular magnetic platters that spin at a fixed speed,
+typically 5,400 or 7,200 rotations per minute (RPM). An actuator arm
+moves a read/write head across the radius of the spinning platter to
+access data stored on concentric circles called tracks. Because data
+must be physically located by moving parts, the geographical location of
+that data on the platter directly impacts performance.</p>
+<h3 id="why-reviewers-use-outer-to-inner-track-tests">Why Reviewers Use
+Outer-to-Inner Track Tests</h3>
+<p>Reviewers use the outer-to-inner track test to measure a hard drive's
+sequential read and write speeds across its entire capacity. Hard drives
+always start writing data on the outermost tracks of the platter and
+work their way toward the center hub as the drive fills up.</p>
+<p>Because the platter spins at a constant RPM, the outer edge of the
+platter travels much faster than the inner edge. Consequently, more
+surface area—and therefore more data—passes beneath the read/write head
+per second on the outer tracks than on the inner tracks.</p>
+<p>By testing from the outer track to the inner track, reviewers can
+demonstrate two critical metrics:</p>
+<ul>
+<li><strong>Maximum Speed:</strong> The drive's peak performance, which
+occurs when the drive is mostly empty and utilizing the fast outer
+tracks.</li>
+<li><strong>Speed Degradation:</strong> How much the drive slows down as
+it reaches full capacity and is forced to use the slower inner tracks. A
+drive that starts at 200 MB/s on the outside might drop to 90 MB/s on
+the inside.</li>
+</ul>
+<p>Without this test, manufacturers could simply advertise the peak
+speed of the outer tracks, misleading consumers about how the drive
+performs when it is mostly full.</p>
+<h3 id="why-reviewers-use-butterfly-seek-tests">Why Reviewers Use
+Butterfly Seek Tests</h3>
+<p>While track tests measure sequential data transfer rates, the
+butterfly seek test measures access time—how many milliseconds it takes
+for the read/write head to physically move from one location to
+another.</p>
+<p>In a butterfly seek test, the benchmarking software forces the
+read/write head to read the outermost track, then immediately jump to
+the innermost track. Next, it jumps to the second outermost track, then
+the second innermost track, repeating this process until the head meets
+in the middle of the platter. When plotted on a graph, this movement
+pattern resembles the wings of a butterfly.</p>
+<p>Reviewers use this test for three main reasons:</p>
+<ul>
+<li><strong>Worst-Case Latency:</strong> Forcing the head to travel
+across the entire width of the platter measures the maximum possible
+delay a user will experience when loading fragmented data.</li>
+<li><strong>Mechanical Precision:</strong> It tests the physical speed
+of the actuator arm and its ability to quickly stop and settle on a
+microscopic track without overshooting it.</li>
+<li><strong>Acoustics and Thermals:</strong> Because the actuator arm is
+violently thrashing back and forth, this test generates the maximum
+amount of vibration, heat, and noise, allowing reviewers to measure how
+loud and hot the drive gets under extreme stress.</li>
+</ul>
+<h3 id="conclusion">Conclusion</h3>
+<p>Single-number benchmarks are not enough to evaluate mechanical
+storage. By combining outer-to-inner track tests with butterfly seek
+tests, hardware reviewers map out the complete physical profile of a
+hard drive. These tests strip away marketing claims and show consumers
+the exact best-case, worst-case, and average performance they can expect
+over the lifespan of the hardware.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-reviewers-use-butterfly-seek-and-track-tests-on-hd-ds';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

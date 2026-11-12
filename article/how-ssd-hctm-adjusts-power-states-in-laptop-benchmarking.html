@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How SSD HCTM Adjusts Power States in Laptop Benchmarking - benchmark</title>
+    <meta name="description" content="This article explains how Solid State Drive (SSD) Host-Controlled Thermal Management (HCTM) dynamically adjusts NVMe power states during intensive laptop hardware benchmarking. It covers the mechanics of operational NVMe power states, the role of host-def">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-ssd-hctm-adjusts-power-states-in-laptop-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How SSD HCTM Adjusts Power States in Laptop Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-ssd-hctm-adjusts-power-states-in-laptop-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how Solid State Drive (SSD) Host-Controlled Thermal Management (HCTM) dynamically adjusts NVMe power states during intensive laptop hardware benchmarking. It covers the mechanics of operational NVMe power states, the role of host-def" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ssd-hctm-adjusts-power-states-in-laptop-benchmarking">How
+SSD HCTM Adjusts Power States in Laptop Benchmarking</h1>
+<p>This article explains how Solid State Drive (SSD) Host-Controlled
+Thermal Management (HCTM) dynamically adjusts NVMe power states during
+intensive laptop hardware benchmarking. It covers the mechanics of
+operational NVMe power states, the role of host-defined temperature
+thresholds, and how a laptop’s system firmware uses these metrics to
+balance peak storage performance with thermal safety in a confined
+mobile chassis.</p>
+<h2 id="what-is-host-controlled-thermal-management-hctm">What is
+Host-Controlled Thermal Management (HCTM)?</h2>
+<p>Introduced in the NVMe 1.3 specification, Host-Controlled Thermal
+Management (HCTM) is a feature that allows the host system (the laptop's
+BIOS and operating system) to dictate how an SSD manages its
+temperature. Instead of relying solely on the SSD's internal firmware to
+panic-throttle when it gets too hot, the laptop sets two specific
+temperature thresholds on the drive:</p>
+<ul>
+<li><strong>Thermal Management Temperature 1 (TMT1):</strong> The
+threshold for light thermal throttling.</li>
+<li><strong>Thermal Management Temperature 2 (TMT2):</strong> The
+threshold for heavy thermal throttling.</li>
+</ul>
+<h2 id="understanding-nvme-operational-power-states">Understanding NVMe
+Operational Power States</h2>
+<p>To control heat, HCTM forces the SSD to transition between different
+NVMe Power States (PS). During an active hardware benchmark, the SSD
+only uses operational power states, as non-operational states (PS3 and
+PS4) are reserved for idle or sleep modes.</p>
+<ul>
+<li><strong>PS0 (Maximum Performance):</strong> The drive operates at
+its highest power limit (often 5W to 9W+ in laptops) and delivers
+maximum read and write speeds.</li>
+<li><strong>PS1 (Light Throttling):</strong> Power consumption is capped
+(typically around 3W to 4W). Performance drops moderately to slow heat
+generation.</li>
+<li><strong>PS2 (Heavy Throttling):</strong> Power consumption is
+strictly limited (often 1.5W to 2.5W). Performance is significantly
+reduced to actively cool the drive while maintaining basic I/O
+functionality.</li>
+</ul>
+<h2 id="how-hctm-adjusts-power-states-during-a-benchmark">How HCTM
+Adjusts Power States During a Benchmark</h2>
+<p>Laptop benchmarking tools—such as CrystalDiskMark, 3DMark Storage, or
+PCMark—subject the SSD to sustained read and write queues. In a thin
+laptop with limited airflow, this causes rapid heat buildup. HCTM
+manages this stress in four distinct phases:</p>
+<h3 id="1-benchmark-initiation-ps0">1. Benchmark Initiation (PS0)</h3>
+<p>When the benchmark begins, the SSD is in <strong>PS0</strong>. The
+controller and NAND flash draw maximum power to deliver peak sequential
+and random I/O speeds. Because laptops often share heat pipes or thermal
+zones between the CPU, GPU, and SSD, the ambient temperature inside the
+chassis rises quickly alongside the SSD's composite temperature.</p>
+<h3 id="2-crossing-the-tmt1-threshold-transition-to-ps1">2. Crossing the
+TMT1 Threshold (Transition to PS1)</h3>
+<p>As sustained writes continue, the SSD's temperature sensor hits the
+host-defined <strong>TMT1</strong> limit (commonly set between 70°C and
+75°C by laptop manufacturers). HCTM immediately commands the SSD
+controller to drop from PS0 to <strong>PS1</strong>. The drive reduces
+its clock speeds and limits the number of active NAND channels. During
+the benchmark, you will see a noticeable plateau or a slight dip in
+megabytes per second (MB/s) and IOPS, preventing the drive from
+overheating further.</p>
+<h3 id="3-crossing-the-tmt2-threshold-transition-to-ps2">3. Crossing the
+TMT2 Threshold (Transition to PS2)</h3>
+<p>If the benchmark is exceptionally long or the laptop’s cooling system
+is saturated by simultaneous CPU/GPU tests, PS1 may not be enough to
+stop the temperature from rising. Once the SSD hits the
+<strong>TMT2</strong> limit (often set between 78°C and 83°C), HCTM
+forces the drive into <strong>PS2</strong>. Power draw is slashed
+drastically. Benchmark speeds will plummet—sometimes below SATA SSD
+levels—to ensure the drive does not reach its critical shutdown
+temperature (usually 85°C+), which would otherwise crash the benchmark
+or cause data corruption.</p>
+<h3 id="4-thermal-hysteresis-returning-to-ps0">4. Thermal Hysteresis
+(Returning to PS0)</h3>
+<p>HCTM uses a mechanism called hysteresis to prevent the SSD from
+rapidly bouncing between power states. If the drive is in PS2, it will
+not immediately return to PS1 the moment it drops 1°C below the TMT2
+threshold. Instead, the drive must cool down by a predetermined margin
+(often 3°C to 5°C below the threshold) before HCTM allows it to step
+back up to PS1, and eventually PS0. This usually occurs during the brief
+idle pauses between different phases of a benchmark suite.</p>
+<h2 id="why-laptops-rely-on-hctm-over-autonomous-throttling">Why Laptops
+Rely on HCTM Over Autonomous Throttling</h2>
+<p>Without HCTM, an SSD relies on autonomous thermal throttling, which
+only triggers when the drive itself is about to suffer physical damage.
+In a laptop, waiting that long is dangerous. A blazing-hot SSD running
+in PS0 can heat-soak the nearby battery, warp thin plastic chassis
+components, or make the laptop's palm rest uncomfortably hot.</p>
+<p>By using HCTM to preemptively step down to PS1 and PS2 during heavy
+benchmarking, the laptop sacrifices peak synthetic storage scores in
+favor of system-wide thermal stability and hardware longevity.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-ssd-hctm-adjusts-power-states-in-laptop-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

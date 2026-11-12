@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daisy Chain vs T-Topology: 4-DIMM Overclocking Explained - benchmark</title>
+    <meta name="description" content="This article examines how motherboard memory trace layouts—specifically Daisy Chain and T-Topology—impact the stability and performance of 4-DIMM RAM configurations during hardware overclocking and benchmarking. It breaks down the physical routing of elec">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/daisy-chain-vs-t-topology-4-dimm-overclocking-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Daisy Chain vs T-Topology: 4-DIMM Overclocking Explained - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/daisy-chain-vs-t-topology-4-dimm-overclocking-explained" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article examines how motherboard memory trace layouts—specifically Daisy Chain and T-Topology—impact the stability and performance of 4-DIMM RAM configurations during hardware overclocking and benchmarking. It breaks down the physical routing of elec" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="daisy-chain-vs-t-topology-4-dimm-overclocking-explained">Daisy
+Chain vs T-Topology: 4-DIMM Overclocking Explained</h1>
+<p>This article examines how motherboard memory trace
+layouts—specifically Daisy Chain and T-Topology—impact the stability and
+performance of 4-DIMM RAM configurations during hardware overclocking
+and benchmarking. It breaks down the physical routing of electrical
+signals between the CPU and memory slots, explains why T-Topology is
+superior for four-stick overclocking, details why Daisy Chain dominates
+two-stick setups, and highlights how these designs influence final
+benchmark scores.</p>
+<h2 id="understanding-motherboard-trace-topology">Understanding
+Motherboard Trace Topology</h2>
+<p>Memory trace topology refers to the physical wiring layout inside the
+motherboard's PCB that connects the CPU’s Integrated Memory Controller
+(IMC) to the RAM (DIMM) slots. On standard mainstream motherboards with
+four RAM slots operating in a dual-channel configuration, two slots are
+assigned to Channel A and two slots are assigned to Channel B.</p>
+<p>How the motherboard manufacturer wires the two slots within a single
+channel determines the topology. At extreme overclocking frequencies,
+the physical length of these wires (traces) dictates signal integrity,
+timing, and stability.</p>
+<h2 id="daisy-chain-topology">Daisy Chain Topology</h2>
+<p>In a Daisy Chain layout, the memory trace runs from the CPU directly
+to the first slot in the channel, and then continues from that first
+slot to the second slot.</p>
+<h3 id="how-it-affects-2-dimm-setups">How It Affects 2-DIMM Setups</h3>
+<p>Daisy Chain is optimized for two sticks of RAM. When you install two
+DIMMs in the furthest slots from the CPU (usually slots A2 and B2), the
+electrical signal travels to the very end of the trace and terminates
+directly into the RAM stick. This minimizes "signal reflection"—a
+phenomenon where electrical signals bounce back down unused wires and
+cause data corruption. Because of this clean signal path, Daisy Chain
+motherboards can achieve massive frequency overclocks using just two
+sticks.</p>
+<h3 id="how-it-affects-4-dimm-overclocking">How It Affects 4-DIMM
+Overclocking</h3>
+<p>When you populate all four slots on a Daisy Chain motherboard,
+overclocking headroom drops significantly. Because the first slot is
+physically closer to the CPU than the second slot, the signals arrive at
+the two RAM sticks at slightly different times. The CPU's memory
+controller struggles to synchronize these mismatched timings at high
+speeds, resulting in instability, blue screens, or a failure to boot
+(POST) when pushing for high benchmark frequencies.</p>
+<h2 id="t-topology">T-Topology</h2>
+<p>In a T-Topology layout, the memory trace runs from the CPU and splits
+into two equal-length branches, forming a "T" shape. Each branch
+connects to one of the two slots in the memory channel.</p>
+<h3 id="how-it-affects-2-dimm-setups-1">How It Affects 2-DIMM
+Setups</h3>
+<p>T-Topology performs poorly compared to Daisy Chain when only two
+sticks of RAM are used. Because the trace splits equally, leaving one
+slot empty creates an open-ended wire (a stub). Signals travel down this
+empty branch, hit the dead end, and reflect back into the active branch.
+This signal interference limits how high you can overclock two sticks of
+RAM.</p>
+<h3 id="how-it-affects-4-dimm-overclocking-1">How It Affects 4-DIMM
+Overclocking</h3>
+<p>T-Topology is the gold standard for 4-DIMM overclocking. Because the
+traces going to both slots in a channel are the exact same length, the
+electrical signals from the CPU arrive at all four RAM sticks
+simultaneously. Furthermore, with all four slots populated, there are no
+empty trace ends to cause signal reflection. This balanced electrical
+environment allows the CPU's memory controller to push all four sticks
+to much higher frequencies than a Daisy Chain board could manage.</p>
+<h2 id="impact-on-hardware-benchmarking">Impact on Hardware
+Benchmarking</h2>
+<p>In competitive hardware benchmarking, memory performance often
+dictates the final score in CPU-bound tests like Geekbench, SuperPi,
+AIDA64, and 3DMark Time Spy.</p>
+<h3 id="the-rank-interleaving-advantage">The Rank Interleaving
+Advantage</h3>
+<p>Benchmarking enthusiasts often want to run four sticks of Single-Rank
+RAM to achieve a "Dual-Rank" configuration per channel. Dual-Rank setups
+allow for rank interleaving, where the memory controller can access one
+rank while the other is refreshing. This provides a significant
+performance boost at any given frequency.</p>
+<p>On a T-Topology motherboard, an overclocker can run four Single-Rank
+DIMMs at very high frequencies, combining the bandwidth advantage of
+high clock speeds with the efficiency boost of rank interleaving.</p>
+<h3 id="the-modern-motherboard-landscape">The Modern Motherboard
+Landscape</h3>
+<p>Despite the advantages of T-Topology for 4-DIMM configurations, the
+vast majority of modern DDR4 and almost all DDR5 consumer motherboards
+use Daisy Chain topology. Manufacturers made this shift because most
+consumers only buy two sticks of RAM, and Daisy Chain allows motherboard
+brands to advertise higher maximum overclocking speeds on the box
+(achieved using only two sticks).</p>
+<p>Consequently, if you are benchmarking on modern hardware, using four
+DIMMs will severely bottleneck your maximum memory frequency. To get the
+highest benchmark scores on modern Daisy Chain motherboards,
+overclockers bypass 4-DIMM setups entirely, opting instead to use two
+Dual-Rank sticks in the primary slots. This provides the same
+rank-interleaving benefits as four sticks while maintaining the clean
+signal integrity required for maximum frequency overclocks.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/daisy-chain-vs-t-topology-4-dimm-overclocking-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

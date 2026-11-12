@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Archiving Raw CSV Logs in Hardware Benchmarks Matters - benchmark</title>
+    <meta name="description" content="Publishing summary charts is standard practice in computer hardware benchmarking, but charts alone often hide critical performance nuances. Archiving raw sensor CSV log files alongside these visual summaries is essential for ensuring data transparency, en">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-archiving-raw-csv-logs-in-hardware-benchmarks-matters">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Archiving Raw CSV Logs in Hardware Benchmarks Matters - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-archiving-raw-csv-logs-in-hardware-benchmarks-matters" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Publishing summary charts is standard practice in computer hardware benchmarking, but charts alone often hide critical performance nuances. Archiving raw sensor CSV log files alongside these visual summaries is essential for ensuring data transparency, en" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-archiving-raw-csv-logs-in-hardware-benchmarks-matters">Why
+Archiving Raw CSV Logs in Hardware Benchmarks Matters</h1>
+<p>Publishing summary charts is standard practice in computer hardware
+benchmarking, but charts alone often hide critical performance nuances.
+Archiving raw sensor CSV log files alongside these visual summaries is
+essential for ensuring data transparency, enabling multi-variable
+troubleshooting, verifying testing methodologies, and preserving
+historical data for future reanalysis. By providing the underlying raw
+telemetry, hardware reviewers and engineers establish credibility and
+give the audience the exact data needed to understand how components
+truly behave under load.</p>
+<h3 id="exposing-time-series-behavior">Exposing Time-Series
+Behavior</h3>
+<p>Summary charts typically rely on single-number metrics like averages,
+minimums, and maximums. While easy to read, these numbers flatten
+time-series data and obscure how hardware performs moment to moment.</p>
+<p>A processor might show a respectable average clock speed on a bar
+chart, hiding the fact that it suffered from severe thermal throttling
+halfway through the test. Raw CSV logs record sensor data at regular
+intervals, allowing readers to see the exact progression of heat soak,
+boost clock decay, transient power spikes, and frame-time stutters over
+the entire duration of the benchmark.</p>
+<h3 id="ensuring-transparency-and-reproducibility">Ensuring Transparency
+and Reproducibility</h3>
+<p>Mistakes in data aggregation, spreadsheet formulas, or chart
+generation can easily go unnoticed. Archiving the raw CSV files acts as
+a permanent audit trail.</p>
+<p>When raw data is available, peers and consumers can independently
+verify that the summary charts accurately reflect the test results.
+Furthermore, CSV logs from tools like HWiNFO or GPU-Z contain dozens of
+secondary sensors. Reviewing these logs confirms whether testing
+conditions were fair, revealing crucial context such as motherboard
+voltage settings, cooling fan RPMs, and power limits that are rarely
+included in final graphs.</p>
+<h3 id="enabling-multi-variable-correlation">Enabling Multi-Variable
+Correlation</h3>
+<p>Hardware performance is a complex interplay of power, thermals, and
+frequencies. Summary charts usually isolate these metrics into separate
+graphs, making it difficult to see how one affects the other.</p>
+<p>With a raw CSV file, an analyst can line up timestamps to correlate
+different sensors simultaneously. For example, if a graphics card
+exhibits a sudden drop in performance, the CSV log allows a user to look
+at that exact millisecond and determine if the drop was caused by
+hitting a thermal limit, a power limit, a voltage drop, or a bottleneck
+in system memory.</p>
+<h3 id="future-proofing-benchmark-data">Future-Proofing Benchmark
+Data</h3>
+<p>The way the tech industry evaluates hardware changes over time. Years
+ago, average frames per second (FPS) was the gold standard for gaming
+benchmarks; today, frame-time consistency (1% and 0.1% lows) and
+performance-per-watt are just as important.</p>
+<p>If a reviewer only publishes static summary charts, that data is
+locked into the analytical standards of that specific era. By archiving
+raw sensor CSVs, the foundational data is preserved. Future researchers,
+engineers, or enthusiasts can download those original logs and apply new
+mathematical models, generate updated charts, or look at previously
+ignored sensor outputs without needing to physically re-test obsolete or
+rare hardware.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-archiving-raw-csv-logs-in-hardware-benchmarks-matters';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

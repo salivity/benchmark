@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Core Clock Offset Stability Across Different Games - benchmark</title>
+    <meta name="description" content="This article explores why a graphics card (GPU) core clock offset that is completely stable in one game may crash immediately in another during hardware benchmarking. It examines how modern GPU boost algorithms, varying game engine workloads, power limits">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/gpu-core-clock-offset-stability-across-different-games">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="GPU Core Clock Offset Stability Across Different Games - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/gpu-core-clock-offset-stability-across-different-games" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores why a graphics card (GPU) core clock offset that is completely stable in one game may crash immediately in another during hardware benchmarking. It examines how modern GPU boost algorithms, varying game engine workloads, power limits" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="gpu-core-clock-offset-stability-across-different-games">GPU Core
+Clock Offset Stability Across Different Games</h1>
+<p>This article explores why a graphics card (GPU) core clock offset
+that is completely stable in one game may crash immediately in another
+during hardware benchmarking. It examines how modern GPU boost
+algorithms, varying game engine workloads, power limits, and the
+utilization of specialized hardware units dictate overclocking
+stability. By understanding these variables, hardware testers can
+establish truly stable clock offsets across their entire benchmarking
+suite.</p>
+<h3 id="the-mechanics-of-the-voltage-frequency-curve">The Mechanics of
+the Voltage-Frequency Curve</h3>
+<p>Applying a core clock offset in overclocking software does not lock
+the GPU to a single static frequency. Instead, it shifts the GPU's
+entire Voltage-Frequency (V/F) curve upward. The GPU's internal boost
+algorithm dynamically selects a point on this curve based on
+temperature, power draw, and workload. Because different games trigger
+different voltage points along this curve, a +150 MHz offset might be
+stable at the 0.95V used in one game, but completely unstable at the
+1.05V used in another.</p>
+<h3 id="the-power-limit-paradox">The Power Limit Paradox</h3>
+<p>Counterintuitively, the most graphically demanding games often
+tolerate higher core clock offsets than lighter, less demanding
+games.</p>
+<ul>
+<li><strong>Power-Limited Scenarios:</strong> A heavy workload (e.g.,
+running a game at 4K resolution with maximum settings) causes the GPU to
+hit its maximum power limit (TDP) instantly. To stay within this power
+budget, the GPU drops its operating voltage and frequency. Because the
+card is forced to run at a lower, safer frequency tier, an aggressive
+offset often remains stable.</li>
+<li><strong>Voltage-Limited Scenarios:</strong> A lighter workload
+(e.g., an older game or a 1080p benchmark) does not max out the GPU's
+power limit. With power headroom available, the boost algorithm pushes
+the GPU to its absolute maximum voltage and highest possible frequency
+states. Adding a core clock offset at the very top of the V/F curve
+pushes the silicon past its physical limits, resulting in a crash.</li>
+</ul>
+<h3 id="silicon-utilization-and-specialized-cores">Silicon Utilization
+and Specialized Cores</h3>
+<p>Modern GPUs are not uniform blocks of silicon; they are divided into
+traditional shader cores, Ray Tracing (RT) cores, Tensor (AI) cores, and
+memory controllers.</p>
+<p>Games that rely solely on traditional rasterization leave the RT and
+Tensor cores idle. This keeps overall die temperatures lower and power
+delivery cleaner, allowing for a higher clock offset on the active
+shader cores. Conversely, benchmarking a game that simultaneously
+utilizes shaders, ray tracing, and AI upscaling (like DLSS or XeSS)
+stresses the entire silicon die at once. This increases electrical
+noise, voltage droop, and localized heat, which drastically reduces the
+stability margin of a core clock offset.</p>
+<h3 id="transient-loads-and-uncapped-menus">Transient Loads and Uncapped
+Menus</h3>
+<p>Many stability failures during gaming benchmarks do not happen during
+sustained heavy rendering, but rather during rapid workload
+transitions.</p>
+<p>When a benchmark transitions from a heavy 3D scene to a loading
+screen or an uncapped in-game menu, the rendering load drops instantly.
+In response, the GPU rapidly dumps power and spikes its clock speed to
+the maximum limit. If a high core clock offset is applied, the GPU
+frequency may momentarily boost higher than the voltage regulator can
+respond to. This microsecond of insufficient voltage causes the graphics
+driver to time out and crash. Games with erratic frame pacing or
+uncapped transition screens are much more likely to expose this
+instability.</p>
+<h3 id="graphics-api-efficiency">Graphics API Efficiency</h3>
+<p>The Application Programming Interface (API) a game uses directly
+impacts overclocking stability. Older APIs like DirectX 11 often leave
+gaps in the GPU rendering pipeline due to CPU bottlenecks, giving the
+GPU microscopic breaks in workload.</p>
+<p>Modern, low-level APIs like DirectX 12 and Vulkan are designed to
+eliminate this idle time, packing compute instructions much more
+densely. Because the GPU execution units are kept constantly saturated
+under DirectX 12 and Vulkan, the hardware generates more heat and draws
+more continuous current. Consequently, a core clock offset that is
+stable in a DirectX 11 benchmark will frequently fail when tested in a
+DirectX 12 title.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/gpu-core-clock-offset-stability-across-different-games';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

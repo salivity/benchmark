@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Motherboard Reviewers Test Cold and Warm Boot Times - benchmark</title>
+    <meta name="description" content="Hardware reviewers test both cold and warm boot times to evaluate a motherboard&#39;s firmware efficiency, component initialization speed, and overall daily user experience. While a cold boot measures how fast a system starts from a completely powered-off sta">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-motherboard-reviewers-test-cold-and-warm-boot-times">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Motherboard Reviewers Test Cold and Warm Boot Times - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-motherboard-reviewers-test-cold-and-warm-boot-times" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware reviewers test both cold and warm boot times to evaluate a motherboard&#39;s firmware efficiency, component initialization speed, and overall daily user experience. While a cold boot measures how fast a system starts from a completely powered-off sta" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-motherboard-reviewers-test-cold-and-warm-boot-times">Why
+Motherboard Reviewers Test Cold and Warm Boot Times</h1>
+<p>Hardware reviewers test both cold and warm boot times to evaluate a
+motherboard's firmware efficiency, component initialization speed, and
+overall daily user experience. While a cold boot measures how fast a
+system starts from a completely powered-off state, a warm boot tests how
+quickly the system restarts when the hardware is already powered and
+initialized. Analyzing both scenarios provides a complete picture of how
+well a motherboard manufacturer has optimized their BIOS, how the board
+handles memory training, and how long users will actually spend waiting
+for their computer to become usable in different real-world
+situations.</p>
+<h2 id="understanding-the-cold-boot-test">Understanding the Cold Boot
+Test</h2>
+<p>A cold boot occurs when you turn on a computer that has been
+completely shut down and disconnected from power, or sitting in a
+zero-power state. Reviewers test this to measure the motherboard's
+baseline initialization speed.</p>
+<p>During a cold boot, the motherboard must perform a full Power-On
+Self-Test (POST). This involves:</p>
+<ul>
+<li>Delivering and stabilizing power to all components.</li>
+<li>Detecting and initializing the CPU, RAM, storage drives, and PCIe
+devices.</li>
+<li>Spinning up cooling fans and water pumps.</li>
+<li>Firing up secondary onboard chips, such as audio controllers, Wi-Fi
+modules, and extra USB hubs.</li>
+</ul>
+<p>Reviewers pay close attention to cold boot times because they expose
+poorly optimized BIOS firmware. If a motherboard takes an unusually long
+time to cold boot, it indicates that the manufacturer’s firmware is
+struggling to communicate with the connected hardware efficiently.</p>
+<h2 id="understanding-the-warm-boot-test">Understanding the Warm Boot
+Test</h2>
+<p>A warm boot happens when you choose the "Restart" option within your
+operating system. In this scenario, power is never fully cut from the
+motherboard or the components.</p>
+<p>Reviewers test warm boot times because a restart bypasses several of
+the rigorous hardware checks required during a cold boot. Since the
+components are already powered on and initialized, the motherboard can
+skip certain parts of the POST process and hand control back to the
+operating system much faster.</p>
+<p>Testing warm boots helps reviewers see how quickly a system can
+recover from software installations, driver updates, or system
+configuration changes. If a warm boot is nearly as slow as a cold boot,
+it tells the reviewer that the motherboard is unnecessarily repeating
+hardware checks that should have been skipped.</p>
+<h2 id="the-impact-of-memory-training">The Impact of Memory
+Training</h2>
+<p>One of the biggest reasons reviewers separate cold and warm boot
+tests on modern motherboards is memory training, particularly with DDR5
+RAM.</p>
+<p>Memory training is the process where the motherboard and CPU test the
+RAM at startup to ensure stability at high speeds.</p>
+<ul>
+<li><strong>On a cold boot:</strong> The motherboard often performs a
+full memory training cycle, which can add anywhere from 10 to 45 seconds
+to the startup time.</li>
+<li><strong>On a warm boot:</strong> The motherboard should ideally
+remember the training data from the previous session and skip this
+step.</li>
+</ul>
+<p>By testing both, reviewers can verify if features like "Memory
+Context Restore" are functioning correctly. A massive gap between cold
+and warm boot times usually points to aggressive memory training during
+the initial power-on phase.</p>
+<h2 id="evaluating-feature-rich-motherboards">Evaluating Feature-Rich
+Motherboards</h2>
+<p>High-end motherboards often have slower boot times than budget
+motherboards. This is because expensive boards are packed with extra
+third-party controllers for additional SATA ports, dual Ethernet jacks,
+Thunderbolt support, and complex RGB lighting systems.</p>
+<p>During a cold boot, every single one of these extra chips must be
+initialized, which delays the startup process. By comparing cold and
+warm boot times, reviewers can determine if a slow startup is simply the
+result of having lots of hardware features to initialize (which mostly
+affects cold boots) or if the motherboard suffers from fundamentally
+sluggish BIOS code (which affects both cold and warm boots).</p>
+<h2 id="reflecting-real-world-usage">Reflecting Real-World Usage</h2>
+<p>Ultimately, reviewers test both metrics because computer users have
+different habits.</p>
+<p>Some users shut their computers down completely at the end of every
+day to save power. For these buyers, the cold boot time is a critical
+metric that affects their daily routine. Other users leave their
+computers on 24/7 or use sleep mode, only rebooting when forced to by an
+operating system update. For this second group, the warm boot time is
+far more relevant. Providing both data points ensures that every
+consumer knows exactly what to expect before purchasing a
+motherboard.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-motherboard-reviewers-test-cold-and-warm-boot-times';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

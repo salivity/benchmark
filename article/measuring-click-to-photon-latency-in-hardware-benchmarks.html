@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measuring Click-to-Photon Latency in Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="This article provides a complete overview of the methodology used for measuring click-to-photon system latency when benchmarking computer hardware. It breaks down the components of the total system latency pipeline, compares the traditional high-speed cam">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/measuring-click-to-photon-latency-in-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Measuring Click-to-Photon Latency in Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/measuring-click-to-photon-latency-in-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a complete overview of the methodology used for measuring click-to-photon system latency when benchmarking computer hardware. It breaks down the components of the total system latency pipeline, compares the traditional high-speed cam" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="measuring-click-to-photon-latency-in-hardware-benchmarks">Measuring
+Click-to-Photon Latency in Hardware Benchmarks</h1>
+<p>This article provides a complete overview of the methodology used for
+measuring click-to-photon system latency when benchmarking computer
+hardware. It breaks down the components of the total system latency
+pipeline, compares the traditional high-speed camera technique with
+modern photodiode sensor tools, outlines the step-by-step testing
+protocol, and explains how to control system variables to ensure
+accurate, repeatable benchmark data.</p>
+<h3 id="understanding-the-latency-pipeline">Understanding the Latency
+Pipeline</h3>
+<p>Click-to-photon latency (also known as end-to-end system latency) is
+the total time it takes for a physical mouse click to result in a
+visible change on a display. When benchmarking hardware, you are
+measuring the sum of three distinct stages:</p>
+<ol type="1">
+<li><strong>Peripheral Latency:</strong> The time taken for the mouse
+switch to actuate, the microcontroller to process the signal, and the
+data to travel via USB to the PC.</li>
+<li><strong>PC Latency:</strong> The time taken by the OS to register
+the input, the CPU to process the game logic, the render queue to hand
+the data off, and the GPU to render the frame.</li>
+<li><strong>Display Latency:</strong> The time taken for the GPU to
+transmit the frame over the display cable, the monitor's scaler to
+process it, and the liquid crystals or OLED pixels to physically change
+color (pixel response time).</li>
+</ol>
+<h3 id="selecting-the-measurement-hardware">Selecting the Measurement
+Hardware</h3>
+<p>There are two valid methodologies for capturing click-to-photon
+latency: the photodiode sensor method (the modern industry standard) and
+the high-speed camera method.</p>
+<h4 id="method-1-photodiode-luminance-sensors-recommended">Method 1:
+Photodiode Luminance Sensors (Recommended)</h4>
+<p>Tools like the NVIDIA Latency Display Analysis Tool (LDAT) or the
+Open Source Response Time Tool (OSRTT) use a light-sensitive photodiode
+strapped to the monitor.</p>
+<ul>
+<li><strong>How it works:</strong> The device connects to the PC via
+USB, acting as a mouse, or physically wires into an existing mouse's
+switch. When triggered, the tool sends a click command to the PC and
+simultaneously starts an internal microsecond timer. The timer stops the
+exact moment the photodiode detects a sharp change in screen luminance
+(such as a muzzle flash).</li>
+</ul>
+<h4 id="method-2-high-speed-camera">Method 2: High-Speed Camera</h4>
+<p>Before photodiode tools were widely available, reviewers used
+high-speed cameras capable of recording at 1,000 frames per second (fps)
+or higher.</p>
+<ul>
+<li><strong>How it works:</strong> An LED is soldered directly to the
+mechanical switch of a mouse so that it illuminates the exact
+millisecond the circuit closes. The camera is positioned to capture both
+the mouse LED and the monitor in the same frame. Latency is calculated
+manually by counting the recorded frames between the LED lighting up and
+the monitor displaying the action. At 1,000 fps, each frame equals 1
+millisecond of latency.</li>
+</ul>
+<h3 id="step-by-step-testing-protocol">Step-by-Step Testing
+Protocol</h3>
+<p>To accurately benchmark a piece of hardware (such as a new GPU, CPU,
+or monitor), follow this strict testing procedure:</p>
+<p><strong>1. Establish a High-Contrast Visual Cue</strong> Configure
+the test software or game so that a mouse click produces an immediate,
+stark change from dark to bright. Many modern games include a built-in
+"Latency Flash Indicator" (often found in NVIDIA Reflex-compatible
+titles) that draws a solid white box on the screen the moment a click is
+detected. If unavailable, aim a weapon at a dark wall in-game so the
+muzzle flash provides the luminance spike.</p>
+<p><strong>2. Position the Sensor</strong> If using a photodiode sensor,
+place it directly over the area of the screen where the white box or
+muzzle flash appears. Because monitors scan out images from top to
+bottom, the physical placement of the sensor changes the results. Always
+place the sensor in the exact same spot on the screen for every
+test.</p>
+<p><strong>3. Configure the Luminance Threshold</strong> In your
+sensor's capture software, set the luminance threshold high enough that
+ambient room light or minor screen fluctuations do not trigger it, but
+low enough that the initial transition from black to white stops the
+timer immediately.</p>
+<p><strong>4. Automate the Sample Collection</strong> System latency
+fluctuates constantly based on where the click lands within the CPU,
+GPU, and monitor refresh cycles. A single measurement is useless.
+Configure the testing tool to automatically fire a click at randomized
+intervals (to avoid syncing with the monitor's refresh rate) between 0.5
+and 1.5 seconds. Capture a minimum of 50 to 100 samples per test
+run.</p>
+<h3 id="controlling-variables-for-hardware-benchmarking">Controlling
+Variables for Hardware Benchmarking</h3>
+<p>To isolate the performance of the specific hardware you are
+benchmarking, all other parts of the pipeline must be locked down.</p>
+<ul>
+<li><strong>Benchmarking GPUs or CPUs:</strong> Use the fastest monitor
+available (e.g., a 240Hz or 360Hz OLED) and a 1000Hz+ gaming mouse.
+Disable V-Sync, G-Sync, or FreeSync unless specifically testing those
+features, and leave the framerate uncapped so the CPU and GPU work at
+their maximum limits.</li>
+<li><strong>Benchmarking Monitors:</strong> Use a top-tier CPU and GPU
+capable of pushing framerates well beyond the monitor's refresh rate in
+a lightweight game (like <em>Counter-Strike 2</em> or <em>Overwatch
+2</em>). Keep the mouse and PC settings identical while swapping only
+the display.</li>
+<li><strong>Benchmarking Mice:</strong> Bypass the tool's internal USB
+click-generator. Instead, physically wire the latency tool to the
+mouse's internal switch pins, or use a solenoid rig to physically
+actuate the mouse button at a consistent speed and force.</li>
+<li><strong>System Hygiene:</strong> Ensure the Windows power plan is
+set to High Performance, disable background apps, and turn off overlays
+(like Discord or Steam) that can hook into the rendering pipeline and
+add latency.</li>
+</ul>
+<h3 id="analyzing-the-data">Analyzing the Data</h3>
+<p>Once the 50 to 100 samples are collected, export the data for
+analysis.</p>
+<ol type="1">
+<li><strong>Remove Outliers:</strong> Inspect the dataset for misfires
+(e.g., 0ms readings caused by screen flicker, or massive spikes caused
+by a background OS task) and discard them.</li>
+<li><strong>Calculate the Mean:</strong> Average the remaining samples
+to get your baseline click-to-photon latency, measured in milliseconds
+(ms).</li>
+<li><strong>Evaluate Consistency:</strong> Calculate the standard
+deviation or chart the minimum and maximum values. A piece of hardware
+that delivers a 25ms average with a tight variance of +/- 2ms provides a
+much better user experience than hardware that averages 25ms but
+fluctuates wildly between 10ms and 45ms.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/measuring-click-to-photon-latency-in-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

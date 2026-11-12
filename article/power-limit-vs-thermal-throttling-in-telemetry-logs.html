@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Limit vs. Thermal Throttling in Telemetry Logs - benchmark</title>
+    <meta name="description" content="When benchmarking computer hardware, performance drops are frequently caused by either power limit throttling or thermal throttling. While both mechanisms reduce clock speeds and voltage to protect the silicon, they leave entirely different footprints in">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/power-limit-vs-thermal-throttling-in-telemetry-logs">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Power Limit vs. Thermal Throttling in Telemetry Logs - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/power-limit-vs-thermal-throttling-in-telemetry-logs" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When benchmarking computer hardware, performance drops are frequently caused by either power limit throttling or thermal throttling. While both mechanisms reduce clock speeds and voltage to protect the silicon, they leave entirely different footprints in" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="power-limit-vs-thermal-throttling-in-telemetry-logs">Power Limit
+vs. Thermal Throttling in Telemetry Logs</h1>
+<p>When benchmarking computer hardware, performance drops are frequently
+caused by either power limit throttling or thermal throttling. While
+both mechanisms reduce clock speeds and voltage to protect the silicon,
+they leave entirely different footprints in telemetry logs. This article
+explains how to distinguish between power and thermal throttling by
+analyzing temperature curves, wattage ceilings, clock speed behavior,
+and diagnostic flags in your benchmarking data.</p>
+<h3 id="temperature-behavior">Temperature Behavior</h3>
+<p>The most immediate way to differentiate the two throttling types in a
+telemetry log is by looking at the core and package temperature
+graphs.</p>
+<ul>
+<li><strong>Thermal Throttling:</strong> The temperature reading will
+climb rapidly and plateau at a specific, hard-coded ceiling—known as
+TjMax for CPUs (often 95°C to 105°C) or the thermal limit for GPUs
+(typically 83°C to 90°C). In the logs, you will see the temperature hit
+this exact number and flatten out, accompanied by an immediate drop in
+clock speeds.</li>
+<li><strong>Power Limit Throttling:</strong> The temperature will rise
+during the benchmark but stabilize well below the hardware's maximum
+safe thermal limit. For example, if a CPU's TjMax is 100°C, you might
+see the temperature hover safely at 72°C while clock speeds are actively
+being reduced.</li>
+</ul>
+<h3 id="wattage-and-power-draw-patterns">Wattage and Power Draw
+Patterns</h3>
+<p>Examining the CPU Package Power or GPU Board Power Draw columns in
+your telemetry log reveals how the hardware is managing energy.</p>
+<ul>
+<li><strong>Thermal Throttling:</strong> Wattage will peak early in the
+benchmark and then visibly decline as the component overheats. Because
+the hardware is forced to lower its voltage and clock speed to shed
+heat, the power draw drops correspondingly. In severe cases, the wattage
+graph will show a downward slope or a jagged, declining stair-step
+pattern.</li>
+<li><strong>Power Limit Throttling:</strong> The wattage reading will
+hit a strict, flat ceiling and stay there for the duration of the heavy
+workload. For CPUs, you might see a brief spike to a short-duration
+power limit (PL2) followed by a sharp drop to a flat long-duration power
+limit (PL1). Once on that limit, the wattage number in the log will
+barely fluctuate by more than a fraction of a watt.</li>
+</ul>
+<h3 id="clock-speed-and-voltage-fluctuations">Clock Speed and Voltage
+Fluctuations</h3>
+<p>How the hardware adjusts its frequency (MHz) and core voltage (Vcore)
+over time differs significantly between the two limits.</p>
+<ul>
+<li><strong>Thermal Throttling:</strong> This often produces a
+"sawtooth" pattern in the clock speed and voltage logs. The hardware
+hits the thermal limit, aggressively cuts voltage and frequency to cool
+down, drops a few degrees, boosts back up, and immediately hits the
+thermal limit again. This results in erratic frame times and
+inconsistent benchmark scores.</li>
+<li><strong>Power Limit Throttling:</strong> Clock speeds and voltages
+adjust smoothly and predictably. The moment the workload demands more
+power than the limit allows, the telemetry will show the clock speed
+stepping down to a sustainable frequency. If the workload remains
+constant, the clock speed line will remain relatively flat and stable,
+adjusting only when the complexity of the benchmark changes.</li>
+</ul>
+<h3 id="telemetry-status-flags">Telemetry Status Flags</h3>
+<p>Modern telemetry tools like HWiNFO, GPU-Z, and Intel XTU log specific
+binary flags (Yes/No or 1/0) communicated directly by the hardware's
+internal sensors.</p>
+<ul>
+<li><strong>Thermal Flags:</strong> Look for sensors labeled "Thermal
+Throttling," "Core Thermal Throttling," or "PROCHOT EXT" (Processor
+Hot). In GPU logs, the "PerfCap Reason" (Performance Cap) sensor will
+explicitly log "Thrm" when temperature is the limiting factor.</li>
+<li><strong>Power Flags:</strong> Look for sensors labeled "Power Limit
+Exceeded," "Package/Ring Power Limit," "PL1," or "PL2." For GPUs, the
+PerfCap Reason in the log will display "Pwr" (Total Board Power limit
+reached).</li>
+</ul>
+<h3 id="summary-of-log-signatures">Summary of Log Signatures</h3>
+<p>To quickly diagnose your log files, match your data to these two
+profiles:</p>
+<ol type="1">
+<li><strong>You are Thermal Throttling if:</strong> Temperatures are
+pinned at maximum capacity, wattage is dropping over time, clock speeds
+are erratic, and thermal flags are triggered.</li>
+<li><strong>You are Power Limit Throttling if:</strong> Temperatures are
+completely safe, wattage is pinned at a flat number, clock speeds are
+reduced but stable, and power limit flags are triggered.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/power-limit-vs-thermal-throttling-in-telemetry-logs';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

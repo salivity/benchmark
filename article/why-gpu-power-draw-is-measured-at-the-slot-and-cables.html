@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why GPU Power Draw is Measured at the Slot and Cables - benchmark</title>
+    <meta name="description" content="When benchmarking graphics cards, hardware reviewers go to great lengths to measure power consumption separately through the motherboard&#39;s PCIe slot and the external power supply cables. This article provides an overview of why this split measurement is c">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-gpu-power-draw-is-measured-at-the-slot-and-cables">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why GPU Power Draw is Measured at the Slot and Cables - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-gpu-power-draw-is-measured-at-the-slot-and-cables" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When benchmarking graphics cards, hardware reviewers go to great lengths to measure power consumption separately through the motherboard&#39;s PCIe slot and the external power supply cables. This article provides an overview of why this split measurement is c" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-gpu-power-draw-is-measured-at-the-slot-and-cables">Why GPU
+Power Draw is Measured at the Slot and Cables</h1>
+<p>When benchmarking graphics cards, hardware reviewers go to great
+lengths to measure power consumption separately through the
+motherboard's PCIe slot and the external power supply cables. This
+article provides an overview of why this split measurement is crucial
+for accurate hardware testing. By isolating these two power pathways,
+reviewers can verify compliance with industry safety standards, ensure
+motherboard protection, bypass inaccurate software sensors, and analyze
+how modern graphics cards handle extreme power spikes and load
+balancing.</p>
+<h2 id="enforcing-the-75-watt-pcie-slot-limit">Enforcing the 75-Watt
+PCIe Slot Limit</h2>
+<p>The primary reason for measuring the PCIe slot separately is to
+ensure the graphics card complies with PCI-SIG (Peripheral Component
+Interconnect Special Interest Group) specifications. By standard design,
+a motherboard's x16 PCIe slot is rated to deliver a maximum of 75 watts
+of power to a graphics card.</p>
+<p>If a poorly designed GPU draws significantly more than 75 watts
+through the slot, it risks damaging the motherboard. Excessive current
+can overheat and melt the 24-pin ATX motherboard connector, damage the
+metallic traces inside the motherboard, or cause severe system
+instability. By measuring the slot in isolation, reviewers can
+immediately flag cards that violate this specification and pose a fire
+or hardware hazard to consumers.</p>
+<h2 id="load-balancing-and-the-12vhpwr-connector">Load Balancing and the
+12VHPWR Connector</h2>
+<p>Modern high-end GPUs draw hundreds of watts, requiring the vast
+majority of their power to come directly from the Power Supply Unit
+(PSU) via 8-pin PCIe cables or the newer 16-pin 12VHPWR (PCIe 5.0)
+cables.</p>
+<p>Reviewers measure the cables separately from the slot to observe how
+the GPU's onboard voltage controllers balance the electrical load.
+Ideally, a graphics card should draw minimal power from the motherboard
+and pull the heavy load through the dedicated PSU cables. With recent
+controversies surrounding melting 12VHPWR connectors on flagship GPUs,
+monitoring the exact current flowing through the cables versus the slot
+allows reviewers to see if the card is regulating its power phases
+correctly under heavy gaming or rendering workloads.</p>
+<h2 id="bypassing-inaccurate-software-telemetry">Bypassing Inaccurate
+Software Telemetry</h2>
+<p>Consumers often use software tools to check their GPU power draw,
+which reads data from the graphics card's internal sensors. However,
+reviewers cannot rely on this method for benchmarking because software
+telemetry is frequently inaccurate or incomplete.</p>
+<p>Some GPU manufacturers configure their sensors to report only the
+power used by the silicon chip itself (Total Graphics Power), completely
+ignoring the power consumed by the video memory (VRAM), cooling fans,
+RGB lighting, and voltage regulation losses. Other times, the internal
+sensors simply have a slow polling rate. By using specialized hardware
+interposers—devices that sit physically between the GPU and the PCIe
+slot, and inline with the power cables—reviewers capture the true Total
+Board Power (TBP) without relying on the manufacturer's potentially
+biased reporting.</p>
+<h2 id="capturing-millisecond-transient-spikes">Capturing Millisecond
+Transient Spikes</h2>
+<p>Graphics cards do not draw a flat, continuous stream of power. As a
+game's workload changes from frame to frame, the GPU experiences
+"transient spikes"—massive increases in power draw that last only a few
+milliseconds. A card rated for 350 watts might momentarily spike to 600
+watts.</p>
+<p>Measuring the slot and cables independently with high-speed hardware
+oscilloscopes allows reviewers to see where those spikes are directed.
+If a massive transient spike hits the PCIe slot instead of the power
+cables, it can trip the motherboard's over-current protection and shut
+down the PC. Conversely, measuring the spikes on the cables helps
+reviewers determine the true minimum wattagePSU a consumer needs to buy
+to prevent their power supply from unexpectedly shutting off during
+intense gaming sessions.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-gpu-power-draw-is-measured-at-the-slot-and-cables';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

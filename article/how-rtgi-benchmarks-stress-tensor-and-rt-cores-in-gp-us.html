@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How RTGI Benchmarks Stress Tensor and RT Cores in GPUs - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how Ray-Traced Global Illumination (RTGI) pushes modern graphics cards to their absolute limits during hardware benchmarks. It explains the fundamentals of RTGI, details how the technology saturates RT cor">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-rtgi-benchmarks-stress-tensor-and-rt-cores-in-gp-us">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How RTGI Benchmarks Stress Tensor and RT Cores in GPUs - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-rtgi-benchmarks-stress-tensor-and-rt-cores-in-gp-us" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how Ray-Traced Global Illumination (RTGI) pushes modern graphics cards to their absolute limits during hardware benchmarks. It explains the fundamentals of RTGI, details how the technology saturates RT cor" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-rtgi-benchmarks-stress-tensor-and-rt-cores-in-gpus">How RTGI
+Benchmarks Stress Tensor and RT Cores in GPUs</h1>
+<p>This article provides a comprehensive overview of how Ray-Traced
+Global Illumination (RTGI) pushes modern graphics cards to their
+absolute limits during hardware benchmarks. It explains the fundamentals
+of RTGI, details how the technology saturates RT cores through complex
+light-bounce calculations, and examines how Tensor cores are
+simultaneously maxed out via AI denoising and upscaling. Finally, it
+covers why the concurrent utilization of these specialized cores makes
+RTGI the ultimate stress test for evaluating GPU thermal limits, power
+delivery, and architectural efficiency.</p>
+<h2 id="what-is-ray-traced-global-illumination-rtgi">What is Ray-Traced
+Global Illumination (RTGI)?</h2>
+<p>Traditional games and benchmarks use rasterization, a technique that
+fakes lighting using pre-baked data. Ray-Traced Global Illumination
+(RTGI), however, simulates the actual physical behavior of light in real
+time. When light hits a surface in the real world, it bounces,
+illuminating surrounding areas and picking up the color of the surface
+it hit. RTGI calculates these indirect light bounces dynamically.
+Because simulating millions of light rays bouncing multiple times per
+frame requires immense computational power, hardware benchmarks use RTGI
+to intentionally bottleneck and test the maximum capabilities of a
+GPU.</p>
+<h2 id="how-rtgi-stresses-rt-cores">How RTGI Stresses RT Cores</h2>
+<p>RT (Ray Tracing) cores are dedicated hardware units designed to
+handle the specific math required to trace the path of light. While
+basic ray tracing might only calculate a single bounce for a reflection
+or a shadow, RTGI calculates multiple bounces for every light source in
+a scene. This stresses the RT cores in two primary ways:</p>
+<ul>
+<li><strong>BVH Traversal:</strong> To know what a ray of light hits,
+the GPU breaks the 3D scene down into a complex grid of boxes called a
+Bounding Volume Hierarchy (BVH). RT cores must continuously search
+through this hierarchy to trace the path of every single ray. In an RTGI
+benchmark, objects are often moving, forcing the GPU to rebuild and
+traverse the BVH simultaneously at lightning speeds.</li>
+<li><strong>Ray-Triangle Intersection Tests:</strong> Once a ray reaches
+the end of the BVH, the RT core must calculate the exact pixel on the 3D
+model's polygon (triangle) the light hits, and at what angle. Because
+RTGI requires primary, secondary, and tertiary light bounces to
+accurately light a room, the number of intersection tests increases
+exponentially, driving RT core utilization to 100%.</li>
+</ul>
+<h2 id="how-rtgi-stresses-tensor-cores">How RTGI Stresses Tensor
+Cores</h2>
+<p>Even the most powerful RT cores cannot cast enough rays in real time
+to create a clear image; doing so would reduce the benchmark to a
+slideshow. Instead, the GPU casts a limited number of rays, which
+results in a grainy, pixelated, and incomplete lighting map. This is
+where Tensor cores are pushed to their limits.</p>
+<p>Tensor cores are specialized processors built for high-speed matrix
+multiplication, which is the foundation of deep learning and artificial
+intelligence. During an RTGI benchmark, Tensor cores handle two massive
+workloads:</p>
+<ul>
+<li><strong>AI Denoising:</strong> Tensor cores run complex neural
+networks to "connect the dots" of the grainy ray-traced image.
+Technologies like Ray Reconstruction use Tensor cores to analyze the
+sparse ray data alongside previous frames, filling in the missing light
+information to produce a smooth, photorealistic image in
+milliseconds.</li>
+<li><strong>AI Upscaling:</strong> Because RTGI is so demanding,
+benchmarks often utilize technologies like DLSS (Deep Learning Super
+Sampling) or XeSS. The GPU renders the scene at a lower resolution to
+save performance, and the Tensor cores use AI to upscale the image to
+the target resolution (like 4K).</li>
+</ul>
+<h2 id="the-ultimate-combined-stress-test">The Ultimate Combined Stress
+Test</h2>
+<p>In standard gaming workloads, different parts of the GPU often wait
+on one another, meaning the hardware rarely hits its absolute
+theoretical limit. RTGI benchmarks are prized by hardware testers
+because they force the entire GPU architecture to work in tandem at
+maximum capacity.</p>
+<p>While the standard shader cores are rendering the geometry of the
+scene, the RT cores are maxed out calculating light bounces, and the
+Tensor cores are fully saturated cleaning and upscaling the final image.
+Furthermore, storing the massive BVH structures and high-resolution
+frame data pushes the Video RAM (VRAM) bandwidth to the brink.</p>
+<p>Because all three core types (Shader, RT, and Tensor) and the memory
+subsystem are operating at peak load simultaneously, an RTGI benchmark
+exposes any weaknesses in a GPU's power delivery, voltage regulation,
+and thermal cooling solutions faster than almost any other workload.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-rtgi-benchmarks-stress-tensor-and-rt-cores-in-gp-us';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

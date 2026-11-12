@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Disable G-Sync, FreeSync, and V-Sync for Benchmarking? - benchmark</title>
+    <meta name="description" content="Hardware reviewers consistently disable G-Sync, FreeSync, and V-Sync during unconstrained benchmarking to measure the raw, unrestricted performance of a computer&#39;s components. By turning off all display synchronization technologies simultaneously, testers">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-disable-g-sync-free-sync-and-v-sync-for-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Disable G-Sync, FreeSync, and V-Sync for Benchmarking? - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-disable-g-sync-free-sync-and-v-sync-for-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware reviewers consistently disable G-Sync, FreeSync, and V-Sync during unconstrained benchmarking to measure the raw, unrestricted performance of a computer&#39;s components. By turning off all display synchronization technologies simultaneously, testers" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-disable-g-sync-freesync-and-v-sync-for-benchmarking">Why
+Disable G-Sync, FreeSync, and V-Sync for Benchmarking?</h1>
+<p>Hardware reviewers consistently disable G-Sync, FreeSync, and V-Sync
+during unconstrained benchmarking to measure the raw, unrestricted
+performance of a computer's components. By turning off all display
+synchronization technologies simultaneously, testers eliminate
+artificial frame rate caps, prevent the monitor from becoming a
+performance bottleneck, and remove software overhead. This practice
+creates a standardized testing environment that reveals the true
+capabilities of a graphics card or processor, allowing for accurate
+comparisons across different hardware generations.</p>
+<h3 id="eliminating-artificial-frame-rate-caps">Eliminating Artificial
+Frame Rate Caps</h3>
+<p>The primary function of V-Sync, G-Sync, and FreeSync is to
+synchronize the frame rate of a game with the refresh rate of a monitor
+to prevent screen tearing. However, this creates a ceiling on
+performance.</p>
+<p>If a reviewer uses a 144Hz monitor with these technologies enabled,
+the system will generally cap the performance at 144 frames per second
+(FPS). If two different graphics cards are both capable of exceeding 144
+FPS—for example, one can produce 160 FPS and a more expensive one can
+produce 250 FPS—leaving sync technologies on will make both cards appear
+identical on a benchmark chart, as both will read 144 FPS. Disabling
+them allows the hardware to render as many frames as physically
+possible.</p>
+<h3 id="preventing-the-monitor-from-becoming-a-bottleneck">Preventing
+the Monitor From Becoming a Bottleneck</h3>
+<p>Unconstrained benchmarking is designed to find the absolute limit of
+a specific component, usually the CPU or GPU. When synchronization
+technologies are active, the monitor becomes the limiting factor in the
+system. By turning off G-Sync, FreeSync, and V-Sync, reviewers
+disconnect the display's limitations from the PC's rendering pipeline.
+The graphics card is forced to run at maximum capacity, outputting
+frames into the buffer as fast as it can compute them, regardless of
+whether the monitor can actually display them all.</p>
+<h3 id="avoiding-fallback-behaviours">Avoiding Fallback Behaviours</h3>
+<p>Reviewers must disable all three technologies simultaneously because
+they often interact with one another. G-Sync and FreeSync are adaptive
+sync technologies that only function within a specific refresh rate
+window (for example, 48Hz to 144Hz).</p>
+<p>When a game's frame rate exceeds the monitor's maximum refresh rate,
+G-Sync and FreeSync often rely on V-Sync as a fallback mechanism to keep
+the frame rate capped, or they behave inconsistently depending on driver
+settings. Simply turning off G-Sync or FreeSync in the driver menu might
+still leave in-game V-Sync active. Disabling all of them at both the
+driver level and within the game settings is the only way to guarantee
+completely unconstrained frame generation.</p>
+<h3 id="accurate-frame-time-and-latency-measurement">Accurate Frame Time
+and Latency Measurement</h3>
+<p>Synchronization technologies alter the way frames are delivered,
+which skews frame time metrics. V-Sync, in particular, is notorious for
+holding back rendered frames in a buffer until the monitor is ready for
+them. If a graphics card misses the monitor's refresh window by a
+millisecond, V-Sync forces the system to wait for the next cycle,
+causing a sudden, artificial drop in measured performance and an
+increase in input latency. Disabling sync features ensures that the
+recorded frame times reflect the exact moment the hardware finishes
+rendering a frame, not the moment the monitor is ready to show it.</p>
+<h3 id="standardization-and-future-proofing-data">Standardization and
+Future-Proofing Data</h3>
+<p>Reviewers need their data to be universally applicable. A reader
+might own a 60Hz, 144Hz, 240Hz, or 360Hz monitor. If a reviewer
+benchmarks with sync enabled on a 144Hz screen, the data is useless to
+someone buying a 240Hz monitor. Furthermore, unconstrained benchmarks
+future-proof the data. Knowing that a graphics card can push 400 FPS in
+a current game tells the consumer that the card has plenty of headroom
+to handle more demanding games in the future, information that would be
+hidden if the test was constrained by a display's refresh rate.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-disable-g-sync-free-sync-and-v-sync-for-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

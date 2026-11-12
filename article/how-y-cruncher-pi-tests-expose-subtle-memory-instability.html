@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Y-Cruncher Pi Tests Expose Subtle Memory Instability - benchmark</title>
+    <meta name="description" content="Y-Cruncher is a premier benchmarking tool that calculates mathematical constants like Pi to trillions of digits, serving as an uncompromising stress test for computer hardware. Specifically, the Pi-2.5b (2.5 billion digits) and Pi-10b (10 billion digits)">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-y-cruncher-pi-tests-expose-subtle-memory-instability">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Y-Cruncher Pi Tests Expose Subtle Memory Instability - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-y-cruncher-pi-tests-expose-subtle-memory-instability" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Y-Cruncher is a premier benchmarking tool that calculates mathematical constants like Pi to trillions of digits, serving as an uncompromising stress test for computer hardware. Specifically, the Pi-2.5b (2.5 billion digits) and Pi-10b (10 billion digits)" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-y-cruncher-pi-tests-expose-subtle-memory-instability">How
+Y-Cruncher Pi Tests Expose Subtle Memory Instability</h1>
+<p>Y-Cruncher is a premier benchmarking tool that calculates
+mathematical constants like Pi to trillions of digits, serving as an
+uncompromising stress test for computer hardware. Specifically, the
+Pi-2.5b (2.5 billion digits) and Pi-10b (10 billion digits) presets are
+renowned for exposing subtle random access memory (RAM) instabilities
+that other stress tests miss. This article provides an overview of how
+these specific workloads push memory subsystems to their absolute limits
+through massive dataset sizes, extreme bandwidth saturation, complex
+addressing patterns, thermal loading, and unforgiving mathematical
+verification.</p>
+<h3 id="bypassing-the-cpu-cache">Bypassing the CPU Cache</h3>
+<p>Smaller benchmarks often fit entirely within a processor’s fast L1,
+L2, or L3 cache, meaning the system RAM is barely tested. Calculating
+2.5 billion digits of Pi requires roughly 11 to 12 gigabytes of
+available RAM, while the 10 billion digit test requires around 44 to 48
+gigabytes. Because these datasets vastly exceed the size of any consumer
+CPU cache, Y-Cruncher is forced to constantly read from and write to the
+physical memory modules. By utilizing such a large footprint, the test
+ensures that a vast majority of the physical memory cells on the sticks
+are actively engaged, leaving nowhere for a defective or unstable memory
+sector to hide.</p>
+<h3 id="extreme-imc-and-bandwidth-saturation">Extreme IMC and Bandwidth
+Saturation</h3>
+<p>Y-Cruncher is heavily optimized for modern multi-core processors and
+utilizes Advanced Vector Extensions (AVX, AVX2, and AVX-512). When
+executing a Pi-2.5b or Pi-10b run, the CPU processes massive chunks of
+data simultaneously, demanding maximum data throughput from the RAM.
+This floods the CPU's Integrated Memory Controller (IMC) and saturates
+the memory bus.</p>
+<p>This level of saturation creates high electrical load and potential
+signal integrity issues on the motherboard traces. If the IMC voltage is
+slightly too low, or if the motherboard's termination resistances are
+slightly off, the sheer volume of data moving at once will cause a
+signal to be misread, immediately exposing the instability.</p>
+<h3 id="complex-memory-access-patterns">Complex Memory Access
+Patterns</h3>
+<p>Calculating Pi at this scale relies heavily on Fast Fourier
+Transforms (FFTs) for multiplying massive numbers. FFT algorithms do not
+just read and write data in a neat, sequential line. Instead, they
+access memory in complex, scattered patterns across different rows and
+banks of the memory modules.</p>
+<p>This erratic access behavior aggressively tests secondary and
+tertiary memory timings. While a system might be stable during
+sequential reads, the rapid opening, closing, and switching of memory
+banks during an FFT workload will quickly crash a system with overly
+tight timings (such as tRRD, tFAW, or tWTR).</p>
+<h3 id="thermal-induced-instability">Thermal Induced Instability</h3>
+<p>A quick benchmark like Pi-25m (25 million digits) finishes in
+seconds, long before the hardware heats up. The Pi-2.5b test takes
+several minutes, and the Pi-10b test takes significantly longer. Because
+Y-Cruncher pushes maximum power through both the CPU and the DIMMs
+simultaneously, it generates immense heat.</p>
+<p>DDR4 and DDR5 memory are highly sensitive to temperature,
+particularly regarding the Refresh Interval (tREFI) and Refresh Cycle
+Time (tRFC). Memory cells are essentially tiny capacitors that leak
+charge faster as they get hotter. During a sustained Pi-2.5b or Pi-10b
+run, the physical RAM sticks heat up to a point where they may begin
+losing data before the system refreshes them, triggering errors that
+only manifest under high thermal saturation.</p>
+<h3 id="zero-tolerance-mathematical-verification">Zero-Tolerance
+Mathematical Verification</h3>
+<p>In many real-world applications or gaming benchmarks, a single
+flipped bit in the RAM might result in a barely noticeable audio pop, a
+single corrupted pixel for one frame, or nothing at all. Y-Cruncher,
+however, has a zero-tolerance policy for data corruption due to the
+nature of its math.</p>
+<p>The algorithms used to calculate Pi are iterative; every step depends
+entirely on the accuracy of the previous step. If unstable RAM causes
+just a single bit to flip from a 0 to a 1 early in a 10-billion-digit
+calculation, that error cascades and ruins the rest of the equation.
+Y-Cruncher runs continuous internal sanity checks and checksum
+validations during the calculation. The exact millisecond a memory error
+alters the math, Y-Cruncher detects the discrepancy, halts the test, and
+flags a hardware failure.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-y-cruncher-pi-tests-expose-subtle-memory-instability';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

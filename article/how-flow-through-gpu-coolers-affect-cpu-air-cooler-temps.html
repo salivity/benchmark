@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Flow-Through GPU Coolers Affect CPU Air Cooler Temps - benchmark</title>
+    <meta name="description" content="This article provides an overview of how dual-axial flow-through graphics card coolers impact the thermal performance of CPU air coolers during hardware benchmarking. While the flow-through GPU design significantly improves graphics card thermals by allow">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-flow-through-gpu-coolers-affect-cpu-air-cooler-temps">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Flow-Through GPU Coolers Affect CPU Air Cooler Temps - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-flow-through-gpu-coolers-affect-cpu-air-cooler-temps" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of how dual-axial flow-through graphics card coolers impact the thermal performance of CPU air coolers during hardware benchmarking. While the flow-through GPU design significantly improves graphics card thermals by allow" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-flow-through-gpu-coolers-affect-cpu-air-cooler-temps">How
+Flow-Through GPU Coolers Affect CPU Air Cooler Temps</h1>
+<p>This article provides an overview of how dual-axial flow-through
+graphics card coolers impact the thermal performance of CPU air coolers
+during hardware benchmarking. While the flow-through GPU design
+significantly improves graphics card thermals by allowing air to pass
+unimpeded through the heatsink fins, it exhausts a concentrated plume of
+hot air directly into the intake path of standard tower-style CPU air
+coolers. Consequently, during combined CPU and GPU benchmarking or heavy
+gaming workloads, CPU temperatures rise due to the elevated ambient
+temperature of the air entering the CPU heatsink, which can ultimately
+influence processor boost clocks and benchmark scores.</p>
+<h2 id="the-mechanics-of-flow-through-gpu-coolers">The Mechanics of
+Flow-Through GPU Coolers</h2>
+<p>Traditional open-air GPU coolers feature a printed circuit board
+(PCB) that runs the entire length of the card. When the fans push air
+into the heatsink, the solid PCB blocks the air from going straight
+through, forcing the heated exhaust out the sides of the card—mostly
+against the motherboard and the side panel of the PC case.</p>
+<p>Modern dual-axial flow-through designs utilize a much shorter PCB
+while keeping the heatsink long. This leaves the rear section of the
+heatsink completely exposed. The fan on the far right of the GPU pushes
+air directly through the exposed heatsink fins and upwards toward the
+top of the case. This dramatically reduces thermal resistance for the
+GPU, keeping it cooler and quieter.</p>
+<h2 id="the-clash-with-cpu-air-cooler-intake">The Clash with CPU Air
+Cooler Intake</h2>
+<p>In a standard ATX computer case, a tower-style CPU air cooler sits
+directly above the primary PCIe slot where the GPU is installed.
+Standard case airflow moves from the front of the case to the back. A
+CPU air cooler relies on pulling in cool air coming from the front
+intake fans and pushing it through its own heatsink toward the rear
+exhaust fan.</p>
+<p>Because the flow-through GPU exhausts hot air vertically right in
+front of the CPU cooler, the two airflow paths collide. Instead of
+drawing in cool air from the front of the case, the CPU cooler’s intake
+fan sucks in the pre-heated exhaust air coming straight out of the
+graphics card. Since a heatsink's cooling efficiency is directly tied to
+the temperature of its intake air, feeding it hot air directly raises
+the temperature of the CPU on a nearly one-to-one basis.</p>
+<h2 id="impact-on-hardware-benchmarking">Impact on Hardware
+Benchmarking</h2>
+<p>When benchmarking computer hardware, the effect of a flow-through GPU
+cooler on CPU temperatures depends entirely on the type of test being
+run.</p>
+<h3 id="1-isolated-cpu-benchmarks">1. Isolated CPU Benchmarks</h3>
+<p>In synthetic benchmarks that only stress the processor, such as
+Cinebench or Prime95, the flow-through GPU design has zero negative
+impact. Because the GPU is sitting idle, it generates minimal heat. If
+the GPU fans are spinning, they are simply passing cool case air through
+the GPU heatsink and into the CPU intake.</p>
+<h3 id="2-isolated-gpu-benchmarks">2. Isolated GPU Benchmarks</h3>
+<p>In benchmarks that heavily stress the graphics card with minimal CPU
+load, such as FurMark or 3DMark Port Royal, the CPU will show noticeably
+higher temperatures despite low utilization. The GPU is dumping hundreds
+of watts of heat directly into the CPU cooler, artificially inflating
+the processor's idle or low-load temperature readings.</p>
+<h3 id="3-combined-and-gaming-benchmarks">3. Combined and Gaming
+Benchmarks</h3>
+<p>In tests that load both components simultaneously—such as 3DMark Time
+Spy, Blender rendering, or actual gaming benchmarks—the thermal impact
+is at its peak. A high-end GPU can exhaust 300W to 450W of heat. This
+causes the CPU cooler intake temperature to spike, often resulting in
+CPU package temperatures that are 3°C to 8°C higher than they would be
+with a blower-style GPU or an all-in-one (AIO) liquid cooler.</p>
+<p>Modern CPUs from Intel and AMD use opportunistic boosting algorithms
+that scale clock speeds based on available thermal headroom. If the
+GPU's hot exhaust pushes the CPU closer to its thermal limit (TJMax),
+the CPU will lower its boost clock speeds. In benchmarking, this
+translates to slightly lower physics or CPU scores during combined runs
+compared to isolated runs.</p>
+<h2 id="mitigating-the-effect-in-testing">Mitigating the Effect in
+Testing</h2>
+<p>To maintain accurate and consistent benchmarking results when using a
+flow-through GPU and a CPU air cooler, system builders and testers must
+rely on high-velocity front-to-back case airflow. High-RPM front intake
+fans can push enough cool air to mix with the hot GPU exhaust, diluting
+the heat plume before the CPU cooler ingests it. Alternatively, testing
+on an open-air test bench reduces the heat buildup, as the lack of an
+enclosure allows the hot GPU exhaust to dissipate into the room rather
+than being forced strictly through the CPU cooler.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-flow-through-gpu-coolers-affect-cpu-air-cooler-temps';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

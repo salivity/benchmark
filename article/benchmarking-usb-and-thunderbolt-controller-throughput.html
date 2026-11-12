@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking USB and Thunderbolt Controller Throughput - benchmark</title>
+    <meta name="description" content="Benchmarking USB and Thunderbolt controllers requires a strict methodology to isolate the controller&#39;s actual performance from external hardware and software bottlenecks. This article outlines the best practices for testing these high-speed interfaces, co">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/benchmarking-usb-and-thunderbolt-controller-throughput">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Benchmarking USB and Thunderbolt Controller Throughput - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/benchmarking-usb-and-thunderbolt-controller-throughput" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Benchmarking USB and Thunderbolt controllers requires a strict methodology to isolate the controller&#39;s actual performance from external hardware and software bottlenecks. This article outlines the best practices for testing these high-speed interfaces, co" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="benchmarking-usb-and-thunderbolt-controller-throughput">Benchmarking
+USB and Thunderbolt Controller Throughput</h1>
+<p>Benchmarking USB and Thunderbolt controllers requires a strict
+methodology to isolate the controller's actual performance from external
+hardware and software bottlenecks. This article outlines the best
+practices for testing these high-speed interfaces, covering hardware
+selection, system configuration, software tools, standardized testing
+protocols, and data interpretation.</p>
+<h3 id="eliminate-hardware-bottlenecks">Eliminate Hardware
+Bottlenecks</h3>
+<p>To test the controller rather than the peripheral, the connected test
+device must be faster than the interface itself.</p>
+<ul>
+<li><strong>Exceed Interface Speeds:</strong> Use a high-end PCIe Gen 4
+or Gen 5 NVMe SSD housed in a bridge/enclosure rated for the maximum
+speed of the port (e.g., a USB4 or Thunderbolt 4 enclosure for 40Gbps
+ports).</li>
+<li><strong>Verify Cable Integrity:</strong> Only use USB-IF certified
+or Intel-certified Thunderbolt cables. Use passive cables under 0.8
+meters whenever possible to avoid signal degradation and latency
+introduced by active cable repeaters.</li>
+<li><strong>Bypass Hubs:</strong> Connect the test device directly to
+the motherboard's rear I/O or the laptop's chassis port. Front-panel
+case connectors and external docks introduce trace-length issues and
+additional controller overhead.</li>
+<li><strong>Check PCIe Lane Allocation:</strong> Consult the motherboard
+manual to ensure the USB or Thunderbolt controller is not sharing PCIe
+lanes with other populated M.2 slots or PCIe expansion cards, which can
+artificially halve the controller's bandwidth.</li>
+</ul>
+<h3 id="configure-the-system-and-os">Configure the System and OS</h3>
+<p>Default operating system settings prioritize power saving over
+maximum throughput. Adjust these settings before testing.</p>
+<ul>
+<li><strong>Update Firmware and Drivers:</strong> Install the latest
+motherboard BIOS, Thunderbolt NVM firmware, and USB host controller
+drivers.</li>
+<li><strong>Adjust Power Plans:</strong> Set the operating system to the
+"High Performance" or "Ultimate Performance" power plan.</li>
+<li><strong>Disable Power Saving:</strong> In the OS power settings,
+disable "USB selective suspend" and "PCI Express Link State Power
+Management."</li>
+<li><strong>Enable Write Caching:</strong> In Windows Device Manager,
+open the properties of the external test drive, navigate to the
+"Policies" tab, and select "Better performance" to enable write caching.
+This ensures the OS does not bottleneck write operations.</li>
+</ul>
+<h3 id="select-appropriate-benchmarking-software">Select Appropriate
+Benchmarking Software</h3>
+<p>Relying on a single piece of software can yield misleading results.
+Use a combination of synthetic and real-world tests.</p>
+<ul>
+<li><strong>CrystalDiskMark:</strong> Ideal for measuring peak
+sequential and random read/write speeds. Configure the settings to "NVMe
+SSD" mode (using the <code>SEQ1M Q8T1</code> and
+<code>RND4K Q32T16</code> profiles) to fully saturate the controller's
+bandwidth.</li>
+<li><strong>ATTO Disk Benchmark:</strong> Useful for visualizing how the
+controller handles different file transfer sizes (from 512B to 64MB) at
+various queue depths.</li>
+<li><strong>Iometer:</strong> The industry standard for sustained
+workloads. Use this to test controller stability and performance
+degradation over extended periods (30+ minutes).</li>
+<li><strong>Real-World File Copy:</strong> Supplement synthetic tests by
+timing the transfer of a single 50GB compressible file (like a video)
+and a 50GB folder containing thousands of small files.</li>
+</ul>
+<h3 id="execute-a-standardized-testing-methodology">Execute a
+Standardized Testing Methodology</h3>
+<p>Consistency is required to produce repeatable and comparable data
+across different systems.</p>
+<ul>
+<li><strong>Close Background Processes:</strong> Terminate all
+non-essential background applications, especially system monitoring
+software (e.g., HWInfo, iCUE) which constantly poll the system bus and
+reduce throughput.</li>
+<li><strong>Prevent Thermal Throttling:</strong> High-speed external
+SSDs and motherboard controllers generate significant heat. Point an
+external fan at the test enclosure and allow a 5-minute cool-down period
+between test runs.</li>
+<li><strong>Avoid SLC Cache Exhaustion:</strong> Do not use a test file
+size in your benchmark that exceeds the external SSD's SLC cache. If the
+drive drops to native TLC or QLC speeds during a test, you are measuring
+the SSD's limitation, not the controller's. Keep the test drive under
+25% total capacity.</li>
+<li><strong>Test Multi-Port Saturation:</strong> Most motherboards route
+multiple physical USB ports through a single host controller. To truly
+test the controller, run benchmarks on two ports simultaneously to see
+how the controller manages bandwidth splitting.</li>
+<li><strong>Average the Results:</strong> Run each benchmark at least
+three times, discarding anomalous runs caused by OS background tasks,
+and average the final numbers.</li>
+</ul>
+<h3 id="account-for-protocol-overhead">Account for Protocol
+Overhead</h3>
+<p>When analyzing your results, you must account for protocol encoding
+and bandwidth reservation. A controller will never achieve its
+theoretical maximum rating in real-world data transfers.</p>
+<ul>
+<li><strong>USB 3.2 Gen 2 (10Gbps):</strong> Uses 128b/132b encoding.
+Expect a maximum real-world throughput of roughly 1,000 to 1,050
+MB/s.</li>
+<li><strong>USB 3.2 Gen 2x2 (20Gbps):</strong> Expect a maximum
+real-world throughput of roughly 2,000 to 2,100 MB/s.</li>
+<li><strong>Thunderbolt 3, Thunderbolt 4, and USB4 (40Gbps):</strong>
+While rated at 40Gbps (5,000 MB/s), these protocols reserve bandwidth
+for DisplayPort video output and rely on PCIe tunneling, which enforces
+packet size limits. The maximum theoretical data throughput for storage
+over a 40Gbps Thunderbolt/USB4 controller is capped at approximately
+3,100 to 3,200 MB/s (32Gbps of PCIe data allocation). Achieving results
+in the 2,800 to 3,150 MB/s range indicates the controller is performing
+at its absolute limit.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/benchmarking-usb-and-thunderbolt-controller-throughput';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

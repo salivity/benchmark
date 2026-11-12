@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methodology for Benchmarking NAS Throughput - benchmark</title>
+    <meta name="description" content="Benchmarking Network Attached Storage (NAS) throughput requires a strict, repeatable methodology to accurately measure how fast data moves between a storage server and client machines. This article outlines the standard process for testing NAS performance">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/methodology-for-benchmarking-nas-throughput">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Methodology for Benchmarking NAS Throughput - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/methodology-for-benchmarking-nas-throughput" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Benchmarking Network Attached Storage (NAS) throughput requires a strict, repeatable methodology to accurately measure how fast data moves between a storage server and client machines. This article outlines the standard process for testing NAS performance" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="methodology-for-benchmarking-nas-throughput">Methodology for
+Benchmarking NAS Throughput</h1>
+<p>Benchmarking Network Attached Storage (NAS) throughput requires a
+strict, repeatable methodology to accurately measure how fast data moves
+between a storage server and client machines. This article outlines the
+standard process for testing NAS performance, detailing the necessary
+network environment setup, storage pool configurations, workload types,
+benchmarking tools, and best practices for eliminating caching anomalies
+to yield reliable hardware evaluations.</p>
+<h2 id="1-standardizing-the-test-environment">1. Standardizing the Test
+Environment</h2>
+<p>To isolate the NAS as the sole performance variable, the client
+computer and network infrastructure must exceed the maximum theoretical
+performance of the NAS.</p>
+<ul>
+<li><strong>Client Hardware:</strong> Use a high-end client PC equipped
+with a fast PCIe 4.0 or 5.0 NVMe SSD. This ensures the client's local
+storage does not bottleneck data transfers during real-world copy
+tests.</li>
+<li><strong>Network Infrastructure:</strong> Connect the NAS to the
+client using enterprise-grade switches and appropriate cabling (Cat6a,
+Cat7, or SFP+ fiber) capable of handling 2.5GbE, 10GbE, 25GbE, or 100GbE
+connections. To eliminate switch overhead entirely during baseline
+testing, use a direct attached connection between the client and the
+NAS.</li>
+<li><strong>Network Settings:</strong> Standardize the Maximum
+Transmission Unit (MTU) settings. Test with standard frames (1500 MTU)
+first, and if testing 10GbE or faster, conduct a secondary test pass
+using Jumbo Frames (9000 MTU) if all hardware supports it.</li>
+<li><strong>OS Optimization:</strong> Disable antivirus software,
+firewalls, and background indexing on the client machine to prevent
+artificial network latency.</li>
+</ul>
+<h2 id="2-configuring-the-nas-and-storage-pool">2. Configuring the NAS
+and Storage Pool</h2>
+<p>Throughput heavily depends on how the storage drives and operating
+system are configured. Every variable must be documented and kept
+consistent across comparative tests.</p>
+<ul>
+<li><strong>Drive Selection:</strong> Use identical drives (matching
+brand, model, capacity, and firmware) for the storage pool.</li>
+<li><strong>RAID Configuration:</strong> Benchmark using standard,
+real-world RAID levels. For 4-bay to 8-bay systems, RAID 5 and RAID 6
+are the industry standards for testing parity calculation overhead. Use
+RAID 10 for high-performance comparisons. Wait for the initial RAID
+synchronization and parity scrubbing to completely finish before running
+any tests.</li>
+<li><strong>File System:</strong> Document the file system used (e.g.,
+EXT4, Btrfs, or ZFS), as features like inline data compression and
+checksums impact throughput.</li>
+<li><strong>SSD Caching:</strong> If the NAS supports NVMe SSD caching,
+conduct two completely separate benchmark runs: one with the mechanical
+hard drives alone to find the baseline performance, and another with the
+read/write cache enabled.</li>
+<li><strong>Protocols:</strong> Test over the specific network protocols
+relevant to the target audience. SMB (Server Message Block) is standard
+for Windows and macOS environments, NFS is used for Linux, and iSCSI is
+used for block-level virtualization workloads.</li>
+</ul>
+<h2 id="3-overcoming-the-ram-cache-trap">3. Overcoming the RAM Cache
+Trap</h2>
+<p>Modern NAS operating systems utilize unused system RAM to cache
+incoming and outgoing data. If a benchmark test file fits entirely
+within the NAS's RAM, the benchmark will measure the speed of the system
+memory and network interface rather than the actual storage drives.</p>
+<p>To measure true storage throughput, the test file size must be
+significantly larger than the total installed RAM of the NAS. The
+standard methodology requires a test data set that is at least
+<strong>two to four times the size of the NAS memory</strong>. For
+example, if a NAS has 16GB of RAM, the benchmark test file size must be
+at least 32GB to 64GB.</p>
+<h2 id="4-defining-test-workloads">4. Defining Test Workloads</h2>
+<p>A comprehensive throughput methodology evaluates how the NAS handles
+different types of data movement.</p>
+<ul>
+<li><strong>Sequential Read and Write:</strong> This measures the speed
+of transferring large, contiguous files (such as 4K video files or
+system backups). It is tested using large block sizes (typically 1MB)
+and is measured in Megabytes per second (MB/s) or Gigabytes per second
+(GB/s).</li>
+<li><strong>Random Read and Write:</strong> This measures performance
+with small, non-contiguous files (such as databases or operating system
+files) using 4K block sizes. While typically measured in IOPS
+(Input/Output Operations Per Second), recording the resulting MB/s
+throughput shows how severely small files degrade transfer speeds.</li>
+<li><strong>Mixed Workloads:</strong> Real-world server environments
+rarely do 100% reads or 100% writes. Configure a test with a 70% read /
+30% write split to simulate active office or virtualization
+environments.</li>
+<li><strong>Queue Depths and Threads:</strong> Test with a single thread
+and a Queue Depth of 1 (QD1T1) to simulate a single user transferring a
+file. Follow this with a high-concurrency test (such as Queue Depth 8
+with 8 Threads) to simulate multiple users accessing the NAS
+simultaneously.</li>
+</ul>
+<h2 id="5-selecting-benchmarking-tools">5. Selecting Benchmarking
+Tools</h2>
+<p>Use a combination of synthetic benchmarking software and real-world
+file transfers to gather a complete performance profile.</p>
+<ul>
+<li><strong>FIO (Flexible I/O Tester):</strong> The gold standard for
+storage benchmarking. It is scriptable, cross-platform, and allows exact
+control over block sizes, queue depths, test duration, and caching
+behavior.</li>
+<li><strong>IOmeter:</strong> A robust alternative to FIO for Windows
+environments that allows deep customization of synthetic network
+workloads.</li>
+<li><strong>CrystalDiskMark:</strong> Useful for quick, standardized
+sequential and random throughput checks over a mapped SMB network drive.
+Ensure the test size is set to the maximum (64GiB) to bypass RAM caching
+on higher-end NAS units.</li>
+<li><strong>Real-World File Copy (Robocopy):</strong> Synthetic tests
+represent best-case scenarios. Validate them by using a command-line
+tool like Windows Robocopy to transfer two real data sets: a single
+100GB video file (sequential test) and a 50GB folder containing 50,000
+small documents and photos (random metadata test).</li>
+</ul>
+<h2 id="6-test-execution-and-data-analysis">6. Test Execution and Data
+Analysis</h2>
+<p>How the tests are run is just as important as the tools used.</p>
+<ul>
+<li><strong>Sustained Testing:</strong> Run each synthetic workload for
+a minimum of 3 to 5 minutes. This ensures that any drive-level caches
+(like SLC caching on SSDs) are exhausted and you are measuring sustained
+throughput.</li>
+<li><strong>Cool-Down Periods:</strong> Allow the NAS to sit idle for 5
+to 10 minutes between tests. This lets the operating system flush its
+buffers, complete background garbage collection, and prevents thermal
+throttling on NVMe drives.</li>
+<li><strong>Multiple Passes:</strong> Run every test at least three
+times. Discard obvious anomalies caused by sudden network hiccups and
+average the remaining results.</li>
+<li><strong>Hardware Monitoring:</strong> Actively monitor the NAS's
+internal resource monitor during testing. Record the CPU and RAM
+utilization alongside the MB/s throughput scores. If throughput plateaus
+while the NAS CPU hits 100% utilization, you have identified a processor
+bottleneck (common with heavy encryption or RAID 6 parity calculations)
+rather than a drive or network limit.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/methodology-for-benchmarking-nas-throughput';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

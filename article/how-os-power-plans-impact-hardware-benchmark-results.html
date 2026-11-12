@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How OS Power Plans Impact Hardware Benchmark Results - benchmark</title>
+    <meta name="description" content="Operating system power plans directly dictate how computer hardware performs during benchmarking by managing voltage delivery, clock speeds, and component sleep states. Choosing a power-saving mode forces the system to throttle performance to conserve ene">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-os-power-plans-impact-hardware-benchmark-results">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How OS Power Plans Impact Hardware Benchmark Results - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-os-power-plans-impact-hardware-benchmark-results" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Operating system power plans directly dictate how computer hardware performs during benchmarking by managing voltage delivery, clock speeds, and component sleep states. Choosing a power-saving mode forces the system to throttle performance to conserve ene" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-os-power-plans-impact-hardware-benchmark-results">How OS
+Power Plans Impact Hardware Benchmark Results</h1>
+<p>Operating system power plans directly dictate how computer hardware
+performs during benchmarking by managing voltage delivery, clock speeds,
+and component sleep states. Choosing a power-saving mode forces the
+system to throttle performance to conserve energy, resulting in
+artificially low benchmark scores. Conversely, selecting a
+high-performance power plan instructs the hardware to maintain maximum
+frequencies and rapid response times, effectively boosting benchmark
+results to reflect the system's true maximum capabilities. This article
+explains the exact mechanisms behind OS power plans and how they
+manipulate CPU, GPU, and storage performance during hardware stress
+tests.</p>
+<h2 id="cpu-frequency-scaling">CPU Frequency Scaling</h2>
+<p>The primary way an operating system power plan affects benchmarks is
+through CPU frequency scaling. Modern processors use technologies like
+Intel Speed Shift and AMD Cool'n'Quiet to dynamically adjust their clock
+speeds based on workload.</p>
+<ul>
+<li><strong>Power Saver Plans:</strong> The OS caps the maximum
+processor state, often limiting the CPU to a fraction of its base clock
+speed. It also completely disables turbo boost technologies. If you run
+a CPU benchmark in this state, the processor is heavily throttled, and
+scores will plummet.</li>
+<li><strong>Balanced Plans:</strong> The OS scales the CPU frequency up
+and down based on demand. While the CPU will eventually reach its
+maximum boost clock during a sustained benchmark, there is a slight
+delay (latency) as the OS requests higher voltage and clock speeds. This
+ramp-up time negatively impacts short, burst-heavy benchmarks.</li>
+<li><strong>High Performance Plans:</strong> The OS locks the minimum
+processor state at 100%. The CPU runs at its base or boost frequency
+constantly, even when idle. When a benchmark begins, there is zero
+ramp-up latency, resulting in immediately boosted scores.</li>
+</ul>
+<h2 id="core-parking-and-c-states">Core Parking and C-States</h2>
+<p>Processors utilize "C-states" to turn off unused parts of the silicon
+to save power. "Core parking" is a feature where the OS completely puts
+idle CPU cores to sleep.</p>
+<p>During a benchmark, waking a parked core from a deep C-state takes
+milliseconds. In the context of hardware benchmarking, milliseconds are
+an eternity. A <strong>Balanced</strong> or <strong>Power Saver</strong>
+plan aggressively parks cores, causing micro-stutters and delays when a
+benchmark suddenly demands all threads. A <strong>High
+Performance</strong> or <strong>Ultimate Performance</strong> plan
+disables core parking entirely, keeping all cores awake and ready to
+process benchmark workloads instantly.</p>
+<h2 id="pcie-link-state-power-management">PCIe Link State Power
+Management</h2>
+<p>Power plans do not just affect the CPU; they also control the
+motherboard's PCI Express (PCIe) lanes, which connect the graphics card
+(GPU) and NVMe solid-state drives (SSDs) to the processor.</p>
+<p>A setting within the OS power plan called <strong>Link State Power
+Management</strong> regulates how much power these lanes use when there
+is no active data transfer.</p>
+<ul>
+<li><strong>Moderate or Maximum Power Savings:</strong> The OS puts the
+PCIe lanes into a low-power sleep state between data bursts. During
+storage benchmarks (which test random read/write speeds) or gaming
+benchmarks, the latency required to wake the PCIe bus throttles data
+transfer rates, leading to lower FPS and slower drive speeds.</li>
+<li><strong>Off (High Performance):</strong> The PCIe lanes remain fully
+powered at all times. This ensures maximum bandwidth and the lowest
+possible latency for both the GPU and NVMe storage, boosting benchmark
+metrics.</li>
+</ul>
+<h2 id="cooling-policies-and-thermal-throttling">Cooling Policies and
+Thermal Throttling</h2>
+<p>Operating system power plans also dictate the system's cooling
+policy, which is generally divided into two modes:
+<strong>Active</strong> and <strong>Passive</strong>.</p>
+<ul>
+<li><strong>Passive Cooling (Power Saver):</strong> When the hardware
+gets hot during a benchmark, the OS will throttle the CPU and GPU clock
+speeds <em>before</em> it increases the speed of the cooling fans. This
+prioritizes silence and energy savings over performance, severely
+reducing benchmark scores as the test progresses.</li>
+<li><strong>Active Cooling (High Performance):</strong> The OS
+immediately ramps up fan speeds to dissipate heat, allowing the CPU and
+GPU to maintain their maximum boost clocks for as long as thermally
+possible before throttling occurs.</li>
+</ul>
+<h2 id="oem-power-limits-in-laptops">OEM Power Limits in Laptops</h2>
+<p>In laptops, changing the OS power plan often triggers firmware-level
+changes managed by the manufacturer. Selecting a High Performance plan
+in the OS frequently signals the motherboard to increase the processor's
+Power Limits (PL1 and PL2) and the GPU's Total Graphics Power (TGP).
+This allows the components to draw more wattage from the battery or wall
+outlet, directly boosting clock speeds and benchmark results compared to
+the default Balanced mode.</p>
+<h2 id="summary-of-best-practices-for-benchmarking">Summary of Best
+Practices for Benchmarking</h2>
+<p>To get accurate, unthrottled benchmark results, users must manually
+set their operating system to the highest available power tier—such as
+<strong>High Performance</strong> or <strong>Ultimate
+Performance</strong> in Windows, or the <strong>Performance</strong>
+governor in Linux. Benchmarking on a Balanced or Power Saver plan
+measures the efficiency of the OS power management rather than the raw
+capability of the computer hardware.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-os-power-plans-impact-hardware-benchmark-results';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

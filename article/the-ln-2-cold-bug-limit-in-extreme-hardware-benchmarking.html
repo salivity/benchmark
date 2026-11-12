@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The LN2 Cold Bug Limit in Extreme Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="In the world of extreme overclocking, enthusiasts use liquid nitrogen (LN2) to cool computer components to sub-zero temperatures, allowing for record-breaking clock speeds. However, this pursuit of performance is often halted by the &quot;cold bug,&quot; a phenomen">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/the-ln-2-cold-bug-limit-in-extreme-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The LN2 Cold Bug Limit in Extreme Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/the-ln-2-cold-bug-limit-in-extreme-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In the world of extreme overclocking, enthusiasts use liquid nitrogen (LN2) to cool computer components to sub-zero temperatures, allowing for record-breaking clock speeds. However, this pursuit of performance is often halted by the &quot;cold bug,&quot; a phenomen" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-ln2-cold-bug-limit-in-extreme-hardware-benchmarking">The LN2
+Cold Bug Limit in Extreme Hardware Benchmarking</h1>
+<p>In the world of extreme overclocking, enthusiasts use liquid nitrogen
+(LN2) to cool computer components to sub-zero temperatures, allowing for
+record-breaking clock speeds. However, this pursuit of performance is
+often halted by the "cold bug," a phenomenon where a processor
+completely stops functioning once it drops below a specific temperature
+threshold. This article explains the physical causes of the cold bug,
+how it restricts minimum operating temperatures, and the techniques
+benchmarkers use to manage this hardware limitation.</p>
+<h2 id="what-is-the-cold-bug">What is the Cold Bug?</h2>
+<p>Liquid nitrogen boils at -196°C (-320°F). While silicon generally
+performs better and requires less voltage as it gets colder, every
+central processing unit (CPU) and graphics processing unit (GPU) has a
+breaking point. The cold bug is the exact temperature at which a system
+freezes, crashes, or refuses to work due to extreme cold. A related
+issue, the "cold boot bug," occurs when a system can run at a specific
+sub-zero temperature, but cannot restart or power on until the chip is
+warmed up to a higher temperature.</p>
+<h2 id="the-physics-behind-the-limit">The Physics Behind the Limit</h2>
+<p>Computer chips are designed to operate within normal ambient
+temperatures, typically between 0°C and 100°C. Pushing them past -100°C
+alters the fundamental physics of the hardware in three main ways:</p>
+<ul>
+<li><strong>Silicon Carrier Freeze-Out:</strong> Semiconductors are
+injected with specific impurities (doping) to control electrical
+conductivity. At extreme sub-zero temperatures, there is not enough
+thermal energy to ionize these impurities. Electrons stop moving freely,
+causing the silicon to behave like an insulator rather than a conductor,
+which instantly crashes the processor.</li>
+<li><strong>Signal Timing Errors:</strong> Different materials inside a
+processor react to cold at different rates. The electrical resistance of
+metal interconnects drops significantly in extreme cold, while
+transistor behavior changes differently. This mismatch ruins the
+microscopic timing required for data signals to travel across the chip,
+leading to immediate system instability.</li>
+<li><strong>Mechanical Stress:</strong> Extreme cold causes materials to
+contract. Because a processor is made of multiple layers—silicon,
+solder, copper, and fiberglass—each layer shrinks at a different rate.
+This thermal contraction can cause microscopic warping, temporarily
+breaking the physical connection between the processor and the
+motherboard socket.</li>
+</ul>
+<h2 id="how-the-cold-bug-limits-benchmarking">How the Cold Bug Limits
+Benchmarking</h2>
+<p>In extreme benchmarking, temperature directly dictates maximum
+frequency. A processor running at -190°C can achieve higher clock speeds
+than the same processor running at -120°C.</p>
+<p>When a chip suffers from a cold bug at a relatively warm temperature,
+such as -110°C, it hits a hard performance wall. The overclocker cannot
+pour more liquid nitrogen to cool the chip further, meaning they cannot
+utilize the full -196°C potential of LN2. Instead, they must carefully
+balance the pouring of liquid nitrogen with a blowtorch, constantly
+fighting to keep the temperature at -109°C—just one degree above the
+failure point. This thermal ceiling directly limits the maximum voltage
+the chip can handle and caps the final benchmark score.</p>
+<h2 id="overcoming-the-cold-bug">Overcoming the Cold Bug</h2>
+<p>While the physical limits of a specific silicon chip cannot be
+changed, extreme overclockers and motherboard manufacturers use several
+methods to push the cold bug temperature lower:</p>
+<ul>
+<li><strong>LN2 Mode Switches:</strong> High-end overclocking
+motherboards feature physical switches that disable built-in thermal
+monitoring. Standard motherboards misread sub-zero temperatures as
+catastrophic sensor failures and shut down the system; LN2 modes bypass
+these safety checks.</li>
+<li><strong>Voltage Adjustments:</strong> Increasing specific secondary
+voltages, such as the Phase-Locked Loop (PLL) or termination voltages,
+can stabilize erratic signal timings and generate just enough internal
+heat within the chip's circuitry to push the cold bug threshold down by
+several degrees.</li>
+<li><strong>Base Clock (BCLK) Tuning:</strong> Sometimes the cold bug is
+triggered only by specific parts of the processor, such as the
+integrated memory controller or PCIe lanes. Slightly altering the base
+clock frequency can shift the internal ratios enough to restore
+stability at lower temperatures.</li>
+<li><strong>Thermal Paste Selection:</strong> Standard thermal pastes
+freeze, crack, and lose conductivity under LN2, exacerbating cold bug
+behavior. Benchmarkers use specialized compounds designed to remain
+pliable at -196°C to ensure even thermal contraction and consistent heat
+transfer.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/the-ln-2-cold-bug-limit-in-extreme-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

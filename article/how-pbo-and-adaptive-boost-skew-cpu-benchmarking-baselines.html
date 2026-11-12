@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How PBO and Adaptive Boost Skew CPU Benchmarking Baselines - benchmark</title>
+    <meta name="description" content="Modern processors utilize dynamic boosting algorithms like AMD’s Precision Boost Overdrive (PBO) and Intel’s Adaptive Boost Technology (ABT) to automatically maximize performance based on thermal and electrical headroom. This article explains how these fe">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-pbo-and-adaptive-boost-skew-cpu-benchmarking-baselines">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How PBO and Adaptive Boost Skew CPU Benchmarking Baselines - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-pbo-and-adaptive-boost-skew-cpu-benchmarking-baselines" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Modern processors utilize dynamic boosting algorithms like AMD’s Precision Boost Overdrive (PBO) and Intel’s Adaptive Boost Technology (ABT) to automatically maximize performance based on thermal and electrical headroom. This article explains how these fe" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-pbo-and-adaptive-boost-skew-cpu-benchmarking-baselines">How
+PBO and Adaptive Boost Skew CPU Benchmarking Baselines</h1>
+<p>Modern processors utilize dynamic boosting algorithms like AMD’s
+Precision Boost Overdrive (PBO) and Intel’s Adaptive Boost Technology
+(ABT) to automatically maximize performance based on thermal and
+electrical headroom. This article explains how these features alter
+traditional "stock" baselines in hardware benchmarking, how motherboard
+manufacturers complicate standardized testing by enabling them by
+default, and why hardware reviewers must manually enforce power limits
+to achieve accurate, repeatable data.</p>
+<h2 id="understanding-pbo-and-adaptive-boost">Understanding PBO and
+Adaptive Boost</h2>
+<p>Before examining how baselines are altered, it is necessary to
+understand what these technologies do.</p>
+<ul>
+<li><strong>Precision Boost Overdrive (PBO):</strong> An AMD technology
+that allows the processor to exceed standard factory power, current, and
+thermal limits. If the CPU cooler and motherboard power delivery (VRMs)
+can handle the extra load, PBO will sustain higher clock speeds for
+longer durations.</li>
+<li><strong>Adaptive Boost Technology (ABT):</strong> An Intel feature
+(available on select high-end processors) that opportunistically
+increases all-core turbo frequencies beyond standard limits, provided
+the CPU remains below a specific temperature threshold (typically 100°C)
+and has sufficient power available.</li>
+</ul>
+<p>Both technologies are essentially automated, manufacturer-sanctioned
+overclocking tools built directly into the silicon and firmware.</p>
+<h2 id="the-erosion-of-the-stock-baseline">The Erosion of the "Stock"
+Baseline</h2>
+<p>In traditional benchmarking, a "stock" CPU ran at strictly defined
+base and boost clock speeds, adhering to a rigid Thermal Design Power
+(TDP). A reviewer could place a processor in three different
+motherboards with three different coolers, and as long as the CPU did
+not thermally throttle, the benchmark scores would be nearly
+identical.</p>
+<p>PBO and ABT destroy this predictability. Because these algorithms
+dynamically scale performance based on the quality of the surrounding
+components, the concept of a fixed stock baseline disappears.</p>
+<h2 id="how-baselines-are-altered-in-practice">How Baselines Are Altered
+in Practice</h2>
+<p>When PBO or ABT are active during benchmarking, they skew hardware
+baselines in three primary ways:</p>
+<h3 id="1-cooler-dependent-performance-scaling">1. Cooler-Dependent
+Performance Scaling</h3>
+<p>Previously, a better CPU cooler only resulted in lower temperatures
+and less noise. With PBO and ABT, thermal headroom is directly converted
+into clock speed. A benchmark run using a 360mm liquid cooler will yield
+a significantly higher "stock" CPU score than the exact same system
+using a standard air cooler, simply because the algorithm detects lower
+temperatures and boosts the chip higher.</p>
+<h3 id="2-motherboard-manipulation">2. Motherboard Manipulation</h3>
+<p>To make their products look superior in comparative reviews, many
+motherboard manufacturers configure their BIOS settings to enable PBO,
+ABT, or unlimited power limits right out of the box. When a user or
+reviewer installs a CPU and leaves the BIOS at "Default" or "Auto," the
+processor is often not running at Intel or AMD’s official baseline
+specifications. It is running an automated overclock, inflating
+benchmark scores compared to a motherboard that strictly follows
+reference guidelines.</p>
+<h3 id="3-skewed-power-efficiency-metrics">3. Skewed Power Efficiency
+Metrics</h3>
+<p>PBO and ABT operate far past the silicon's optimal efficiency curve.
+To gain a 3% to 5% increase in multi-threaded benchmark scores, these
+features might increase power consumption by 25% to 40%. If a benchmark
+baseline is recorded with these features unintentionally enabled, the
+resulting performance-per-watt data will be entirely inaccurate,
+portraying the CPU as vastly more power-hungry and hotter than the
+chipmaker intended for standard operation.</p>
+<h2 id="establishing-a-true-baseline">Establishing a True Baseline</h2>
+<p>To combat the variability introduced by PBO and ABT, professional
+hardware benchmarkers can no longer rely on "Out-of-the-Box" or "Auto"
+BIOS settings. Establishing a true stock baseline now requires manual
+intervention:</p>
+<ul>
+<li><strong>For AMD:</strong> Reviewers must manually disable PBO in the
+BIOS and ensure the Package Power Tracking (PPT), Thermal Design Current
+(TDC), and Electrical Design Current (EDC) match AMD's official
+reference specifications for that specific CPU.</li>
+<li><strong>For Intel:</strong> Reviewers must disable Adaptive Boost
+and Multi-Core Enhancement (MCE), while manually locking the Long
+Duration Power Limit (PL1) and Short Duration Power Limit (PL2) to
+Intel's official guidance.</li>
+</ul>
+<p>Only by stripping away these dynamic boost variables can benchmarkers
+isolate the true baseline performance of the silicon, ensuring that a
+CPU review is actually measuring the processor itself, rather than the
+capability of the motherboard and liquid cooler attached to it.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-pbo-and-adaptive-boost-skew-cpu-benchmarking-baselines';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

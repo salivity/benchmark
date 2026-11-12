@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antivirus Impact on Hardware Compilation Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores how real-time antivirus scanning severely distorts computer hardware benchmarks, specifically during file and code compilation tests. By intercepting read and write operations to check for threats, security software introduces signif">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/antivirus-impact-on-hardware-compilation-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Antivirus Impact on Hardware Compilation Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/antivirus-impact-on-hardware-compilation-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how real-time antivirus scanning severely distorts computer hardware benchmarks, specifically during file and code compilation tests. By intercepting read and write operations to check for threats, security software introduces signif" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="antivirus-impact-on-hardware-compilation-benchmarks">Antivirus
+Impact on Hardware Compilation Benchmarks</h1>
+<p>This article explores how real-time antivirus scanning severely
+distorts computer hardware benchmarks, specifically during file and code
+compilation tests. By intercepting read and write operations to check
+for threats, security software introduces significant processor and
+storage overhead. This interference leads to artificially slow
+compilation times and inaccurate hardware performance evaluations,
+illustrating why proper test environment configuration is required for
+valid benchmarking results.</p>
+<h2 id="the-mechanics-of-file-compilation-benchmarks">The Mechanics of
+File Compilation Benchmarks</h2>
+<p>File compilation tests—such as building the Linux kernel, Chromium,
+or running LLVM suites—are popular for evaluating CPU, RAM, and storage
+performance. Unlike synthetic benchmarks that run entirely in system
+memory, code compilation is heavily input/output (I/O) intensive.</p>
+<p>During a compilation test, the system reads thousands of source code
+files, processes them, and writes thousands of temporary object files
+and final executable binaries to the storage drive. This process demands
+rapid context switching, high multi-threaded CPU utilization, and fast
+disk read/write speeds.</p>
+<h2 id="how-real-time-scanning-interferes">How Real-Time Scanning
+Interferes</h2>
+<p>Real-time antivirus (AV) software operates by integrating deeply into
+the operating system's file system drivers. Its primary job is to
+intercept file creation, modification, and execution events before they
+complete.</p>
+<p>File compilation mimics the exact behavior that antivirus software is
+designed to monitor: the rapid creation of new, unknown executable code
+and binary files. As the compiler generates thousands of temporary
+files, the antivirus intercepts nearly every single operation. It pauses
+the compiler's access to the file, scans the contents against malware
+definitions or heuristic models, and only then releases the file back to
+the compiler to continue the build process.</p>
+<h2 id="impact-on-specific-hardware-metrics">Impact on Specific Hardware
+Metrics</h2>
+<p>When real-time scanning is active during a compilation benchmark, the
+test no longer measures raw hardware capability. Instead, it measures
+how quickly the hardware can run the compiler and the antivirus software
+simultaneously.</p>
+<ul>
+<li><strong>CPU Bottlenecks:</strong> Antivirus scanning requires
+significant processing power, especially when unpacking and analyzing
+newly compiled binaries. This steals valuable CPU cycles and threads
+away from the compiler, resulting in artificially lower multi-core
+performance scores.</li>
+<li><strong>Storage I/O Latency:</strong> Compilation relies on high
+IOPS (Input/Output Operations Per Second) to handle massive volumes of
+small files. Antivirus interception adds milliseconds of latency to each
+file operation. Across tens of thousands of files, this creates a
+massive storage bottleneck, masking the true speed of fast NVMe
+SSDs.</li>
+<li><strong>Memory Bandwidth Contention:</strong> Both the compiler and
+the antivirus engine must load data into the system RAM. The antivirus
+consumes memory bandwidth and cache space, increasing cache misses for
+the compilation workload.</li>
+</ul>
+<h2 id="loss-of-benchmark-repeatability">Loss of Benchmark
+Repeatability</h2>
+<p>A core requirement of hardware benchmarking is repeatability.
+Real-time antivirus software destroys test consistency in several
+ways:</p>
+<ul>
+<li><strong>Smart Caching:</strong> Some antivirus programs will scan a
+file once and mark it as safe, ignoring it in subsequent runs. This
+makes the first benchmark run significantly slower than the second or
+third run.</li>
+<li><strong>Background Updates:</strong> Security software frequently
+downloads new definitions in the background, shifting the performance
+baseline from one hour to the next.</li>
+<li><strong>Heuristic Variations:</strong> Cloud-based protection
+features may upload snippets of unrecognized compiled binaries for
+remote analysis, introducing network latency into a local hardware
+test.</li>
+</ul>
+<h2 id="best-practices-for-accurate-benchmarking">Best Practices for
+Accurate Benchmarking</h2>
+<p>To accurately measure hardware performance using file compilation
+tests, the impact of real-time scanning must be eliminated or strictly
+controlled.</p>
+<ol type="1">
+<li><strong>Disable Real-Time Protection:</strong> Temporarily turn off
+the antivirus software entirely before initiating the benchmark
+suite.</li>
+<li><strong>Use Folder Exclusions:</strong> Configure the antivirus to
+exclude the specific directories where the source code, temporary build
+files, and compiler executables reside.</li>
+<li><strong>Test Offline on Clean OS Installs:</strong> Professional
+hardware reviewers use dedicated, offline operating system installations
+with all background security services stripped or disabled via group
+policy, ensuring that 100% of the hardware's resources are dedicated to
+the compilation task.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/antivirus-impact-on-hardware-compilation-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

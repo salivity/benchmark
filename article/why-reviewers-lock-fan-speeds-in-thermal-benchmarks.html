@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Reviewers Lock Fan Speeds in Thermal Benchmarks - benchmark</title>
+    <meta name="description" content="Hardware reviewers frequently lock fan speeds to a fixed percentage during thermal benchmarks to eliminate variables and ensure fair, repeatable comparisons across different computer components. This article explains why isolating fan behavior is critical">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-reviewers-lock-fan-speeds-in-thermal-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Reviewers Lock Fan Speeds in Thermal Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-reviewers-lock-fan-speeds-in-thermal-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware reviewers frequently lock fan speeds to a fixed percentage during thermal benchmarks to eliminate variables and ensure fair, repeatable comparisons across different computer components. This article explains why isolating fan behavior is critical" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-reviewers-lock-fan-speeds-in-thermal-benchmarks">Why
+Reviewers Lock Fan Speeds in Thermal Benchmarks</h1>
+<p>Hardware reviewers frequently lock fan speeds to a fixed percentage
+during thermal benchmarks to eliminate variables and ensure fair,
+repeatable comparisons across different computer components. This
+article explains why isolating fan behavior is critical for accurate
+testing, detailing how it removes the influence of inconsistent factory
+fan curves, highlights the true efficiency of a cooler's physical
+design, stabilizes boost clocks, and provides reliable data for
+consumers.</p>
+<h2 id="eliminating-the-moving-target-of-dynamic-curves">Eliminating the
+Moving Target of Dynamic Curves</h2>
+<p>By default, computer fans operate on a dynamic curve, meaning they
+spin faster as temperatures rise and slow down as components cool. While
+this is ideal for everyday use, it ruins scientific testing. If a fan
+constantly changes its speed during a benchmark, the airflow changes
+with it. Locking the fan to a fixed percentage—such as 50% or
+100%—ensures a constant, unchanging amount of airflow from start to
+finish. This provides a stable baseline so reviewers can measure the
+exact thermal output of a component without the cooling system actively
+fighting to change the results mid-test.</p>
+<h2 id="neutralizing-aggressive-factory-settings">Neutralizing
+Aggressive Factory Settings</h2>
+<p>Different manufacturers program their hardware with different
+priorities. One graphics card manufacturer might prioritize silence,
+setting a relaxed fan curve that allows the card to run hot. Another
+manufacturer might use the exact same physical heatsink but program an
+aggressive, loud fan curve to keep temperatures low.</p>
+<p>If a reviewer leaves the fans on their automatic settings, the louder
+card will appear to have a better cooling design simply because the fans
+are spinning faster. Locking the fans to a fixed percentage forces both
+products to operate under identical rules, revealing which manufacturer
+actually built the better cooler rather than which one set the most
+aggressive software profile.</p>
+<h2 id="isolating-heatsink-and-case-design">Isolating Heatsink and Case
+Design</h2>
+<p>Thermal benchmarking is often about testing the physical metal of a
+heatsink, the quality of thermal paste, or the airflow layout of a PC
+case.</p>
+<ul>
+<li><strong>Testing Thermal Paste:</strong> When comparing thermal
+pastes, the cooler and fan must behave identically every single time. A
+fixed fan speed guarantees that any temperature difference is solely the
+result of the paste.</li>
+<li><strong>Testing PC Cases:</strong> When testing a computer case,
+locking the internal CPU and GPU fans ensures those components don't
+automatically ramp up to compensate for a case with poor airflow. If a
+case has bad ventilation, locked component fans will directly result in
+higher temperatures, clearly exposing the case's flaws.</li>
+<li><strong>Testing Heatsinks:</strong> When testing a specific GPU or
+CPU cooler, locking the fan speed demonstrates how efficiently the heat
+pipes and radiator fins dissipate heat at a specific airflow level.</li>
+</ul>
+<h2 id="stabilizing-modern-boost-clocks">Stabilizing Modern Boost
+Clocks</h2>
+<p>Modern CPUs and GPUs use boosting algorithms that automatically
+increase their clock speeds—and consequently their heat output—if they
+detect available thermal headroom. If a fan is left on "Auto," it might
+suddenly ramp up, cool the chip down by a few degrees, and trigger the
+chip to boost higher and draw more power. This creates a chaotic loop of
+fluctuating power draw and changing fan speeds. Locking the fan speed
+stabilizes the thermal environment, leading to predictable power
+consumption and consistent benchmark scores.</p>
+<h2 id="ensuring-long-term-repeatability">Ensuring Long-Term
+Repeatability</h2>
+<p>Hardware reviewers often compare a brand-new product against data
+collected months or even years prior. For historical data to remain
+valid, the testing methodology must be strictly controlled. Firmware
+updates and driver changes can silently alter how "Auto" fan curves
+behave over time. By manually overriding the software and locking fans
+to a set percentage, reviewers guarantee that a test conducted today is
+performed under the exact same mechanical conditions as a test conducted
+a year ago.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-reviewers-lock-fan-speeds-in-thermal-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

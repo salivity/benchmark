@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Game Physics Ties Frame Rate to Benchmarking Speed - benchmark</title>
+    <meta name="description" content="This article provides an overview of how game engines link physics calculations to frame rates and the resulting impact on computer hardware benchmarking. It covers the mechanics of the game loop, the differences between fixed and variable time steps, how">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-game-physics-ties-frame-rate-to-benchmarking-speed">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Game Physics Ties Frame Rate to Benchmarking Speed - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-game-physics-ties-frame-rate-to-benchmarking-speed" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of how game engines link physics calculations to frame rates and the resulting impact on computer hardware benchmarking. It covers the mechanics of the game loop, the differences between fixed and variable time steps, how" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-game-physics-ties-frame-rate-to-benchmarking-speed">How Game
+Physics Ties Frame Rate to Benchmarking Speed</h1>
+<p>This article provides an overview of how game engines link physics
+calculations to frame rates and the resulting impact on computer
+hardware benchmarking. It covers the mechanics of the game loop, the
+differences between fixed and variable time steps, how uncapped frame
+rates alter simulation speeds, and why decoupling physics from rendering
+is essential for accurate, deterministic hardware testing.</p>
+<h2 id="the-game-loop-and-frame-locked-physics">The Game Loop and
+Frame-Locked Physics</h2>
+<p>At the heart of every video game is the game loop, a continuous cycle
+that processes user input, updates the game world (including physics),
+and renders the visual frame.</p>
+<p>In older or specifically designed game engines, the physics
+simulation is tied directly to the rendering frame rate. In this
+"frame-locked" approach, the engine assumes the game will run at a
+specific speed, such as 60 frames per second (FPS). Every time the
+graphics card (GPU) renders a frame, the processor (CPU) advances the
+physics simulation by a fixed amount—specifically, 1/60th of a
+second.</p>
+<p>When benchmarking modern hardware, testers usually uncap the frame
+rate to measure the maximum output of the CPU and GPU. In a frame-locked
+engine, if a powerful PC pushes the frame rate to 120 FPS, the engine
+still advances the physics by 1/60th of a second per frame. Because
+twice as many frames are occurring in one real-world second, the physics
+simulation runs at double the intended speed. Characters move twice as
+fast, gravity pulls harder, and the benchmark completes in half the
+time.</p>
+<h2 id="variable-delta-time-and-workload-scaling">Variable Delta Time
+and Workload Scaling</h2>
+<p>To prevent simulation speed from changing when frame rates fluctuate,
+many engines use a variable time step, known as "delta time." With this
+method, the engine measures the exact amount of real time that has
+passed since the last frame was rendered and scales the physics
+calculations accordingly.</p>
+<p>While delta time keeps the simulation speed consistent to the human
+eye, it creates a major issue for hardware benchmarking: workload
+scaling.</p>
+<ul>
+<li><strong>Low Frame Rates:</strong> If a weak system runs a benchmark
+at 30 FPS, the CPU only calculates physics 30 times per second, moving
+objects in larger increments.</li>
+<li><strong>High Frame Rates:</strong> If a high-end system runs the
+same benchmark at 300 FPS, the CPU must calculate the physics 300 times
+per second, moving objects in microscopic increments.</li>
+</ul>
+<p>Because the physics are recalculated every frame, a faster GPU
+demands exponentially more physics work from the CPU. Instead of
+measuring how fast a system can complete a set workload, the benchmark
+inadvertently increases the workload the faster the computer runs. This
+creates an artificial CPU bottleneck at high frame rates, skewing the
+test results.</p>
+<h2 id="floating-point-errors-and-determinism">Floating-Point Errors and
+Determinism</h2>
+<p>Accurate hardware benchmarking relies on determinism—the guarantee
+that a test will execute the exact same way every single time it is run.
+Tying physics to frame rates via delta time destroys determinism due to
+floating-point math inaccuracies.</p>
+<p>Computers have a limit to how precisely they can calculate decimals.
+When a benchmark runs at 300 FPS, the time between frames is a tiny
+fraction of a second (0.0033 seconds). Multiplying physics forces by
+such small numbers leads to rounding errors. Over the course of a
+benchmark, these rounding errors accumulate.</p>
+<p>Consequently, a physics-heavy benchmark (like a building collapsing)
+will play out differently at 30 FPS than it will at 300 FPS. Debris may
+fall in different directions, causing different collision calculations,
+which alters the CPU load. If two computers are not calculating the
+exact same events, their benchmark scores cannot be fairly compared.</p>
+<h2 id="the-benchmarking-solution-decoupled-fixed-time-steps">The
+Benchmarking Solution: Decoupled Fixed Time Steps</h2>
+<p>To ensure fair and accurate hardware evaluations, modern game engines
+and dedicated benchmarking tools decouple the physics engine from the
+rendering engine.</p>
+<p>In this configuration, the physics simulation runs on a strict,
+independent timer (e.g., 60 ticks per second), regardless of whether the
+GPU is rendering 30 FPS or 500 FPS. The CPU calculates the exact same
+number of physics interactions per second on both a budget PC and a
+supercomputer.</p>
+<p>To make the visuals look smooth at high frame rates, the engine uses
+interpolation. The GPU takes the previous physics state and the current
+physics state and draws the in-between frames smoothly. This allows the
+benchmark to accurately measure the raw rendering power of the GPU and
+the fixed logic processing of the CPU without the simulation speed
+breaking or the workload dynamically changing.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-game-physics-ties-frame-rate-to-benchmarking-speed';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

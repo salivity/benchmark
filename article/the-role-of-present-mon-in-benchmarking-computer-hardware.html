@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Role of PresentMon in Benchmarking Computer Hardware - benchmark</title>
+    <meta name="description" content="Hardware present monitoring tools, with Intel&#39;s PresentMon serving as the industry standard, are essential utilities used to accurately measure and analyze the real-world performance of computer components. Unlike basic frame counters that only provide a">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/the-role-of-present-mon-in-benchmarking-computer-hardware">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Role of PresentMon in Benchmarking Computer Hardware - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/the-role-of-present-mon-in-benchmarking-computer-hardware" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware present monitoring tools, with Intel&#39;s PresentMon serving as the industry standard, are essential utilities used to accurately measure and analyze the real-world performance of computer components. Unlike basic frame counters that only provide a" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-role-of-presentmon-in-benchmarking-computer-hardware">The
+Role of PresentMon in Benchmarking Computer Hardware</h1>
+<p>Hardware present monitoring tools, with Intel's PresentMon serving as
+the industry standard, are essential utilities used to accurately
+measure and analyze the real-world performance of computer components.
+Unlike basic frame counters that only provide a surface-level glance at
+performance, these tools track the exact lifecycle of every rendered
+frame as it travels from the processor to the graphics card and finally
+to the monitor. By capturing deep telemetry data across various graphics
+APIs, tools like PresentMon provide reviewers and enthusiasts with
+critical metrics on frame rates, frame pacing, hardware bottlenecks, and
+system latency. This article explains how present monitoring tools
+function, the specific metrics they capture, and why they are
+indispensable for modern hardware benchmarking.</p>
+<h3 id="how-presentmon-works">How PresentMon Works</h3>
+<p>In computer graphics, a "Present" is a specific programming call made
+when an application has finished rendering a frame and hands it over to
+the operating system to be displayed on the monitor.</p>
+<p>PresentMon functions by tapping into Event Tracing for Windows (ETW),
+a built-in operating system mechanism that logs system and application
+events. Because it reads data directly from Windows rather than
+injecting code into the game itself, PresentMon operates with extremely
+low overhead and does not trigger anti-cheat software. Furthermore, this
+approach makes it API-agnostic, meaning it can accurately benchmark
+software running on DirectX 9, DirectX 11, DirectX 12, Vulkan, and
+OpenGL using the exact same methodology.</p>
+<h3 id="moving-beyond-average-fps">Moving Beyond Average FPS</h3>
+<p>Historically, hardware benchmarking relied heavily on average frames
+per second (FPS). However, average FPS fails to capture the actual
+smoothness of a gaming experience. A system might average 60 FPS, but if
+the frames are delivered unevenly, the user will experience severe
+stuttering.</p>
+<p>Present monitoring tools solve this by measuring <strong>Frame
+Time</strong>—the exact amount of time, in milliseconds, it takes to
+render and present each individual frame. By recording the time between
+every single "Present" event, these tools allow benchmarkers to
+calculate crucial percentile metrics:</p>
+<ul>
+<li><strong>1% Lows:</strong> The average frame rate of the slowest 1%
+of frames. This metric reveals noticeable stutters and dips in
+performance.</li>
+<li><strong>0.1% Lows:</strong> The average frame rate of the slowest
+0.1% of frames, used to identify severe micro-stuttering and momentary
+freezes.</li>
+</ul>
+<h3 id="identifying-hardware-bottlenecks-with-gpu-busy">Identifying
+Hardware Bottlenecks with "GPU Busy"</h3>
+<p>A major advancement in modern present monitoring is the ability to
+isolate CPU performance from GPU performance. PresentMon achieves this
+through a metric known as <strong>GPU Busy</strong>.</p>
+<p>While Frame Time measures the total time it takes for the entire
+system to produce a frame, GPU Busy measures the exact amount of time
+the graphics card spends actively rendering that frame. Benchmarkers
+compare these two metrics to instantly identify system bottlenecks:</p>
+<ul>
+<li><strong>GPU Bottleneck:</strong> If the total Frame Time is 16
+milliseconds and the GPU Busy time is also 16 milliseconds, the graphics
+card is working at 100% capacity. Upgrading the CPU will not improve
+performance.</li>
+<li><strong>CPU Bottleneck:</strong> If the total Frame Time is 16
+milliseconds, but the GPU Busy time is only 8 milliseconds, the graphics
+card is sitting idle for half the time while waiting for the processor
+to send it data. This proves the CPU is limiting the system's
+performance.</li>
+</ul>
+<h3 id="tracking-displayed-vs-dropped-frames">Tracking Displayed vs.
+Dropped Frames</h3>
+<p>Not every frame generated by a computer actually makes it to the
+user's eyes. Due to synchronization technologies (like V-Sync) or
+display refresh rate limits, some frames are generated by the GPU but
+dropped before they reach the monitor.</p>
+<p>PresentMon differentiates between application performance and display
+performance. It tracks when a frame is generated, when it enters the
+display queue, and whether it actually illuminates pixels on the screen.
+This allows hardware testers to measure true display frame rates and
+calculate accurate system latency—the time between a user's mouse click
+and the resulting action appearing on the monitor.</p>
+<h3 id="the-foundation-of-the-benchmarking-ecosystem">The Foundation of
+the Benchmarking Ecosystem</h3>
+<p>PresentMon is so effective that it serves as the foundational engine
+for almost all modern benchmarking software. While PresentMon itself has
+a dedicated user interface and a command-line tool, its open-source code
+is integrated into popular third-party utilities such as CapFrameX,
+NVIDIA FrameView, and AMD OCAT. By standardizing how frame data is
+collected, present monitoring tools ensure that hardware benchmarks are
+accurate, repeatable, and directly comparable across different testing
+labs.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/the-role-of-present-mon-in-benchmarking-computer-hardware';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

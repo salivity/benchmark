@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How AI Upscaling Complicates Computer Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="Artificial intelligence upscaling technologies, such as Nvidia&#39;s DLSS, AMD&#39;s FSR, and Intel&#39;s XeSS, have revolutionized gaming performance, but they have also thrown the traditional hardware benchmarking process into chaos. By rendering games at lower res">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-ai-upscaling-complicates-computer-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How AI Upscaling Complicates Computer Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-ai-upscaling-complicates-computer-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Artificial intelligence upscaling technologies, such as Nvidia&#39;s DLSS, AMD&#39;s FSR, and Intel&#39;s XeSS, have revolutionized gaming performance, but they have also thrown the traditional hardware benchmarking process into chaos. By rendering games at lower res" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ai-upscaling-complicates-computer-hardware-benchmarking">How
+AI Upscaling Complicates Computer Hardware Benchmarking</h1>
+<p>Artificial intelligence upscaling technologies, such as Nvidia's
+DLSS, AMD's FSR, and Intel's XeSS, have revolutionized gaming
+performance, but they have also thrown the traditional hardware
+benchmarking process into chaos. By rendering games at lower resolutions
+and using algorithms to reconstruct images, coupled with frame
+generation techniques, these tools make direct, apples-to-apples
+comparisons between graphics cards nearly impossible. This article
+explores how variable internal resolutions, proprietary hardware
+requirements, subjective image quality, and artificial frames have
+fundamentally complicated the way reviewers and consumers measure
+computer hardware performance.</p>
+<h2 id="the-end-of-apples-to-apples-comparisons">The End of
+Apples-to-Apples Comparisons</h2>
+<p>Historically, benchmarking a graphics card was straightforward:
+reviewers ran a game at a native resolution like 1080p, 1440p, or 4K and
+recorded the frames per second (FPS). Upscaling breaks this
+standard.</p>
+<p>When DLSS (Deep Learning Super Sampling) or FSR (FidelityFX Super
+Resolution) is enabled, the GPU renders the game at a lower internal
+resolution and scales it up to fit the monitor. Even though these
+technologies use standardized preset names like "Quality" or
+"Performance," the underlying algorithms work differently and utilize
+different hardware components. Consequently, comparing a GPU running
+DLSS against another running FSR is no longer a strict test of raw
+hardware power; it is a test of competing software algorithms.</p>
+<h2 id="the-subjectivity-of-image-quality">The Subjectivity of Image
+Quality</h2>
+<p>Before upscaling, a frame rendered on an AMD card looked virtually
+identical to a frame rendered on an Nvidia or Intel card. Today, higher
+frame rates often come at the cost of visual fidelity.</p>
+<p>Upscalers can introduce visual artifacts such as ghosting,
+shimmering, and blurring. Because Nvidia's AI-driven DLSS typically
+retains better image quality than AMD's spatial/temporal FSR at lower
+resolutions, two cards producing the exact same FPS with upscaling
+enabled are not delivering the same user experience. Benchmark bar
+charts only show numerical performance, failing to capture the
+degradation in visual quality required to achieve those numbers.
+Reviewers must now perform subjective visual analyses alongside
+objective frame-rate testing.</p>
+<h2 id="frame-generation-distorts-performance-metrics">Frame Generation
+Distorts Performance Metrics</h2>
+<p>The introduction of frame generation in DLSS 3 and FSR 3 has further
+muddied the waters. These technologies use AI and motion data to insert
+entirely artificial frames between traditionally rendered ones.</p>
+<p>While this makes the game look smoother to the eye and drastically
+increases the reported FPS on a benchmark chart, these generated frames
+do not respond to user input. In fact, frame generation adds processing
+overhead that can increase input lag. A game running at 120 FPS with
+frame generation might have the slower input responsiveness of a game
+running at 50 FPS. Therefore, traditional FPS counters are no longer a
+reliable indicator of how playable or responsive a game actually
+feels.</p>
+<h2 id="vendor-exclusivity-creates-testing-dilemmas">Vendor Exclusivity
+Creates Testing Dilemmas</h2>
+<p>Hardware reviewers face a difficult philosophical choice when setting
+up benchmarks. Nvidia's DLSS requires proprietary Tensor cores, meaning
+it only works on Nvidia GPUs. AMD’s FSR and Intel's XeSS are open-source
+and work on almost all modern graphics cards.</p>
+<p>If a reviewer tests all cards solely at native resolution to keep the
+test fair, they ignore a massive, proprietary performance feature that
+buyers of Nvidia cards will heavily rely on. Conversely, if they enable
+DLSS for Nvidia and FSR for AMD, the test becomes scientifically flawed
+because the workloads and resulting image qualities are no longer
+identical.</p>
+<h2 id="shifting-the-bottleneck-to-the-cpu">Shifting the Bottleneck to
+the CPU</h2>
+<p>Upscaling also alters how different components within a computer
+interact during a benchmark. When testing a powerful GPU on a 4K monitor
+using an upscaler's "Performance" mode, the graphics card is actually
+rendering the game internally at 1080p.</p>
+<p>At 1080p, modern high-end GPUs process frames so quickly that the
+computer's central processor (CPU) often cannot keep up. Instead of
+measuring the maximum potential of the graphics card, the benchmark
+inadvertently measures the limits of the CPU. This forces reviewers to
+run exponentially more tests—covering native resolutions, multiple
+upscaling presets, and frame generation toggles—significantly increasing
+the time and complexity required to accurately evaluate a single piece
+of hardware.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-ai-upscaling-complicates-computer-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

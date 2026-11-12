@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Role of Prime95 Small FFTs in CPU Thermal Testing - benchmark</title>
+    <meta name="description" content="Prime95&#39;s Small FFTs torture test is widely recognized as the ultimate benchmark for evaluating a processor&#39;s maximum thermal output and the efficiency of its cooling solution. This article examines the mechanics of the Small FFTs workload, explaining how">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/the-role-of-prime-95-small-ff-ts-in-cpu-thermal-testing">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Role of Prime95 Small FFTs in CPU Thermal Testing - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/the-role-of-prime-95-small-ff-ts-in-cpu-thermal-testing" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Prime95&#39;s Small FFTs torture test is widely recognized as the ultimate benchmark for evaluating a processor&#39;s maximum thermal output and the efficiency of its cooling solution. This article examines the mechanics of the Small FFTs workload, explaining how" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-role-of-prime95-small-ffts-in-cpu-thermal-testing">The Role
+of Prime95 Small FFTs in CPU Thermal Testing</h1>
+<p>Prime95's Small FFTs torture test is widely recognized as the
+ultimate benchmark for evaluating a processor's maximum thermal output
+and the efficiency of its cooling solution. This article examines the
+mechanics of the Small FFTs workload, explaining how it isolates the CPU
+to generate extreme heat and why overclockers and system builders rely
+on it to find thermal limits. Additionally, it covers the role of AVX
+instructions in power consumption and how to use this test to identify
+thermal throttling and validate cooling performance.</p>
+<h2 id="how-small-ffts-isolate-the-cpu">How Small FFTs Isolate the
+CPU</h2>
+<p>Small FFTs (Fast Fourier Transforms) are mathematical calculations
+sized specifically to fit entirely within the processor's L1, L2, and L3
+caches. In standard workloads, the CPU frequently waits for data to
+travel back and forth from the system RAM, which creates microscopic
+pauses in processing. By keeping the workload entirely inside the
+ultra-fast CPU cache, Small FFTs eliminate memory bottlenecks. This
+forces the processor's execution units to run at an unrelenting 100%
+capacity, generating a continuous, unbroken stream of heat.</p>
+<h2 id="establishing-the-worst-case-thermal-baseline">Establishing the
+Worst-Case Thermal Baseline</h2>
+<p>Real-world applications, such as gaming, 3D rendering, or video
+editing, feature fluctuating workloads that rarely push all CPU cores to
+their absolute limits simultaneously. Prime95 Small FFTs create a
+synthetic, worst-case thermal scenario. Hardware testers use this
+specific mode to find the absolute ceiling of a CPU’s temperature. The
+logic is straightforward: if a cooling system can keep the processor
+within safe operating temperatures during a Small FFTs run, it is
+mathematically guaranteed to handle any standard daily workload without
+overheating.</p>
+<h2 id="the-impact-of-avx-instructions">The Impact of AVX
+Instructions</h2>
+<p>Modern versions of Prime95 utilize Advanced Vector Extensions (AVX,
+AVX2, and AVX-512) to process data more efficiently. When the Small FFTs
+test runs with AVX enabled, the CPU demands a massive increase in
+electrical current. This surge in power consumption translates directly
+into an immediate and extreme spike in thermal output. Benchmarking with
+AVX-enabled Small FFTs is the most aggressive method for testing the
+thermal transfer limits between the CPU silicon, the integrated heat
+spreader (IHS), the thermal paste, and the cooler's cold plate.</p>
+<h2 id="detecting-thermal-throttling">Detecting Thermal Throttling</h2>
+<p>A primary objective of thermal benchmarking is identifying whether a
+system suffers from thermal throttling. Every modern processor has a
+maximum safe operating temperature, known as TJMax (Thermal Junction
+Maximum), usually set between 95°C and 105°C.</p>
+<p>When Prime95 Small FFTs push the processor to this thermal wall, the
+CPU protects itself by automatically lowering its clock speed and
+voltage. During the benchmark, testers monitor core frequencies
+alongside temperatures. If the clock speeds drop below the expected
+all-core boost frequency while temperatures are maxed out, the cooling
+system has failed the test and cannot dissipate the heat fast enough to
+maintain peak performance.</p>
+<h2 id="measuring-cooler-saturation">Measuring Cooler Saturation</h2>
+<p>Different cooling solutions take varying amounts of time to reach
+thermal equilibrium, and Prime95 Small FFTs provide the steady heat load
+required to measure this saturation point accurately.</p>
+<ul>
+<li><strong>Air Coolers:</strong> Typically reach their maximum thermal
+limit within 10 to 15 minutes of running Small FFTs, as the metal heat
+pipes and fins saturate with heat quickly.</li>
+<li><strong>Liquid Coolers:</strong> All-in-One (AIO) coolers and custom
+water loops require 30 to 60 minutes of testing. The liquid coolant
+absorbs a significant amount of thermal energy before the water
+temperature finally stabilizes, revealing the true heat dissipation
+limit of the radiators and fans.</li>
+</ul>
+<p>By applying a constant, unchanging thermal load, Prime95 Small FFTs
+ensure that benchmark results reflect the true physical limits of the
+cooling hardware rather than temporary fluctuations in software
+demand.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/the-role-of-prime-95-small-ff-ts-in-cpu-thermal-testing';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

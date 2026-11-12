@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDR5 On-Die vs. Side-Band ECC in Memory Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores the fundamental differences between DDR5 on-die Error Correction Code (ECC) and side-band ECC, specifically focusing on how each impacts computer hardware during memory benchmarking. While on-die ECC is a standard feature built into">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/ddr-5-on-die-vs-side-band-ecc-in-memory-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DDR5 On-Die vs. Side-Band ECC in Memory Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/ddr-5-on-die-vs-side-band-ecc-in-memory-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the fundamental differences between DDR5 on-die Error Correction Code (ECC) and side-band ECC, specifically focusing on how each impacts computer hardware during memory benchmarking. While on-die ECC is a standard feature built into" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ddr5-on-die-vs-side-band-ecc-in-memory-benchmarking">DDR5 On-Die
+vs. Side-Band ECC in Memory Benchmarking</h1>
+<p>This article explores the fundamental differences between DDR5 on-die
+Error Correction Code (ECC) and side-band ECC, specifically focusing on
+how each impacts computer hardware during memory benchmarking. While
+on-die ECC is a standard feature built into all DDR5 chips to maintain
+high-density manufacturing yields, side-band ECC is a true
+enterprise-grade solution that ensures data integrity across the entire
+memory bus. Understanding these two technologies explains why memory
+behaves differently regarding latency, stability, and error reporting
+during hardware stress tests and benchmarks.</p>
+<h2 id="understanding-on-die-ecc">Understanding On-Die ECC</h2>
+<p>On-die ECC is a new standard feature integrated directly into every
+DDR5 DRAM chip, including consumer-grade desktop memory. As memory
+becomes denser, the physical cells shrink, making them more susceptible
+to bit flips and data corruption. On-die ECC corrects single-bit errors
+entirely within the memory chip itself before the data is ever sent to
+the CPU. For every 128 bits of data, the chip uses an extra 8 bits
+internally for error correction. It does not require specialized
+motherboard or CPU support because the CPU is completely unaware the
+correction is happening.</p>
+<h2 id="understanding-side-band-ecc">Understanding Side-Band ECC</h2>
+<p>Side-band ECC is the DDR5 evolution of traditional server-grade ECC
+memory. While DDR5 modules with side-band ECC still feature on-die ECC
+inside the chips, they also include additional physical DRAM chips on
+the module dedicated to protecting data as it travels across the
+motherboard traces to the CPU. A standard DDR5 module features two
+32-bit data sub-channels. A side-band ECC module expands this to two
+40-bit sub-channels, allocating 8 extra bits per sub-channel
+specifically for error correction. This requires explicit support from
+both the motherboard and the processor's Integrated Memory Controller
+(IMC).</p>
+<h2 id="error-reporting-during-stability-benchmarks">Error Reporting
+During Stability Benchmarks</h2>
+<p>The most significant difference during memory
+benchmarking—specifically stability testing with tools like MemTest86,
+Karhu, or Prime95—is how errors are reported to the system.</p>
+<p>Because on-die ECC operates exclusively inside the DRAM chip, it
+corrects single-bit errors silently. If you are benchmarking an
+aggressive memory overclock, the memory might be generating thousands of
+single-bit errors due to high temperatures or insufficient voltage.
+On-die ECC will fix these without notifying the CPU or the operating
+system. To the user running the benchmark, the system appears completely
+stable. However, if the overclock is pushed just slightly further,
+generating multi-bit errors that on-die ECC cannot fix, the system will
+suddenly crash or corrupt the operating system without warning.</p>
+<p>Conversely, side-band ECC actively communicates with the CPU. When
+side-band ECC detects and corrects an error in transit, it logs the
+event with the operating system (often visible as a WHEA error in
+Windows Event Viewer). During a memory benchmark, this transparency
+allows hardware testers to immediately see that their memory
+configuration is on the verge of instability, even if the benchmark
+hasn't crashed.</p>
+<h2 id="latency-and-bandwidth-impacts">Latency and Bandwidth
+Impacts</h2>
+<p>When running synthetic benchmarks that measure raw bandwidth and
+latency, such as AIDA64, the two ECC types exhibit different performance
+characteristics.</p>
+<ul>
+<li><strong>On-Die ECC Performance:</strong> On-die ECC introduces a
+microscopic latency penalty because the chip must compute the
+error-checking algorithm before releasing data. However, because every
+DDR5 chip has this feature, it is simply baked into the baseline
+performance of the DDR5 standard. During extreme overclocking
+benchmarks, if on-die ECC is constantly triggered to fix errors, it can
+cause inconsistent benchmark scores. The memory controller may
+experience micro-stalls waiting for corrected data, resulting in
+lower-than-expected read and write bandwidth scores despite higher clock
+speeds.</li>
+<li><strong>Side-Band ECC Performance:</strong> Side-band ECC shifts the
+error-checking workload to the CPU's memory controller. In synthetic
+benchmarks, a side-band ECC module running at the exact same frequency
+and timings as a standard consumer DDR5 module will typically show a 1%
+to 2% increase in memory latency. This is the time it takes the CPU to
+verify the extra 8 bits of data per sub-channel. Bandwidth scores,
+however, remain virtually identical, as the extra bus width is used
+exclusively for parity data rather than system data.</li>
+</ul>
+<h2 id="hardware-compatibility-and-overclocking-limits">Hardware
+Compatibility and Overclocking Limits</h2>
+<p>From a benchmarking perspective, consumer DDR5 (on-die ECC only) and
+workstation DDR5 (on-die plus side-band ECC) target different goals.</p>
+<p>Memory kits with only on-die ECC are designed for maximum bandwidth
+and low latency. They are binned for high frequencies and tight timings,
+making them ideal for setting high scores in competitive hardware
+benchmarks.</p>
+<p>Modules with side-band ECC prioritize absolute data integrity over
+raw speed. Because there are extra DRAM chips on the PCB and more data
+lines routing to the CPU, there is an increased electrical load on the
+memory controller. Consequently, side-band ECC memory usually cannot
+reach the same extreme clock speeds as standard DDR5 during overclocking
+benchmarks, capping the maximum achievable bandwidth in exchange for
+total system reliability.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/ddr-5-on-die-vs-side-band-ecc-in-memory-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

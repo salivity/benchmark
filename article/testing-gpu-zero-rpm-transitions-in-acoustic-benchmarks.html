@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing GPU Zero RPM Transitions in Acoustic Benchmarks - benchmark</title>
+    <meta name="description" content="Modern graphics cards use a &quot;zero RPM&quot; or &quot;fan stop&quot; mode to remain completely silent during light tasks, but the transition from passive to active cooling can sometimes create jarring noise anomalies. This article provides an overview of how hardware rev">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/testing-gpu-zero-rpm-transitions-in-acoustic-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Testing GPU Zero RPM Transitions in Acoustic Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/testing-gpu-zero-rpm-transitions-in-acoustic-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Modern graphics cards use a &quot;zero RPM&quot; or &quot;fan stop&quot; mode to remain completely silent during light tasks, but the transition from passive to active cooling can sometimes create jarring noise anomalies. This article provides an overview of how hardware rev" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="testing-gpu-zero-rpm-transitions-in-acoustic-benchmarks">Testing
+GPU Zero RPM Transitions in Acoustic Benchmarks</h1>
+<p>Modern graphics cards use a "zero RPM" or "fan stop" mode to remain
+completely silent during light tasks, but the transition from passive to
+active cooling can sometimes create jarring noise anomalies. This
+article provides an overview of how hardware reviewers and acoustic
+engineers benchmark GPU fan stop transitions. It covers the silent
+testing environments required, the specific thermal workloads used to
+trigger fan engagement, the tracking of temperature hysteresis, and the
+acoustic equipment used to detect motor clicks and fan revving
+spikes.</p>
+<h2 id="establishing-a-zero-noise-environment">Establishing a Zero-Noise
+Environment</h2>
+<p>To accurately measure the quiet transition of a GPU fan starting up,
+all other system noise sources must be eliminated. Testing takes place
+inside an anechoic chamber or a soundproofed room with an ambient noise
+floor below 20 dBA.</p>
+<p>The test system is built on an open-air test bench using exclusively
+silent components:</p>
+<ul>
+<li>A passively cooled CPU (using a massive heatsink with no fan).</li>
+<li>A fanless power supply unit (PSU).</li>
+<li>Solid-state drives (SSDs) with no moving parts.</li>
+</ul>
+<p>Ambient room temperature is strictly controlled, typically between
+21°C and 23°C, because external thermal conditions directly impact when
+the GPU fans will engage and disengage.</p>
+<h2 id="positioning-acoustic-equipment">Positioning Acoustic
+Equipment</h2>
+<p>A calibrated Class 1 sound level meter (SLM) or a specialized
+measurement microphone is placed at a standardized close distance from
+the graphics card—usually 15 to 50 centimeters away, aimed directly at
+the fan hubs.</p>
+<p>While standard acoustic testing is often done at a one-meter
+distance, zero RPM transition testing requires closer proximity. This
+allows the microphone to capture subtle mechanical noises, such as
+bearing friction or pulse-width modulation (PWM) motor clicking, which
+occur at the exact moment power is applied to the fan motor.</p>
+<h2 id="triggering-the-transition-threshold">Triggering the Transition
+Threshold</h2>
+<p>Testers do not use heavy 3D stress tests to evaluate fan stop
+behavior, as extreme loads force the fans to ramp up to high speeds
+immediately. Instead, testers apply a gradual, light thermal load to
+slowly creep the GPU core and memory temperatures toward the activation
+threshold, which is typically programmed between 50°C and 60°C.</p>
+<p>This gradual heating is achieved using menu screens of older games,
+4K video playback, or custom power-virus scripts configured to pull a
+very specific, low wattage (Usually 40W to 70W). This simulates
+real-world borderline usage, such as light gaming or multi-monitor
+productivity.</p>
+<h2 id="analyzing-rpm-overshoot-and-acoustic-spikes">Analyzing RPM
+Overshoot and Acoustic Spikes</h2>
+<p>As the GPU crosses its thermal activation threshold, the acoustic
+equipment records the exact moment the fans overcome static friction and
+begin to spin. Testers look for two main acoustic flaws during this
+phase:</p>
+<ol type="1">
+<li><strong>RPM Overshoot:</strong> Many GPUs send a brief, high-voltage
+burst to kickstart the fan blades, causing them to spin up to 1,500+ RPM
+for a second before settling down to a quiet 800 RPM. This creates an
+audible "whoosh" sound.</li>
+<li><strong>Motor Clicking:</strong> Some fan controllers produce an
+audible click, grind, or high-pitched whine as the motor
+initializes.</li>
+</ol>
+<p>The sound level meter logs decibel data multiple times per second to
+graph these brief acoustic spikes. Simultaneously, frequency spectrum
+analysis is used to identify specific annoying pitches that a basic
+decibel reading might miss.</p>
+<h2 id="evaluating-thermal-hysteresis-and-fan-cycling">Evaluating
+Thermal Hysteresis and Fan Cycling</h2>
+<p>A critical part of the benchmark is evaluating the hysteresis
+loop—the gap between the temperature that turns the fan on and the
+temperature that turns the fan off. Throughout the acoustic recording,
+testers log hardware telemetry data (GPU temperature, hotspot
+temperature, fan RPM, and PWM percentage) at millisecond intervals.</p>
+<p>Once the fans spin up, the tester reduces the workload slightly to
+observe the spin-down behavior. A well-engineered GPU will activate its
+fans at 60°C and keep them spinning until the core cools down to 45°C,
+ensuring a smooth, infrequent transition.</p>
+<p>A poorly tuned GPU might turn its fans on at 55°C and turn them off
+at 53°C. Testers intentionally hold the GPU at this exact borderline
+wattage to see if the card gets trapped in "fan cycling"—a flawed state
+where the fans repeatedly rev up for a few seconds, cool the card by two
+degrees, shut off, and immediately rev up again. In acoustic
+benchmarking, continuous start-stop cycling is considered a major
+failure, as a constant, low humming noise is far less distracting to the
+human ear than a repetitive revving sound.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/testing-gpu-zero-rpm-transitions-in-acoustic-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

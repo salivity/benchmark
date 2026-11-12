@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCIe Gen 5 Heat Impact on Sustained Storage Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores the direct impact of heat dissipation on the sustained throughput of PCIe Gen 5 storage drives during computer hardware benchmarking. It examines why Gen 5 solid-state drives (SSDs) generate substantial heat, how thermal throttling d">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/pc-ie-gen-5-heat-impact-on-sustained-storage-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="PCIe Gen 5 Heat Impact on Sustained Storage Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/pc-ie-gen-5-heat-impact-on-sustained-storage-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the direct impact of heat dissipation on the sustained throughput of PCIe Gen 5 storage drives during computer hardware benchmarking. It examines why Gen 5 solid-state drives (SSDs) generate substantial heat, how thermal throttling d" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="pcie-gen-5-heat-impact-on-sustained-storage-benchmarks">PCIe Gen
+5 Heat Impact on Sustained Storage Benchmarks</h1>
+<p>This article explores the direct impact of heat dissipation on the
+sustained throughput of PCIe Gen 5 storage drives during computer
+hardware benchmarking. It examines why Gen 5 solid-state drives (SSDs)
+generate substantial heat, how thermal throttling degrades data transfer
+speeds, the ways inadequate cooling distorts benchmark scores, and the
+cooling methods required to achieve accurate, consistent performance
+metrics.</p>
+<h2 id="why-pcie-gen-5-drives-run-hot">Why PCIe Gen 5 Drives Run
+Hot</h2>
+<p>PCIe Gen 5 SSDs double the theoretical bandwidth of Gen 4, reaching
+sequential read and write speeds of up to 14,000 MB/s. Achieving these
+speeds requires multi-channel controllers running at higher clock speeds
+and denser, faster NAND flash memory. Consequently, power consumption
+has increased, with many Gen 5 drives drawing 10 to 14 watts under full
+load. Because all of this power is concentrated into a compact M.2 2280
+form factor, the electrical energy converts rapidly into dense pockets
+of heat.</p>
+<h2 id="the-mechanics-of-thermal-throttling">The Mechanics of Thermal
+Throttling</h2>
+<p>To prevent permanent silicon damage, NVMe SSDs utilize built-in
+thermal sensors to monitor the temperatures of the controller and the
+NAND flash chips. While NAND flash operates efficiently at moderately
+warm temperatures, the drive's controller becomes unstable if it
+overheats.</p>
+<p>Once a PCIe Gen 5 drive reaches its programmed thermal
+limit—typically between 70°C and 85°C—a firmware safety mechanism called
+thermal throttling engages. The controller intentionally reduces its
+operating frequency and voltage. This action immediately lowers heat
+output, but it does so by drastically cutting the drive's data
+processing rates.</p>
+<h2 id="how-heat-skews-sustained-benchmarks">How Heat Skews Sustained
+Benchmarks</h2>
+<p>Hardware storage benchmarks generally measure two scenarios: short
+bursts of data and sustained workloads. A poorly cooled PCIe Gen 5 SSD
+might complete a short-burst test before the heat saturates the
+components, producing an artificially high score.</p>
+<p>During sustained throughput benchmarks, the software writes or reads
+hundreds of gigabytes of continuous data to test the drive's endurance
+and stability. Under these conditions, heat accumulates within seconds.
+If heat dissipation is inadequate, thermal throttling triggers early in
+the test. Instead of measuring the maximum sustained capability of the
+storage hardware, the benchmark measures the drive's throttled safety
+state. In severe cases of poor heat dissipation, a throttled Gen 5 SSD
+will drop to transfer speeds slower than a PCIe Gen 3 drive,or it may
+shut down entirely to protect itself, resulting in a failed benchmark
+run.</p>
+<h2 id="separating-cache-exhaustion-from-thermal-limits">Separating
+Cache Exhaustion from Thermal Limits</h2>
+<p>When benchmarking sustained write speeds, all modern SSDs experience
+a natural performance drop once their fast pSLC (pseudo-Single-Level
+Cell) cache fills up, forcing the drive to write directly to slower TLC
+or QLC NAND.</p>
+<p>Poor heat dissipation makes it difficult to analyze this behavior. If
+a drive thermally throttles during a sustained write test, a hardware
+tester cannot easily determine if a sudden drop in throughput is caused
+by the drive running out of cache or by the controller overheating.
+Effective heat dissipation eliminates the thermal variable, ensuring
+that the benchmark accurately reflects the true architectural limits of
+the controller and NAND flash.</p>
+<h2 id="cooling-requirements-for-accurate-testing">Cooling Requirements
+for Accurate Testing</h2>
+<p>Maintaining peak sustained throughput during benchmarks requires a
+cooling solution that can dissipate heat faster than the drive generates
+it.</p>
+<ul>
+<li><strong>Bare Drives:</strong> Benchmarking a PCIe Gen 5 SSD without
+a heatsink is unviable. The drive will hit its thermal limit in seconds,
+sometimes even while idling or booting the operating system.</li>
+<li><strong>Passive Heatsinks:</strong> Thick aluminum or copper
+heatsinks, including those integrated into modern motherboards, are the
+minimum requirement. They rely on thermal pads to transfer heat away
+from the controller and into the metal fins.</li>
+<li><strong>System Airflow:</strong> Passive heatsinks fail during long
+benchmarks if the air around them is stagnant. Consistent case airflow
+is required to move heat away from the M.2 slot.</li>
+<li><strong>Active Cooling:</strong> For open-air test benches that lack
+case fans, or for prolonged stress testing, active heatsinks featuring
+built-in micro-fans or vapor chambers are necessary. These solutions
+force air directly over the fins, ensuring the PCIe Gen 5 drive never
+reaches its throttling threshold during the benchmark.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/pc-ie-gen-5-heat-impact-on-sustained-storage-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

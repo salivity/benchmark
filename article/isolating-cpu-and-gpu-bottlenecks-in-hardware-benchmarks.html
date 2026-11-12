@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isolating CPU and GPU Bottlenecks in Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="Accurately benchmarking computer hardware requires understanding which component is limiting your system&#39;s performance at any given moment. This article explains how to isolate Central Processing Unit (CPU) bottlenecks from Graphics Processing Unit (GPU)">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/isolating-cpu-and-gpu-bottlenecks-in-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Isolating CPU and GPU Bottlenecks in Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/isolating-cpu-and-gpu-bottlenecks-in-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Accurately benchmarking computer hardware requires understanding which component is limiting your system&#39;s performance at any given moment. This article explains how to isolate Central Processing Unit (CPU) bottlenecks from Graphics Processing Unit (GPU)" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="isolating-cpu-and-gpu-bottlenecks-in-hardware-benchmarks">Isolating
+CPU and GPU Bottlenecks in Hardware Benchmarks</h1>
+<p>Accurately benchmarking computer hardware requires understanding
+which component is limiting your system's performance at any given
+moment. This article explains how to isolate Central Processing Unit
+(CPU) bottlenecks from Graphics Processing Unit (GPU) bottlenecks during
+testing. By monitoring real-time hardware utilization metrics,
+manipulating screen resolutions, adjusting graphics settings, and using
+dedicated synthetic tests, you can definitively identify whether your
+processor or graphics card is the primary factor holding back your
+system's performance.</p>
+<h3 id="monitor-real-time-hardware-utilization">Monitor Real-Time
+Hardware Utilization</h3>
+<p>Before changing any settings, you must establish a baseline by
+observing how your hardware behaves under load. Use an On-Screen Display
+(OSD) monitoring tool, such as MSI Afterburner paired with RivaTuner
+Statistics Server, to track metrics in real time.</p>
+<ul>
+<li><strong>Identifying a GPU Bottleneck:</strong> Look at the GPU usage
+percentage. If your GPU utilization is consistently between 95% and
+100%, your system is GPU-bound. The graphics card is working at its
+maximum capacity, and the CPU is waiting for it to finish rendering
+frames.</li>
+<li><strong>Identifying a CPU Bottleneck:</strong> If your GPU usage
+drops below 90% (while frame rates are uncapped), you are likely facing
+a CPU bottleneck. Note that overall CPU usage does not need to be at
+100% to bottleneck a system. Because many games and applications only
+utilize a few processor cores, you must monitor <strong>per-core
+utilization</strong>. If one or two CPU threads are maxed out at 95% to
+100% while GPU usage is low, the CPU is the bottleneck.</li>
+</ul>
+<h3 id="how-to-isolate-the-cpu">How to Isolate the CPU</h3>
+<p>To benchmark your CPU’s maximum capability, you must remove the GPU
+from the equation. You do this by drastically reducing the graphical
+workload, forcing the GPU to render frames as fast as the CPU can feed
+them data.</p>
+<ol type="1">
+<li><strong>Lower the Resolution:</strong> Drop the display resolution
+to 1920x1080 (1080p) or 1280x720 (720p). Lower resolutions require
+significantly fewer pixels to be rendered by the GPU, shifting the
+workload entirely to the processor.</li>
+<li><strong>Minimize Graphics Settings:</strong> Set textures, shadows,
+anti-aliasing, ambient occlusion, and ray tracing to their lowest
+possible settings.</li>
+<li><strong>Uncap Frame Rates:</strong> Turn off V-Sync, G-Sync,
+FreeSync, and any in-game frame rate limiters.</li>
+</ol>
+<p>In this scenario, your GPU usage should plummet. The resulting frame
+rate is the absolute maximum your CPU can achieve in that specific
+application.</p>
+<h3 id="how-to-isolate-the-gpu">How to Isolate the GPU</h3>
+<p>To benchmark the GPU and ensure the CPU is not holding it back, you
+need to overwhelm the graphics card with visual data. This slows down
+the frame rate, giving the CPU plenty of breathing room between
+frames.</p>
+<ol type="1">
+<li><strong>Increase the Resolution:</strong> Set the resolution to
+2560x1440 (1440p) or 3840x2160 (4K). If you do not have a
+high-resolution monitor, use Virtual Super Resolution (AMD) or Dynamic
+Super Resolution (Nvidia) in your graphics driver control panel to
+render the workload at a higher internal resolution.</li>
+<li><strong>Maximize Graphics Settings:</strong> Set all visual settings
+to "Ultra" or "Maximum." Enable heavy graphical features like ray
+tracing and high-level anti-aliasing.</li>
+<li><strong>Disable Upscalers:</strong> Turn off DLSS, FSR, or XeSS, as
+these technologies lower the internal rendering resolution and can
+reintroduce a CPU bottleneck.</li>
+</ol>
+<p>When configured correctly, your GPU utilization will lock at 99% to
+100%, and your CPU usage will drop. Any changes in performance during
+this test are strictly representative of the GPU's capabilities.</p>
+<h3 id="analyze-frame-times-and-1-lows">Analyze Frame Times and 1%
+Lows</h3>
+<p>Average frame rates (FPS) do not tell the whole story when isolating
+bottlenecks. You must also record 1% low and 0.1% low FPS metrics,
+alongside a frame time graph.</p>
+<ul>
+<li><strong>CPU Bottleneck Behavior:</strong> When a CPU is overwhelmed,
+it struggles to deliver frame data at a consistent pace. This manifests
+as spikes on the frame time graph, resulting in visible micro-stuttering
+and very poor 1% and 0.1% low FPS numbers, even if the average FPS seems
+high.</li>
+<li><strong>GPU Bottleneck Behavior:</strong> When a GPU is maxed out,
+the frame rate may be low, but the frame time graph will remain
+relatively flat and consistent. The gap between the average FPS and the
+1% low FPS will be much smaller than in a CPU-bound scenario.</li>
+</ul>
+<h3 id="use-synthetic-benchmarks-to-eliminate-variables">Use Synthetic
+Benchmarks to Eliminate Variables</h3>
+<p>In-game benchmarks often utilize both the CPU and GPU simultaneously,
+which can muddy the results. To completely isolate the components, use
+synthetic benchmarking software designed to target one piece of hardware
+at a time.</p>
+<ul>
+<li><strong>For CPU Isolation:</strong> Use Cinebench, Prime95, or the
+3DMark CPU Profile test. These applications bypass the GPU entirely,
+using pure mathematical and rendering workloads to test single-core and
+multi-core processor performance.</li>
+<li><strong>For GPU Isolation:</strong> Use Unigine Superposition or
+FurMark. If using 3DMark (such as the Time Spy or Fire Strike tests),
+ignore the overall score and look exclusively at the "Graphics Score,"
+which isolates GPU performance from the physics/CPU portion of the
+test.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/isolating-cpu-and-gpu-bottlenecks-in-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How GPU Sag Affects Thermal Contact During Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores the critical relationship between graphics card sag, improper bracket support, and thermal performance during intensive hardware benchmarking. As modern GPUs utilize increasingly massive heatsinks, the lack of proper physical support">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-gpu-sag-affects-thermal-contact-during-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How GPU Sag Affects Thermal Contact During Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-gpu-sag-affects-thermal-contact-during-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the critical relationship between graphics card sag, improper bracket support, and thermal performance during intensive hardware benchmarking. As modern GPUs utilize increasingly massive heatsinks, the lack of proper physical support" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-gpu-sag-affects-thermal-contact-during-benchmarking">How GPU
+Sag Affects Thermal Contact During Benchmarking</h1>
+<p>This article explores the critical relationship between graphics card
+sag, improper bracket support, and thermal performance during intensive
+hardware benchmarking. As modern GPUs utilize increasingly massive
+heatsinks, the lack of proper physical support causes the printed
+circuit board (PCB) to flex under its own weight. This article explains
+how that structural bending compromises the contact between the cooler
+and internal components, leading to skewed benchmark results, thermal
+throttling, and potential hardware degradation, as well as how to
+prevent these issues.</p>
+<h2 id="the-mechanics-of-pcb-flex">The Mechanics of PCB Flex</h2>
+<p>Modern graphics cards are heavy, with most of their mass concentrated
+in the metal heatsink assembly. When a GPU is installed horizontally
+into a motherboard's PCIe slot, it is only secured at two points: the
+PCIe slot itself at the bottom, and the PC case's expansion slot bracket
+on the left.</p>
+<p>This leaves the far-right corner of the graphics card completely
+unsupported. Gravity pulls this heavy, unsupported corner downward,
+resulting in GPU sag. Because the fiberglass PCB is somewhat flexible
+and the metal heatsink is completely rigid, this downward pull forces
+the PCB to bow and twist away from the cooler.</p>
+<h2 id="loss-of-mounting-pressure-and-thermal-contact">Loss of Mounting
+Pressure and Thermal Contact</h2>
+<p>For a GPU cooler to work effectively, the metal cold plate must
+maintain high, even mounting pressure against the GPU die, while thermal
+pads must stay firmly pressed against the VRAM modules and Voltage
+Regulator Modules (VRMs).</p>
+<p>When GPU sag occurs, the bending of the PCB alters the geometry of
+the card. The tension from the sag pulls the PCB slightly away from the
+rigid heatsink assembly. Even a microscopic reduction in mounting
+pressure creates significant problems for heat transfer. The cold plate
+may tilt by a fraction of a millimeter, resulting in high pressure on
+one side of the GPU die and almost no contact on the other.</p>
+<h2 id="the-thermal-paste-pump-out-effect">The Thermal Paste "Pump-Out"
+Effect</h2>
+<p>Benchmarking software pushes a GPU to its absolute thermal limits,
+generating rapid and extreme heating and cooling cycles. Under normal
+conditions, thermal paste fills the microscopic imperfections between
+the GPU die and the heatsink.</p>
+<p>When a card is sagging and mounting pressure is uneven, these intense
+benchmarking heat cycles accelerate a phenomenon known as the "pump-out"
+effect. As the GPU die heats up and expands during a benchmark, the
+uneven pressure causes the liquid-like thermal paste to be squeezed out
+from the areas of high pressure into the gaps created by the sag. When
+the benchmark finishes and the card cools down, the paste does not
+return to its original position, leaving dry spots on the silicon.</p>
+<p>Similarly, the thermal pads covering the VRAM and VRMs can physically
+detach from the components as the PCB bends away from the heatsink,
+trapping heat inside the chips.</p>
+<h2 id="how-poor-contact-skews-benchmark-results">How Poor Contact Skews
+Benchmark Results</h2>
+<p>During a hardware benchmark, the effects of compromised thermal
+contact become immediately apparent through system monitoring
+metrics:</p>
+<ul>
+<li><strong>Skyrocketing Hotspot Temperatures:</strong> While the
+average GPU temperature might look normal, the "Hotspot" or "Junction"
+temperature—which measures the hottest single sensor on the die—will
+spike drastically. A delta of more than 15°C to 20°C between the average
+temperature and the hotspot temperature is a classic sign of uneven
+thermal contact caused by sag.</li>
+<li><strong>Premature Thermal Throttling:</strong> Modern GPUs
+dynamically adjust their clock speeds based on thermal headroom. If the
+hotspot or VRAM temperatures hit their thermal limits due to poor
+heatsink contact, the GPU will aggressively downclock itself to prevent
+damage.</li>
+<li><strong>Inaccurate Scores:</strong> Because the card is downclocking
+to save itself from localized overheating, the final benchmark score
+will be artificially low. The benchmark is no longer measuring the
+maximum capability of the silicon, but rather the limitation of the
+compromised cooling mount.</li>
+<li><strong>Maxed-Out Fan Speeds:</strong> The GPU BIOS will attempt to
+combat the high hotspot temperatures by running the cooling fans at 100%
+capacity, generating excessive noise without actually solving the
+physical contact issue.</li>
+</ul>
+<h2 id="securing-the-gpu-for-accurate-benchmarking">Securing the GPU for
+Accurate Benchmarking</h2>
+<p>To ensure thermal contact remains uniform during benchmarking, the
+physical stress on the PCB must be eliminated.</p>
+<ol type="1">
+<li><strong>Install an Anti-Sag Bracket or Support Stand:</strong> Use a
+simple pillar-style support stand or a case-mounted bracket to prop up
+the far-right corner of the GPU. Push the card up just until it is
+level; pushing it too high can cause reverse-sag, which also ruins
+thermal contact.</li>
+<li><strong>Proper IO Bracket Installation:</strong> When screwing the
+GPU into the PC case, hold the card up so it is completely level while
+tightening the screws. Allowing the card to drop before tightening the
+screws locks the sag into place.</li>
+<li><strong>Use Vertical Mounting:</strong> Mounting the GPU vertically
+aligns the weight of the heatsink with gravity, eliminating the sideways
+torque on the PCB and ensuring the mounting pressure on the thermal
+interface material remains completely uniform.</li>
+<li><strong>Re-pasting Severely Sagging Cards:</strong> If a GPU has
+been sagging for months or years, simply adding a support bracket may
+not fix the temperatures. The thermal paste has likely already pumped
+out, and the card will need to be disassembled, cleaned, and re-pasted
+before accurate benchmarking can resume.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-gpu-sag-affects-thermal-contact-during-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

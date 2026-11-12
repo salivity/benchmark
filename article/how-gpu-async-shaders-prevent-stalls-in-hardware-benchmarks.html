@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How GPU Async Shaders Prevent Stalls in Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="This article explains how GPU asynchronous shader execution prevents pipeline stalls during demanding hardware benchmarks. By abandoning strict sequential processing, asynchronous execution allows a graphics card to run rendering and compute tasks simulta">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-gpu-async-shaders-prevent-stalls-in-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How GPU Async Shaders Prevent Stalls in Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-gpu-async-shaders-prevent-stalls-in-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how GPU asynchronous shader execution prevents pipeline stalls during demanding hardware benchmarks. By abandoning strict sequential processing, asynchronous execution allows a graphics card to run rendering and compute tasks simulta" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-gpu-async-shaders-prevent-stalls-in-hardware-benchmarks">How
+GPU Async Shaders Prevent Stalls in Hardware Benchmarks</h1>
+<p>This article explains how GPU asynchronous shader execution prevents
+pipeline stalls during demanding hardware benchmarks. By abandoning
+strict sequential processing, asynchronous execution allows a graphics
+card to run rendering and compute tasks simultaneously. This concurrency
+fills idle hardware gaps, maximizes processor utilization, and ensures
+stable frame times when benchmarking complex 3D scenes.</p>
+<h2 id="understanding-the-gpu-pipeline-stall">Understanding the GPU
+Pipeline Stall</h2>
+<p>In traditional rendering architectures, GPUs process tasks in a
+single, sequential queue. The graphics card must finish rendering Task A
+before it can begin Task B.</p>
+<p>During a complex benchmarking scene, the GPU is bombarded with varied
+workloads, such as heavy geometry calculations, lighting, physics
+simulations, and post-processing effects. Not all of these tasks use the
+entire GPU. For example, generating a shadow map might heavily utilize
+the rasterization engine while leaving the compute shader cores
+completely idle.</p>
+<p>When these shader cores sit waiting for the current task to finish
+before they can start the next one, a "pipeline stall" or "bubble"
+occurs. The hardware is bottlenecked not by its maximum capacity, but by
+inefficient scheduling.</p>
+<h2 id="the-mechanics-of-asynchronous-shader-execution">The Mechanics of
+Asynchronous Shader Execution</h2>
+<p>Asynchronous shader execution (often referred to as Async Compute)
+solves this bottleneck by breaking the single processing line into
+multiple independent queues. Typically, modern APIs like DirectX 12 and
+Vulkan divide workloads into three main categories:</p>
+<ul>
+<li><strong>Graphics Queue:</strong> Handles standard rendering tasks
+like geometry and pixel shading.</li>
+<li><strong>Compute Queue:</strong> Handles non-traditional rendering
+tasks like physics, artificial intelligence, and lighting
+calculations.</li>
+<li><strong>Copy Queue:</strong> Manages data transfers across system
+and video memory.</li>
+</ul>
+<p>Modern GPUs feature dedicated hardware schedulers that monitor these
+queues in real time. When the scheduler detects that a graphics task is
+only using 60% of the GPU's shader cores, it immediately pulls a task
+from the compute queue to utilize the remaining 40% of the hardware.</p>
+<h2 id="pairing-workloads-in-complex-scenes">Pairing Workloads in
+Complex Scenes</h2>
+<p>Benchmarking software intentionally stresses hardware by layering
+multiple complex effects into a single frame. Asynchronous shader
+execution prevents stalls in these scenarios by pairing workloads that
+require different parts of the GPU.</p>
+<ul>
+<li><strong>Depth-Only Passes and Compute:</strong> While the GPU is
+rendering depth passes (which require minimal shader power), the
+hardware scheduler can simultaneously run compute shaders to calculate
+particle physics or global illumination.</li>
+<li><strong>Memory-Bound vs. Math-Bound Tasks:</strong> If one shader
+task is stalled waiting to fetch texture data from VRAM, the GPU does
+not freeze. Instead, it instantly switches context to execute a
+math-heavy shader task that already has its data loaded in the
+cache.</li>
+<li><strong>Post-Processing Overlap:</strong> Instead of waiting for a
+frame to be completely rendered before applying post-processing effects
+like motion blur or ambient occlusion, the GPU can begin computing these
+effects for the current frame while simultaneously starting the geometry
+rendering for the <em>next</em> frame.</li>
+</ul>
+<h2 id="why-it-matters-in-hardware-benchmarking">Why It Matters in
+Hardware Benchmarking</h2>
+<p>Synthetic benchmarks, such as 3DMark Time Spy, are specifically
+designed to saturate the GPU pipeline to measure a card's absolute peak
+performance.</p>
+<p>Without asynchronous shader execution, a complex benchmark scene
+would cause constant micro-stutters and erratic frame times as the GPU
+repeatedly stalls and restarts its pipeline. By dynamically interweaving
+tasks, async execution smooths out these frame time spikes. It ensures
+that the benchmark is measuring the true raw computational power of the
+silicon, rather than measuring how long the GPU spends waiting on itself
+to finish sequential tasks.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-gpu-async-shaders-prevent-stalls-in-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

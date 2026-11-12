@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Need for a Clean OS in Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="Benchmarking computer hardware requires absolute precision, and using a dedicated, clean operating system (OS) installation image is critical for achieving accurate results. This article explores how a fresh OS environment eliminates resource-heavy backgr">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/the-need-for-a-clean-os-in-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Need for a Clean OS in Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/the-need-for-a-clean-os-in-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Benchmarking computer hardware requires absolute precision, and using a dedicated, clean operating system (OS) installation image is critical for achieving accurate results. This article explores how a fresh OS environment eliminates resource-heavy backgr" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-need-for-a-clean-os-in-hardware-benchmarking">The Need for a
+Clean OS in Hardware Benchmarking</h1>
+<p>Benchmarking computer hardware requires absolute precision, and using
+a dedicated, clean operating system (OS) installation image is critical
+for achieving accurate results. This article explores how a fresh OS
+environment eliminates resource-heavy background tasks, prevents driver
+conflicts, ensures test repeatability, and provides a standardized
+baseline for fair and scientific hardware comparisons.</p>
+<h2 id="eliminating-background-processes-and-bloatware">Eliminating
+Background Processes and Bloatware</h2>
+<p>An everyday operating system accumulates digital clutter over time.
+Installed applications often add background services, auto-updaters, and
+system tray utilities that silently consume CPU cycles, system memory
+(RAM), and disk bandwidth.</p>
+<p>When benchmarking, even a 2% CPU usage spike from a background task
+can skew the results, making a processor or graphics card appear slower
+than it actually is. A clean OS image guarantees that system resources
+are dedicated entirely to the benchmarking software.</p>
+<h2 id="preventing-driver-conflicts">Preventing Driver Conflicts</h2>
+<p>Testing different pieces of hardware on a heavily used OS often leads
+to driver overlap. For example, switching from an AMD graphics card to
+an Nvidia graphics card without a clean environment can leave behind
+orphaned registry keys, configuration files, and background
+services.</p>
+<p>These remnants frequently cause system instability, crashes, or
+artificial performance bottlenecks. Using a clean OS image for each test
+platform ensures that only the exact drivers required for the specific
+hardware under test are present.</p>
+<h2 id="ensuring-consistency-and-repeatability">Ensuring Consistency and
+Repeatability</h2>
+<p>The core principle of accurate benchmarking is isolating the variable
+being tested. If you test a CPU today and another CPU next month on a
+daily-driver OS, the software environment will have changed due to
+routine use, invalidating the comparison.</p>
+<p>By creating a dedicated, clean OS image, hardware testers can deploy
+the exact same software state before every single test. This makes the
+benchmarks repeatable and scientifically valid, ensuring that
+performance differences are caused strictly by the hardware, not the
+software.</p>
+<h2 id="controlling-operating-system-updates">Controlling Operating
+System Updates</h2>
+<p>Operating system updates frequently include security patches,
+scheduler changes, and API modifications that can drastically alter
+hardware performance overnight. If an OS updates automatically in the
+middle of a testing cycle, all previously gathered data becomes
+incomparable to the new data.</p>
+<p>A dedicated benchmarking image is typically configured with automatic
+updates disabled and is often kept offline. This freezes the software
+environment in time, allowing testers to build a reliable database of
+hardware scores over months of testing.</p>
+<h2 id="maintaining-storage-performance">Maintaining Storage
+Performance</h2>
+<p>Solid State Drives (SSDs) and Hard Disk Drives (HDDs) experience
+performance degradation as they fill up with data and become fragmented.
+Furthermore, an OS that has been running for months will have a heavily
+utilized page file and bloated system caches.</p>
+<p>Restoring a clean OS image formats the drive and writes a fresh,
+contiguous block of data. This ensures that storage bottlenecks do not
+inadvertently throttle the performance of the CPU, RAM, or GPU during
+data-heavy benchmark loads.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/the-need-for-a-clean-os-in-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

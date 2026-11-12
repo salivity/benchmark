@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3DMark in Mobile vs Desktop Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how 3DMark Solar Bay and Wild Life Extreme serve as the industry standard for cross-platform hardware benchmarking. It examines how these two specific tests bridge the architectural gap between mobile devi">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/3-d-mark-in-mobile-vs-desktop-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="3DMark in Mobile vs Desktop Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/3-d-mark-in-mobile-vs-desktop-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how 3DMark Solar Bay and Wild Life Extreme serve as the industry standard for cross-platform hardware benchmarking. It examines how these two specific tests bridge the architectural gap between mobile devi" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="3dmark-in-mobile-vs-desktop-hardware-benchmarking">3DMark in
+Mobile vs Desktop Hardware Benchmarking</h1>
+<p>This article provides a comprehensive overview of how 3DMark Solar
+Bay and Wild Life Extreme serve as the industry standard for
+cross-platform hardware benchmarking. It examines how these two specific
+tests bridge the architectural gap between mobile devices and desktop
+computers, allowing for direct comparisons in traditional rasterization,
+modern ray tracing, and thermal sustained performance across Windows,
+macOS, Android, and iOS.</p>
+<h2 id="the-convergence-of-mobile-and-desktop-hardware">The Convergence
+of Mobile and Desktop Hardware</h2>
+<p>Historically, comparing smartphone processors to desktop computer
+components was impractical due to vastly different architectures (ARM
+versus x86), thermal limits, and operating systems. However, the rise of
+powerful System-on-Chips (SoCs) like Apple Silicon, Qualcomm's
+Snapdragon X series, and flagship mobile processors has blurred the
+lines between mobile and desktop computing. 3DMark Wild Life Extreme and
+Solar Bay were developed by UL Solutions to provide a unified grading
+scale across these converging platforms.</p>
+<h2 id="3dmark-wild-life-extreme-measuring-rasterization">3DMark Wild
+Life Extreme: Measuring Rasterization</h2>
+<p>3DMark Wild Life Extreme is a cross-platform benchmark designed to
+evaluate high-level rasterization performance—the traditional method of
+rendering 3D graphics. It serves as the primary tool for comparing the
+raw graphical horsepower of smartphones, tablets, laptops, and desktop
+PCs.</p>
+<p>To achieve fair cross-platform comparisons, Wild Life Extreme
+utilizes the most efficient native graphics APIs for each operating
+system:</p>
+<ul>
+<li><strong>DirectX 12</strong> for Windows devices.</li>
+<li><strong>Metal</strong> for iOS and macOS devices.</li>
+<li><strong>Vulkan</strong> for Android and compatible Windows
+devices.</li>
+</ul>
+<p>The benchmark renders scenes at a 4K UHD (3840 x 2160) resolution
+regardless of the device's actual screen resolution. For mobile devices,
+this is an extremely heavy workload that pushes GPUs to their absolute
+limits. For desktop GPUs, it acts as a baseline test, making it
+particularly useful for comparing flagship smartphones directly against
+desktop integrated graphics (iGPUs), handheld gaming PCs, and
+entry-level discrete graphics cards.</p>
+<h2 id="3dmark-solar-bay-cross-platform-ray-tracing">3DMark Solar Bay:
+Cross-Platform Ray Tracing</h2>
+<p>Ray tracing, a rendering technique that simulates the physical
+behavior of light, was once exclusive to high-end desktop graphics
+cards. With recent generations of mobile chips integrating
+hardware-accelerated ray tracing cores, a new testing standard became
+necessary. 3DMark Solar Bay fulfills this role as a dedicated
+cross-platform ray tracing benchmark.</p>
+<p>Solar Bay uses the Vulkan and Metal APIs to test ray-traced
+reflections across Windows, Android, iOS, and macOS. Unlike 3DMark's
+heavier desktop-only ray tracing tests (such as Port Royal or Speed
+Way), Solar Bay uses a lighter ray tracing workload. This ensures that
+smartphones can run the test at playable frame rates while still
+demanding enough processing power to scale up to desktop hardware.</p>
+<p>The benchmark is divided into three sections that progressively
+increase the ray tracing workload by 100% at each stage. This
+progression allows testers to see exactly how much performance a mobile
+chip loses compared to a desktop GPU as the complexity of the lighting
+increases.</p>
+<h2
+id="evaluating-thermal-throttling-and-sustained-performance">Evaluating
+Thermal Throttling and Sustained Performance</h2>
+<p>A critical difference between mobile and desktop hardware is cooling
+capacity. Desktops utilize large heatsinks and active fans to maintain
+peak performance indefinitely, whereas smartphones and ultra-thin
+laptops rely on passive cooling and must throttle performance to prevent
+overheating.</p>
+<p>Both Wild Life Extreme and Solar Bay feature a "Stress Test" mode,
+which loops the benchmark continuously for 20 minutes. Instead of
+providing a single peak score, this mode generates a stability
+percentage and a performance graph.</p>
+<p>In mobile vs. desktop comparisons, this feature highlights the
+reality of thermal envelopes. A tablet or smartphone might match a
+desktop GPU in a single one-minute run of Solar Bay, but the 20-minute
+stress test will reveal how quickly the mobile device loses performance
+due to heat, providing a realistic metric for long gaming or rendering
+sessions.</p>
+<h2 id="summary-of-their-combined-role">Summary of Their Combined
+Role</h2>
+<p>Together, 3DMark Wild Life Extreme and Solar Bay eliminate the
+guesswork of cross-platform hardware evaluation. Wild Life Extreme
+establishes the baseline for traditional 3D rendering, while Solar Bay
+measures forward-looking ray tracing capabilities. By using native APIs
+and standardized rendering resolutions, these benchmarks allow consumers
+and engineers to accurately measure how close mobile processors are
+getting to traditional desktop performance.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/3-d-mark-in-mobile-vs-desktop-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

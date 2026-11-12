@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hidden Benchmark Boost of Memory Rank Interleaving - benchmark</title>
+    <meta name="description" content="Memory rank interleaving is an often-overlooked architectural feature that significantly impacts computer hardware performance. This article explores how rank interleaving works, the difference between single-rank and dual-rank memory, and why this techno">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/the-hidden-benchmark-boost-of-memory-rank-interleaving">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Hidden Benchmark Boost of Memory Rank Interleaving - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/the-hidden-benchmark-boost-of-memory-rank-interleaving" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Memory rank interleaving is an often-overlooked architectural feature that significantly impacts computer hardware performance. This article explores how rank interleaving works, the difference between single-rank and dual-rank memory, and why this techno" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-hidden-benchmark-boost-of-memory-rank-interleaving">The
+Hidden Benchmark Boost of Memory Rank Interleaving</h1>
+<p>Memory rank interleaving is an often-overlooked architectural feature
+that significantly impacts computer hardware performance. This article
+explores how rank interleaving works, the difference between single-rank
+and dual-rank memory, and why this technology provides a hidden
+performance boost during hardware benchmarking. By allowing the memory
+controller to alternate data operations between different groups of
+memory chips, rank interleaving minimizes latency and maximizes
+bandwidth, frequently resulting in higher benchmark scores even when
+comparing RAM sticks with identical clock speeds and timings.</p>
+<h3 id="understanding-memory-ranks">Understanding Memory Ranks</h3>
+<p>To understand rank interleaving, you must first understand what a
+memory rank is. A rank is an independent 64-bit wide block of data
+created by a group of memory chips on a RAM module.</p>
+<ul>
+<li><strong>Single-Rank Memory:</strong> Has one 64-bit data block. The
+CPU’s memory controller can only access this single group of chips at
+one time.</li>
+<li><strong>Dual-Rank Memory:</strong> Has two 64-bit data blocks on a
+single module. While the memory controller can still only talk to one
+rank at a time per channel, having two available ranks unlocks the
+ability to interleave tasks.</li>
+</ul>
+<p>Ranks are not the same as memory channels (like Dual-Channel or
+Quad-Channel). You can have a dual-channel setup consisting of either
+two single-rank sticks or two dual-rank sticks.</p>
+<h3 id="how-rank-interleaving-works">How Rank Interleaving Works</h3>
+<p>RAM cannot feed data to the CPU continuously without interruption.
+After a memory chip is accessed, it must undergo a brief recovery
+period—known as a precharge and refresh cycle—before it can be accessed
+again.</p>
+<p>In a single-rank per channel configuration, the CPU's memory
+controller must wait for this recovery cycle to finish before it can
+request more data. This creates micro-stalls, increasing latency.</p>
+<p>Memory rank interleaving solves this bottleneck. When you have
+multiple ranks per channel (either by using two dual-rank sticks in a
+two-slot setup, or four single-rank sticks in a four-slot setup), the
+memory controller can alternate between them. While Rank A is refreshing
+and unavailable, the memory controller immediately reads from or writes
+to Rank B. Once Rank B needs to refresh, Rank A is ready again. This
+continuous ping-pong effect keeps the data pipeline full.</p>
+<h3 id="why-it-creates-a-hidden-benchmark-boost">Why It Creates a
+"Hidden" Benchmark Boost</h3>
+<p>When benchmarking computer hardware, testers usually look at three
+primary RAM specifications: capacity (e.g., 32GB), frequency (e.g.,
+3600MHz), and primary timings (e.g., CL16). Because memory manufacturers
+rarely print the rank configuration on the box, rank interleaving acts
+as a hidden variable.</p>
+<p>Here is how it directly impacts benchmark results:</p>
+<ul>
+<li><strong>Higher CPU Benchmark Scores:</strong> Synthetic tests that
+measure raw data throughput and compression (such as 7-Zip, Geekbench,
+and AIDA64) rely heavily on continuous memory bandwidth. Rank
+interleaving eliminates the dead time between memory requests, allowing
+the CPU to process more instructions per clock cycle.</li>
+<li><strong>Improved Gaming Framerates:</strong> In CPU-bound games or
+titles running at 1080p, the processor is constantly fetching game state
+data from the RAM. Rank interleaving can improve average framerates and,
+more importantly, boost "1% low" framerates by reducing the time the CPU
+spends waiting on memory refreshes.</li>
+<li><strong>Identical Specs, Different Results:</strong> If you
+benchmark two identical PCs with 32GB of 3600MHz CL16 RAM, the system
+utilizing dual-rank modules (or four single-rank modules) will
+consistently outperform the system using only two single-rank modules by
+5% to 10% in memory-sensitive workloads.</li>
+</ul>
+<h3 id="how-to-achieve-rank-interleaving">How to Achieve Rank
+Interleaving</h3>
+<p>To take advantage of this performance boost during your own hardware
+benchmarks, you need at least two ranks per memory channel. In a
+standard mainstream motherboard with a dual-channel architecture and
+four RAM slots, you can achieve this in two ways:</p>
+<ol type="1">
+<li>Install <strong>two dual-rank</strong> memory modules in the primary
+dual-channel slots.</li>
+<li>Install <strong>four single-rank</strong> memory modules, filling
+all available slots.</li>
+</ol>
+<p>Both configurations present two ranks per channel to the CPU's memory
+controller, automatically enabling rank interleaving and unlocking the
+maximum potential of your hardware.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/the-hidden-benchmark-boost-of-memory-rank-interleaving';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why GPU Benchmarks Track Both Fan RPM and Percentage - benchmark</title>
+    <meta name="description" content="Hardware reviewers consistently track both absolute revolutions per minute (RPM) and fan speed percentages when benchmarking graphics cards to provide a complete picture of thermal and acoustic performance. Relying on a single metric can easily mislead co">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-gpu-benchmarks-track-both-fan-rpm-and-percentage">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why GPU Benchmarks Track Both Fan RPM and Percentage - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-gpu-benchmarks-track-both-fan-rpm-and-percentage" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware reviewers consistently track both absolute revolutions per minute (RPM) and fan speed percentages when benchmarking graphics cards to provide a complete picture of thermal and acoustic performance. Relying on a single metric can easily mislead co" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-gpu-benchmarks-track-both-fan-rpm-and-percentage">Why GPU
+Benchmarks Track Both Fan RPM and Percentage</h1>
+<p>Hardware reviewers consistently track both absolute revolutions per
+minute (RPM) and fan speed percentages when benchmarking graphics cards
+to provide a complete picture of thermal and acoustic performance.
+Relying on a single metric can easily mislead consumers because
+different GPUs utilize vastly different fan sizes, blade designs, and
+motor capabilities. By combining the raw rotational speed with the
+percentage of maximum capacity, reviewers reveal not just how fast a fan
+is spinning, but how hard the cooling system is actually working and how
+much thermal headroom remains.</p>
+<h3 id="accounting-for-physical-fan-differences">Accounting for Physical
+Fan Differences</h3>
+<p>Not all GPU fans are created equal. A compact graphics card might
+utilize small 80mm fans, while a massive flagship card utilizes 110mm
+fans. For the smaller fan to move the exact same volume of air as the
+larger fan, it must spin at a much higher absolute RPM.</p>
+<p>If a reviewer only reports that a fan is spinning at 2,000 RPM, the
+reader lacks the context to know if that is fast or slow for that
+specific cooler. Pairing the RPM with the percentage provides immediate
+context regarding the fan's physical design limits.</p>
+<h3 id="measuring-thermal-headroom">Measuring Thermal Headroom</h3>
+<p>The fan percentage metric—dictated by the card's Pulse Width
+Modulation (PWM) signal—shows how much harder the cooling system can
+work before reaching its absolute limit.</p>
+<p>Consider two different GPUs running at 65°C with their fans spinning
+at 1,800 RPM. Looking only at temperature and RPM, they appear identical
+in performance. However, if Card A is operating at 45% fan speed and
+Card B is operating at 90% fan speed, the reality is very different.
+Card A has massive cooling headroom remaining for overclocking or hot
+environments, while Card B is nearly maxed out and close to
+overheating.</p>
+<h3 id="providing-acoustic-context">Providing Acoustic Context</h3>
+<p>While percentage is great for understanding headroom, it is useless
+on its own for judging noise levels. A GPU running at 50% fan speed
+sounds quiet on paper. However, if that card uses a blower-style fan
+with a maximum speed of 4,500 RPM, 50% still results in a very loud
+2,250 RPM.</p>
+<p>Conversely, 50% on a massive triple-fan cooler might only be 900 RPM,
+which is virtually silent. Absolute RPM gives the reader a reliable
+indication of the physical noise and pitch the fan will generate, while
+the percentage explains where that noise sits on the card's specific
+performance scale.</p>
+<h3 id="evaluating-manufacturer-vbios-tuning">Evaluating Manufacturer
+VBIOS Tuning</h3>
+<p>Tracking both metrics allows reviewers to analyze how well a
+manufacturer has tuned the card's factory fan curve. Graphics card
+partners often include dual-BIOS switches with "Quiet" and "Performance"
+modes.</p>
+<p>By looking at both numbers, reviewers can see how the card's firmware
+translates temperature into action. It exposes whether a manufacturer is
+artificially capping fan percentages to pass acoustic tests at the
+expense of safe operating temperatures, or if they are running the fans
+at unnecessarily high RPMs for only a marginal drop in temperature.</p>
+<h3 id="detecting-hardware-and-firmware-anomalies">Detecting Hardware
+and Firmware Anomalies</h3>
+<p>Logging both metrics helps reviewers spot hardware defects, bearing
+issues, or firmware bugs during testing. The percentage represents what
+the GPU is <em>asking</em> the fan to do, while the RPM is a physical
+tachometer reading of what the fan is <em>actually</em> doing.</p>
+<p>If a GPU's software demands 60% fan speed, but the RPM fluctuates
+wildly, the reviewer knows the fan motor or controller is faulty.
+Furthermore, when testing "zero-RPM" idle modes, checking both numbers
+confirms whether a 0% PWM signal actually results in a 0 RPM fan stop,
+as poorly calibrated cards sometimes continue spinning at low RPMs
+despite reporting 0% in software.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-gpu-benchmarks-track-both-fan-rpm-and-percentage';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

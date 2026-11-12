@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Windows Memory Integrity Impacts Gaming and Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores the direct impact of Windows Core Isolation Memory Integrity on gaming performance and computer hardware benchmarking. While this built-in security feature provides crucial protection against malware by isolating critical system proc">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-windows-memory-integrity-impacts-gaming-and-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Windows Memory Integrity Impacts Gaming and Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-windows-memory-integrity-impacts-gaming-and-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the direct impact of Windows Core Isolation Memory Integrity on gaming performance and computer hardware benchmarking. While this built-in security feature provides crucial protection against malware by isolating critical system proc" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-windows-memory-integrity-impacts-gaming-and-benchmarks">How
+Windows Memory Integrity Impacts Gaming and Benchmarks</h1>
+<p>This article explores the direct impact of Windows Core Isolation
+Memory Integrity on gaming performance and computer hardware
+benchmarking. While this built-in security feature provides crucial
+protection against malware by isolating critical system processes in a
+virtualized environment, it creates a persistent processing overhead.
+Consequently, keeping Memory Integrity enabled typically results in
+lower frame rates during gameplay and reduced scores in synthetic
+hardware benchmarks, leading many gamers, overclockers, and hardware
+reviewers to disable the feature to achieve maximum system
+performance.</p>
+<h2 id="what-is-memory-integrity">What is Memory Integrity?</h2>
+<p>Memory Integrity, also known as Hypervisor-Protected Code Integrity
+(HVCI), is a Windows security feature that is part of
+Virtualization-Based Security (VBS). It uses your processor's hardware
+virtualization capabilities to create an isolated, secure area of system
+memory. By running critical Windows security processes inside this
+virtualized container, the operating system prevents malicious code and
+compromised drivers from tampering with the system kernel.</p>
+<h2 id="the-impact-on-gaming-performance">The Impact on Gaming
+Performance</h2>
+<p>Because Memory Integrity relies on continuous virtualization, every
+relevant instruction must pass through an extra layer of security
+verification. This creates a bottleneck between the CPU, system memory,
+and the graphics card.</p>
+<ul>
+<li><strong>Average Frame Rates:</strong> Gamers can expect an average
+frame rate reduction of 5% to 15% when Memory Integrity is enabled,
+depending on the specific game engine.</li>
+<li><strong>Frame Pacing and 1% Lows:</strong> Beyond average FPS, the
+feature negatively impacts 1% low frame rates. This translates to
+noticeable micro-stuttering and less consistent frame pacing during
+intense gaming moments.</li>
+<li><strong>Resolution Differences:</strong> The performance penalty is
+most obvious at lower resolutions like 1080p, where games are heavily
+reliant on the CPU. At 4K resolution, where the workload shifts
+primarily to the GPU, the performance drop caused by Memory Integrity is
+much less noticeable.</li>
+<li><strong>Anti-Cheat Conflicts:</strong> Some kernel-level anti-cheat
+software used in competitive multiplayer games can conflict with Memory
+Integrity, occasionally causing games to crash or fail to launch unless
+the setting is adjusted.</li>
+</ul>
+<h2 id="the-impact-on-hardware-benchmarking">The Impact on Hardware
+Benchmarking</h2>
+<p>For hardware benchmarking, the effects of Memory Integrity are even
+more pronounced than in standard gaming. Synthetic benchmarks are
+designed to measure the raw, uninhibited calculation speed of CPUs, RAM,
+and GPUs.</p>
+<ul>
+<li><strong>Lower CPU Scores:</strong> Benchmarks like Cinebench,
+Geekbench, and 3DMark Time Spy CPU tests show an immediate drop in
+scores when VBS and Memory Integrity are active. The hypervisor consumes
+CPU cycles that would otherwise be dedicated to the benchmark
+workload.</li>
+<li><strong>Memory Latency:</strong> Memory Integrity increases system
+RAM latency and reduces memory read and write bandwidth. Benchmarks that
+specifically test memory speeds, such as AIDA64, will report noticeably
+worse timings and throughput.</li>
+<li><strong>Inconsistent Baseline Data:</strong> Because Windows 11
+enables Memory Integrity by default on clean installations, while
+upgraded systems may have it turned off, benchmark results between
+identical PCs can vary wildly. Hardware reviewers universally disable
+Memory Integrity to ensure accurate, apples-to-apples comparisons across
+different components.</li>
+</ul>
+<h2 id="why-some-hardware-suffers-more-than-others">Why Some Hardware
+Suffers More Than Others</h2>
+<p>The severity of the performance loss depends heavily on the age of
+the computer hardware. Modern processors feature built-in hardware
+support to handle Virtualization-Based Security more efficiently, known
+as Mode-Based Execution Control (MBEC) on Intel CPUs and Guest Mode
+Execute Trap (GMET) on AMD CPUs.</p>
+<ul>
+<li><strong>Modern CPUs:</strong> Intel 11th Generation (and newer) and
+AMD Ryzen 3000 series (and newer) have full hardware support for these
+security features, keeping the performance loss mostly in the
+single-digit percentages.</li>
+<li><strong>Older CPUs:</strong> Processors older than Intel 7th
+Generation and AMD Zen+ lack this dedicated support. They must emulate
+the security features via software, which can result in massive
+performance drops of 20% or more in both games and benchmarks.</li>
+</ul>
+<h2 id="balancing-security-and-performance">Balancing Security and
+Performance</h2>
+<p>Microsoft recognizes the performance cost of Core Isolation Memory
+Integrity and officially advises that gamers can turn the feature off if
+they prioritize maximum frame rates over maximum security. For users
+running strictly controlled benchmarking tests or competitive gaming
+sessions, disabling Memory Integrity—and rebooting the PC—will
+immediately restore lost hardware performance. However, for everyday
+computing, leaving the feature enabled provides a strong defense against
+advanced malware, at the cost of a small fraction of your hardware's
+peak potential.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-windows-memory-integrity-impacts-gaming-and-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

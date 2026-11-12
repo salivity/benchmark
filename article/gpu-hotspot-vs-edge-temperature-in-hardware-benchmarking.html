@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Hotspot vs. Edge Temperature in Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="This article explains the critical differences between GPU hotspot (junction) temperature and edge temperature during computer hardware benchmarking. While the edge temperature provides a traditional reading from the perimeter of the silicon die, the hots">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/gpu-hotspot-vs-edge-temperature-in-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="GPU Hotspot vs. Edge Temperature in Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/gpu-hotspot-vs-edge-temperature-in-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the critical differences between GPU hotspot (junction) temperature and edge temperature during computer hardware benchmarking. While the edge temperature provides a traditional reading from the perimeter of the silicon die, the hots" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="gpu-hotspot-vs-edge-temperature-in-hardware-benchmarking">GPU
+Hotspot vs. Edge Temperature in Hardware Benchmarking</h1>
+<p>This article explains the critical differences between GPU hotspot
+(junction) temperature and edge temperature during computer hardware
+benchmarking. While the edge temperature provides a traditional reading
+from the perimeter of the silicon die, the hotspot temperature measures
+the single hottest sensor among dozens placed directly across the GPU
+core. Understanding the relationship and the gap between these two
+metrics is essential for accurately assessing cooler performance,
+thermal paste application, and the true thermal throttling limits of
+modern graphics cards.</p>
+<h2 id="what-is-gpu-edge-temperature">What is GPU Edge Temperature?</h2>
+<p>For decades, the edge temperature—often simply labeled as "GPU Temp"
+in monitoring software—was the only thermal metric available to
+consumers. This reading is taken from one or a few thermal sensors
+located on the outer perimeter (the edge) of the graphics processing
+unit's silicon die.</p>
+<p>Because the edge of the die is furthest from the most intense
+processing activity, it is naturally cooler than the center. In hardware
+benchmarking, edge temperature serves as a baseline indicator of the
+overall heat load being transferred into the heatsink, and it is
+typically the default metric used by manufacturers to control fan speed
+curves.</p>
+<h2 id="what-is-gpu-hotspot-junction-temperature">What is GPU Hotspot
+(Junction) Temperature?</h2>
+<p>The hotspot temperature, also known as the T-junction (Tj)
+temperature, is a more precise and dynamic metric. Modern GPUs from AMD,
+Nvidia, and Intel are embedded with a dense array of dozens of thermal
+sensors distributed across the entire silicon die.</p>
+<p>Instead of averaging these sensors, the GPU's telemetry reports the
+single highest reading at any given millisecond as the hotspot
+temperature. As workloads shift during a benchmark, the physical
+location of the hotspot changes rapidly. Because it measures the exact
+center of the thermal action, the hotspot temperature is always
+significantly higher than the edge temperature.</p>
+<h2 id="why-the-difference-matters-in-benchmarking">Why the Difference
+Matters in Benchmarking</h2>
+<p>When benchmarking computer hardware, relying solely on the edge
+temperature gives an incomplete picture of thermal performance. The
+inclusion of hotspot data changes how hardware is evaluated in three
+specific ways:</p>
+<h3 id="1-boost-clocks-and-thermal-throttling">1. Boost Clocks and
+Thermal Throttling</h3>
+<p>Modern GPUs use opportunistic boosting algorithms (like AMD Precision
+Boost and Nvidia GPU Boost) to push clock speeds as high as possible
+until they hit a power, voltage, or thermal limit. Today, thermal
+throttling is dictated primarily by the hotspot temperature, not the
+edge temperature.</p>
+<p>For example, a GPU might have a safe edge temperature of 75°C during
+a benchmark, leading the user to believe there is plenty of thermal
+headroom. However, if the hotspot temperature has reached its maximum
+limit (often 105°C to 110°C), the card will aggressively downclock to
+protect the silicon, resulting in lower benchmark scores.</p>
+<h3 id="2-the-temperature-delta-cooler-contact-quality">2. The
+Temperature Delta (Cooler Contact Quality)</h3>
+<p>In benchmarking, the "delta" is the numerical difference between the
+edge temperature and the hotspot temperature. Under normal heavy load, a
+healthy delta is typically between 10°C and 20°C.</p>
+<p>Tracking this delta is the best way to diagnose physical hardware
+flaws:</p>
+<ul>
+<li><strong>Small Delta (10°C–15°C):</strong> Indicates an even,
+high-pressure mount of the heatsink and optimal thermal paste
+coverage.</li>
+<li><strong>Large Delta (25°C+):</strong> Indicates poor contact between
+the cooler and the GPU die. Even if the edge temperature looks
+acceptable at 65°C, a hotspot of 100°C (a 35°C delta) means the thermal
+paste has likely pumped out, dried up, or the heatsink mounting screws
+have uneven tension.</li>
+</ul>
+<h3 id="3-true-cooler-comparison">3. True Cooler Comparison</h3>
+<p>When benchmarking aftermarket GPU coolers, water blocks, or thermal
+compounds, edge temperature alone can be misleading. A massive cooler
+might keep the edge of the die very cool, masking a warped baseplate
+that fails to cool the center of the die. Measuring the hotspot
+temperature reveals how quickly and efficiently a cooling solution can
+extract concentrated heat from the most demanding areas of the
+silicon.</p>
+<h2 id="summary-of-key-differences">Summary of Key Differences</h2>
+<ul>
+<li><strong>Sensor Location:</strong> Edge is measured on the perimeter
+of the die; Hotspot is the highest reading from a grid of sensors across
+the entire die.</li>
+<li><strong>Temperature Reading:</strong> Edge is lower and changes
+gradually; Hotspot is 10°C to 20°C higher and fluctuates instantly with
+workloads.</li>
+<li><strong>Benchmarking Utility:</strong> Edge measures overall
+heatsink saturation; Hotspot dictates maximum boost clocks, triggers
+thermal throttling, and reveals the quality of the physical cooler
+mount.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/gpu-hotspot-vs-edge-temperature-in-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

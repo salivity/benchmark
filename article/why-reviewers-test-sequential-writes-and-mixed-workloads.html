@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Reviewers Test Sequential Writes and Mixed Workloads - benchmark</title>
+    <meta name="description" content="Hardware reviewers test both sustained sequential writes and mixed workloads to provide a complete, accurate picture of a storage drive&#39;s true performance. While manufacturers often advertise peak speeds based on short bursts of simple data transfers, the">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-reviewers-test-sequential-writes-and-mixed-workloads">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Reviewers Test Sequential Writes and Mixed Workloads - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-reviewers-test-sequential-writes-and-mixed-workloads" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware reviewers test both sustained sequential writes and mixed workloads to provide a complete, accurate picture of a storage drive&#39;s true performance. While manufacturers often advertise peak speeds based on short bursts of simple data transfers, the" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-reviewers-test-sequential-writes-and-mixed-workloads">Why
+Reviewers Test Sequential Writes and Mixed Workloads</h1>
+<p>Hardware reviewers test both sustained sequential writes and mixed
+workloads to provide a complete, accurate picture of a storage drive's
+true performance. While manufacturers often advertise peak speeds based
+on short bursts of simple data transfers, these numbers rarely reflect
+everyday use. Sustained sequential write tests push hardware to its
+limits to expose cache sizes, thermal throttling, and true base speeds
+during heavy tasks like transferring massive video files. Conversely,
+mixed workload tests simulate real-world daily computing—such as gaming,
+running an operating system, and multitasking—where the hardware must
+read and write data simultaneously. Testing both ensures consumers know
+how a drive performs under both extreme stress and normal, everyday
+conditions.</p>
+<h2 id="the-purpose-of-sustained-sequential-write-tests">The Purpose of
+Sustained Sequential Write Tests</h2>
+<p>Sequential writes involve transferring large, continuous blocks of
+data to a drive, such as copying a 100GB movie file. Manufacturers love
+to advertise sequential speeds because they produce the highest numbers.
+However, they usually only measure these speeds in short bursts.</p>
+<p>Reviewers use <strong>sustained</strong> sequential write tests to
+see what happens when a drive is forced to write massive amounts of data
+continuously. This exposes three critical factors:</p>
+<ul>
+<li><strong>Cache Exhaustion:</strong> Most modern Solid State Drives
+(SSDs) use a small portion of super-fast memory (often called an SLC
+cache) to absorb incoming data quickly. Once this cache fills up during
+a large file transfer, write speeds can plummet—sometimes to levels
+slower than a traditional mechanical hard drive. Sustained testing
+reveals how big this cache is and how slow the drive gets once it runs
+out.</li>
+<li><strong>True NAND Speed:</strong> After the cache is full, the drive
+must write directly to its main storage blocks. Sustained tests show the
+actual, unassisted speed of the storage media.</li>
+<li><strong>Thermal Throttling:</strong> Writing data continuously
+generates significant heat. If a drive gets too hot, it intentionally
+slows itself down to prevent damage. A sustained test shows if the
+hardware's cooling solution can handle heavy, prolonged work.</li>
+</ul>
+<h2 id="the-purpose-of-mixed-workload-tests">The Purpose of Mixed
+Workload Tests</h2>
+<p>In everyday computing, a storage drive rarely just reads or just
+writes data in a neat, continuous line. Instead, it constantly jumps
+around, reading and writing small files at the exact same time. This is
+a mixed workload.</p>
+<p>When you boot up your computer, launch a game, or browse the web,
+your system might be reading application files while simultaneously
+writing temporary cache files, system logs, and background updates.
+Reviewers typically test this using a 70% read and 30% write ratio to
+mimic real-world usage.</p>
+<p>Mixed workload testing is vital because:</p>
+<ul>
+<li><strong>It Exposes Controller Weaknesses:</strong> The controller is
+the "brain" of the storage drive. Reading and writing require different
+electrical voltages and processes. Some controllers are terrible at
+switching between reading and writing quickly, causing the system to
+stutter or freeze, even if the drive has high advertised speeds.</li>
+<li><strong>It Measures Real-World Responsiveness:</strong> How fast
+your computer "feels" depends heavily on how well it handles mixed
+workloads. A drive that excels here will load applications faster and
+handle multitasking smoothly.</li>
+</ul>
+<h2 id="why-both-tests-are-necessary">Why Both Tests Are Necessary</h2>
+<p>Relying on just one of these tests leaves a blind spot.</p>
+<p>If a reviewer only tests sustained sequential writes, they might
+recommend a drive that is great for a video editor moving massive files,
+but feels sluggish for a casual user running multiple office
+programs.</p>
+<p>If a reviewer only tests mixed workloads, a consumer might buy a
+drive that feels snappy during web browsing, only to find out it slows
+to a crawl the moment they try to back up their photo library or install
+a massive game.</p>
+<p>By testing both sustained sequential writes and mixed workloads,
+reviewers strip away marketing gimmicks and show exactly how hardware
+will behave in both worst-case stress scenarios and typical daily
+use.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-reviewers-test-sequential-writes-and-mixed-workloads';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

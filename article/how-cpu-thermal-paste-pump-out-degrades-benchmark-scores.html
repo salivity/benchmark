@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CPU Thermal Paste Pump-Out Degrades Benchmark Scores - benchmark</title>
+    <meta name="description" content="This article explores the CPU thermal paste pump-out effect and explains how it systematically degrades computer hardware benchmark scores over months of cyclic testing. By examining the physical mechanics of thermal expansion, we will look at how repetit">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-cpu-thermal-paste-pump-out-degrades-benchmark-scores">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CPU Thermal Paste Pump-Out Degrades Benchmark Scores - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-cpu-thermal-paste-pump-out-degrades-benchmark-scores" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the CPU thermal paste pump-out effect and explains how it systematically degrades computer hardware benchmark scores over months of cyclic testing. By examining the physical mechanics of thermal expansion, we will look at how repetit" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-cpu-thermal-paste-pump-out-degrades-benchmark-scores">How
+CPU Thermal Paste Pump-Out Degrades Benchmark Scores</h1>
+<p>This article explores the CPU thermal paste pump-out effect and
+explains how it systematically degrades computer hardware benchmark
+scores over months of cyclic testing. By examining the physical
+mechanics of thermal expansion, we will look at how repetitive heating
+and cooling pushes thermal compound away from the processor, leading to
+increased temperatures, thermal throttling, and progressively lower
+performance metrics. Finally, we cover how hardware testers can prevent
+this degradation to maintain accurate benchmarking data.</p>
+<h2 id="understanding-the-thermal-paste-pump-out-effect">Understanding
+the Thermal Paste Pump-Out Effect</h2>
+<p>The pump-out effect is a physical phenomenon where thermal paste is
+gradually squeezed out from between the CPU's Integrated Heat Spreader
+(IHS) and the cooler's baseplate. Metals expand when heated and contract
+when cooled. Because the CPU and the cooler are made of different
+materials and heat up at different rates, they expand and contract
+unevenly.</p>
+<p>On a microscopic level, the IHS and the cooler base warp slightly
+during temperature changes. When the CPU heats up, the surfaces bow
+toward each other, pushing the liquid-like thermal paste outward toward
+the edges. When the CPU cools down, the surfaces flatten out, but the
+paste does not get pulled back toward the center.</p>
+<h2 id="how-cyclic-benchmarking-accelerates-the-process">How Cyclic
+Benchmarking Accelerates the Process</h2>
+<p>Standard computer use involves gradual and moderate temperature
+changes. Cyclic benchmarking, however, subjects hardware to extreme
+thermal shock. A typical benchmarking loop pushes a CPU to 100%
+utilization, causing a rapid spike to maximum operating temperatures,
+followed immediately by an idle period where the liquid or air cooler
+rapidly drops the temperature.</p>
+<p>Over months of testing, a benchmark rig undergoes thousands of these
+extreme thermal cycles. This rapid, repetitive expansion and contraction
+acts like a mechanical pump. Low-viscosity (runny) thermal pastes are
+particularly vulnerable, getting pushed out from the center of the CPU
+much faster under cyclic benchmarking conditions than they would in a
+typical gaming or office PC.</p>
+<h2 id="from-pump-out-to-degraded-benchmark-scores">From Pump-Out to
+Degraded Benchmark Scores</h2>
+<p>As thermal paste is pumped out from the center of the CPU—directly
+above the hottest parts of the silicon dies—microscopic air gaps take
+its place. Because air is a thermal insulator rather than a conductor,
+heat transfer from the CPU to the cooler becomes inefficient. This leads
+to a steady decline in benchmark scores through the following chain
+reaction:</p>
+<ol type="1">
+<li><strong>Higher Baseline and Peak Temperatures:</strong> With less
+paste covering the primary heat zones, the CPU runs hotter under the
+exact same workload compared to when the paste was freshly applied.</li>
+<li><strong>Loss of Thermal Headroom:</strong> Modern processors rely on
+automated boosting algorithms (such as Intel Turbo Boost and AMD
+Precision Boost) that increase clock speeds based on available thermal
+headroom. As temperatures rise due to pump-out, the CPU cannot boost as
+high or maintain boost clocks for as long.</li>
+<li><strong>Premature Thermal Throttling:</strong> During heavy
+multi-core benchmarks, the CPU will hit its maximum safe operating
+temperature (TjMax) much faster. To prevent silicon damage, the
+processor lowers its voltage and clock speeds.</li>
+<li><strong>Progressive Score Decay:</strong> Because clock speeds are
+directly tied to computational output, a CPU that throttles earlier in a
+benchmark run will complete fewer calculations. Over months of testing,
+a reviewer might notice a CPU losing 2% to 10% of its multi-core
+benchmark score, purely due to degraded thermal conductivity rather than
+hardware failure or software bloat.</li>
+</ol>
+<h2 id="preventing-score-degradation-in-test-rigs">Preventing Score
+Degradation in Test Rigs</h2>
+<p>To ensure benchmark scores remain consistent over months of testing,
+hardware testers must eliminate the pump-out effect. This can be
+achieved through several methods:</p>
+<ul>
+<li><strong>High-Viscosity Thermal Pastes:</strong> Using thicker pastes
+that require more effort to spread. These compounds resist the
+mechanical pumping action of thermal cycling much better than thin,
+easily spreadable pastes.</li>
+<li><strong>Phase-Change Thermal Pads:</strong> Materials like Honeywell
+PTM7950 are solid at room temperature and only melt into a paste at high
+operating temperatures. When the CPU cools down, the material solidifies
+again, preventing it from being pumped out completely.</li>
+<li><strong>Graphene and Carbon Thermal Pads:</strong> Reusable solid
+pads do not contain any liquid silicone or oils. Because they are
+entirely solid, they are immune to the pump-out effect, providing
+identical thermal performance over thousands of benchmark cycles.</li>
+<li><strong>Frequent Repasting:</strong> If standard thermal paste must
+be used for consistency in testing methodology, the cooler must be
+remounted with fresh paste at regular intervals to reset the thermal
+baseline.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-cpu-thermal-paste-pump-out-degrades-benchmark-scores';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

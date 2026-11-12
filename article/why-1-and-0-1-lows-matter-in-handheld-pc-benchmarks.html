@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why 1% and 0.1% Lows Matter in Handheld PC Benchmarks - benchmark</title>
+    <meta name="description" content="This article explains why measuring 1% and 0.1% low framerates is essential when benchmarking handheld gaming PCs. While average framerates provide a basic baseline for performance, they often hide severe micro-stutters and frame drops caused by the stric">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-1-and-0-1-lows-matter-in-handheld-pc-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why 1% and 0.1% Lows Matter in Handheld PC Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-1-and-0-1-lows-matter-in-handheld-pc-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains why measuring 1% and 0.1% low framerates is essential when benchmarking handheld gaming PCs. While average framerates provide a basic baseline for performance, they often hide severe micro-stutters and frame drops caused by the stric" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-1-and-01-lows-matter-in-handheld-pc-benchmarks">Why 1% and
+0.1% Lows Matter in Handheld PC Benchmarks</h1>
+<p>This article explains why measuring 1% and 0.1% low framerates is
+essential when benchmarking handheld gaming PCs. While average
+framerates provide a basic baseline for performance, they often hide
+severe micro-stutters and frame drops caused by the strict power,
+thermal, and memory limitations of portable hardware. By focusing on
+these specific low-end metrics, hardware testers and consumers can
+accurately evaluate the true smoothness, consistency, and playability of
+games on handheld devices.</p>
+<h2 id="understanding-1-and-01-lows">Understanding 1% and 0.1% Lows</h2>
+<p>When benchmarking a game, software records the time it takes to
+render every single frame.</p>
+<ul>
+<li><strong>Average FPS:</strong> The total number of frames rendered
+divided by the total time of the benchmark.</li>
+<li><strong>1% Lows:</strong> The average framerate of the slowest 1% of
+frames recorded during the test.</li>
+<li><strong>0.1% Lows:</strong> The average framerate of the slowest
+0.1% of frames recorded.</li>
+</ul>
+<p>If a game runs at an average of 60 frames per second (FPS), the 1%
+and 0.1% lows reveal how badly the framerate dips during the most
+demanding moments. If the 1% low is 50 FPS, the game is smooth. If the
+1% low is 15 FPS, the game suffers from noticeable freezing and
+stuttering, even though the average remains 60 FPS.</p>
+<h2 id="the-unique-bottlenecks-of-handheld-hardware">The Unique
+Bottlenecks of Handheld Hardware</h2>
+<p>Handheld gaming PCs, such as the Steam Deck, ASUS ROG Ally, and
+Lenovo Legion Go, do not function like desktop PCs. They rely on
+Accelerated Processing Units (APUs) that combine the CPU and GPU onto a
+single chip. This compact design introduces specific bottlenecks that
+directly cause poor 1% and 0.1% lows.</p>
+<h3 id="1-shared-system-memory">1. Shared System Memory</h3>
+<p>Desktop gaming PCs have dedicated Video RAM (VRAM) for the graphics
+card and separate system RAM for the CPU. Handheld PCs share one pool of
+memory for both. When a game simultaneously demands heavy CPU data
+processing and high-resolution texture loading on the GPU, the memory
+bandwidth maxes out. This traffic jam results in an immediate stutter,
+which is only captured by 1% and 0.1% low metrics.</p>
+<h3 id="2-strict-power-limits-tdp">2. Strict Power Limits (TDP)</h3>
+<p>Handhelds operate under strict battery and thermal constraints,
+usually running between 10W and 30W of Thermal Design Power (TDP). The
+device must dynamically shift this limited power between the CPU and GPU
+in real time. If an explosion occurs in-game, the CPU might suddenly
+draw more power to calculate physics, starving the GPU of power for a
+fraction of a second. This causes a sharp frame drop that average FPS
+calculations smooth over, but 0.1% lows expose instantly.</p>
+<h3 id="3-storage-speeds-and-asset-streaming">3. Storage Speeds and
+Asset Streaming</h3>
+<p>Many users expand their handheld storage using MicroSD cards or
+budget single-sided NVMe SSDs. When moving quickly through an open-world
+game, the storage drive must stream assets into the memory on the fly.
+Slower storage speeds cause the rendering pipeline to pause while
+waiting for data. These pauses manifest as severe spikes in the 0.1%
+lows.</p>
+<h2 id="low-base-framerates-magnify-stutter">Low Base Framerates Magnify
+Stutter</h2>
+<p>On a high-end desktop PC running a game at 144 FPS, a sudden 30% drop
+in performance brings the framerate down to roughly 100 FPS. To the
+human eye, this drop is barely perceptible.</p>
+<p>Handheld gaming PCs rarely achieve high framerates in modern titles;
+players typically target a locked 30, 40, or 60 FPS. At a baseline of 40
+FPS, a 30% drop brings the framerate down to 28 FPS. Because the time
+between frames is already much longer at lower framerates, any downward
+spike crosses the threshold where the human brain stops seeing smooth
+motion and starts seeing a slideshow. Therefore, tight frame
+pacing—represented by 1% and 0.1% lows being close to the average FPS—is
+far more important on a handheld than a high average framerate.</p>
+<h2 id="thermal-throttling-detection">Thermal Throttling Detection</h2>
+<p>Handheld PCs have tiny cooling fans and heatsinks. Over long gaming
+sessions, heat builds up, forcing the APU to lower its clock speeds to
+prevent overheating. Often, thermal throttling does not immediately drop
+the average FPS by a massive margin. Instead, it introduces instability
+as the chip rapidly bounces off its thermal limit. Tracking 1% and 0.1%
+lows over an extended benchmark period is the most reliable way to see
+if a handheld's cooling solution can maintain a stutter-free experience
+over time.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Relying solely on average FPS when benchmarking handheld gaming PCs
+gives a false impression of hardware capability. Because portable
+devices constantly juggle limited power, shared memory, and tight
+thermal budgets, they are heavily prone to frame pacing issues. Testing
+1% and 0.1% lows is the only way to accurately measure these
+hardware-induced stutters and determine if a game is truly playable on a
+handheld screen.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-1-and-0-1-lows-matter-in-handheld-pc-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

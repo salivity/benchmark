@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measuring Radiator Heat Dissipation in PC Benchmarks - benchmark</title>
+    <meta name="description" content="Accurately measuring a radiator&#39;s heat dissipation capacity requires isolating the radiator from fluctuating computer hardware variables and testing it under strictly controlled thermal conditions. This article outlines the proper benchmarking methodology">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/measuring-radiator-heat-dissipation-in-pc-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Measuring Radiator Heat Dissipation in PC Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/measuring-radiator-heat-dissipation-in-pc-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Accurately measuring a radiator&#39;s heat dissipation capacity requires isolating the radiator from fluctuating computer hardware variables and testing it under strictly controlled thermal conditions. This article outlines the proper benchmarking methodology" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="measuring-radiator-heat-dissipation-in-pc-benchmarks">Measuring
+Radiator Heat Dissipation in PC Benchmarks</h1>
+<p>Accurately measuring a radiator's heat dissipation capacity requires
+isolating the radiator from fluctuating computer hardware variables and
+testing it under strictly controlled thermal conditions. This article
+outlines the proper benchmarking methodology, which involves using a
+synthetic heat load to apply exact wattage, standardizing coolant flow
+and fan speeds, and calculating the temperature delta (Delta T) between
+the liquid coolant and the ambient air once the system reaches thermal
+equilibrium.</p>
+<h3 id="1-use-a-synthetic-heat-source">1. Use a Synthetic Heat
+Source</h3>
+<p>Real CPUs and GPUs fluctuate in power consumption based on workload,
+silicon quality, and thermal throttling, making them unreliable for
+strict radiator testing. Instead, use a Thermal Test Vehicle (TTV) or an
+inline immersion heater connected to a variable DC power supply. This
+allows you to inject a precise, unwavering amount of heat directly into
+the cooling loop. Use a calibrated power meter at the power supply
+output to verify the exact wattage being applied to the liquid.</p>
+<h3 id="2-monitor-the-correct-temperatures">2. Monitor the Correct
+Temperatures</h3>
+<p>To measure the radiator's performance, ignore component die
+temperatures. You only need to measure the ambient air temperature and
+the liquid coolant temperature.</p>
+<ul>
+<li><strong>Ambient Air:</strong> Place at least two thermal probes a
+few inches in front of the radiator's air intake to record the average
+temperature of the air entering the fins.</li>
+<li><strong>Coolant:</strong> Place calibrated inline liquid temperature
+sensors at the radiator’s inlet and outlet ports.</li>
+</ul>
+<p>Subtract the average ambient air intake temperature from the average
+liquid temperature. This resulting number is your <strong>Delta T
+(ΔT)</strong>, which is the foundational metric for radiator thermal
+performance.</p>
+<h3 id="3-standardize-liquid-flow-and-airflow">3. Standardize Liquid
+Flow and Airflow</h3>
+<p>A radiator's ability to dissipate heat changes drastically depending
+on how fast the water and air move through it. You must lock these
+variables across all tests to get accurate data.</p>
+<ul>
+<li><strong>Coolant Flow Rate:</strong> Install a digital flow meter in
+the loop. Adjust your pump speed until it hits a standardized flow rate,
+typically 1.0 Gallon Per Minute (GPM) or 150 to 200 Liters Per Hour
+(LPH). Ensure this flow rate remains constant, as thicker or more
+restrictive radiators may require higher pump speeds to maintain the
+same flow.</li>
+<li><strong>Airflow:</strong> Test the radiator using the exact same
+fans across all benchmarks. Seal the gap between the fans and the
+radiator with gasket tape to prevent air leakage. Lock the fans to
+specific RPM steps (e.g., 800 RPM, 1200 RPM, 1800 RPM) using a hardware
+PWM controller, and verify the speed with a laser tachometer.</li>
+</ul>
+<h3 id="4-reach-thermal-equilibrium">4. Reach Thermal Equilibrium</h3>
+<p>Turn on the heat source, pump, and fans. Allow the system to run
+until the coolant temperature completely stops rising and flattens out
+on a graph. This state is called thermal equilibrium—the point where the
+radiator is dissipating the exact same amount of thermal energy into the
+room as the heater is putting into the loop. Reaching equilibrium
+usually takes 30 to 60 minutes. Once reached, log the temperatures for
+15 minutes to calculate a stable average.</p>
+<h3 id="5-calculate-the-dissipation-capacity">5. Calculate the
+Dissipation Capacity</h3>
+<p>In PC hardware benchmarking, radiator capacity is universally
+expressed as <strong>Watts per 10°C Delta T (W/10ΔT)</strong>. Because
+radiator thermal dissipation scales linearly with the temperature delta,
+you can determine this metric using one of two methods:</p>
+<ul>
+<li><strong>The Fixed Wattage Method:</strong> Apply a constant load
+(for example, 300W) and wait for equilibrium. Measure the resulting
+Delta T. Divide your wattage by the Delta T, then multiply by 10. For
+instance, if a 300W load results in a 12°C Delta T, the math is (300 /
+12) * 10 = 250. The radiator's capacity at that specific fan speed is
+250W/10ΔT.</li>
+<li><strong>The Target Delta Method:</strong> Apply a heat load and
+slowly adjust the wattage on your variable power supply until the system
+stabilizes at an exact 10°C Delta T. Once it holds steady at a 10°C
+difference between the water and the air, the wattage reading on your
+power meter is the radiator's exact heat dissipation capacity.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/measuring-radiator-heat-dissipation-in-pc-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

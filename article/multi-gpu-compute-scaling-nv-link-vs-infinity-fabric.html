@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-GPU Compute Scaling: NVLink vs. Infinity Fabric - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive analysis of how NVIDIA&#39;s NVLink and AMD&#39;s Infinity Fabric perform in modern multi-GPU compute benchmarks. It explores why traditional PCIe lanes bottleneck high-performance workloads, how these proprietary high-speed">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/multi-gpu-compute-scaling-nv-link-vs-infinity-fabric">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Multi-GPU Compute Scaling: NVLink vs. Infinity Fabric - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/multi-gpu-compute-scaling-nv-link-vs-infinity-fabric" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive analysis of how NVIDIA&#39;s NVLink and AMD&#39;s Infinity Fabric perform in modern multi-GPU compute benchmarks. It explores why traditional PCIe lanes bottleneck high-performance workloads, how these proprietary high-speed" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="multi-gpu-compute-scaling-nvlink-vs-infinity-fabric">Multi-GPU
+Compute Scaling: NVLink vs. Infinity Fabric</h1>
+<p>This article provides a comprehensive analysis of how NVIDIA's NVLink
+and AMD's Infinity Fabric perform in modern multi-GPU compute
+benchmarks. It explores why traditional PCIe lanes bottleneck
+high-performance workloads, how these proprietary high-speed
+interconnects enable memory pooling, and the actual scaling efficiency
+achieved in artificial intelligence, rendering, and scientific
+simulations using today's top-tier hardware.</p>
+<h2 id="the-death-of-pcie-in-heavy-compute">The Death of PCIe in Heavy
+Compute</h2>
+<p>To understand the benchmark performance of NVLink and Infinity
+Fabric, you must first understand the limitation of standard PCIe slots.
+Even modern PCIe Gen 5 x16 offers a bidirectional bandwidth of roughly
+128 GB/s. In complex compute benchmarks—such as training Large Language
+Models (LLMs) or running fluid dynamics simulations—GPUs must constantly
+share massive datasets. When forced through PCIe, GPUs spend more time
+waiting for data than processing it, resulting in poor multi-GPU
+scaling. NVLink and Infinity Fabric bypass this bottleneck by creating
+direct, ultra-high-bandwidth bridges between GPUs.</p>
+<h2 id="nvidia-nvlink-benchmark-performance">NVIDIA NVLink Benchmark
+Performance</h2>
+<p>NVIDIA’s NVLink, particularly in its fourth and fifth generations
+(found in Hopper H100 and Blackwell B200 architectures), dominates AI
+and deep learning benchmarks.</p>
+<ul>
+<li><strong>Bandwidth:</strong> Modern NVLink provides up to 900 GB/s
+(Hopper) and 1.8 TB/s (Blackwell) of bidirectional bandwidth per
+GPU—over ten times the speed of PCIe Gen 5.</li>
+<li><strong>Scaling Efficiency:</strong> In standard compute benchmarks
+like MLPerf, moving from one to eight GPUs using standard PCIe often
+yields dismal scaling efficiency (sometimes dropping below 50% per added
+card due to communication overhead). With NVLink and NVSwitch, scaling
+efficiency regularly hits 90% to 95%. This means an 8-GPU cluster
+performs nearly eight times faster than a single GPU.</li>
+<li><strong>Memory Pooling:</strong> NVLink allows multiple GPUs to pool
+their VRAM into a single, unified memory space. In rendering benchmarks
+like OctaneBench or V-Ray, if a scene exceeds a single GPU's memory
+buffer, performance normally crashes. With NVLink, the workload scales
+seamlessly across the combined memory of the linked GPUs without a
+performance penalty.</li>
+</ul>
+<h2 id="amd-infinity-fabric-benchmark-performance">AMD Infinity Fabric
+Benchmark Performance</h2>
+<p>AMD utilizes its Infinity Fabric interconnect technology mainly
+within its Instinct MI-series accelerators (such as the MI250X and
+MI300X) to power high-performance computing (HPC) and exascale
+supercomputers.</p>
+<ul>
+<li><strong>Bandwidth:</strong> The latest Infinity Fabric
+implementations allow up to 896 GB/s of peer-to-peer bandwidth between
+GPUs in a standard 8-GPU node.</li>
+<li><strong>Coherent Memory:</strong> AMD's distinct advantage in
+benchmarking is CPU-to-GPU memory coherency, particularly in the MI300A
+(which combines CPU and GPU cores) and xGMI links. This eliminates the
+need to copy data back and forth between system RAM and VRAM,
+drastically reducing latency in scientific compute benchmarks like
+LAMMPS (molecular dynamics) and GROMACS.</li>
+<li><strong>Scaling Efficiency:</strong> In FP64 (double-precision)
+compute benchmarks, AMD’s Infinity Fabric demonstrates near-linear
+scaling. When scaling from two to eight Instinct GPUs, HPC workloads
+regularly maintain an 85% to 92% scaling efficiency, trading blows
+directly with NVIDIA's NVLink in raw compute throughput.</li>
+</ul>
+<h2 id="workload-dependency-where-scaling-matters">Workload Dependency:
+Where Scaling Matters</h2>
+<p>Hardware interconnects only perform well if the benchmarking software
+is programmed to use them. Multi-GPU scaling falls into two categories
+during testing:</p>
+<ol type="1">
+<li><strong>Weakly Coupled Workloads (PCIe is Enough):</strong>
+Benchmarks like Blender Cycles, Cinebench, or basic cryptocurrency
+mining split a task into smaller, independent chunks. Each GPU works on
+its own piece of the puzzle and rarely talks to the others. Here, NVLink
+and Infinity Fabric show almost zero performance improvement over
+standard PCIe. Scaling is already near 100% regardless of the
+interconnect.</li>
+<li><strong>Tightly Coupled Workloads (Interconnect is
+Critical):</strong> Deep learning training, weather forecasting, and
+massive-scale finite element analysis require every GPU to know what the
+others are calculating millisecond by millisecond. In these benchmarks,
+NVLink and Infinity Fabric deliver a 2x to 4x total system speedup
+compared to running the exact same GPUs over a standard PCIe motherboard
+interface.</li>
+</ol>
+<h2 id="the-verdict-on-modern-hardware">The Verdict on Modern
+Hardware</h2>
+<p>In modern compute benchmarking, both NVLink and Infinity Fabric have
+effectively solved the multi-GPU scaling bottleneck for enterprise
+hardware. While consumer-grade GPUs have largely had these features
+stripped away (NVIDIA removed NVLink from the RTX 40-series),
+workstation and data center hardware rely on them entirely. When
+benchmarking AI and HPC tasks, both technologies deliver 85% to 95%
+linear scaling, turning multiple discrete graphics cards into what the
+software perceives as one massive, unified processor.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/multi-gpu-compute-scaling-nv-link-vs-infinity-fabric';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

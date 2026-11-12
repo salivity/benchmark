@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The VRAM Cliff: Benchmarking Hardware at Ultra Textures - benchmark</title>
+    <meta name="description" content="This article explains why Video Random Access Memory (VRAM) capacity acts as a sudden performance cliff when benchmarking graphics cards with ultra texture settings. It covers the fundamental role of VRAM, the consequences of texture data exceeding availa">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/the-vram-cliff-benchmarking-hardware-at-ultra-textures">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The VRAM Cliff: Benchmarking Hardware at Ultra Textures - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/the-vram-cliff-benchmarking-hardware-at-ultra-textures" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains why Video Random Access Memory (VRAM) capacity acts as a sudden performance cliff when benchmarking graphics cards with ultra texture settings. It covers the fundamental role of VRAM, the consequences of texture data exceeding availa" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-vram-cliff-benchmarking-hardware-at-ultra-textures">The VRAM
+Cliff: Benchmarking Hardware at Ultra Textures</h1>
+<p>This article explains why Video Random Access Memory (VRAM) capacity
+acts as a sudden performance cliff when benchmarking graphics cards with
+ultra texture settings. It covers the fundamental role of VRAM, the
+consequences of texture data exceeding available capacity, why standard
+system RAM cannot compensate for the overflow, and how this bottleneck
+ruins benchmark results through severe stuttering, frame drops, and
+visual degradation.</p>
+<h2 id="the-role-of-vram-and-ultra-textures">The Role of VRAM and Ultra
+Textures</h2>
+<p>VRAM is dedicated, high-speed memory located directly on the graphics
+card. Its primary job is to hold the visual assets the GPU needs to
+render the very next frame, with surface textures taking up the vast
+majority of this space.</p>
+<p>Increasing texture settings from "High" to "Ultra" rarely requires
+extra processing power from the GPU core. Instead, it simply swaps
+standard image files for massive, uncompressed image files. As long as
+the graphics card has enough VRAM to hold these files, turning textures
+to ultra comes with almost zero performance penalty.</p>
+<h2 id="why-capacity-is-a-cliff-not-a-slope">Why Capacity is a Cliff,
+Not a Slope</h2>
+<p>Most computer hardware scales linearly. A 10% faster GPU core
+generally yields roughly 10% more frames per second. VRAM capacity does
+not work this way; it is a binary limit.</p>
+<p>You either have enough VRAM to hold the ultra textures, or you do
+not. If a game's ultra textures require 9GB of VRAM, a 12GB graphics
+card will run the game flawlessly. However, an 8GB graphics card of the
+exact same speed will hit a wall. The performance does not drop by a
+small percentage; it plummets entirely, creating the "cliff point" seen
+in hardware benchmarks.</p>
+<h2 id="the-system-ram-bottleneck">The System RAM Bottleneck</h2>
+<p>When a benchmark pushes VRAM past its maximum capacity, the computer
+does not crash. Instead, it uses the PC's standard system RAM as
+overflow storage. This is where the performance cliff happens.</p>
+<p>VRAM sits right next to the GPU core and communicates via a massive
+bandwidth pipeline, often moving data at 500 to 1,000 GB per second.
+When the GPU is forced to fetch excess textures from system RAM, that
+data must travel through the motherboard's PCIe slot. The PCIe bus
+typically limits data transfer to just 16 to 64 GB per second.</p>
+<p>Because system RAM is much slower and further away, the GPU core is
+forced to sit idle and wait for the ultra textures to arrive.</p>
+<h2 id="how-the-cliff-appears-in-benchmarks">How the Cliff Appears in
+Benchmarks</h2>
+<p>When a graphics card falls off the VRAM cliff during a benchmark, the
+failure shows up in three specific ways:</p>
+<ul>
+<li><strong>Cratering 1% Low Frame Rates:</strong> Every time the camera
+turns in a benchmark, the GPU must pull new textures from the slow
+system RAM. This causes the game to freeze for a split second, resulting
+in violent stuttering and terrible 1% low frame rate metrics.</li>
+<li><strong>Plummeting Average FPS:</strong> Because the GPU spends so
+much time waiting for data to travel across the PCIe slot, the overall
+average frame rate drops drastically compared to a card with adequate
+VRAM.</li>
+<li><strong>Broken Visuals (Texture Pop-In):</strong> Some modern game
+engines are programmed to avoid stuttering at all costs. When these
+games detect an overflowing VRAM buffer, they simply refuse to load the
+ultra textures. Even though the benchmark is set to "Ultra," the game
+displays blurry, low-resolution textures, making the benchmark
+comparison invalid.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/the-vram-cliff-benchmarking-hardware-at-ultra-textures';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

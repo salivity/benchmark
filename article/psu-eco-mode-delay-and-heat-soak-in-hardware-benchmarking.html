@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSU Eco-Mode Delay and Heat Soak in Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="Power Supply Unit (PSU) eco-mode, often called zero-RPM mode, improves acoustics by keeping the cooling fan off during low-to-moderate loads. However, during computer hardware benchmarking, the sudden spike in power draw creates a thermal delay before the">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/psu-eco-mode-delay-and-heat-soak-in-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="PSU Eco-Mode Delay and Heat Soak in Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/psu-eco-mode-delay-and-heat-soak-in-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Power Supply Unit (PSU) eco-mode, often called zero-RPM mode, improves acoustics by keeping the cooling fan off during low-to-moderate loads. However, during computer hardware benchmarking, the sudden spike in power draw creates a thermal delay before the" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="psu-eco-mode-delay-and-heat-soak-in-hardware-benchmarking">PSU
+Eco-Mode Delay and Heat Soak in Hardware Benchmarking</h1>
+<p>Power Supply Unit (PSU) eco-mode, often called zero-RPM mode,
+improves acoustics by keeping the cooling fan off during low-to-moderate
+loads. However, during computer hardware benchmarking, the sudden spike
+in power draw creates a thermal delay before the fan activates. This
+article examines how this delay causes rapid heat soak within the PSU's
+internal components, leading to degraded power delivery, increased
+chassis temperatures, and skewed benchmark results.</p>
+<h3 id="the-mechanics-of-eco-mode-delay">The Mechanics of Eco-Mode
+Delay</h3>
+<p>Eco-mode relies on internal thermistors and load sensors to determine
+when to activate the cooling fan. Typically, the fan remains completely
+off until the PSU reaches a specific load threshold (usually 30% to 50%
+of its maximum capacity) or a designated internal temperature.</p>
+<p>Because thermal sensors are normally attached to a single secondary
+heatsink rather than the hottest individual components, there is a
+physical delay in heat transfer. When a hardware benchmark initiates an
+instant 100% load on the CPU and GPU, the PSU components generate
+extreme heat immediately. However, the thermal mass of the heatsink
+delays the temperature reading, meaning the sensor can take anywhere
+from several seconds to a few minutes to register the threshold required
+to spin up the fan.</p>
+<h3 id="internal-component-heat-soak">Internal Component Heat Soak</h3>
+<p>During the delay before the fan engages, stagnant air traps heat
+inside the PSU housing. Primary heat generators, such as bridge
+rectifiers, APFC MOSFETs, and the main transformers, experience rapid
+thermal saturation, known as heat soak.</p>
+<p>Without active airflow, the internal heatsinks quickly reach their
+thermal capacity. Even more vulnerable are the electrolytic capacitors,
+coils, and small PCB components that do not have direct heatsink
+contact. These parts absorb radiant heat from the surrounding stagnant
+air. When the fan finally spins up, the components are already
+heat-soaked, meaning the fan must run at a much higher RPM for a longer
+duration just to bring temperatures back down to baseline, compared to a
+fan that was spinning prior to the load spike.</p>
+<h3 id="impact-on-power-delivery-and-benchmark-scores">Impact on Power
+Delivery and Benchmark Scores</h3>
+<p>Heat soak directly compromises the electrical performance of a PSU
+during the critical opening phases of a benchmark. As internal
+temperatures spike, electrical resistance within the PSU changes, and
+overall efficiency drops. This thermal stress leads to two main
+issues:</p>
+<ul>
+<li><strong>Increased Voltage Ripple:</strong> High temperatures
+temporarily degrade the filtering capability of capacitors, allowing
+more AC fluctuations (noise) to bleed into the DC lines feeding the
+motherboard and graphics card.</li>
+<li><strong>Looser Voltage Regulation:</strong> The 12Vrail, which
+powers the CPU and GPU, may experience greater voltage droop under heavy
+load when the regulating components are overheated.</li>
+</ul>
+<p>In a benchmarking scenario, dirty power and voltage droop directly
+reduce the stability of hardware, especially when overclocked. Modern
+CPUs and GPUs use precise power and thermal telemetry to manage their
+boost clocks. If the PSU delivers unstable voltage or high ripple due to
+heat soak, the graphics card or processor may fail to hit its maximum
+boost frequency, or it may crash entirely, resulting in artificially low
+benchmark scores.</p>
+<h3 id="secondary-thermal-bleed-into-the-chassis">Secondary Thermal
+Bleed into the Chassis</h3>
+<p>A heat-soaked PSU affects more than just its own internal circuitry.
+Before the fan engages to exhaust the heat out the back of the computer,
+natural convection causes the trapped heat to rise through the top
+perforations of the PSU casing.</p>
+<p>In standard mid-tower cases where the PSU is mounted at the bottom,
+this radiant heat bleeds directly into the main chamber beneath the
+graphics card. The GPU intake fans then pull this pre-heated air into
+the graphics card heatsink. Consequently, the GPU experiences
+accelerated heat soak of its own, causing it to hit thermal throttling
+limits earlier in the benchmark run.</p>
+<h3 id="best-practices-for-benchmarking">Best Practices for
+Benchmarking</h3>
+<p>To achieve accurate and repeatable hardware benchmarks, all thermal
+variables must be controlled. Leaving PSU eco-mode enabled introduces an
+inconsistent thermal baseline, as back-to-back benchmark runs will
+suffer from compounding heat soak during the periods when the fan cycles
+off between tests. Disabling eco-mode ensures continuous active airflow,
+preventing heat soak before the load hits and guaranteeing the cleanest
+possible power delivery throughout the entire benchmark.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/psu-eco-mode-delay-and-heat-soak-in-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

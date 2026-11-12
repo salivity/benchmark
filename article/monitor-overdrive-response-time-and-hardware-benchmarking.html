@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor Overdrive, Response Time, and Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how a monitor&#39;s pixel response time and overdrive settings interact with computer hardware benchmarking. While these display settings do not alter raw software-generated metrics like frames per second (FPS">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/monitor-overdrive-response-time-and-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Monitor Overdrive, Response Time, and Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/monitor-overdrive-response-time-and-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how a monitor&#39;s pixel response time and overdrive settings interact with computer hardware benchmarking. While these display settings do not alter raw software-generated metrics like frames per second (FPS" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="monitor-overdrive-response-time-and-hardware-benchmarking">Monitor
+Overdrive, Response Time, and Hardware Benchmarking</h1>
+<p>This article provides a comprehensive overview of how a monitor's
+pixel response time and overdrive settings interact with computer
+hardware benchmarking. While these display settings do not alter raw
+software-generated metrics like frames per second (FPS) or CPU rendering
+scores, they play a critical role in physical end-to-end system latency
+testing and the actual visual perception of hardware performance.
+Understanding the boundary between internal hardware rendering and
+external display output is essential for accurate performance
+evaluation.</p>
+<h2 id="understanding-pixel-response-time-and-overdrive">Understanding
+Pixel Response Time and Overdrive</h2>
+<p>Pixel response time is the speed at which a monitor’s pixels can
+change from one color to another, typically measured in milliseconds
+(ms) using a grey-to-grey (GtG) standard. If pixels change too slowly,
+moving objects leave a trail, known as ghosting or motion blur.</p>
+<p>Monitor overdrive is a feature that applies a higher voltage to the
+liquid crystals in a display panel, forcing the pixels to transition
+faster. While proper overdrive reduces ghosting, pushing the voltage too
+high causes the pixel to overshoot its target color. This creates a
+bright halo trail behind moving objects, known as inverse ghosting or
+corona artifacts.</p>
+<h2 id="software-benchmarks-no-direct-impact">Software Benchmarks: No
+Direct Impact</h2>
+<p>When running standard software benchmarks—such as 3DMark, Cinebench,
+or built-in video game benchmark tools—monitor overdrive and pixel
+response times have zero impact on the final score.</p>
+<p>Hardware benchmarks measure how fast the CPU and GPU can process data
+and generate frames in the system's memory. The computer calculates
+these metrics internally before the image is even sent through the
+display cable. In fact, you can run a GPU benchmark with the monitor
+completely turned off, and the resulting FPS and frame time graphs will
+be identical to a test run on a fully calibrated display.</p>
+<h2 id="end-to-end-latency-testing-direct-impact">End-to-End Latency
+Testing: Direct Impact</h2>
+<p>Monitor settings become a major variable when benchmarking total
+system latency, often referred to as "click-to-photon" latency. Hardware
+reviewers use specialized tools, such as NVIDIA’s Latency Display
+Analysis Tool (LDAT) or high-speed cameras, to measure the exact time it
+takes for a mouse click to result in a visible change on the screen.</p>
+<p>In this type of physical benchmarking, pixel response time is a
+direct bottleneck.</p>
+<ol type="1">
+<li><strong>Slower Response Times:</strong> If overdrive is turned off,
+the pixels take longer to reach the brightness threshold required to
+trigger the latency sensor. This adds milliseconds to the total system
+latency score, making the PC hardware appear slower than it actually
+is.</li>
+<li><strong>Aggressive Overdrive:</strong> Cranking overdrive to its
+maximum setting speeds up the initial pixel transition, which can
+artificially lower latency scores on a sensor. However, the resulting
+inverse ghosting makes the display visually unusable in real-world
+scenarios.</li>
+<li><strong>Sensor Confusion:</strong> Extreme overshoot from bad
+overdrive settings can cause brightness spikes that trick optical
+sensors into registering a frame change prematurely or inaccurately,
+invalidating the benchmark data.</li>
+</ol>
+<h2 id="the-frame-rate-fluctuation-problem">The Frame Rate Fluctuation
+Problem</h2>
+<p>Hardware benchmarks intentionally push systems to their limits,
+resulting in wildly fluctuating frame rates. A GPU might output 200 FPS
+in a simple scene and drop to 55 FPS in a heavy physics simulation. When
+benchmarking with Variable Refresh Rate (VRR) technologies like G-Sync
+or FreeSync enabled, the monitor's refresh rate changes dynamically to
+match the GPU's frame rate.</p>
+<p>This creates a conflict with static monitor overdrive settings:</p>
+<ul>
+<li>Overdrive tuned for 200Hz is too aggressive for 60Hz. When the
+benchmark bogs down the GPU and the refresh rate drops, the high
+overdrive voltage causes severe inverse ghosting.</li>
+<li>Overdrive tuned for 60Hz is too weak for 200Hz. When the GPU outputs
+high frame rates during lighter sections of the benchmark, the pixels
+cannot keep up, resulting in heavy motion blur.</li>
+</ul>
+<p>While the software will accurately report that the GPU hit 200 FPS,
+the human eye will not perceive the smoothness of 200 FPS if the pixel
+response time is slower than the refresh window. For a 200Hz refresh
+rate, a new frame appears every 5 milliseconds. If the monitor's pixel
+response time is 8 milliseconds, the hardware's performance is visually
+bottlenecked by the display.</p>
+<h2 id="best-practices-for-accurate-benchmarking">Best Practices for
+Accurate Benchmarking</h2>
+<p>To ensure monitor settings do not skew your perception or physical
+measurements of hardware performance, apply the following rules:</p>
+<ul>
+<li><strong>For Software Benchmarks:</strong> Ignore monitor settings
+entirely. Focus on internal frame time graphs and FPS counters.</li>
+<li><strong>For Latency Benchmarks:</strong> Set the monitor's overdrive
+to a balanced, reviewer-verified setting (usually "Medium" or "Normal")
+that provides the fastest response time without introducing severe
+overshoot. Keep this setting locked across all hardware
+comparisons.</li>
+<li><strong>For Visual Evaluation:</strong> Match your overdrive setting
+to the average frame rate your hardware achieves during the test, or use
+a monitor with variable overdrive, which automatically adjusts pixel
+voltage based on the current frame rate output by the GPU.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/monitor-overdrive-response-time-and-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

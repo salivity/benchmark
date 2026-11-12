@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact of PCIe Gen 3, 4, and 5 x8 Lanes on GPU Benchmarks - benchmark</title>
+    <meta name="description" content="This article examines how restricting a graphics card to an x8 PCIe lane configuration across PCIe Generation 3, Generation 4, and Generation 5 impacts GPU benchmarking and overall hardware performance. We will cover the raw bandwidth differences between">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/impact-of-pc-ie-gen-3-4-and-5-x-8-lanes-on-gpu-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Impact of PCIe Gen 3, 4, and 5 x8 Lanes on GPU Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/impact-of-pc-ie-gen-3-4-and-5-x-8-lanes-on-gpu-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article examines how restricting a graphics card to an x8 PCIe lane configuration across PCIe Generation 3, Generation 4, and Generation 5 impacts GPU benchmarking and overall hardware performance. We will cover the raw bandwidth differences between" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="impact-of-pcie-gen-3-4-and-5-x8-lanes-on-gpu-benchmarks">Impact
+of PCIe Gen 3, 4, and 5 x8 Lanes on GPU Benchmarks</h1>
+<p>This article examines how restricting a graphics card to an x8 PCIe
+lane configuration across PCIe Generation 3, Generation 4, and
+Generation 5 impacts GPU benchmarking and overall hardware performance.
+We will cover the raw bandwidth differences between each generation,
+explain why modern GPUs frequently operate at x8 speeds, and break down
+how these limitations affect both synthetic tests and real-world gaming
+benchmarks, particularly when Video RAM (VRAM) limits are reached.</p>
+<h2 id="the-bandwidth-breakdown">The Bandwidth Breakdown</h2>
+<p>PCIe (Peripheral Component Interconnect Express) generations double
+the bandwidth per lane with each new iteration. When a graphics card is
+wired for or restricted to 8 lanes (x8) instead of the standard 16 lanes
+(x16), the available data transfer speeds are cut in half for that
+specific generation.</p>
+<p>Here is the maximum theoretical bidirectional bandwidth for x8
+configurations:</p>
+<ul>
+<li><strong>PCIe Gen 3 x8:</strong> ~8 GB/s (Equivalent to PCIe Gen 2
+x16)</li>
+<li><strong>PCIe Gen 4 x8:</strong> ~16 GB/s (Equivalent to PCIe Gen 3
+x16)</li>
+<li><strong>PCIe Gen 5 x8:</strong> ~32 GB/s (Equivalent to PCIe Gen 4
+x16)</li>
+</ul>
+<p>Because bandwidth doubles with each generation, a PCIe Gen 4 x8
+connection offers the exact same bandwidth as a full PCIe Gen 3 x16
+slot. Similarly, a PCIe Gen 5 x8 connection matches a full PCIe Gen 4
+x16 slot.</p>
+<h2 id="why-gpus-run-at-x8-speeds">Why GPUs Run at x8 Speeds</h2>
+<p>In computer hardware benchmarking, you will encounter x8 lane
+restrictions in two ways:</p>
+<ol type="1">
+<li><strong>Physical GPU Wiring:</strong> Manufacturers often wire
+budget and mid-range GPUs (such as the NVIDIA RTX 4060 or AMD RX 7600)
+with only 8 electrical lanes to reduce manufacturing costs, even though
+the physical connector is x16 in size.</li>
+<li><strong>Motherboard Lane Bifurcation:</strong> On many modern
+motherboards, installing an M.2 NVMe SSD into a secondary slot that
+shares bandwidth with the CPU will force the primary x16 GPU slot to
+drop down to x8 mode.</li>
+</ol>
+<h2 id="impact-on-synthetic-benchmarks">Impact on Synthetic
+Benchmarks</h2>
+<p>Synthetic benchmarks test specific hardware limits and react
+differently depending on what is being measured.</p>
+<ul>
+<li><strong>Bandwidth-Specific Tests:</strong> In tests like the 3DMark
+PCI Express Feature Test, which purely measures how fast data moves
+across the PCIe bus, benchmark scores scale linearly. Gen 4 x8 will
+score roughly double that of Gen 3 x8, and Gen 5 x8 will score quadruple
+that of Gen 3 x8.</li>
+<li><strong>Standard Rendering Tests:</strong> In benchmarks like 3DMark
+Time Spy, Fire Strike, or Unigine Superposition, the necessary graphical
+assets are loaded entirely into the GPU's VRAM before the test begins.
+Because the PCIe bus is not heavily utilized during the actual rendering
+phase, the score difference between Gen 3 x8, Gen 4 x8, and Gen 5 x8 is
+negligible, typically showing only a 1% to 3% variance.</li>
+</ul>
+<h2 id="impact-on-gaming-benchmarks">Impact on Gaming Benchmarks</h2>
+<p>Real-world gaming benchmarks rely heavily on streaming assets
+(textures, geometry, and shaders) from the system RAM to the GPU in
+real-time. The impact of x8 wiring here depends heavily on the GPU's
+VRAM capacity.</p>
+<h3 id="scenario-a-sufficient-vram">Scenario A: Sufficient VRAM</h3>
+<p>If the GPU has enough VRAM to hold all the game's data (for example,
+a 12GB or 16GB GPU running at 1440p), the PCIe bus is not stressed.</p>
+<ul>
+<li><strong>Gen 3 x8:</strong> Suffers a minor 2% to 5% drop in average
+frame rates compared to Gen 4 x8.</li>
+<li><strong>Gen 4 x8 and Gen 5 x8:</strong> Perform nearly identically,
+as 16 GB/s is more than enough bandwidth to feed the GPU without
+delay.</li>
+</ul>
+<h3 id="scenario-b-exceeding-vram-limits">Scenario B: Exceeding VRAM
+Limits</h3>
+<p>If a game demands more VRAM than the GPU possesses (which is common
+on 8GB cards running modern titles at high settings), the GPU must use
+the PCIe bus to offload overflow data to the slower system RAM.</p>
+<ul>
+<li><strong>Gen 3 x8:</strong> The ~8 GB/s bandwidth becomes a massive
+bottleneck. Benchmarks will show severe frame time spikes, stuttering,
+and a 15% to 30% drop in both average FPS and 1% low frame rates.</li>
+<li><strong>Gen 4 x8:</strong> The ~16 GB/s bandwidth mitigates much of
+this penalty, resulting in significantly smoother 1% lows and higher
+averages compared to Gen 3 x8, though stuttering may still occur due to
+system RAM latency.</li>
+<li><strong>Gen 5 x8:</strong> The ~32 GB/s bandwidth completely removes
+the PCIe bus as a bottleneck during VRAM overflow, operating at the same
+efficiency as a standard Gen 4 x16 slot.</li>
+</ul>
+<h2 id="a-note-on-high-end-gpus-and-pcie-gen-5">A Note on High-End GPUs
+and PCIe Gen 5</h2>
+<p>PCIe connections are backward and forward-compatible, but they always
+operate at the speed of the slowest component. If you place a current
+high-end PCIe Gen 4 GPU (like an RTX 4090) into a PCIe Gen 5
+motherboard, and that motherboard drops to x8 mode due to M.2 SSD lane
+sharing, the GPU will not run at Gen 5 x8. Because the GPU only supports
+Gen 4, the connection defaults to <strong>Gen 4 x8</strong>. In
+benchmarks, this restricts a flagship GPU to 16 GB/s of bandwidth,
+resulting in a 2% to 6% performance loss depending on the game and
+resolution.</p>
+<p>To actually benchmark at Gen 5 x8 speeds (32 GB/s), both the
+motherboard/CPU and the graphics card must natively support the PCIe 5.0
+standard. When using true Gen 5 hardware, dropping to x8 lanes yields
+zero performance loss in benchmarks compared to Gen 4 x16.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/impact-of-pc-ie-gen-3-4-and-5-x-8-lanes-on-gpu-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

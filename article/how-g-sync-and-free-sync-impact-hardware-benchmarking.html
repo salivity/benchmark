@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How G-Sync and FreeSync Impact Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="Variable refresh rate (VRR) technologies like Nvidia G-Sync and AMD FreeSync are designed to create a smooth visual experience, but they actively interfere with accurate computer hardware benchmarking. This article explains how display synchronization alt">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-g-sync-and-free-sync-impact-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How G-Sync and FreeSync Impact Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-g-sync-and-free-sync-impact-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Variable refresh rate (VRR) technologies like Nvidia G-Sync and AMD FreeSync are designed to create a smooth visual experience, but they actively interfere with accurate computer hardware benchmarking. This article explains how display synchronization alt" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-g-sync-and-freesync-impact-hardware-benchmarking">How G-Sync
+and FreeSync Impact Hardware Benchmarking</h1>
+<p>Variable refresh rate (VRR) technologies like Nvidia G-Sync and AMD
+FreeSync are designed to create a smooth visual experience, but they
+actively interfere with accurate computer hardware benchmarking. This
+article explains how display synchronization alters frame delivery,
+enforces artificial performance ceilings, and skews frame time metrics,
+demonstrating why these features must be disabled when testing the raw
+performance of a CPU or GPU.</p>
+<h2 id="the-conflict-between-smoothness-and-raw-performance">The
+Conflict Between Smoothness and Raw Performance</h2>
+<p>The primary goal of hardware benchmarking is to push components to
+their absolute limits to measure their maximum possible output.
+Conversely, the goal of G-Sync and FreeSync is to control and stabilize
+frame delivery to eliminate screen tearing and stuttering.</p>
+<p>VRR achieves this by dynamically matching the monitor’s refresh rate
+to the graphics card's frame rate output. Because benchmarking requires
+unconstrained hardware behavior to compare different components fairly,
+introducing a technology that actively regulates frame output
+invalidates the test results.</p>
+<h2 id="artificial-frame-rate-caps">Artificial Frame Rate Caps</h2>
+<p>The most significant impact VRR has on benchmarking is the
+introduction of frame rate limits. G-Sync and FreeSync only function
+within a specific refresh rate window, typically up to the monitor's
+maximum refresh rate (e.g., 144Hz or 240Hz).</p>
+<p>To keep the frame rate within this functional window, VRR
+technologies are almost always paired with V-Sync or automatic
+driver-level frame limiters (such as Nvidia Reflex). If you are
+benchmarking a high-end GPU capable of rendering 350 frames per second
+(FPS) in a specific game, an active VRR setup on a 144Hz monitor will
+cap the performance at or just below 144 FPS. Consequently, the
+benchmark will only measure the monitor's limitation rather than the
+GPU's actual power.</p>
+<h2 id="skewed-frametimes-and-1-lows">Skewed Frametimes and 1% Lows</h2>
+<p>Modern benchmarking relies heavily on frametime metrics—specifically
+1% and 0.1% lows—to measure system stability and stutter. Frametime is
+the exact amount of time it takes the hardware to render a single
+frame.</p>
+<p>When G-Sync or FreeSync is enabled, the graphics driver communicates
+with the display to manage the render queue. If the frame rate hits the
+monitor's maximum refresh rate ceiling, the system stops rendering new
+frames and waits for the display to catch up. This introduces artificial
+delays in the rendering pipeline, which benchmarking software records as
+higher frametimes. This makes the hardware appear slower or less
+consistent in data logs than it actually is when running uncapped.</p>
+<h2 id="altered-cpu-and-gpu-utilization">Altered CPU and GPU
+Utilization</h2>
+<p>Benchmarking often involves isolating either the CPU or the GPU to
+see where a system bottleneck lies. Because VRR setups frequently
+prevent the hardware from running at 100% capacity when the frame rate
+approaches the monitor's refresh limit, system utilization drops.</p>
+<p>This results in lower power consumption, reduced thermal output, and
+lower clock speeds during the test. If you are benchmarking a cooling
+solution, power supply, or overclocking stability, VRR will prevent the
+hardware from generating the maximum heat and power load required for an
+accurate stress test.</p>
+<h2 id="inconsistent-cross-system-comparisons">Inconsistent Cross-System
+Comparisons</h2>
+<p>A core principle of benchmarking is repeatability. If you benchmark a
+graphics card on a 144Hz FreeSync monitor and compare the results to the
+exact same graphics card tested on a 240Hz G-Sync monitor, the results
+will differ wildly if synchronization is left on. The hardware did not
+change, but the display constraints dictated the benchmark scores.</p>
+<h2 id="how-to-properly-configure-a-system-for-benchmarking">How to
+Properly Configure a System for Benchmarking</h2>
+<p>To measure the true performance of your computer hardware, you must
+remove the display as a limiting factor. Before running any benchmark,
+apply the following settings:</p>
+<ul>
+<li><strong>Disable G-Sync or FreeSync</strong> in the Nvidia Control
+Panel, Nvidia App, or AMD Radeon Software.</li>
+<li><strong>Disable V-Sync</strong> both in the graphics driver control
+panel and within the specific game or benchmark settings.</li>
+<li><strong>Remove all frame rate limiters</strong> in the game menu and
+third-party software (such as RivaTuner Statistics Server).</li>
+<li><strong>Disable Low Latency Modes</strong> like Nvidia Reflex or AMD
+Anti-Lag, as these features can dynamically cap frame rates when paired
+with VRR displays.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-g-sync-and-free-sync-impact-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

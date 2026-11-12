@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact of GPU Shader Cache on Initial Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="This article explains how the size and storage location of a GPU driver&#39;s shader cache directly impact the performance and accuracy of initial hardware benchmark runs. When benchmarking a computer, the very first pass often suffers from stuttering and art">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/impact-of-gpu-shader-cache-on-initial-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Impact of GPU Shader Cache on Initial Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/impact-of-gpu-shader-cache-on-initial-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how the size and storage location of a GPU driver&#39;s shader cache directly impact the performance and accuracy of initial hardware benchmark runs. When benchmarking a computer, the very first pass often suffers from stuttering and art" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="impact-of-gpu-shader-cache-on-initial-hardware-benchmarks">Impact of
+GPU Shader Cache on Initial Hardware Benchmarks</h1>
+<p>This article explains how the size and storage location of a GPU
+driver's shader cache directly impact the performance and accuracy of
+initial hardware benchmark runs. When benchmarking a computer, the very
+first pass often suffers from stuttering and artificially low frame
+rates due to real-time shader compilation. By understanding how shader
+cache size limits and storage drive speeds influence this process,
+hardware testers can eliminate storage bottlenecks, understand
+initial-run anomalies, and achieve consistent benchmarking data.</p>
+<h2 id="the-mechanics-of-the-initial-benchmark-run">The Mechanics of the
+Initial Benchmark Run</h2>
+<p>Modern graphics APIs like DirectX 12 and Vulkan require games and
+benchmarking tools to compile shaders—small programs that tell the GPU
+how to render lighting, effects, and textures—specifically for the
+installed graphics card.</p>
+<p>During an initial benchmark run, the GPU driver's shader cache is
+empty. As the benchmark progresses, the system must compile these
+shaders on the fly using the CPU, and then write the compiled data to
+the shader cache on the storage drive. This simultaneous compiling and
+writing causes several issues during the first run:</p>
+<ul>
+<li><strong>Severe Stuttering:</strong> Frame times spike as the GPU
+waits for the CPU to finish compiling shaders.</li>
+<li><strong>Skewed 1% and 0.1% Lows:</strong> While average frame rates
+might only drop slightly, minimum frame rate metrics will be drastically
+lower than normal.</li>
+<li><strong>Artificial CPU Bottlenecks:</strong> The CPU usage spikes to
+100% due to compilation workloads, misrepresenting how the hardware
+actually handles the benchmark's standard rendering load.</li>
+</ul>
+<h2 id="how-shader-cache-size-affects-benchmarking">How Shader Cache
+Size Affects Benchmarking</h2>
+<p>GPU manufacturers set a default maximum size for the shader cache in
+their driver software. If this size limit is too small, it directly
+compromises both long initial runs and subsequent testing passes.</p>
+<h3 id="cache-eviction-during-large-benchmarks">Cache Eviction During
+Large Benchmarks</h3>
+<p>If a benchmark or a suite of benchmarks generates more shader data
+than the driver's cache size limit allows, the driver will overwrite the
+oldest compiled shaders with the newest ones. If a benchmark loops or
+revisits an earlier scene during the initial run, the system is forced
+to recompile the overwritten shaders, reintroducing stutters.</p>
+<h3 id="invalidating-warm-up-runs">Invalidating "Warm-Up" Runs</h3>
+<p>Hardware testers typically perform a "warm-up" run to populate the
+shader cache, discarding the first result and recording the second.
+However, if the shader cache size limit is too restrictive, the shaders
+from the beginning of the benchmark are purged by the time the warm-up
+run finishes. Consequently, the second run will behave just like an
+initial run, ruining the consistency of the test. Increasing the shader
+cache size limit to "Unlimited" or the maximum allowable gigabytes in
+the GPU control panel prevents this issue.</p>
+<h2 id="how-shader-cache-location-affects-benchmarking">How Shader Cache
+Location Affects Benchmarking</h2>
+<p>By default, GPU drivers store the shader cache on the primary
+operating system drive (typically the C: drive). The physical speed of
+the storage drive hosting this cache dictates how fast compiled shaders
+can be written during the initial run and read during subsequent
+runs.</p>
+<h3 id="storage-io-bottlenecks">Storage I/O Bottlenecks</h3>
+<p>During the initial run, the system is constantly writing newly
+compiled shader files to the disk.</p>
+<ul>
+<li><strong>Hard Disk Drives (HDD):</strong> If the shader cache is
+located on a mechanical hard drive, the slow write speeds will create an
+Input/Output (I/O) bottleneck. The CPU and GPU will stall while waiting
+for the drive to finish writing data, amplifying initial-run
+stuttering.</li>
+<li><strong>SATA SSDs:</strong> While much faster than HDDs, budget SATA
+SSDs (especially those without DRAM cache) can still experience
+write-speed drops during heavy, continuous shader compilation.</li>
+<li><strong>NVMe SSDs:</strong> Storing the shader cache on a fast PCIe
+NVMe SSD ensures that writing compiled shaders during the initial run
+happens almost instantaneously, minimizing storage-related frame time
+spikes.</li>
+</ul>
+<h3 id="drive-contention">Drive Contention</h3>
+<p>If the benchmark software is installed on the same drive as the
+shader cache, the storage device must simultaneously read massive
+benchmark texture files and write small shader cache files. Separating
+the benchmark installation and the shader cache onto different
+high-speed NVMe drives eliminates drive contention during the initial
+run.</p>
+<h2 id="best-practices-for-accurate-benchmarking">Best Practices for
+Accurate Benchmarking</h2>
+<p>To control the variables introduced by the GPU shader cache during
+hardware testing, apply the following configurations:</p>
+<ol type="1">
+<li><strong>Maximize Cache Size:</strong> Open the NVIDIA Control Panel
+or AMD Software and set the Shader Cache Size to its maximum limit to
+prevent shader eviction between runs.</li>
+<li><strong>Use Fast Storage:</strong> Ensure the primary OS drive
+(where the cache lives by default) is a high-speed NVMe SSD.</li>
+<li><strong>Perform a Warm-Up Pass:</strong> Never use the initial run
+to judge pure rendering performance. Run the benchmark once to fully
+compile and write the shaders to the cache, then record the results of
+the second and third runs.</li>
+<li><strong>Clear the Cache When Swapping Hardware:</strong> Always
+manually delete the shader cache folders when changing GPUs or updating
+drivers to prevent corrupted or incompatible cached data from crashing
+the initial run.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/impact-of-gpu-shader-cache-on-initial-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

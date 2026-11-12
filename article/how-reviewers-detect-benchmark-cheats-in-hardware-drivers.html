@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Reviewers Detect Benchmark Cheats in Hardware Drivers - benchmark</title>
+    <meta name="description" content="Hardware manufacturers occasionally manipulate their device drivers to detect popular benchmarking software and artificially inflate performance scores. To achieve these higher numbers, drivers might secretly degrade visual quality, skip complex calculati">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-reviewers-detect-benchmark-cheats-in-hardware-drivers">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Reviewers Detect Benchmark Cheats in Hardware Drivers - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-reviewers-detect-benchmark-cheats-in-hardware-drivers" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware manufacturers occasionally manipulate their device drivers to detect popular benchmarking software and artificially inflate performance scores. To achieve these higher numbers, drivers might secretly degrade visual quality, skip complex calculati" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-reviewers-detect-benchmark-cheats-in-hardware-drivers">How
+Reviewers Detect Benchmark Cheats in Hardware Drivers</h1>
+<p>Hardware manufacturers occasionally manipulate their device drivers
+to detect popular benchmarking software and artificially inflate
+performance scores. To achieve these higher numbers, drivers might
+secretly degrade visual quality, skip complex calculations, or push
+hardware beyond safe power limits only while the test is running. This
+article explains the exact methods hardware reviewers use to uncover
+these deceptive optimizations, including executable renaming,
+pixel-level image comparisons, custom testing routines, and deep API
+analysis.</p>
+<h2 id="renaming-the-benchmark-executable">Renaming the Benchmark
+Executable</h2>
+<p>The most common way a driver cheats is by scanning the system for the
+specific file name of a benchmark program, such as
+<code>3DMark.exe</code> or <code>Cinebench.exe</code>. When the driver
+detects the targeted file name, it triggers a specific profile designed
+solely to boost scores in that application.</p>
+<p>Reviewers counter this by simply renaming the application's
+executable file to something generic, like <code>wordpad.exe</code> or
+<code>test123.exe</code>, before running the test. If the hardware score
+drops significantly after the file name is changed, the reviewer has
+definitive proof that the driver was applying application-specific
+optimizations rather than demonstrating true hardware performance.</p>
+<h2 id="pixel-by-pixel-image-quality-analysis">Pixel-by-Pixel Image
+Quality Analysis</h2>
+<p>In graphics card testing, a common cheat involves the driver secretly
+lowering the visual quality of a game or benchmark to render frames
+faster. A driver might reduce texture filtering quality, lower shadow
+resolutions, or decrease the distance at which objects are rendered,
+hoping the human eye won't notice during a fast-moving test.</p>
+<p>To catch this, reviewers use specialized capture cards to record
+uncompressed video output directly from the graphics card. They then
+extract identical frames from different hardware setups and compare them
+pixel by pixel. By zooming in on textures and using software that
+highlights visual differences between two images, reviewers can easily
+spot if a driver is cutting visual corners to gain an unfair frame-rate
+advantage.</p>
+<h2 id="abandoning-built-in-benchmarks-for-custom-runs">Abandoning
+Built-in Benchmarks for Custom Runs</h2>
+<p>Many video games include a built-in benchmark mode that follows a
+predetermined camera path. Because this path is entirely predictable,
+manufacturers can program their drivers to optimize performance
+exclusively for that specific two-minute sequence, ignoring the rest of
+the game.</p>
+<p>Hardware reviewers bypass this by ignoring built-in benchmark tools
+altogether. Instead, they load into the actual game and record
+performance during a manual playthrough in a demanding area. If a
+graphics card performs exceptionally well in the canned benchmark but
+struggles during actual gameplay, reviewers know the driver has been
+tailored specifically to pass the synthetic test.</p>
+<h2 id="inspecting-api-calls-and-shader-replacement">Inspecting API
+Calls and Shader Replacement</h2>
+<p>For a deeper technical investigation, reviewers use graphics
+debugging tools like RenderDoc. These tools allow the reviewer to
+intercept the communication between the software and the hardware
+driver, examining how every single frame is constructed.</p>
+<p>When a game runs, it sends mathematical instructions called "shaders"
+to the graphics card. A cheating driver will intercept a complex, heavy
+shader written by the game developer and secretly swap it out for a
+simplified version that runs much faster. By using debugging tools,
+reviewers can inspect the exact code being executed by the hardware and
+catch the driver replacing standard instructions with simplified
+ones.</p>
+<h2 id="monitoring-power-and-thermal-limits">Monitoring Power and
+Thermal Limits</h2>
+<p>Sometimes, driver cheats do not alter the software workload, but
+instead change how the physical hardware behaves. A driver might
+recognize a short CPU or GPU benchmark and temporarily disable the
+hardware's built-in temperature and power limits. This allows the chip
+to run at unsustainable speeds just long enough to finish the test and
+post a high score, even though it would overheat and throttle during
+normal daily use.</p>
+<p>Reviewers detect this by attaching physical power-monitoring
+equipment directly to the computer's power cables and motherboard. By
+logging real-time wattage, voltage, and thermal data, reviewers can see
+if a piece of hardware is drawing significantly more power during a
+recognized benchmark than it is allowed to draw during standard gaming
+or rendering workloads.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-reviewers-detect-benchmark-cheats-in-hardware-drivers';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

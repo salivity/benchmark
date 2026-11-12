@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact of Resizable BAR on Modern PC Gaming Benchmarks - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how enabling Resizable BAR (Base Address Register) alters the results of computer hardware benchmarks in modern video games. It covers the technical function of the feature, the resulting improvements in a">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/impact-of-resizable-bar-on-modern-pc-gaming-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Impact of Resizable BAR on Modern PC Gaming Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/impact-of-resizable-bar-on-modern-pc-gaming-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how enabling Resizable BAR (Base Address Register) alters the results of computer hardware benchmarks in modern video games. It covers the technical function of the feature, the resulting improvements in a" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="impact-of-resizable-bar-on-modern-pc-gaming-benchmarks">Impact
+of Resizable BAR on Modern PC Gaming Benchmarks</h1>
+<p>This article provides a comprehensive overview of how enabling
+Resizable BAR (Base Address Register) alters the results of computer
+hardware benchmarks in modern video games. It covers the technical
+function of the feature, the resulting improvements in average frame
+rates and frame time consistency, the varying levels of performance
+scaling across Nvidia, AMD, and Intel graphics cards, and the potential
+for performance regressions. Ultimately, understanding Resizable BAR is
+crucial because its inclusion or omission can completely shift the
+competitive hierarchy of graphics cards during standardized testing.</p>
+<h2 id="understanding-the-mechanism">Understanding the Mechanism</h2>
+<p>Historically, a computer's processor (CPU) could only access the
+graphics card's memory (VRAM) in restricted 256MB chunks. Modern games
+utilize large textures, shaders, and geometry that far exceed this
+limit, creating a data transfer bottleneck.</p>
+<p>Resizable BAR is a PCI Express (PCIe) technology that removes this
+restriction. When enabled in the motherboard BIOS, it allows the CPU to
+view and access the entire VRAM buffer simultaneously. Instead of
+queuing up multiple small transfers, the CPU can request and deliver
+massive assets in parallel, fundamentally changing how hardware performs
+under load.</p>
+<h2 id="shifts-in-average-frame-rates-and-1-lows">Shifts in Average
+Frame Rates and 1% Lows</h2>
+<p>When benchmarking modern games built on DirectX 12 and Vulkan APIs,
+enabling Resizable BAR typically results in an immediate shift in
+performance metrics.</p>
+<ul>
+<li><strong>Average FPS Gains:</strong> In titles optimized for the
+technology, benchmarks usually record a 3% to 15% increase in average
+frames per second (FPS). Games that heavily stream assets, such as
+<em>Forza Horizon 5</em>, <em>Cyberpunk 2077</em>, and <em>Assassin's
+Creed Valhalla</em>, show the most pronounced gains.</li>
+<li><strong>Improved 1% Lows:</strong> Benchmark outcomes are not just
+about maximum speed; they also measure stability. Resizable BAR often
+significantly boosts "1% low" and "0.1% low" frame rates. Because the
+CPU does not have to wait as long to feed data to the GPU,
+micro-stuttering is reduced, leading to smoother frame pacing metrics on
+benchmark graphs.</li>
+</ul>
+<h2 id="vendor-specific-benchmark-variances">Vendor-Specific Benchmark
+Variances</h2>
+<p>Enabling Resizable BAR does not affect all hardware equally. It
+changes the outcome of comparative benchmarks because different GPU
+manufacturers utilize the feature with varying degrees of reliance.</p>
+<h3 id="intel-arc-gpus">Intel Arc GPUs</h3>
+<p>For Intel Arc graphics cards, Resizable BAR is practically mandatory.
+Intel designed their GPU architecture specifically around the assumption
+that this feature is active. Benchmarking an Intel Arc GPU without
+Resizable BAR enabled results in severe performance degradation, often
+dropping frame rates by 20% to 40% and introducing massive stuttering.
+Enabling it transforms these cards from unplayable to competitive in
+benchmark charts.</p>
+<h3 id="amd-radeon-smart-access-memory">AMD Radeon (Smart Access
+Memory)</h3>
+<p>AMD markets its implementation of Resizable BAR as Smart Access
+Memory (SAM). AMD GPUs generally see significant and consistent uplifts
+across a wide variety of games when the feature is turned on. In
+head-to-head benchmarks against competing cards, enabling SAM can often
+push an AMD GPU ahead of a rival card that it would otherwise lose to in
+legacy testing configurations.</p>
+<h3 id="nvidia-geforce">Nvidia GeForce</h3>
+<p>Nvidia takes a conservative approach by using a driver-level
+whitelist. Even if Resizable BAR is enabled in the BIOS, the Nvidia
+driver will only activate it in games that Nvidia has specifically
+tested and approved. Consequently, benchmarking an Nvidia GPU with the
+feature enabled will show noticeable gains in whitelisted games, while
+non-whitelisted games will show zero change in benchmark outcomes unless
+the user manually forces the feature on using third-party software.</p>
+<h2 id="the-risk-of-performance-regressions">The Risk of Performance
+Regressions</h2>
+<p>Resizable BAR does not guarantee a higher benchmark score in every
+scenario. In some modern games, enabling the feature can actually
+degrade performance, leading to lower average FPS and worse stuttering.
+This happens when a game engine is poorly optimized for full VRAM
+access, causing memory management overhead.</p>
+<p>Because of this, hardware testers sometimes find that enabling
+Resizable BAR lowers the overall score in specific titles, particularly
+older DirectX 11 games or specific engines that do not handle large
+memory transfers efficiently.</p>
+<h2 id="impact-on-hardware-review-methodology">Impact on Hardware Review
+Methodology</h2>
+<p>Before Resizable BAR became widespread, hardware benchmarking was
+straightforward: install the GPU and run the test. Today, the feature
+acts as a major variable that changes the outcome of hardware
+evaluations.</p>
+<p>If a reviewer benchmarks a suite of games with Resizable BAR
+disabled, the data fails to represent the true modern capability of AMD
+and Intel hardware. Conversely, enabling it globally represents a
+realistic use case for modern PC builders, often narrowing the gap
+between mid-range and high-end components and shifting the
+"cost-per-frame" value calculations that consumers rely on.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/impact-of-resizable-bar-on-modern-pc-gaming-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

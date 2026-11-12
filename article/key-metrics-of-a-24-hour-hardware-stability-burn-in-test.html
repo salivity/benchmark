@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Metrics of a 24-Hour Hardware Stability Burn-In Test - benchmark</title>
+    <meta name="description" content="A 24-hour stability burn-in test pushes computer hardware to its absolute limits to ensure reliability under prolonged, maximum stress. This article provides a comprehensive overview of the exact metrics—ranging from error rates and thermal limits to volt">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/key-metrics-of-a-24-hour-hardware-stability-burn-in-test">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Key Metrics of a 24-Hour Hardware Stability Burn-In Test - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/key-metrics-of-a-24-hour-hardware-stability-burn-in-test" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="A 24-hour stability burn-in test pushes computer hardware to its absolute limits to ensure reliability under prolonged, maximum stress. This article provides a comprehensive overview of the exact metrics—ranging from error rates and thermal limits to volt" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="key-metrics-of-a-24-hour-hardware-stability-burn-in-test">Key
+Metrics of a 24-Hour Hardware Stability Burn-In Test</h1>
+<p>A 24-hour stability burn-in test pushes computer hardware to its
+absolute limits to ensure reliability under prolonged, maximum stress.
+This article provides a comprehensive overview of the exact
+metrics—ranging from error rates and thermal limits to voltage
+consistency and clock speed stability—that define a successful hardware
+burn-in test. By monitoring these specific data points, system builders
+and overclockers can confirm their systems are completely stable for
+long-term use.</p>
+<h2 id="zero-hardware-and-system-errors">Zero Hardware and System
+Errors</h2>
+<p>The most critical metric of a 24-hour burn-in is the complete absence
+of errors. A system has only passed if it achieves the following:</p>
+<ul>
+<li><strong>Zero System Crashes:</strong> No Blue Screens of Death
+(BSOD), unexpected reboots, or hard system freezes.</li>
+<li><strong>Zero WHEA Errors:</strong> Windows Hardware Error
+Architecture (WHEA) logs must remain completely at zero. Even if a
+system does not crash, logged WHEA warnings indicate silent data
+corruption caused by an unstable CPU, RAM, or PCIe bus.</li>
+<li><strong>Zero Calculation Errors:</strong> Benchmarking software like
+Prime95, OCCT, or MemTest86 must report 0 errors across all worker
+threads and memory addresses. A single miscalculation fails the
+test.</li>
+</ul>
+<h2 id="thermal-equilibrium-and-safe-peak-temperatures">Thermal
+Equilibrium and Safe Peak Temperatures</h2>
+<p>During a 24-hour test, cooling solutions (especially liquid coolers)
+become fully heat-soaked. Success is defined by how the system manages
+this sustained heat.</p>
+<ul>
+<li><strong>Staying Below TjMax:</strong> The CPU and GPU must stay
+safely below their maximum junction temperature (TjMax), which is
+typically between 95°C and 105°C for modern CPUs, and around 85°C to
+90°C for GPUs (with hotspots up to 105°C).</li>
+<li><strong>Thermal Equilibrium:</strong> Temperatures should plateau
+within the first hour and remain flat for the remaining 23 hours. A
+temperature that slowly creeps upward over 24 hours indicates inadequate
+case airflow or a failing cooling loop.</li>
+<li><strong>Zero Thermal Throttling:</strong> Hardware monitoring tools
+must show a 0% thermal throttling status. The cooling system must
+dissipate heat fast enough that the components do not have to lower
+their performance to survive.</li>
+</ul>
+<h2 id="clock-speed-consistency">Clock Speed Consistency</h2>
+<p>A stable system maintains predictable performance throughout the
+entire testing period.</p>
+<ul>
+<li><strong>Sustained Boost Clocks:</strong> Under a constant workload,
+the CPU and GPU core clocks should lock into a steady frequency. While
+frequencies will naturally be lower in extreme synthetic workloads (like
+AVX2 instructions) than in gaming, they should not wildly
+fluctuate.</li>
+<li><strong>No VRM Throttling:</strong> If the CPU temperature is fine,
+but clock speeds suddenly drop to base levels periodically, the
+motherboard’s Voltage Regulator Modules (VRMs) are overheating. A
+successful burn-in requires VRM temperatures to stay below 90°C,
+ensuring sustained clock speeds.</li>
+</ul>
+<h2 id="voltage-stability">Voltage Stability</h2>
+<p>Power delivery must remain tight and predictable under a 24-hour
+load.</p>
+<ul>
+<li><strong>Minimal Vcore Fluctuation:</strong> The voltage supplied to
+the CPU (Vcore) and GPU should remain consistent with the load-line
+calibration (LLC) settings. Erratic voltage spikes can degrade silicon,
+while severe voltage drops (Vdroop) will cause instability.</li>
+<li><strong>Power Supply Rail Tolerances:</strong> The 12V, 5V, and 3.3V
+rails from the Power Supply Unit (PSU) must stay within the ATX
+specification of ±5%. For example, the 12V rail must never drop below
+11.4V or exceed 12.6V during the entire 24-hour run.</li>
+</ul>
+<h2 id="storage-drive-health-and-speed">Storage Drive Health and
+Speed</h2>
+<p>If the burn-in includes storage benchmarks, the drives must maintain
+both physical health and performance.</p>
+<ul>
+<li><strong>Zero S.M.A.R.T. Errors:</strong> The drive must not log any
+new reallocated sectors, uncorrectable errors, or CRC errors during the
+test.</li>
+<li><strong>Controlled Drive Temps:</strong> NVMe SSDs must remain below
+70°C to 80°C to prevent thermal throttling, which causes read and write
+speeds to plummet to hard-drive levels.</li>
+</ul>
+<h2 id="frame-time-consistency-gpu-specific">Frame Time Consistency (GPU
+Specific)</h2>
+<p>When looping graphical benchmarks to test the GPU, stability is
+measured by the smoothness of the output.</p>
+<ul>
+<li><strong>97% or Higher Frame Rate Stability:</strong>
+Industry-standard stress tests, such as 3DMark, require a system to
+maintain a frame rate consistency of 97% or higher across all loops to
+pass.</li>
+<li><strong>Zero Visual Artifacts:</strong> A visual inspection at the
+start and end of the 24-hour period must show no screen tearing,
+flickering, discolored pixels, or geometry spikes, which indicate
+unstable GPU core or VRAM clocks.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/key-metrics-of-a-24-hour-hardware-stability-burn-in-test';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

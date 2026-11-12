@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Resolution Scaling Shifts Hardware Load in Benchmarking - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how changing display resolutions shifts the primary processing load between the Central Processing Unit (CPU) and the Graphics Processing Unit (GPU) during hardware benchmarking. At lower resolutions, the">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-resolution-scaling-shifts-hardware-load-in-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Resolution Scaling Shifts Hardware Load in Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-resolution-scaling-shifts-hardware-load-in-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how changing display resolutions shifts the primary processing load between the Central Processing Unit (CPU) and the Graphics Processing Unit (GPU) during hardware benchmarking. At lower resolutions, the" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-resolution-scaling-shifts-hardware-load-in-benchmarking">How
+Resolution Scaling Shifts Hardware Load in Benchmarking</h1>
+<p>This article provides a comprehensive overview of how changing
+display resolutions shifts the primary processing load between the
+Central Processing Unit (CPU) and the Graphics Processing Unit (GPU)
+during hardware benchmarking. At lower resolutions, the workload relies
+heavily on the CPU to process high frame rates, whereas higher
+resolutions transfer the bottleneck almost entirely to the GPU due to
+the massive increase in pixel rendering demands. Understanding this
+fundamental shift is critical for accurately testing components,
+interpreting performance metrics, and building a balanced computer
+system.</p>
+<h2 id="the-rendering-pipeline-cpu-vs-gpu-roles">The Rendering Pipeline:
+CPU vs. GPU Roles</h2>
+<p>To understand why resolution shifts the hardware load, you must first
+understand how a computer generates a frame in a benchmark or video
+game. The process is a two-step assembly line:</p>
+<ol type="1">
+<li><strong>The CPU (The Architect):</strong> The CPU calculates the
+environment's logic, physics, audio, and artificial intelligence. It
+determines where objects are located and prepares a list of instructions
+(draw calls) for the GPU. Crucially, the CPU's workload remains mostly
+the same regardless of the display resolution.</li>
+<li><strong>The GPU (The Painter):</strong> The GPU takes the
+instructions from the CPU and renders the actual image, applying
+textures, lighting, and shading to every individual pixel on the screen.
+The GPU's workload scales directly with the number of pixels it must
+draw.</li>
+</ol>
+<h2 id="low-resolutions-720p-and-1080p-the-cpu-bottleneck">Low
+Resolutions (720p and 1080p): The CPU Bottleneck</h2>
+<p>When benchmarking at lower resolutions like 1280x720 (720p) or
+1920x1080 (1080p), the primary load is placed on the CPU.</p>
+<p>A 1080p display contains roughly 2 million pixels. Modern graphics
+cards can render 2 million pixels with minimal effort. Because the GPU
+finishes drawing each frame so quickly, it immediately demands the next
+set of instructions from the CPU.</p>
+<p>This creates a scenario where frame rates skyrocket, forcing the CPU
+to work at maximum capacity to calculate game logic and feed draw calls
+to the waiting GPU. In this state, the system is "CPU-bound." Upgrading
+the graphics card at this resolution will often yield zero performance
+gains because the CPU simply cannot prepare frames any faster.
+Therefore, hardware reviewers exclusively use 1080p (or lower) to
+benchmark CPUs, as it removes the GPU as a limiting factor.</p>
+<h2 id="high-resolutions-1440p-and-4k-the-gpu-bottleneck">High
+Resolutions (1440p and 4K): The GPU Bottleneck</h2>
+<p>As you scale the resolution upward to 2560x1440 (1440p) and 3840x2160
+(4K), the primary hardware load shifts dramatically to the GPU.</p>
+<p>Scaling from 1080p to 4K increases the pixel count from roughly 2
+million to over 8.2 million. The GPU now has to do four times the work
+to render a single frame. Because the GPU takes significantly longer to
+paint these millions of pixels, the overall frame rate drops.</p>
+<p>As the frame rate drops, the CPU's job becomes much easier. Instead
+of scrambling to prepare 200 frames per second, the CPU might only need
+to prepare 60 frames per second, leaving it with plenty of idle time
+while it waits for the GPU to finish rendering. The system is now
+"GPU-bound." At 4K, even a budget CPU can often match the performance of
+a high-end CPU, because the graphics card is the sole component holding
+back the frame rate. Consequently, 1440p and 4K are the standard
+resolutions used to benchmark the raw power of graphics cards.</p>
+<h2 id="upscaling-technologies-and-load-shifting">Upscaling Technologies
+and Load Shifting</h2>
+<p>Modern benchmarking also accounts for resolution upscalers like
+NVIDIA DLSS, AMD FSR, and Intel XeSS. These technologies intentionally
+manipulate resolution scaling to shift hardware loads.</p>
+<p>When an upscaler is enabled on a 4K monitor, the GPU actually renders
+the benchmark at a lower internal resolution (such as 1080p or 1440p)
+and uses algorithms to stretch the image back to 4K. By lowering the
+internal resolution, the GPU load is drastically reduced, which
+increases the frame rate and shifts the burden right back onto the CPU.
+Benchmarking with upscalers requires careful observation, as setting an
+upscaler to "Performance" mode at 1440p can unintentionally turn a GPU
+benchmark into a CPU bottleneck test.</p>
+<h2 id="summary-of-resolution-scaling-in-benchmarks">Summary of
+Resolution Scaling in Benchmarks</h2>
+<ul>
+<li><strong>1080p Benchmarking:</strong> Tests the CPU's maximum speed.
+The GPU waits on the CPU.</li>
+<li><strong>1440p Benchmarking:</strong> A balanced workload. Usually
+stresses the GPU, though fast GPUs may still push the CPU hard.</li>
+<li><strong>4K Benchmarking:</strong> Tests the GPU's maximum rendering
+power and memory bandwidth. The CPU waits on the GPU.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-resolution-scaling-shifts-hardware-load-in-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Methods for Benchmarking Hardware Video Encoders - benchmark</title>
+    <meta name="description" content="Benchmarking hardware video encoders like NVIDIA’s NVENC and Intel’s QuickSync requires a two-pronged approach that evaluates both encoding speed and output visual quality. Simply measuring how fast a chip renders a video is insufficient because hardware">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/best-methods-for-benchmarking-hardware-video-encoders">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Best Methods for Benchmarking Hardware Video Encoders - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/best-methods-for-benchmarking-hardware-video-encoders" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Benchmarking hardware video encoders like NVIDIA’s NVENC and Intel’s QuickSync requires a two-pronged approach that evaluates both encoding speed and output visual quality. Simply measuring how fast a chip renders a video is insufficient because hardware" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="best-methods-for-benchmarking-hardware-video-encoders">Best
+Methods for Benchmarking Hardware Video Encoders</h1>
+<p>Benchmarking hardware video encoders like NVIDIA’s NVENC and Intel’s
+QuickSync requires a two-pronged approach that evaluates both encoding
+speed and output visual quality. Simply measuring how fast a chip
+renders a video is insufficient because hardware encoders process data
+differently, resulting in varying image quality at the same bitrate.
+This article covers the exact methodologies, standardized source files,
+software tools, and objective quality metrics like VMAF required to
+accurately test and compare modern media engines.</p>
+<h2 id="1-prepare-uncompressed-source-material">1. Prepare Uncompressed
+Source Material</h2>
+<p>To accurately test an encoder, you must feed it uncompressed, raw
+video files. Using an already compressed MP4 file from YouTube or a
+camera introduces generation loss, meaning the encoder has to waste
+bitrate trying to recreate existing compression artifacts.</p>
+<ul>
+<li><strong>File Format:</strong> Use <code>.y4m</code> (YUV4MPEG2)
+files, which are completely uncompressed. The Xiph.org Derf’s collection
+is the industry standard for free, uncompressed test sequences.</li>
+<li><strong>Variety of Content:</strong> Select at least three types of
+footage to stress the encoders differently:
+<ul>
+<li><strong>High Motion:</strong> Sports or fast-paced action gaming
+(tests temporal compression).</li>
+<li><strong>High Detail/Static:</strong> Nature scenes with foliage or
+water (tests spatial compression).</li>
+<li><strong>Synthetic/Animation:</strong> 2D or 3D animation (tests flat
+color gradients and sharp lines).</li>
+</ul></li>
+<li><strong>Resolutions:</strong> Test at both 1080p at 60fps (the
+standard for live streaming) and 4K at 60fps (the standard for video
+editing and archiving).</li>
+</ul>
+<h2 id="2-select-the-benchmarking-software">2. Select the Benchmarking
+Software</h2>
+<p>Avoid using heavy video editing suites like Premiere Pro for isolated
+encoder testing, as they introduce CPU, RAM, and disk bottlenecks.
+Instead, use direct command-line utilities that isolate the hardware
+encoder.</p>
+<ul>
+<li><strong>FFmpeg:</strong> The industry standard for video
+manipulation. It supports NVENC, QuickSync, and AMD AMF, allowing you to
+run identical commands across different hardware.</li>
+<li><strong>Rigaya’s Hardware Encoders (NVEncC and QSVEncC):</strong>
+These are specialized command-line tools written specifically to expose
+every possible parameter of NVIDIA and Intel media engines without
+third-party software overhead.</li>
+<li><strong>HandBrake:</strong> If you need to represent a "real-world"
+user scenario, HandBrake is acceptable, as it uses FFmpeg under the hood
+while providing a standardized graphical interface.</li>
+</ul>
+<h2 id="3-standardize-the-encoding-parameters">3. Standardize the
+Encoding Parameters</h2>
+<p>Because NVENC and QuickSync use different architectures, their
+presets do not directly align. You must standardize the output
+constraints to create an apples-to-apples comparison.</p>
+<ul>
+<li><strong>Codecs:</strong> Test H.264 (AVC) for legacy compatibility,
+H.265 (HEVC) for modern editing, and AV1 for next-generation
+efficiency.</li>
+<li><strong>Bitrate Control (CBR):</strong> To test live-streaming
+performance, use Constant Bitrate (CBR). Set strict limits, such as
+6,000 kbps for 1080p60 and 20,000 kbps for 4K60. Disable B-frames if
+testing ultra-low-latency scenarios, or use 2 B-frames for standard
+Twitch/YouTube streaming simulations.</li>
+<li><strong>Quality Control (CQP/ICQ):</strong> To test local recording
+and archiving, use Constant Quantization Parameter (CQP) for NVENC and
+Intelligent Constant Quality (ICQ) for QuickSync.</li>
+<li><strong>Presets:</strong> Test at least two presets per encoder. For
+NVENC, test <code>P1</code> (Fastest) and <code>P7</code> (Slowest/Best
+Quality). For QuickSync, test <code>TU7</code> (Fastest) and
+<code>TU1</code> (Slowest/Best Quality).</li>
+</ul>
+<h2 id="4-measure-encoding-speed-and-efficiency">4. Measure Encoding
+Speed and Efficiency</h2>
+<p>Before running the speed test, place your uncompressed
+<code>.y4m</code> source files on a high-speed NVMe SSD or a RAM disk.
+Raw 4K video requires massive read speeds; a slow drive will bottleneck
+the encoder and ruin the benchmark.</p>
+<ul>
+<li><strong>Frames Per Second (FPS):</strong> FFmpeg and Rigaya’s tools
+will output the average encoding speed in FPS upon completion. This is
+your primary speed metric.</li>
+<li><strong>Hardware Utilization and Power:</strong> Run HWiNFO64 in the
+background during the encode. Log the "GPU Video Engine Load" and
+overall package power draw (in Watts). Calculate the "Frames Per Watt"
+to determine the true efficiency of the media engine, which is
+especially important for laptop benchmarking.</li>
+</ul>
+<h2 id="5-measure-visual-quality-using-vmaf">5. Measure Visual Quality
+Using VMAF</h2>
+<p>Speed means nothing if the resulting video is blurry. Because human
+eyes are subjective, you must use objective mathematical models to
+compare the encoded output against the original <code>.y4m</code> source
+file.</p>
+<ul>
+<li><strong>VMAF (Video Multi-Method Assessment Fusion):</strong>
+Developed by Netflix, VMAF is the gold standard for video quality
+benchmarking. It uses machine learning to predict how a human would
+perceive the video quality, scoring it from 0 to 100. A score of 93 or
+higher is generally considered visually indistinguishable from the
+original.</li>
+<li><strong>PSNR and SSIM:</strong> Peak Signal-to-Noise Ratio and
+Structural Similarity Index are older metrics. They are less accurate
+than VMAF regarding human perception, but they are fast to calculate and
+useful as secondary data points.</li>
+</ul>
+<p><strong>How to execute the quality test:</strong> Use FFmpeg with the
+<code>libvmaf</code> filter. Pass the newly encoded NVENC or QuickSync
+file and the original <code>.y4m</code> file into the filter. FFmpeg
+will compare them frame-by-frame and generate a mean VMAF score.</p>
+<h2 id="6-plot-the-bitrate-to-quality-curve">6. Plot the
+Bitrate-to-Quality Curve</h2>
+<p>The ultimate method for presenting hardware encoder benchmarks is a
+Bitrate-to-Quality curve.</p>
+<ol type="1">
+<li>Encode the same source file five times at different CBR bitrates
+(e.g., 2 Mbps, 4 Mbps, 6 Mbps, 8 Mbps, and 10 Mbps) on both NVENC and
+QuickSync.</li>
+<li>Run a VMAF analysis on all the resulting files.</li>
+<li>Plot the results on a line graph with Bitrate on the X-axis and VMAF
+Score on the Y-axis.</li>
+</ol>
+<p>This graph will definitively show which hardware encoder achieves
+higher visual quality at lower bitrates, providing a complete and
+undeniable benchmark of the hardware's capabilities.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/best-methods-for-benchmarking-hardware-video-encoders';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

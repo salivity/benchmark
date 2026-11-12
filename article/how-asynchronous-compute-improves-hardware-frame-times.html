@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Asynchronous Compute Improves Hardware Frame Times - benchmark</title>
+    <meta name="description" content="This article explains how asynchronous compute technology reduces frame times and improves overall performance when benchmarking computer hardware. By enabling a graphics processing unit (GPU) to process graphics and compute workloads simultaneously rathe">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-asynchronous-compute-improves-hardware-frame-times">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Asynchronous Compute Improves Hardware Frame Times - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-asynchronous-compute-improves-hardware-frame-times" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how asynchronous compute technology reduces frame times and improves overall performance when benchmarking computer hardware. By enabling a graphics processing unit (GPU) to process graphics and compute workloads simultaneously rathe" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-asynchronous-compute-improves-hardware-frame-times">How
+Asynchronous Compute Improves Hardware Frame Times</h1>
+<p>This article explains how asynchronous compute technology reduces
+frame times and improves overall performance when benchmarking computer
+hardware. By enabling a graphics processing unit (GPU) to process
+graphics and compute workloads simultaneously rather than in a strict
+single-file line, asynchronous compute eliminates idle hardware
+resources. You will learn the difference between synchronous and
+asynchronous processing, how parallel task execution directly lowers
+frame rendering times, and why this capability is critical for modern
+benchmarking in APIs like DirectX 12 and Vulkan.</p>
+<h2 id="the-problem-with-traditional-rendering-queues">The Problem with
+Traditional Rendering Queues</h2>
+<p>To understand asynchronous compute, it helps to look at how GPUs
+traditionally handle workloads. In older graphics APIs like DirectX 11,
+rendering is synchronous, meaning it happens in a strict sequence. The
+GPU processes a single queue of tasks one after the other. For example,
+the GPU might render geometry first, calculate lighting second, and
+apply post-processing effects last.</p>
+<p>The flaw in this sequential method is that different tasks use
+different parts of the GPU. A heavy geometry task might max out the
+geometry engines while leaving the compute shaders idle. Conversely, a
+post-processing task might heavily tax memory bandwidth while leaving
+the majority of the shader cores empty. Because the tasks are locked in
+a strict line, the GPU cannot use its idle resources to start the next
+job, leading to wasted potential and longer wait times to complete each
+frame.</p>
+<h2 id="how-asynchronous-compute-works">How Asynchronous Compute
+Works</h2>
+<p>Asynchronous compute solves the idle resource problem by introducing
+multiple task queues. Instead of a single line of tasks, modern
+low-level APIs like DirectX 12 and Vulkan break workloads into separate
+graphics, compute, and copy queues.</p>
+<p>With a hardware scheduler managing these queues, the GPU can analyze
+its current usage in real-time and fill in the performance gaps. If the
+GPU is rendering a complex 3D environment (graphics queue) and has 30%
+of its shader cores sitting idle, the scheduler can simultaneously run a
+physics simulation or lighting calculation (compute queue) on those
+unused cores.</p>
+<h2 id="direct-impact-on-frame-times">Direct Impact on Frame Times</h2>
+<p>Frame time is the exact amount of time, measured in milliseconds
+(ms), it takes for a GPU to render a single frame. Lower frame times
+directly translate to higher framerates and reduced input lag.
+Asynchronous compute improves frame times in three specific ways:</p>
+<ul>
+<li><strong>Time Compression:</strong> By overlapping tasks, the total
+time required to finish a frame shrinks. If a graphics task takes 10ms
+and a compute task takes 4ms, synchronous processing requires 14ms to
+complete both. With asynchronous compute executing them at the same
+time, both tasks might finish in just 10.5ms.</li>
+<li><strong>Eliminating Pipeline Stalls:</strong> In a sequential
+pipeline, if one task stalls while waiting for memory data, the entire
+rendering process stops. This creates a bubble of inactivity, causing a
+sudden spike in frame time known as a stutter. Asynchronous compute
+masks this latency by immediately shifting the GPU's focus to another
+queue while waiting for the stalled task's data to arrive.</li>
+<li><strong>Consistent Frame Pacing:</strong> Benchmarking is not just
+about average framerates; it is about consistency, often measured as 1%
+and 0.1% lows. By keeping the GPU close to 100% utilization at all
+times, asynchronous compute smooths out the peaks and valleys in
+workload demand, resulting in a much flatter, more consistent frame-time
+graph.</li>
+</ul>
+<h2 id="what-this-means-for-hardware-benchmarking">What This Means for
+Hardware Benchmarking</h2>
+<p>When benchmarking modern GPUs, asynchronous compute capability acts
+as a major differentiator between hardware architectures. GPUs with
+robust hardware schedulers will show significantly lower and more stable
+frame times in modern games compared to older architectures that must
+clumsily emulate this feature through software drivers.</p>
+<p>In synthetic benchmarks like 3DMark Time Spy, which is built
+specifically to test DirectX 12 features, disabling asynchronous compute
+invariably leads to higher frame times and lower overall scores. When
+evaluating hardware, looking at frame-time variance in compute-heavy
+workloads—such as ray tracing, ambient occlusion, depth of field, and
+complex particle physics—reveals how effectively a GPU uses asynchronous
+compute to prevent bottlenecks and deliver a smooth visual
+experience.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-asynchronous-compute-improves-hardware-frame-times';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

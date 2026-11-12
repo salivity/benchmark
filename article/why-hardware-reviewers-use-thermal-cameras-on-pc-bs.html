@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Hardware Reviewers Use Thermal Cameras on PCBs - benchmark</title>
+    <meta name="description" content="When benchmarking computer hardware, reviewers use thermal imaging cameras to look beyond standard software temperature readings and identify hidden hotspots on a printed circuit board (PCB). This article explains how thermal imaging reveals the true ther">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-hardware-reviewers-use-thermal-cameras-on-pc-bs">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Hardware Reviewers Use Thermal Cameras on PCBs - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-hardware-reviewers-use-thermal-cameras-on-pc-bs" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When benchmarking computer hardware, reviewers use thermal imaging cameras to look beyond standard software temperature readings and identify hidden hotspots on a printed circuit board (PCB). This article explains how thermal imaging reveals the true ther" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-hardware-reviewers-use-thermal-cameras-on-pcbs">Why Hardware
+Reviewers Use Thermal Cameras on PCBs</h1>
+<p>When benchmarking computer hardware, reviewers use thermal imaging
+cameras to look beyond standard software temperature readings and
+identify hidden hotspots on a printed circuit board (PCB). This article
+explains how thermal imaging reveals the true thermal performance of
+critical components like voltage regulation modules and memory chips,
+evaluates the effectiveness of cooling designs, and predicts the
+long-term reliability and safety of the hardware under heavy
+workloads.</p>
+<h2 id="overcoming-the-limits-of-onboard-sensors">Overcoming the Limits
+of Onboard Sensors</h2>
+<p>Standard benchmarking software relies on built-in digital thermal
+sensors to report temperatures. While main processors like CPU cores and
+GPU dies have plenty of sensors, the rest of the PCB often lacks them
+entirely. A software utility might report that a graphics card is
+running at a safe 65°C, while an unmonitored component just inches away
+on the board is reaching 110°C. Thermal cameras allow reviewers to see
+the entire heat footprint of the hardware at once, exposing thermal
+issues that software simply cannot detect.</p>
+<h2 id="evaluating-power-delivery-and-vrms">Evaluating Power Delivery
+and VRMs</h2>
+<p>The Voltage Regulation Module (VRM) is responsible for delivering
+clean, stable power to the CPU or GPU. Composed of MOSFETs, chokes, and
+capacitors, the VRM generates massive amounts of heat during heavy
+benchmarking or overclocking. If the VRMs overheat, they will reduce
+power delivery to protect themselves, causing a sudden drop in system
+performance known as VRM throttling. By pointing a thermal camera at the
+PCB, reviewers can instantly see if the power delivery system is running
+cool and efficient, or if it is under-engineered and running dangerously
+hot.</p>
+<h2 id="testing-cooler-design-and-assembly-quality">Testing Cooler
+Design and Assembly Quality</h2>
+<p>Manufacturers design complex heatsinks to draw heat away from the
+PCB, but design flaws and factory assembly errors frequently occur. A
+thermal camera helps reviewers verify if a cooling solution is actually
+doing its job. For example, if one area of the PCB glows bright yellow
+or white on a thermal monitor while the surrounding areas remain dark
+purple, it often indicates poor mounting pressure, a warped heatsink, or
+a missing thermal pad. This visual evidence allows reviewers to hold
+manufacturers accountable for poor quality control.</p>
+<h2 id="predicting-hardware-longevity-and-stability">Predicting Hardware
+Longevity and Stability</h2>
+<p>Excessive heat is the primary enemy of electronics. High temperatures
+degrade silicon, drastically reduce the lifespan of capacitors, and warp
+the fiberglass of the PCB itself over time. Even if a PCB hotspot does
+not cause immediate crashes during a short benchmark, running a
+component near its thermal limit every day will lead to premature
+hardware failure. Reviewers use thermal imaging to warn consumers about
+products that may fail shortly after their warranty expires due to
+neglected hotspots.</p>
+<h2 id="identifying-safety-hazards">Identifying Safety Hazards</h2>
+<p>In extreme cases, PCB hotspots point to genuine safety hazards.
+Poorly seated power connectors, inadequate PCB copper traces, or faulty
+soldering can create high electrical resistance, leading to localized,
+extreme heat. Thermal imaging allows reviewers to spot overloaded power
+delivery paths and melting power connectors long before smoke appears,
+protecting consumers from buying defective and potentially dangerous
+computer hardware.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-hardware-reviewers-use-thermal-cameras-on-pc-bs';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

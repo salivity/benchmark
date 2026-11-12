@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How SSD Over-Provisioning Improves Write Consistency - benchmark</title>
+    <meta name="description" content="This article explores the direct impact of Solid State Drive (SSD) over-provisioning on sustained write consistency during hardware benchmarking. It explains the fundamental mechanics of NAND flash memory, why SSD performance degrades under heavy continuo">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-ssd-over-provisioning-improves-write-consistency">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How SSD Over-Provisioning Improves Write Consistency - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-ssd-over-provisioning-improves-write-consistency" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the direct impact of Solid State Drive (SSD) over-provisioning on sustained write consistency during hardware benchmarking. It explains the fundamental mechanics of NAND flash memory, why SSD performance degrades under heavy continuo" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ssd-over-provisioning-improves-write-consistency">How SSD
+Over-Provisioning Improves Write Consistency</h1>
+<p>This article explores the direct impact of Solid State Drive (SSD)
+over-provisioning on sustained write consistency during hardware
+benchmarking. It explains the fundamental mechanics of NAND flash
+memory, why SSD performance degrades under heavy continuous loads, and
+how increasing the over-provisioning percentage mitigates these
+bottlenecks to deliver predictable, steady-state write performance.</p>
+<h2 id="the-nand-flash-bottleneck">The NAND Flash Bottleneck</h2>
+<p>To understand why SSDs lose write consistency during heavy
+benchmarking, you must first understand how NAND flash memory handles
+data.</p>
+<p>SSDs write data in small units called <strong>pages</strong>, but
+they can only erase data in much larger groups of pages called
+<strong>blocks</strong>. Furthermore, NAND flash cannot overwrite
+existing data directly. Before new data can be written to a page that
+previously held invalid (deleted) data, the entire block containing that
+page must be erased.</p>
+<p>When a drive is relatively empty, the SSD controller writes directly
+to blank pages at maximum speed. However, during a sustained write
+benchmark, the drive quickly runs out of fresh pages. The controller is
+forced to perform <strong>Garbage Collection (GC)</strong> on the fly.
+It must:</p>
+<ol type="1">
+<li>Read the valid data from a mixed block.</li>
+<li>Write that valid data to a new location.</li>
+<li>Erase the old block.</li>
+<li>Write the new incoming benchmark data.</li>
+</ol>
+<p>This process, known as the Read-Modify-Erase-Write cycle, creates
+massive internal traffic. In benchmarking, this manifests as a sudden
+drop in write speeds and wild fluctuations in latency, ruining write
+consistency.</p>
+<h2 id="what-is-over-provisioning">What is Over-Provisioning?</h2>
+<p>Over-provisioning (OP) is the practice of reserving a specific
+percentage of an SSD's total NAND flash capacity exclusively for the
+controller's internal management tasks. This space is completely
+invisible to the host operating system and the user.</p>
+<p>While every SSD comes with a factory-set OP percentage (typically
+around 7% for consumer drives and up to 28% for enterprise drives),
+users and hardware testers can manually increase the OP percentage by
+partitioning the drive to leave a portion of the storage
+unallocated.</p>
+<h2 id="how-over-provisioning-percentage-impacts-write-consistency">How
+Over-Provisioning Percentage Impacts Write Consistency</h2>
+<p>In hardware benchmarking, "sustained write consistency" refers to the
+drive's ability to maintain a tight, predictable level of Input/Output
+Operations Per Second (IOPS) and throughput after its initial high-speed
+caches (like SLC cache) are exhausted. A higher OP percentage directly
+improves this consistency in three ways:</p>
+<h3 id="1-a-larger-buffer-of-pre-erased-blocks">1. A Larger Buffer of
+Pre-Erased Blocks</h3>
+<p>The reserved OP space acts as a constant pool of empty, pre-erased
+blocks. During a relentless sustained write test, the SSD controller
+pulls from this pool to accept incoming data immediately. The higher the
+OP percentage, the larger this buffer is, reducing the likelihood that
+the host system will have to wait for a slow block-erase cycle to finish
+before writing new data.</p>
+<h3 id="2-reduced-write-amplification">2. Reduced Write
+Amplification</h3>
+<p>Write Amplification occurs when the SSD has to write more data
+internally than the host actually sent, due to the shuffling of data
+during Garbage Collection.</p>
+<p>When an SSD has a low OP percentage and is pushed to a full state by
+a benchmark, almost every block is mostly full of valid data. To free up
+space, the controller has to move a large amount of valid data just to
+reclaim a few invalid pages. By increasing the OP percentage, the
+mathematical probability of having blocks with larger ratios of invalid
+data increases. The controller has to move less valid data to free up
+blocks, drastically lowering the Write Amplification Factor (WAF). Less
+internal data movement means more bandwidth is consistently available
+for the benchmark's incoming writes.</p>
+<h3 id="3-smoother-background-garbage-collection">3. Smoother Background
+Garbage Collection</h3>
+<p>Without sufficient OP, Garbage Collection becomes an emergency
+foreground task that interrupts host writes, showing up on a benchmark
+graph as severe downward spikes in IOPS. A higher OP percentage gives
+the controller the workspace it needs to interleave Garbage Collection
+tasks efficiently between host commands. Instead of hitting a brick
+wall, the controller balances erasing and writing simultaneously.</p>
+<h2 id="the-result-in-hardware-benchmarks">The Result in Hardware
+Benchmarks</h2>
+<p>When benchmarking an SSD using tools like FIO or Iometer, testers
+push the drive into "steady state"—the point where the drive is fully
+saturated and performance stabilizes.</p>
+<ul>
+<li><strong>Low OP (e.g., 7%):</strong> The benchmark graph will show
+high initial speeds, followed by a steep cliff. Once in steady state,
+the plot points for IOPS will be scattered widely. The drive will
+briefly hit high speeds, plummet to near-zero while it erases blocks,
+and jump back up.</li>
+<li><strong>High OP (e.g., 28%+):</strong> The benchmark graph will
+still show a drop after the initial cache is full, but the steady-state
+floor will be significantly higher. More importantly, the plot points
+will form a tight, flat line.</li>
+</ul>
+<p>By increasing the over-provisioning percentage, you directly trade
+raw storage capacity for reduced controller overhead. In a benchmarking
+environment, this eliminates worst-case latency spikes and ensures the
+SSD delivers a predictable, consistent stream of write performance under
+maximum load.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-ssd-over-provisioning-improves-write-consistency';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

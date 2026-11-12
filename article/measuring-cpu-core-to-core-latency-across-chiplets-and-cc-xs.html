@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measuring CPU Core-to-Core Latency Across Chiplets and CCXs - benchmark</title>
+    <meta name="description" content="This article explains the methodology behind measuring CPU core-to-core latency across different Core Complexes (CCXs) and chiplets during hardware benchmarking. It covers the fundamental software techniques used to force inter-core communication, the rol">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/measuring-cpu-core-to-core-latency-across-chiplets-and-cc-xs">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Measuring CPU Core-to-Core Latency Across Chiplets and CCXs - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/measuring-cpu-core-to-core-latency-across-chiplets-and-cc-xs" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the methodology behind measuring CPU core-to-core latency across different Core Complexes (CCXs) and chiplets during hardware benchmarking. It covers the fundamental software techniques used to force inter-core communication, the rol" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="measuring-cpu-core-to-core-latency-across-chiplets-and-ccxs">Measuring
+CPU Core-to-Core Latency Across Chiplets and CCXs</h1>
+<p>This article explains the methodology behind measuring CPU
+core-to-core latency across different Core Complexes (CCXs) and chiplets
+during hardware benchmarking. It covers the fundamental software
+techniques used to force inter-core communication, the role of thread
+affinity, how hardware timers track nanosecond delays through cache
+coherency protocols, and how these measurements reveal the underlying
+physical architecture of modern processors.</p>
+<h3 id="thread-affinity-and-isolation">Thread Affinity and
+Isolation</h3>
+<p>To measure the latency between two specific CPU cores, a benchmarking
+program must first ensure that the operating system does not move the
+testing tasks around. Benchmarks achieve this using <strong>thread
+affinity</strong> (or thread pinning).</p>
+<p>Using operating system APIs, the software creates two separate
+threads and locks them to two specific logical or physical cores—for
+example, Core 0 and Core 1. This guarantees that the communication being
+measured is strictly between those two exact hardware locations.</p>
+<h3 id="the-ping-pong-atomic-test">The "Ping-Pong" Atomic Test</h3>
+<p>CPU cores do not send direct messages to one another in standard
+workloads; instead, they communicate by reading and writing to shared
+memory and caches. To measure latency, benchmarks use a "ping-pong" test
+that forces a piece of data (a cache line) to bounce back and forth
+between the two pinned cores.</p>
+<p>The process works like this:</p>
+<ol type="1">
+<li><strong>Initialization:</strong> A shared variable is created in the
+system memory, which is loaded into the CPU's cache.</li>
+<li><strong>The Ping:</strong> Core A uses an atomic instruction, such
+as Compare-And-Swap (CAS), to change the value of the shared variable
+from 0 to 1.</li>
+<li><strong>Cache Invalidation:</strong> Because Core A modified the
+data, the CPU’s cache coherency protocol invalidates that data in Core
+B's cache.</li>
+<li><strong>The Pong:</strong> Core B is running a tight loop,
+constantly checking the variable. Once it detects the value has changed
+to 1, it fetches the updated cache line, and immediately uses an atomic
+instruction to change the value back to 0.</li>
+<li><strong>Repetition:</strong> Core A detects the change back to 0 and
+repeats the process.</li>
+</ol>
+<p>Because the cores must wait for the hardware to validate and transfer
+the cache line before they can execute the next change, the speed of
+this loop is entirely bottlenecked by the physical latency between the
+two cores.</p>
+<h3 id="high-precision-timing">High-Precision Timing</h3>
+<p>A single transfer between cores happens in just a few nanoseconds,
+which is too fast to measure accurately on its own due to software
+overhead. To get an accurate reading, the benchmark bounces the data
+back and forth thousands or millions of times.</p>
+<p>Before the loop starts, the software records the current time using
+the CPU's internal hardware timer, typically accessed via the
+<code>RDTSC</code> (Read Time-Stamp Counter) assembly instruction. Once
+the million bounces are complete, it reads the timer again.</p>
+<p>The total elapsed time is then divided by the number of transfers to
+calculate the average latency in nanoseconds. Depending on the
+benchmark, this is reported either as a "round-trip" latency (Core A to
+Core B and back) or divided by two to represent "one-way" latency.</p>
+<h3 id="crossing-ccxs-and-chiplets">Crossing CCXs and Chiplets</h3>
+<p>The benchmark does not inherently know the physical layout of the
+CPU. It simply runs the ping-pong test across every possible pair of
+cores (Core 0 to Core 1, Core 0 to Core 2, etc.) and plots the results
+in a grid. The physical architecture reveals itself through the
+data:</p>
+<ul>
+<li><strong>Intra-CCX (Same Core Complex):</strong> If Core A and Core B
+are on the same CCX, they share a local L3 cache. The cache line only
+needs to travel across the local L3 ring or bus. The benchmark will
+record very low latency (typically 10 to 30 nanoseconds).</li>
+<li><strong>Inter-CCX (Different Core Complexes, Same Chiplet):</strong>
+In older architectures where a single silicon die was split into two
+CCXs, the data had to leave one L3 cache, traverse an internal
+interconnect, and enter the other L3 cache. This results in a noticeable
+jump in latency.</li>
+<li><strong>Inter-Chiplet / CCD (Different Silicon Dies):</strong> If
+Core A is on Chiplet 1 and Core B is on Chiplet 2, the cache line must
+physically leave the silicon die, travel across the package substrate
+(such as AMD's Infinity Fabric) to the central I/O die, and then route
+to the second chiplet. The benchmark captures this long physical journey
+as a massive spike in latency (often 70 to 100+ nanoseconds).</li>
+</ul>
+<p>By automating this test across all core combinations, hardware
+reviewers generate heatmaps that clearly show the boundaries of CCXs,
+chiplets, and Simultaneous Multithreading (SMT) sibling threads based
+purely on the time it takes to bounce a single cache line back and
+forth.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/measuring-cpu-core-to-core-latency-across-chiplets-and-cc-xs';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

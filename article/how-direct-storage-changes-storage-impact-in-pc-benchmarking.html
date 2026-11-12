@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How DirectStorage Changes Storage Impact in PC Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores how the adoption of Microsoft&#39;s DirectStorage API in modern game engines fundamentally alters computer hardware benchmarking. Historically, storage drives only influenced game loading times and had virtually no impact on actual frame">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-direct-storage-changes-storage-impact-in-pc-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How DirectStorage Changes Storage Impact in PC Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-direct-storage-changes-storage-impact-in-pc-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how the adoption of Microsoft&#39;s DirectStorage API in modern game engines fundamentally alters computer hardware benchmarking. Historically, storage drives only influenced game loading times and had virtually no impact on actual frame" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-directstorage-changes-storage-impact-in-pc-benchmarking">How
+DirectStorage Changes Storage Impact in PC Benchmarking</h1>
+<p>This article explores how the adoption of Microsoft's DirectStorage
+API in modern game engines fundamentally alters computer hardware
+benchmarking. Historically, storage drives only influenced game loading
+times and had virtually no impact on actual frame rates. By allowing
+storage devices to stream data directly to the graphics card for
+decompression, DirectStorage turns solid-state drives (SSDs) into active
+participants in real-time rendering. Consequently, hardware reviewers
+and benchmarkers must now account for storage speeds when evaluating CPU
+performance, GPU workloads, and frame time stability.</p>
+<h3 id="the-end-of-the-storage-doesnt-matter-for-fps-era">The End of the
+"Storage Doesn't Matter for FPS" Era</h3>
+<p>In traditional game engines, assets are pulled from the storage
+drive, placed into system RAM, sent to the CPU to be decompressed, and
+finally forwarded to the GPU to be rendered. Because the CPU was a
+massive bottleneck in this decompression pipeline, the maximum speed of
+the storage drive rarely mattered once a game was loaded. Upgrading from
+a standard SATA SSD to a high-end NVMe SSD yielded almost zero
+improvement in frames per second (FPS). Therefore, hardware benchmarkers
+largely ignored storage drives when testing graphics cards or
+processors, as any functional SSD produced the same in-game performance
+results.</p>
+<h3 id="shifting-the-workload-from-cpu-to-gpu">Shifting the Workload
+from CPU to GPU</h3>
+<p>Game engines utilizing DirectStorage bypass the traditional data
+pipeline. High-speed NVMe drives now transfer compressed game assets
+directly to the GPU's memory via the PCIe bus, and the GPU handles the
+decompression using its vast parallel processing power.</p>
+<p>This shift changes hardware benchmarking in two distinct ways:</p>
+<ul>
+<li><strong>CPU Benchmarks:</strong> DirectStorage significantly reduces
+CPU overhead. When benchmarking CPU-bound games that use this
+technology, weaker or older processors will show improved performance
+and higher frame rates because they are freed from heavy data
+decompression tasks.</li>
+<li><strong>GPU Benchmarks:</strong> Because the graphics card now uses
+a fraction of its compute power to decompress storage data, it has
+slightly fewer resources available for pure rendering. Benchmarkers
+evaluating GPUs must now recognize that the card is simultaneously
+acting as a rendering engine and a data decompression processor.</li>
+</ul>
+<h3 id="measuring-frame-pacing-and-1-lows">Measuring Frame Pacing and 1%
+Lows</h3>
+<p>The most critical impact of DirectStorage on gaming benchmarks is not
+necessarily higher average FPS, but improved frame pacing and higher 1%
+and 0.1% low frame rates. Modern game engines constantly stream massive
+textures and geometry in real-time as a player moves through a seamless
+world.</p>
+<p>With DirectStorage, the bandwidth of the NVMe drive directly dictates
+how quickly these assets are fed to the GPU. When benchmarking slower
+PCIe 3.0 drives against faster PCIe 4.0 or PCIe 5.0 drives in
+DirectStorage-enabled engines, testers can finally measure tangible
+differences in traversal stutter, texture pop-in, and frame time
+consistency. A slow drive can now actively cause frame drops during
+fast-paced gameplay.</p>
+<h3 id="redefining-synthetic-storage-metrics">Redefining Synthetic
+Storage Metrics</h3>
+<p>For years, synthetic storage benchmarks focused heavily on maximum
+sequential read and write speeds—metrics that looked great on a box but
+rarely translated to real-world gaming performance. DirectStorage forces
+hardware testers to prioritize different metrics:</p>
+<ul>
+<li><strong>High Queue Depths:</strong> Traditional games process
+storage requests one or a few at a time. DirectStorage allows game
+engines to submit thousands of input/output (I/O) requests
+simultaneously.</li>
+<li><strong>Sustained Performance:</strong> Because assets are streamed
+continuously, a drive's ability to handle parallel data streams without
+thermal throttling becomes a primary metric for gaming viability.</li>
+<li><strong>Controller Efficiency:</strong> The raw speed of the NAND
+flash matters less than how efficiently the SSD's onboard controller can
+manage massive queues of randomized gaming data.</li>
+</ul>
+<h3 id="stricter-standardization-for-test-benches">Stricter
+Standardization for Test Benches</h3>
+<p>The integration of DirectStorage requires a stricter standardization
+of hardware test benches. Reviewers can no longer swap out different
+SSDs between test runs under the assumption that the results will remain
+isolated to the GPU or CPU being tested. The storage drive is now a
+performance-altering variable on par with system memory speeds and
+latency. To produce accurate data, benchmarkers must now lock in a
+specific, high-bandwidth PCIe Gen 4 or Gen 5 NVMe drive for CPU and GPU
+testing, while also creating a new category of benchmarks where the SSD
+itself is tested using live gameplay framerates rather than simple
+stopwatch load-time tests.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-direct-storage-changes-storage-impact-in-pc-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

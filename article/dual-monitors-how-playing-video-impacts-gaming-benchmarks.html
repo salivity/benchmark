@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual Monitors: How Playing Video Impacts Gaming Benchmarks - benchmark</title>
+    <meta name="description" content="Running a secondary monitor with a playing video during a gaming benchmark significantly skews hardware performance metrics and invalidates test accuracy. This article explains how simultaneous video playback consumes critical GPU, CPU, and memory resourc">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/dual-monitors-how-playing-video-impacts-gaming-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dual Monitors: How Playing Video Impacts Gaming Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/dual-monitors-how-playing-video-impacts-gaming-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Running a secondary monitor with a playing video during a gaming benchmark significantly skews hardware performance metrics and invalidates test accuracy. This article explains how simultaneous video playback consumes critical GPU, CPU, and memory resourc" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="dual-monitors-how-playing-video-impacts-gaming-benchmarks">Dual
+Monitors: How Playing Video Impacts Gaming Benchmarks</h1>
+<p>Running a secondary monitor with a playing video during a gaming
+benchmark significantly skews hardware performance metrics and
+invalidates test accuracy. This article explains how simultaneous video
+playback consumes critical GPU, CPU, and memory resources, triggers
+display refresh rate conflicts, and degrades frame times, ultimately
+leading to lower average frame rates and worse 1% lows than the hardware
+would achieve in an isolated test environment.</p>
+<h3 id="gpu-resource-consumption">GPU Resource Consumption</h3>
+<p>Modern graphics cards have dedicated media engines to handle video
+decoding separately from the main 3D rendering cores. However, playing a
+video still consumes core GPU resources. The media player or web browser
+requires Video RAM (VRAM) and a small percentage of the 3D engine to
+render the application interface and output the display signal.</p>
+<p>In VRAM-heavy benchmarks, this extra memory allocation can push the
+graphics card over its capacity, forcing it to use slower system RAM and
+causing severe stuttering. Furthermore, keeping a second display active
+with moving video prevents the GPU from allocating 100% of its power
+budget to the game, slightly reducing boost clock speeds.</p>
+<h3 id="cpu-and-system-memory-overhead">CPU and System Memory
+Overhead</h3>
+<p>Playing a video—especially through a web browser—requires substantial
+CPU and RAM resources. The processor must manage network data, decode
+audio streams, and handle background browser threads.</p>
+<p>In CPU-bound gaming benchmarks, or when testing at 1080p resolution,
+these stolen CPU cycles directly reduce the average frames per second
+(FPS). More importantly, background CPU interruptions disrupt the timing
+of frames being sent to the GPU. This heavily degrades 1% and 0.1% low
+frame rates, which are the metrics used to measure micro-stuttering and
+overall smoothness.</p>
+<h3 id="refresh-rate-desynchronization">Refresh Rate
+Desynchronization</h3>
+<p>Many dual-monitor setups combine displays with different
+specifications, such as a 144Hz primary gaming monitor and a 60Hz
+secondary monitor. When a video plays on the 60Hz screen, the operating
+system's display manager must render and synchronize two different
+refresh rates simultaneously.</p>
+<p>Even on modern operating systems, this mixed-refresh-rate scenario
+can cause frame pacing issues, increased input latency, or forced V-Sync
+anomalies on the primary display. If the game is benchmarked in
+borderless windowed mode rather than exclusive fullscreen, this
+synchronization issue is significantly worse.</p>
+<h3 id="hardware-acceleration-conflicts">Hardware Acceleration
+Conflicts</h3>
+<p>Browsers and media players use hardware acceleration by default to
+offload tasks to the GPU. When a benchmark pushes a GPU to 99%
+utilization, the graphics driver must constantly switch contexts between
+rendering the benchmark and rendering the video. This introduces frame
+latency.</p>
+<p>While the drop in average FPS might only be between 2% and 5%, the
+resulting spikes in frame times will ruin the consistency of the
+benchmark data. Turning off hardware acceleration in the browser does
+not fix the problem; it simply shifts the entire video decoding workload
+onto the CPU, creating a processor bottleneck instead.</p>
+<h3 id="benchmarking-best-practices">Benchmarking Best Practices</h3>
+<p>Hardware benchmarking requires a controlled, repeatable environment
+to produce valid data. Because video bitrates, streaming buffers, and
+browser memory usage fluctuate constantly, playing a video introduces an
+unscientific variable into the test. Unless the specific goal of the
+benchmark is to measure real-world multitasking performance, the
+secondary monitor should be turned off and all background applications
+closed before running any hardware tests.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/dual-monitors-how-playing-video-impacts-gaming-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

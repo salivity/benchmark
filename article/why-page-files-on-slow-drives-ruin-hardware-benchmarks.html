@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Page Files on Slow Drives Ruin Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="This article explains how allocating a system&#39;s page file (virtual memory) to a slow storage drive creates severe bottlenecks that invalidate computer hardware benchmarks. By examining the massive speed disparity between system RAM and slower storage medi">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-page-files-on-slow-drives-ruin-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Page Files on Slow Drives Ruin Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-page-files-on-slow-drives-ruin-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how allocating a system&#39;s page file (virtual memory) to a slow storage drive creates severe bottlenecks that invalidate computer hardware benchmarks. By examining the massive speed disparity between system RAM and slower storage medi" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-page-files-on-slow-drives-ruin-hardware-benchmarks">Why Page
+Files on Slow Drives Ruin Hardware Benchmarks</h1>
+<p>This article explains how allocating a system's page file (virtual
+memory) to a slow storage drive creates severe bottlenecks that
+invalidate computer hardware benchmarks. By examining the massive speed
+disparity between system RAM and slower storage mediums, how benchmarks
+trigger memory swapping, and the specific ways this impacts CPU and GPU
+scores, you will understand how to properly configure your virtual
+memory for accurate performance testing.</p>
+<h2 id="the-role-of-the-page-file-in-benchmarking">The Role of the Page
+File in Benchmarking</h2>
+<p>The page file, or virtual memory, is a reserved portion of a storage
+drive that the operating system uses as an extension of physical Random
+Access Memory (RAM). When a computer runs out of physical RAM, or when
+the OS decides to free up RAM for active tasks, it moves inactive data
+to the page file.</p>
+<p>Benchmarking software is designed to push hardware to its absolute
+limits. During these extreme stress tests, memory consumption spikes
+rapidly. Even if a system has plenty of RAM, the operating system may
+proactively shift background data to the page file to ensure the
+benchmark has maximum access to physical memory. If that page file
+resides on a slow mechanical Hard Disk Drive (HDD) or an aging SATA
+Solid State Drive (SSD), the entire system's performance is
+compromised.</p>
+<h2 id="the-speed-disparity-bottleneck">The Speed Disparity
+Bottleneck</h2>
+<p>To understand why a slow drive ruins benchmark results, look at the
+bandwidth and latency differences between memory types:</p>
+<ul>
+<li><strong>System RAM (DDR4/DDR5):</strong> Operates at speeds between
+25,000 MB/s and 60,000+ MB/s, with latency measured in nanoseconds.</li>
+<li><strong>NVMe SSDs:</strong> Operate at speeds between 3,500 MB/s and
+14,000 MB/s, with latency measured in microseconds.</li>
+<li><strong>Mechanical HDDs:</strong> Operate at speeds between 80 MB/s
+and 200 MB/s, with latency measured in milliseconds.</li>
+</ul>
+<p>When a benchmark forces the system to read or write to a page file on
+a mechanical hard drive, the data transfer rate drops from tens of
+thousands of megabytes per second to just a tiny fraction of that.</p>
+<h2 id="how-it-corrupts-benchmark-scores">How It Corrupts Benchmark
+Scores</h2>
+<p>When the page file is on a slow drive, the benchmark ends up testing
+the storage drive's limitations rather than the true capabilities of the
+CPU or GPU. This manifests in three specific ways:</p>
+<h3 id="1-cpu-starvation-and-io-wait">1. CPU Starvation and I/O
+Wait</h3>
+<p>Modern CPUs can process billions of instructions per second, provided
+they have a steady stream of data. If a CPU needs data that has been
+paged out to a slow drive, the processor must pause and wait for the
+drive to locate and send that data. In computing, this is known as "I/O
+Wait." During a timed benchmark, every millisecond the CPU spends
+waiting for a slow drive is time it is not rendering or calculating,
+resulting in artificially low multi-core and single-core scores.</p>
+<h3 id="2-ruined-1-and-01-low-frame-rates">2. Ruined 1% and 0.1% Low
+Frame Rates</h3>
+<p>In gaming and GPU benchmarks, average frame rates only tell half the
+story; 1% and 0.1% lows measure system stability and frame pacing. When
+a benchmark loads heavy textures, it can fill up both the GPU's Video
+RAM (VRAM) and the system RAM, triggering page file usage. A slow drive
+cannot deliver assets fast enough, causing the screen to freeze
+momentarily. While the average frame rate might only drop slightly,
+these stutters completely destroy the 1% and 0.1% low metrics, falsely
+indicating that the GPU or CPU is unstable.</p>
+<h3 id="3-background-task-interference">3. Background Task
+Interference</h3>
+<p>A benchmark does not run in a vacuum; the operating system is still
+running in the background. If the OS decides to swap background
+processes to a slow drive during the middle of a benchmark run, the
+storage controller becomes saturated. This creates a system-wide latency
+spike that interrupts the benchmark's execution thread, leading to
+inconsistent and unrepeatable scores across multiple runs.</p>
+<h2 id="how-to-fix-page-file-bottlenecks">How to Fix Page File
+Bottlenecks</h2>
+<p>To ensure your hardware benchmarks reflect the true performance of
+your CPU, GPU, and RAM, follow these configuration steps:</p>
+<ul>
+<li><strong>Disable Page Files on Slow Drives:</strong> Go into your
+operating system's advanced system settings and explicitly set the page
+file size to "None" for all mechanical hard drives and slow SATA
+SSDs.</li>
+<li><strong>Assign the Page File to the Fastest NVMe Drive:</strong> Set
+the page file to "System Managed" exclusively on your fastest PCIe NVMe
+SSD. While still slower than RAM, an NVMe drive minimizes the latency
+penalty if paging occurs.</li>
+<li><strong>Close Background Applications:</strong> Free up as much
+physical RAM as possible before running a benchmark to reduce the
+likelihood of the OS needing to use virtual memory at all.</li>
+<li><strong>Do Not Disable the Page File Completely:</strong> Even with
+32GB or 64GB of RAM, some benchmarking suites and games are hardcoded to
+look for a page file and will crash if one does not exist. Always keep
+an active page file on your fastest drive.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-page-files-on-slow-drives-ruin-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

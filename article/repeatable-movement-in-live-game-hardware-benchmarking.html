@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repeatable Movement in Live-Game Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="Achieving accurate computer hardware benchmarks requires strict consistency, especially when testing live gameplay rather than relying on built-in diagnostic tools. To ensure every graphics card or processor faces the exact same workload, hardware reviewe">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/repeatable-movement-in-live-game-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Repeatable Movement in Live-Game Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/repeatable-movement-in-live-game-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Achieving accurate computer hardware benchmarks requires strict consistency, especially when testing live gameplay rather than relying on built-in diagnostic tools. To ensure every graphics card or processor faces the exact same workload, hardware reviewe" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="repeatable-movement-in-live-game-hardware-benchmarking">Repeatable
+Movement in Live-Game Hardware Benchmarking</h1>
+<p>Achieving accurate computer hardware benchmarks requires strict
+consistency, especially when testing live gameplay rather than relying
+on built-in diagnostic tools. To ensure every graphics card or processor
+faces the exact same workload, hardware reviewers use specialized
+techniques to guarantee repeatable player movement paths. This article
+explores the primary methods used to standardize live-game testing runs,
+including strategic save states, visual landmarks, on-rails sequences,
+input macros, and statistical averaging to eliminate human error and
+dynamic game variables.</p>
+<h2 id="strategic-save-files">Strategic Save Files</h2>
+<p>Consistency begins before the character takes a single step.
+Reviewers create a dedicated manual save file in a performance-heavy
+area of the game. By loading this exact save file before every benchmark
+run, the player character starts at the precise same coordinates, facing
+the exact same direction, with the game world loaded into an identical
+initial state.</p>
+<h2 id="visual-landmarks-and-linear-paths">Visual Landmarks and Linear
+Paths</h2>
+<p>Complex mouse movements and combat maneuvers are impossible for a
+human to replicate perfectly across dozens of test runs. Instead,
+reviewers design simple, linear paths. They align the camera with a
+specific visual landmark in the distance—such as a specific tree,
+doorway, or mountain peak—and hold the forward movement key without
+touching the mouse. The run concludes the exact moment the character
+passes a secondary landmark, such as a specific crack in the road or a
+streetlamp. Avoiding manual camera rotation ensures the rendering engine
+draws the exact same geometry every time.</p>
+<h2 id="real-time-on-rails-sequences">Real-Time "On-Rails"
+Sequences</h2>
+<p>Many modern games feature scripted sequences where the game takes
+control of the player's movement while still rendering the environment
+in real-time. Examples include riding as a passenger in a vehicle,
+sitting on a moving cart, or following a scripted camera pan at the
+start of a mission. Because these moments are calculated live by the
+hardware rather than playing a pre-recorded video file, they offer 100%
+repeatable movement paths without requiring any manual input from the
+reviewer.</p>
+<h2 id="input-macros-and-automation">Input Macros and Automation</h2>
+<p>To remove human reaction times entirely, some reviewers use macro
+software to record a sequence of keyboard and mouse inputs and play them
+back during the benchmark. While effective for basic movement, this
+method requires careful implementation. In certain game engines, mouse
+sensitivity and movement speed are tied directly to the frame rate. If a
+faster graphics card renders more frames, a recorded mouse macro might
+turn the camera further than it did on a slower card, ruining the test
+path. Therefore, macros are typically limited to simple directional
+keystrokes.</p>
+<h2 id="controlling-dynamic-world-variables">Controlling Dynamic World
+Variables</h2>
+<p>Following an identical movement path is useless if the environment
+changes around the player. Reviewers frequently use developer console
+commands, third-party mods, or specific game settings to lock the time
+of day and freeze weather patterns. This ensures that a sudden dynamic
+rainstorm or a shift from day to night does not alter lighting
+calculations and skew the performance data. Reviewers also choose paths
+largely devoid of randomized non-player characters (NPCs) or
+unpredictable physics events.</p>
+<h2 id="multi-run-averaging">Multi-Run Averaging</h2>
+<p>Even with strict movement protocols, minor variations in live
+gameplay and background operating system tasks are inevitable. To ensure
+the data is bulletproof, reviewers execute the exact same movement path
+multiple times—typically three to five passes per hardware
+configuration. The performance metrics from these runs are then averaged
+together, and any obvious outliers caused by anomalous game behavior are
+discarded and re-tested.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/repeatable-movement-in-live-game-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

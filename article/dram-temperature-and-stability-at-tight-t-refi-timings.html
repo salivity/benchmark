@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRAM Temperature and Stability at Tight tREFI Timings - benchmark</title>
+    <meta name="description" content="This article explores the critical relationship between DRAM temperature and system stability when tuning the Refresh Interval (tREFI) for computer hardware benchmarking. It explains how memory cells store data, why elevated temperatures accelerate charge">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/dram-temperature-and-stability-at-tight-t-refi-timings">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DRAM Temperature and Stability at Tight tREFI Timings - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/dram-temperature-and-stability-at-tight-t-refi-timings" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the critical relationship between DRAM temperature and system stability when tuning the Refresh Interval (tREFI) for computer hardware benchmarking. It explains how memory cells store data, why elevated temperatures accelerate charge" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="dram-temperature-and-stability-at-tight-trefi-timings">DRAM
+Temperature and Stability at Tight tREFI Timings</h1>
+<p>This article explores the critical relationship between DRAM
+temperature and system stability when tuning the Refresh Interval
+(tREFI) for computer hardware benchmarking. It explains how memory cells
+store data, why elevated temperatures accelerate charge leakage, and how
+pushing tREFI to its limits under high heat leads to system crashes.
+Finally, it provides practical solutions for maintaining thermal
+stability during intensive benchmark runs.</p>
+<h3 id="understanding-trefi">Understanding tREFI</h3>
+<p>DRAM stores data as electrical charges inside millions of tiny
+capacitors. Because these capacitors naturally leak their charge over
+time, the memory controller must periodically pause operations to
+recharge, or "refresh," them.</p>
+<p>The tREFI (Refresh Interval) timing dictates how much time passes
+between these refresh cycles. Unlike primary memory timings where lower
+numbers equal better performance, optimizing (or "tightening") tREFI
+means increasing the value. A higher tREFI value delays the refresh
+cycle, allowing the RAM to spend more time transferring data and less
+time refreshing. This significantly boosts memory bandwidth and lowers
+latency in hardware benchmarks.</p>
+<h3 id="how-temperature-affects-memory-cells">How Temperature Affects
+Memory Cells</h3>
+<p>The physical enemy of a DRAM capacitor is heat. As the operating
+temperature of a memory module increases, the rate at which its
+capacitors leak electrical charge accelerates exponentially.</p>
+<p>At standard operating temperatures (around 30°C to 40°C), capacitors
+hold their charge effortlessly between standard refresh intervals.
+However, once temperatures climb past 50°C, the silicon becomes much
+more susceptible to leakage, and the stored electrical charges drain
+away significantly faster.</p>
+<h3 id="why-high-temperatures-crash-tuned-trefi">Why High Temperatures
+Crash Tuned tREFI</h3>
+<p>When benchmarking hardware, enthusiasts often push tREFI to its
+maximum selectable limit (such as 65,535 on DDR4 and up to 262,143 on
+some DDR5 motherboards). This stretches the time between refreshes to
+the absolute maximum. If the DRAM temperature rises too high during a
+heavy benchmark load, a critical conflict occurs: the capacitors leak
+their charge faster than the delayed refresh cycle can replenish it.</p>
+<p>When a capacitor loses too much charge before the next refresh
+arrives, the memory controller can no longer read the data accurately. A
+"bit flip" occurs, turning a 1 into a 0. During a benchmark, this
+results in immediate instability. Symptoms include failed benchmark
+runs, application crashes, Blue Screens of Death (BSOD), and silent
+operating system file corruption.</p>
+<h3 id="critical-temperature-thresholds">Critical Temperature
+Thresholds</h3>
+<p>Different memory integrated circuits (ICs) have varying tolerances to
+heat. Popular overclocking ICs like Samsung B-die (DDR4) and SK Hynix
+A-die or M-die (DDR5) are notoriously sensitive to temperature when
+tREFI is maxed out. When running heavily tuned tREFI timings alongside
+elevated voltages, the general thermal limits are:</p>
+<ul>
+<li><strong>Under 45°C:</strong> Ideal for extreme tREFI tuning and
+maximum stability.</li>
+<li><strong>45°C to 50°C:</strong> The borderline zone where instability
+begins to manifest during heavy, prolonged stress tests.</li>
+<li><strong>Over 50°C:</strong> High probability of memory errors and
+crashes when using aggressively tuned tREFI values.</li>
+</ul>
+<h3 id="managing-thermals-for-benchmarking">Managing Thermals for
+Benchmarking</h3>
+<p>To maintain stability at tight, high-performance tREFI settings,
+benchmarkers must actively manage DRAM temperatures. This is especially
+true for DDR5, which places the heat-generating power management IC
+(PMIC) directly onto the memory stick, causing it to run hotter than
+DDR4.</p>
+<p>To prevent temperature-induced tREFI instability, apply the following
+methods:</p>
+<ul>
+<li><strong>Use Active Cooling:</strong> Place a dedicated fan directly
+over the memory modules. Even a basic 120mm fan blowing directly across
+the DIMMs can drop temperatures by 10°C to 15°C, instantly stabilizing a
+maxed-out tREFI setting.</li>
+<li><strong>Account for GPU Heat:</strong> During 3D benchmarks,
+graphics cards exhaust massive amounts of heat directly into the path of
+the RAM slots. Always test your RAM stability while the GPU is under
+load to ensure ambient case heat does not push the DRAM over its thermal
+cliff.</li>
+<li><strong>Improve Heatspreader Contact:</strong> Factory heatspreaders
+sometimes use low-quality thermal pads that trap heat. Replacing stock
+thermal pads with high-conductivity pads, or running bare PCB sticks
+with a high-RPM fan, often yields much lower temperatures.</li>
+<li><strong>Dial Back tREFI:</strong> If adding active cooling is not an
+option, lower the tREFI value. Stepping down from 65,535 to 32,767 cuts
+the refresh delay in half, providing massive thermal headroom at the
+cost of a very minor drop in benchmark scores.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/dram-temperature-and-stability-at-tight-t-refi-timings';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

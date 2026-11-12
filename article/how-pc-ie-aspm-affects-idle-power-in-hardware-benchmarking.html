@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How PCIe ASPM Affects Idle Power in Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores the impact of PCIe Active State Power Management (ASPM) on idle power consumption during computer hardware benchmarking. It explains the basic mechanics of ASPM power states, demonstrates how this feature drastically reduces system-w">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-pc-ie-aspm-affects-idle-power-in-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How PCIe ASPM Affects Idle Power in Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-pc-ie-aspm-affects-idle-power-in-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the impact of PCIe Active State Power Management (ASPM) on idle power consumption during computer hardware benchmarking. It explains the basic mechanics of ASPM power states, demonstrates how this feature drastically reduces system-w" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-pcie-aspm-affects-idle-power-in-hardware-benchmarking">How
+PCIe ASPM Affects Idle Power in Hardware Benchmarking</h1>
+<p>This article explores the impact of PCIe Active State Power
+Management (ASPM) on idle power consumption during computer hardware
+benchmarking. It explains the basic mechanics of ASPM power states,
+demonstrates how this feature drastically reduces system-wide energy
+draw when components are inactive, and highlights how inconsistent ASPM
+configurations can skew benchmark results for motherboards, CPUs, GPUs,
+and storage drives.</p>
+<h2 id="what-is-pcie-aspm">What is PCIe ASPM?</h2>
+<p>PCIe Active State Power Management (ASPM) is a power-saving protocol
+used to manage PCI Express-connected devices (such as graphics cards,
+NVMe SSDs, and network adapters) when they are in a fully active system
+state, but not actively transferring data.</p>
+<p>Instead of keeping the PCIe link running at full power at all times,
+ASPM transitions the connection into lower power states during brief
+periods of inactivity:</p>
+<ul>
+<li><strong>L0:</strong> The normal, fully active state where data is
+transferring and power draw is at its peak.</li>
+<li><strong>L0s:</strong> A shallow sleep state for a single direction
+of the serial link. It offers minor power savings with minimal wake-up
+latency (usually nanoseconds).</li>
+<li><strong>L1:</strong> A deeper sleep state that shuts down the
+bidirectional link entirely. It offers significant power savings
+(including deeper sub-states like L1.1 and L1.2) at the cost of higher
+wake-up latency (microseconds).</li>
+</ul>
+<h2 id="the-domino-effect-on-system-idle-power">The Domino Effect on
+System Idle Power</h2>
+<p>When benchmarking a system’s idle power consumption, ASPM does much
+more than save a few milliwatts on a single PCIe slot. It directly
+controls the power efficiency of the entire motherboard and CPU through
+a mechanism known as Package C-states.</p>
+<p>For a modern CPU to enter its deepest, most power-efficient idle
+states (such as C8 or C10), all connected PCIe devices must first enter
+the L1 power state. If ASPM is disabled—or if a single PCIe device
+refuses to enter the L1 state—the CPU is blocked from entering deep
+sleep.</p>
+<p>Consequently, disabling ASPM can cause a system to draw 15 to 30
+watts more at the wall while completely idle. A tiny NVMe drive or
+network card without ASPM enabled will force the CPU’s internal PCIe
+controller and memory controller to stay awake, drastically inflating
+total system power measurements.</p>
+<h2 id="how-aspm-skews-hardware-benchmarks">How ASPM Skews Hardware
+Benchmarks</h2>
+<p>Inconsistent ASPM settings are one of the leading causes of
+inaccurate power benchmarking across hardware reviews. Here is how it
+affects specific component testing:</p>
+<h3 id="1-graphics-cards-gpus">1. Graphics Cards (GPUs)</h3>
+<p>Modern GPUs are designed to drop their clock speeds and voltages to
+near-zero when displaying a static desktop. However, some GPUs (most
+notably Intel Arc cards and certain AMD Radeon models) strictly require
+PCIe ASPM L1 to be enabled in the motherboard BIOS to reach their
+advertised idle power targets. If a tester benchmarks a GPU on a testbed
+with ASPM disabled, the GPU may idle at 40W instead of 10W, leading to a
+flawed conclusion that the GPU itself is inefficient.</p>
+<h3 id="2-motherboards-and-cpus">2. Motherboards and CPUs</h3>
+<p>Desktop motherboard manufacturers frequently disable ASPM by default
+in the BIOS to prioritize maximum out-of-the-box performance and avoid
+compatibility issues with older PCIe devices. If a reviewer compares the
+power efficiency of two motherboards, and Board A has ASPM enabled by
+default while Board B has it disabled, Board A will appear vastly more
+power-efficient at idle, even if its physical voltage regulators are
+inferior.</p>
+<h3 id="3-nvme-ssds">3. NVMe SSDs</h3>
+<p>High-speed PCIe 4.0 and 5.0 NVMe SSDs run hot and consume significant
+power. With ASPM enabled, an NVMe drive will drop to a few milliwatts
+when not in use, keeping idle temperatures low. If benchmarked with ASPM
+off, the controller remains fully active, leading to artificially high
+idle power draw and elevated baseline temperatures before a storage
+stress test even begins.</p>
+<h2 id="the-latency-trade-off-in-performance-testing">The Latency
+Trade-Off in Performance Testing</h2>
+<p>Hardware testers often intentionally disable ASPM to achieve the
+highest possible scores in synthetic benchmarks. Because waking a PCIe
+link from the L1 state takes a few microseconds, this tiny delay can
+accumulate during rapid, intermittent workloads.</p>
+<p>For example, disabling ASPM frequently results in higher 4K random
+read/write scores in SSD benchmarks and marginally reduces frame-time
+spikes in certain games. However, a major benchmarking error occurs when
+testers disable ASPM for performance runs and forget to re-enable it
+when measuring idle power consumption.</p>
+<h2 id="standardizing-aspm-for-accurate-benchmarking">Standardizing ASPM
+for Accurate Benchmarking</h2>
+<p>To produce accurate and repeatable idle power benchmarks, testers
+must standardize ASPM across all hardware configurations:</p>
+<ol type="1">
+<li><strong>Manual BIOS Configuration:</strong> Never leave ASPM
+settings on "Auto" in the motherboard BIOS. Explicitly set all PCIe Root
+Ports and DMI/OPI links to "L1" or "L0sL1" when testing for power
+efficiency.</li>
+<li><strong>OS Power Plans:</strong> Ensure the operating system is
+configured to use ASPM. In Windows, this means setting "Link State Power
+Management" under the PCI Express power plan settings to "Maximum power
+savings" when measuring idle draw.</li>
+<li><strong>Verify C-State Residency:</strong> Before recording idle
+wattage at the wall, use monitoring software (such as HWiNFO or
+ThrottleStop) to verify that the CPU is successfully reaching Package C8
+or C10 states. If it is stuck in C2 or C3, a PCIe device is failing to
+utilize ASPM, invalidating the idle power test.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-pc-ie-aspm-affects-idle-power-in-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

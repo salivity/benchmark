@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Audio EMI Shielding Prevents GPU Benchmarking Static - benchmark</title>
+    <meta name="description" content="This article explains how motherboard audio Electromagnetic Interference (EMI) shielding eliminates static, buzzing, and whining noises during intense GPU benchmarking. When a graphics card operates under maximum load, it generates massive electrical nois">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-audio-emi-shielding-prevents-gpu-benchmarking-static">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Audio EMI Shielding Prevents GPU Benchmarking Static - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-audio-emi-shielding-prevents-gpu-benchmarking-static" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how motherboard audio Electromagnetic Interference (EMI) shielding eliminates static, buzzing, and whining noises during intense GPU benchmarking. When a graphics card operates under maximum load, it generates massive electrical nois" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-audio-emi-shielding-prevents-gpu-benchmarking-static">How
+Audio EMI Shielding Prevents GPU Benchmarking Static</h1>
+<p>This article explains how motherboard audio Electromagnetic
+Interference (EMI) shielding eliminates static, buzzing, and whining
+noises during intense GPU benchmarking. When a graphics card operates
+under maximum load, it generates massive electrical noise that easily
+corrupts unprotected onboard audio signals. Below, we examine the
+mechanics of GPU-induced interference and the specific hardware
+techniques—such as Faraday cages, PCB isolation, and dedicated ground
+paths—that motherboard manufacturers use to keep audio clean during
+heavy system stress.</p>
+<h2 id="the-source-of-the-static-high-load-gpu-benchmarking">The Source
+of the Static: High-Load GPU Benchmarking</h2>
+<p>During a GPU benchmark, the graphics card is pushed to its absolute
+power and processing limits. To supply the GPU core with the necessary
+electricity, the card's Voltage Regulator Modules (VRMs) switch on and
+off hundreds of thousands of times per second.</p>
+<p>This rapid switching of high electrical currents generates strong
+electromagnetic fields around the graphics card and through the
+motherboard itself. This byproduct is known as Electromagnetic
+Interference (EMI). Without proper protection, this radiation travels
+through the air inside the PC case and across the motherboard's surface,
+acting like a broadcast signal looking for an antenna.</p>
+<h2 id="why-onboard-audio-is-vulnerable">Why Onboard Audio is
+Vulnerable</h2>
+<p>Audio begins as a digital signal (ones and zeros), which is largely
+immune to EMI. However, for you to hear sound through headphones or
+speakers, the motherboard's audio codec must convert that digital data
+into an analog electrical wave.</p>
+<p>Once the signal becomes analog, it is extremely sensitive. The copper
+traces (pathways) on the motherboard that carry this analog signal to
+your audio jacks inadvertently act as antennas. They pick up the
+electromagnetic fields radiating from the benchmarking GPU. Because the
+analog audio signal operates at a very low voltage, even a tiny amount
+of induced voltage from the GPU's EMI translates into loud, audible
+static, buzzing, or a high-pitched whine that changes pitch as your
+framerate fluctuates.</p>
+<h2 id="how-motherboard-emi-shielding-stops-the-interference">How
+Motherboard EMI Shielding Stops the Interference</h2>
+<p>Motherboard manufacturers use a combination of physical and
+electrical barriers—collectively referred to as EMI shielding—to protect
+the analog audio section from the GPU.</p>
+<h3 id="1-the-emi-cover-faraday-cage">1. The EMI Cover (Faraday
+Cage)</h3>
+<p>The most visible part of audio shielding is the metal cover placed
+directly over the motherboard's audio chip (the DAC/codec). This piece
+of metal acts as a miniature Faraday cage. When airborne electromagnetic
+waves from the GPU hit this metal shield, the shield absorbs the energy
+and safely channels it into the motherboard's ground plane. This
+prevents the radiation from ever reaching the sensitive silicon inside
+the audio chip.</p>
+<h3 id="2-pcb-isolation-the-audio-moat">2. PCB Isolation (The Audio
+Moat)</h3>
+<p>If you look closely at the bottom-left corner of a modern
+motherboard, you will see a thin, translucent line separating the audio
+components from the rest of the board (often illuminated by LEDs from
+underneath). This is a physical gap where all the internal copper layers
+of the Printed Circuit Board (PCB) have been stripped away.</p>
+<p>Because the GPU is plugged directly into the motherboard's PCIe slot,
+it dumps electrical noise directly into the board's shared copper ground
+plane. The PCB isolation line acts as a moat, physically blocking this
+electrical noise from traveling through the board and contaminating the
+audio circuitry.</p>
+<h3 id="3-dedicated-grounding-paths">3. Dedicated Grounding Paths</h3>
+<p>Standard motherboard components share a common ground. During a GPU
+benchmark, massive power spikes can cause fluctuations in this shared
+ground, a phenomenon known as "ground bounce." If the audio system
+shares this volatile ground, you will hear static. Shielded motherboards
+use an isolated ground path exclusively for the audio section, ensuring
+the baseline voltage for your sound remains flat and stable regardless
+of how much power the GPU is drawing.</p>
+<h3 id="4-multi-layer-pcb-routing">4. Multi-Layer PCB Routing</h3>
+<p>Modern motherboards are made of multiple stacked layers of fiberglass
+and copper. To further protect the analog signals as they travel from
+the audio chip to the rear I/O ports or front-panel header,
+manufacturers route the audio traces through the inner layers of the
+PCB. By sandwiching the audio pathways between solid copper ground
+layers on the top and bottom, the motherboard creates a tunnel that
+shields the audio wires from the GPU sitting just a few inches away.
+Furthermore, the left and right audio channels are often routed on
+entirely separate layers to prevent cross-talk and further reduce noise
+pickup.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-audio-emi-shielding-prevents-gpu-benchmarking-static';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

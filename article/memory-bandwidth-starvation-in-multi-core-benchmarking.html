@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Bandwidth Starvation in Multi-Core Benchmarking - benchmark</title>
+    <meta name="description" content="This article explains why memory bandwidth starvation frequently limits performance during multi-core hardware benchmarking. It examines the growing disparity between processor core counts and RAM data transfer rates, how simultaneous core utilization ove">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/memory-bandwidth-starvation-in-multi-core-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Memory Bandwidth Starvation in Multi-Core Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/memory-bandwidth-starvation-in-multi-core-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains why memory bandwidth starvation frequently limits performance during multi-core hardware benchmarking. It examines the growing disparity between processor core counts and RAM data transfer rates, how simultaneous core utilization ove" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="memory-bandwidth-starvation-in-multi-core-benchmarking">Memory
+Bandwidth Starvation in Multi-Core Benchmarking</h1>
+<p>This article explains why memory bandwidth starvation frequently
+limits performance during multi-core hardware benchmarking. It examines
+the growing disparity between processor core counts and RAM data
+transfer rates, how simultaneous core utilization overwhelms memory
+controllers, the role of CPU cache exhaustion, and how limited memory
+channels ultimately cause processing cores to sit idle waiting for
+data.</p>
+<h2 id="the-disparity-between-core-scaling-and-ram-speeds">The Disparity
+Between Core Scaling and RAM Speeds</h2>
+<p>Over the last decade, CPU manufacturers have rapidly increased the
+number of physical cores on a single chip. Consumer processors now
+routinely feature 16 to 24 cores, while enterprise processors can exceed
+64 or 128 cores. However, system memory (RAM) bandwidth has not scaled
+at the same pace.</p>
+<p>While transitioning from DDR4 to DDR5 nearly doubled available
+bandwidth, the number of cores sharing that bandwidth has multiplied
+much faster. As a result, the amount of memory bandwidth available
+<em>per core</em> has actually decreased in many modern
+architectures.</p>
+<h2 id="simultaneous-demand-in-benchmarking">Simultaneous Demand in
+Benchmarking</h2>
+<p>In typical daily workloads, only a few CPU cores are active at any
+given millisecond, leaving plenty of memory bandwidth for the active
+cores. Multi-core benchmarks, however, are specifically designed to push
+every available core to 100% utilization at the exact same time.</p>
+<p>For a CPU core to process instructions, it must constantly fetch data
+from the RAM and write results back to it. When 16, 32, or 64 cores
+demand data simultaneously, the memory controller is flooded with
+requests. Because the data highway (the memory bus) is only so wide, a
+traffic jam occurs. This is memory bandwidth starvation: the cores are
+capable of calculating data faster than the RAM can deliver it.</p>
+<h2 id="cache-exhaustion-and-cache-thrashing">Cache Exhaustion and Cache
+Thrashing</h2>
+<p>Modern CPUs use ultra-fast onboard memory called cache (L1, L2, and
+L3) to prevent bandwidth starvation. If a core finds the data it needs
+in the cache, it does not need to access the slower system RAM.</p>
+<p>During heavy multi-core benchmarking, two problems occur:</p>
+<ul>
+<li><strong>Dataset Overflow:</strong> Many benchmarks use massive
+datasets that intentionally exceed the size of the CPU's L3 cache. Once
+the cache is full, cores are forced to fetch data directly from the
+system RAM.</li>
+<li><strong>Cache Thrashing:</strong> Because all cores are working at
+maximum capacity and often share the same L3 cache pool, they constantly
+overwrite the cached data of other cores. This reduces cache efficiency
+and drives up the demand on system memory even further.</li>
+</ul>
+<h2 id="the-limitation-of-memory-channels">The Limitation of Memory
+Channels</h2>
+<p>The physical connection between the CPU and the RAM is divided into
+memory channels. Most mainstream desktop platforms only support
+dual-channel memory. This means that whether you install an entry-level
+6-core CPU or a flagship 24-core CPU on that motherboard, both
+processors are restricted to the same two data pipes to the RAM.</p>
+<p>High-end desktop (HEDT) and server platforms attempt to solve this by
+offering four, eight, or even twelve memory channels. However, because
+these platforms also scale up to vastly higher core counts, multi-core
+benchmarks can still saturate the memory bus.</p>
+<h2 id="the-result-stalled-cpu-cycles">The Result: Stalled CPU
+Cycles</h2>
+<p>When memory bandwidth reaches 100% saturation during a benchmark, the
+CPU cores experience "wait states" or stalled cycles. The cores remain
+powered on and allocated to the benchmark task, but they are doing no
+actual computational work for nanoseconds at a time because they are
+waiting for the next batch of data to arrive from the RAM. Consequently,
+the benchmark score stops reflecting the raw compute power of the CPU
+and instead measures the maximum transfer speed of the system's memory
+configuration.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/memory-bandwidth-starvation-in-multi-core-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

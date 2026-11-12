@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Synthetic Benchmarks Favor Specific Hardware Vendors - benchmark</title>
+    <meta name="description" content="Synthetic benchmarking suites are essential tools for measuring computer hardware performance, yet they frequently favor specific vendor architectures over others. This article explores the technical and commercial reasons behind these disparities, focusi">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-synthetic-benchmarks-favor-specific-hardware-vendors">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Synthetic Benchmarks Favor Specific Hardware Vendors - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-synthetic-benchmarks-favor-specific-hardware-vendors" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Synthetic benchmarking suites are essential tools for measuring computer hardware performance, yet they frequently favor specific vendor architectures over others. This article explores the technical and commercial reasons behind these disparities, focusi" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-synthetic-benchmarks-favor-specific-hardware-vendors">Why
+Synthetic Benchmarks Favor Specific Hardware Vendors</h1>
+<p>Synthetic benchmarking suites are essential tools for measuring
+computer hardware performance, yet they frequently favor specific vendor
+architectures over others. This article explores the technical and
+commercial reasons behind these disparities, focusing on compiler
+optimizations, instruction set utilization, memory hierarchies, core
+topologies, and industry partnerships. Understanding these factors
+explains why synthetic scores often fail to reflect real-world
+performance across competing brands like Intel, AMD, and Nvidia.</p>
+<h2 id="compiler-optimizations-and-bias">Compiler Optimizations and
+Bias</h2>
+<p>Software code must be translated into machine code by a compiler
+before a processor can execute it. Different compilers optimize code for
+specific hardware architectures.</p>
+<p>Historically, some synthetic benchmarks were built using
+vendor-specific compilers, such as the Intel C++ Compiler (ICC). In the
+past, these compilers would detect the processor's vendor ID before
+executing tasks. If the compiler detected an Intel CPU, it used the
+fastest available code path. If it detected a competing AMD CPU, it
+defaulted to a slower, basic code path, even if the AMD processor
+supported the faster instructions. Even without intentional throttling,
+a compiler designed by a specific hardware vendor will naturally be
+tuned to exploit the strengths and avoid the weaknesses of that vendor's
+architecture.</p>
+<h2 id="instruction-set-utilization">Instruction Set Utilization</h2>
+<p>Modern processors use specialized instruction sets—such as AVX2,
+AVX-512, or proprietary AI extensions—to accelerate complex
+calculations. Synthetic benchmarks often rely heavily on these
+instructions to generate maximum theoretical performance numbers.</p>
+<p>If a benchmark heavily utilizes AVX-512 instructions, a processor
+architecture with dedicated, full-width AVX-512 execution units will
+achieve massively inflated scores compared to an architecture that lacks
+the instruction set or executes it over multiple clock cycles. While
+this highlights a specific capability of the silicon, most everyday
+applications and games do not use these specialized instructions, making
+the synthetic advantage irrelevant for average users.</p>
+<h2 id="cache-and-memory-subsystems">Cache and Memory Subsystems</h2>
+<p>Synthetic workloads are typically small, repetitive, and predictable.
+Because of this, the entire workload can sometimes fit inside a
+processor’s high-speed L1, L2, or L3 cache, bypassing the slower system
+RAM entirely.</p>
+<ul>
+<li><strong>Cache Size Bias:</strong> If a benchmark's workload fits
+neatly into a large L3 cache, processors with massive cache sizes (such
+as AMD’s 3D V-Cache chips) will dominate the test.</li>
+<li><strong>Memory Bandwidth vs. Latency:</strong> Some benchmarks
+strictly measure memory bandwidth, favoring architectures with wider
+memory buses or support for faster RAM speeds. Others measure memory
+latency, favoring architectures with monolithic dies over chiplet
+designs.</li>
+</ul>
+<p>Real-world applications have unpredictable data patterns that
+constantly overflow the cache, neutralizing the lopsided advantages seen
+in synthetic memory tests.</p>
+<h2 id="core-topologies-and-thread-scheduling">Core Topologies and
+Thread Scheduling</h2>
+<p>Hardware vendors take different approaches to multi-core design. For
+example, AMD primarily uses uniform, high-performance cores, while Intel
+utilizes a hybrid architecture combining Performance-cores (P-cores) and
+Efficient-cores (E-cores).</p>
+<p>Synthetic benchmarks that assign fixed workloads to every available
+thread equally can get bottlenecked on hybrid architectures. If the
+benchmark waits for the slower E-cores to finish their portion of the
+rendering task before completing the test, the overall score drops.
+Conversely, if a benchmark is specifically updated to recognize and
+adapt to hybrid topologies, it may artificially boost that vendor's
+score compared to older software.</p>
+<h2 id="gpu-architectures-and-api-overhead">GPU Architectures and API
+Overhead</h2>
+<p>In graphics benchmarking, synthetic suites like 3DMark test specific
+rendering techniques such as tessellation, compute shaders, or ray
+tracing.</p>
+<p>Nvidia, AMD, and Intel allocate their silicon budgets differently.
+Nvidia dedicates significant physical space on the die to specialized
+ray-tracing (RT) cores and AI-driven Tensor cores. AMD traditionally
+focuses more on raw rasterization compute units and high-speed cache
+(Infinity Cache). Consequently, a synthetic benchmark that heavily
+weights ray-tracing calculations will massively favor Nvidia, while a
+test focused on pure rasterization at lower resolutions may lean toward
+AMD.</p>
+<h2 id="vendor-sponsorship-and-early-access">Vendor Sponsorship and
+Early Access</h2>
+<p>Developing benchmarking software is expensive. Benchmark creators
+often partner with hardware manufacturers through developer programs.
+Through these partnerships, hardware vendors provide funding,
+engineering support, and early access to unreleased prototypes.</p>
+<p>When a vendor works closely with a benchmark developer, they ensure
+the software is fully optimized for their upcoming architecture at
+launch. A competing vendor who did not participate as closely in the
+development process may find their hardware running unoptimized code,
+resulting in lower scores until patches are released months later.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-synthetic-benchmarks-favor-specific-hardware-vendors';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

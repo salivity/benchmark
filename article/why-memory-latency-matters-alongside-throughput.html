@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Memory Latency Matters Alongside Throughput - benchmark</title>
+    <meta name="description" content="This article explores why measuring memory latency in nanoseconds is just as critical as evaluating throughput when benchmarking computer hardware. It breaks down the fundamental differences between bandwidth and latency, explains how processor wait times">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-memory-latency-matters-alongside-throughput">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Memory Latency Matters Alongside Throughput - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-memory-latency-matters-alongside-throughput" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores why measuring memory latency in nanoseconds is just as critical as evaluating throughput when benchmarking computer hardware. It breaks down the fundamental differences between bandwidth and latency, explains how processor wait times" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-memory-latency-matters-alongside-throughput">Why Memory
+Latency Matters Alongside Throughput</h1>
+<p>This article explores why measuring memory latency in nanoseconds is
+just as critical as evaluating throughput when benchmarking computer
+hardware. It breaks down the fundamental differences between bandwidth
+and latency, explains how processor wait times bottleneck system
+performance, and demonstrates why relying solely on throughput metrics
+provides an incomplete and often misleading picture of real-world
+computing efficiency.</p>
+<h2 id="throughput-vs-latency-the-fundamental-difference">Throughput vs.
+Latency: The Fundamental Difference</h2>
+<p>To understand memory performance, you must look at two distinct
+metrics: throughput (bandwidth) and latency.</p>
+<p>Throughput measures the volume of data that can be transferred over a
+given period, typically expressed in gigabytes per second (GB/s).
+Latency measures the time delay between a processor requesting data from
+the memory and that data actually arriving, measured in nanoseconds
+(ns).</p>
+<p>Think of memory like a highway. Throughput is the number of lanes on
+the highway, determining how many cars can travel at once. Latency is
+the speed limit and traffic conditions, determining how long it takes a
+single car to get from point A to point B. Adding more lanes (higher
+throughput) does not make a single car reach its destination any
+faster.</p>
+<h2 id="the-cpu-waiting-game">The CPU Waiting Game</h2>
+<p>Modern processors operate at gigahertz speeds, meaning they execute
+billions of clock cycles every second. A single CPU clock cycle takes
+just a fraction of a nanosecond. However, fetching data from system RAM
+typically takes between 50 to 100 nanoseconds.</p>
+<p>In the time it takes RAM to respond to a single request, a fast CPU
+might sit idle for hundreds of clock cycles. If a benchmark only tests
+throughput, it masks this delay. High throughput only helps once the
+data stream has started flowing. If the CPU has to constantly stop and
+wait dozens of nanoseconds for new instructions to begin arriving, the
+system's overall performance will bottleneck regardless of how many
+gigabytes per second the memory can theoretically push.</p>
+<h2 id="sequential-vs-random-workloads">Sequential vs. Random
+Workloads</h2>
+<p>Different computing tasks stress memory in different ways, which is
+why testing both metrics is required for accurate hardware
+evaluation.</p>
+<p><strong>When Throughput Dominates:</strong></p>
+<ul>
+<li>Video editing and rendering</li>
+<li>Large file compression and decompression</li>
+<li>Scientific simulations with massive datasets</li>
+</ul>
+<p>In these scenarios, the CPU knows what data it needs ahead of time.
+It requests massive, continuous blocks of data. Once the initial latency
+penalty is paid, high throughput allows the data to flood into the
+processor rapidly.</p>
+<p><strong>When Latency Dominates:</strong></p>
+<ul>
+<li>Video gaming (calculating physics, AI, and frame data)</li>
+<li>Database management and web servers</li>
+<li>Everyday operating system responsiveness and web browsing</li>
+</ul>
+<p>These tasks rely heavily on random memory access. The CPU requests a
+small piece of data, processes it, and only then realizes it needs
+another piece of data from a completely different location in the RAM.
+Because the requests are small and unpredictable, the memory highway
+never fills up. Throughput becomes largely irrelevant, and the time it
+takes to fetch each individual request—the latency in
+nanoseconds—dictates performance.</p>
+<h2 id="why-nanoseconds-matter-more-than-clock-cycles">Why Nanoseconds
+Matter More Than Clock Cycles</h2>
+<p>Memory manufacturers often advertise latency using CAS Latency (CL),
+which measures delay in clock cycles rather than absolute time. Relying
+on CL timings alone is a common benchmarking mistake.</p>
+<p>Because the duration of a clock cycle changes depending on the
+memory's frequency (megatransfers per second), CL numbers cannot be
+directly compared across different speeds or generations of RAM. For
+example, DDR5 memory has much higher CL numbers than DDR4, leading some
+to believe it is slower to respond. However, because DDR5 cycles happen
+much faster, the actual time delay in nanoseconds is often very similar
+or better.</p>
+<p>Testing and reporting memory latency in absolute time (nanoseconds)
+strips away the marketing confusion of clock cycles and frequencies. It
+provides a standardized, undeniable measurement of how long the CPU
+actually waits for data.</p>
+<h2 id="the-complete-benchmarking-picture">The Complete Benchmarking
+Picture</h2>
+<p>Evaluating computer hardware by looking only at memory throughput is
+like judging a delivery service solely by the size of its trucks while
+ignoring how long it takes them to arrive. While high bandwidth is
+essential for heavy data streaming, low latency in nanoseconds is what
+keeps a processor fed during complex, real-world tasks. A comprehensive
+hardware benchmark must measure both to accurately predict how a system
+will perform under all conditions.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-memory-latency-matters-alongside-throughput';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Transient Power Spikes in ATX 3.1 Power Supplies - benchmark</title>
+    <meta name="description" content="This article provides a direct look at how hardware reviewers and engineers benchmark transient power spike handling in ATX 3.1 power supplies. It covers the specific ATX 3.1 power excursion requirements, the specialized industrial testing equipment requi">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/testing-transient-power-spikes-in-atx-3-1-power-supplies">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Testing Transient Power Spikes in ATX 3.1 Power Supplies - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/testing-transient-power-spikes-in-atx-3-1-power-supplies" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a direct look at how hardware reviewers and engineers benchmark transient power spike handling in ATX 3.1 power supplies. It covers the specific ATX 3.1 power excursion requirements, the specialized industrial testing equipment requi" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="testing-transient-power-spikes-in-atx-31-power-supplies">Testing
+Transient Power Spikes in ATX 3.1 Power Supplies</h1>
+<p>This article provides a direct look at how hardware reviewers and
+engineers benchmark transient power spike handling in ATX 3.1 power
+supplies. It covers the specific ATX 3.1 power excursion requirements,
+the specialized industrial testing equipment required to simulate
+microsecond loads, the exact testing methodologies used, and the metrics
+that determine whether a power supply passes or fails.</p>
+<h3 id="the-atx-31-baseline-requirements">The ATX 3.1 Baseline
+Requirements</h3>
+<p>To test an ATX 3.1 power supply unit (PSU), benchmarkers design their
+tests around Intel’s official ATX 3.1 specifications. Modern graphics
+cards and processors frequently draw massive amounts of power for
+fractions of a second, known as transient spikes or power
+excursions.</p>
+<p>To pass ATX 3.1 benchmarking, a PSU must sustain a power spike of up
+to 200% of its total rated capacity for 100 microseconds without
+shutting down. Additionally, the dedicated 16-pin 12V-2x6 GPU power
+connector must handle spikes up to 300% of its rated capacity for the
+same duration.</p>
+<h3 id="the-benchmarking-hardware">The Benchmarking Hardware</h3>
+<p>Reviewers do not use standard gaming PCs to benchmark PSU transient
+response because consumer hardware cannot generate consistent,
+repeatable microsecond spikes on demand. Instead, testers use industrial
+Automated Test Equipment (ATE), most commonly manufactured by companies
+like Chroma.</p>
+<p>A professional PSU testing suite includes:</p>
+<ul>
+<li><strong>Programmable DC Electronic Loads:</strong> Devices capable
+of pulling thousands of watts from the PSU in exact microsecond
+intervals.</li>
+<li><strong>High-Speed Digital Oscilloscopes:</strong> Equipment that
+captures and graphs voltage fluctuations in real-time.</li>
+<li><strong>Data Loggers and Thermal Cameras:</strong> Tools that
+monitor efficiency, internal temperatures, and cable heat during extreme
+stress.</li>
+</ul>
+<h3 id="programming-the-transient-load-tests">Programming the Transient
+Load Tests</h3>
+<p>To simulate a transient spike, the benchmarker connects the PSU's
+cables directly to the electronic load and programs specific testing
+scenarios.</p>
+<p>The tester establishes a continuous baseline load—such as 40% of the
+PSU's maximum capacity—and programs the electronic load to instantly
+jump to 200% capacity for 100 microseconds before dropping back to the
+baseline. This is regulated by a "duty cycle," which dictates how often
+the spike repeats (for example, a 10% duty cycle means the spike happens
+for 100 microseconds, followed by 900 microseconds of rest).</p>
+<p>Testers also configure the "slew rate," which controls how fast the
+power draw ramps up. A high slew rate ensures the test accurately mimics
+the violent, sudden shifts in electrical demand produced by modern GPUs.
+This cycle is repeated continuously for several minutes to ensure
+stability.</p>
+<h3 id="testing-the-12v-2x6-connector">Testing the 12V-2x6
+Connector</h3>
+<p>ATX 3.1 introduced the 12V-2x6 connector, an update to the older
+12VHPWR connector, designed to improve safety and connection
+reliability. Benchmarkers test this connector separately from the rest
+of the system.</p>
+<p>For a standard 600W-rated 12V-2x6 cable, the tester programs the
+electronic load to pull 1800W (a 300% excursion) through that single
+cable for 100 microseconds. Testers also intentionally manipulate the
+connector's shorter sense pins to ensure the PSU correctly cuts power if
+the cable is not fully plugged in during a load test.</p>
+<h3 id="evaluating-pass-or-fail-metrics">Evaluating Pass or Fail
+Metrics</h3>
+<p>During the simulated spikes, the benchmarker monitors three critical
+factors to determine if the ATX 3.1 PSU passes the benchmark:</p>
+<ol type="1">
+<li><strong>Voltage Regulation:</strong> Using the oscilloscope, the
+tester watches the 12V, 5V, and 3.3V rails. Normally, the 12V rail must
+stay within +5% and -7% of 12V. During a 200% transient spike, the ATX
+3.1 spec allows the 12V rail to drop slightly lower, down to -8%
+(11.04V). If the voltage drops below 11.04V, the PSU fails the
+benchmark, as this would cause a real PC to crash or reboot.</li>
+<li><strong>Protection Circuitry Calibration:</strong> Power supplies
+feature Over Power Protection (OPP) and Over Current Protection (OCP) to
+prevent catastrophic failure. A properly engineered ATX 3.1 PSU must
+have its protections tuned so they do not prematurely trigger and shut
+the power supply off during a brief, 100-microsecond spike, while still
+triggering reliably if the overload lasts too long.</li>
+<li><strong>Component Survival:</strong> The extreme stress of rapid
+200% load shifts causes physical vibrations and high heat inside the
+PSU. If capacitors burst, MOSFETs short-circuit, or the unit emits smoke
+during the repetitive duty cycles, the unit fails the benchmark.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/testing-transient-power-spikes-in-atx-3-1-power-supplies';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

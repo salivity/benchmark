@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correlating GPU PCIe Bus Load with Frame Time Spikes - benchmark</title>
+    <meta name="description" content="This article explores the direct correlation between a graphics processing unit&#39;s (GPU) PCIe bus interface load percentage and the occurrence of frame time spikes during computer hardware benchmarking. It explains the mechanics of the PCIe bus, why sudden">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/correlating-gpu-pc-ie-bus-load-with-frame-time-spikes">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Correlating GPU PCIe Bus Load with Frame Time Spikes - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/correlating-gpu-pc-ie-bus-load-with-frame-time-spikes" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the direct correlation between a graphics processing unit&#39;s (GPU) PCIe bus interface load percentage and the occurrence of frame time spikes during computer hardware benchmarking. It explains the mechanics of the PCIe bus, why sudden" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="correlating-gpu-pcie-bus-load-with-frame-time-spikes">Correlating
+GPU PCIe Bus Load with Frame Time Spikes</h1>
+<p>This article explores the direct correlation between a graphics
+processing unit's (GPU) PCIe bus interface load percentage and the
+occurrence of frame time spikes during computer hardware benchmarking.
+It explains the mechanics of the PCIe bus, why sudden surges in
+interface utilization trigger severe frame pacing issues, the critical
+role of Video RAM (VRAM) limitations, and how hardware testers can
+analyze these metrics to accurately diagnose system bottlenecks.</p>
+<h2 id="what-is-gpu-pcie-bus-interface-load">What is GPU PCIe Bus
+Interface Load?</h2>
+<p>The Peripheral Component Interconnect Express (PCIe) bus is the
+high-speed communication pathway connecting the GPU to the CPU and
+system RAM. The "bus interface load percentage" measures how much of
+that pathway's maximum available bandwidth is currently being used.</p>
+<p>During standard gameplay or benchmarking, assets are loaded from the
+storage drive, passed through the CPU and system RAM, and stored in the
+GPU’s local VRAM. Once the necessary data is in the VRAM, PCIe bus load
+typically remains low—often between 1% and 15%—because the GPU only
+needs to receive small packets of positional data and draw calls from
+the CPU for each frame.</p>
+<h2 id="how-bus-load-triggers-frame-time-spikes">How Bus Load Triggers
+Frame Time Spikes</h2>
+<p>Frame time is the exact duration it takes to render a single frame,
+measured in milliseconds (ms). A smooth gaming experience requires
+consistent frame times. A frame time spike occurs when a single frame
+takes significantly longer to render than the frames before and after
+it, which manifests visually as a stutter or hitch.</p>
+<p>There is a strong, direct correlation between sudden spikes in PCIe
+bus interface load and frame time spikes. If the GPU needs data that is
+not currently in its VRAM, it must pause rendering the current frame and
+request that data from the system RAM over the PCIe bus. Because the
+PCIe bus is drastically slower than VRAM, this data transfer creates a
+bottleneck. In benchmarking graphs, you will see the PCIe bus load
+percentage shoot up, and at that exact millisecond, the frame time graph
+will spike upward.</p>
+<h2 id="the-primary-culprit-vram-capacity-limits">The Primary Culprit:
+VRAM Capacity Limits</h2>
+<p>The most common reason for high PCIe bus load during a benchmark is
+exceeding the GPU’s VRAM buffer.</p>
+<ol type="1">
+<li><strong>Normal Operation:</strong> The GPU accesses textures and
+shaders directly from its onboard VRAM at speeds often exceeding 500
+GB/s. PCIe bus load is minimal, and frame times are flat and
+consistent.</li>
+<li><strong>VRAM Overflow:</strong> When benchmark settings (like 4K
+resolution or Ultra textures) demand more VRAM than the card possesses,
+the system uses system RAM as an overflow buffer.</li>
+<li><strong>Bus Saturation:</strong> The GPU is forced to constantly
+swap data back and forth across the PCIe bus. The bus interface load
+jumps to 50%, 80%, or even 100%. Because PCIe bandwidth (typically 16
+GB/s to 64 GB/s depending on the generation) cannot match VRAM speeds,
+the GPU stalls while waiting for data, resulting in severe, repetitive
+frame time spikes.</li>
+</ol>
+<h2 id="asset-streaming-and-directstorage">Asset Streaming and
+DirectStorage</h2>
+<p>Even when VRAM is not entirely full, correlation between bus load and
+frame time spikes can occur in modern games that utilize aggressive
+asset streaming. As a benchmark camera moves rapidly through a dense
+environment, new textures and geometry must be loaded in real-time.</p>
+<p>When a massive chunk of data is pushed across the PCIe interface all
+at once, the bus load spikes. If the game engine does not handle this
+asynchronous data loading efficiently, the main rendering thread pauses
+to wait for the PCIe transfer to complete, resulting in a traversal
+stutter—a noticeable frame time spike directly tied to a burst in PCIe
+bus usage.</p>
+<h2 id="the-impact-of-pcie-generations-and-lane-counts">The Impact of
+PCIe Generations and Lane Counts</h2>
+<p>Hardware configuration heavily dictates how quickly PCIe bus load
+translates into frame time spikes. GPUs connect via a specific number of
+lanes (usually x4, x8, or x16) and a specific PCIe generation (such as
+Gen 3, Gen 4, or Gen 5).</p>
+<p>If you are benchmarking a budget GPU wired for only PCIe x8 or x4
+lanes on an older PCIe Gen 3 motherboard, the maximum available
+bandwidth is severely restricted. In this scenario, the PCIe bus
+interface load will hit 100% much faster than it would on a Gen 4 x16
+system. Consequently, the correlation becomes much more aggressive:
+minor VRAM overflows or standard asset streaming will immediately
+saturate the bus, causing longer and more frequent frame time
+spikes.</p>
+<h2 id="how-to-diagnose-this-in-benchmarking">How to Diagnose This in
+Benchmarking</h2>
+<p>To confirm that PCIe bandwidth is the cause of poor frame pacing
+during a benchmark, testers look for a specific pattern in monitoring
+software:</p>
+<ul>
+<li><strong>Check VRAM Usage:</strong> Observe if VRAM allocation is
+near the maximum capacity of the GPU.</li>
+<li><strong>Monitor Bus Interface Load:</strong> Look for sudden
+plateaus or spikes in the GPU Bus Interface Load graph (reaching above
+40-50% during active rendering).</li>
+<li><strong>Overlay Frame Times:</strong> Align the frame time graph
+with the bus load graph. If the millisecond spikes in frame time align
+perfectly with the percentage spikes in bus load, the system is
+suffering from a PCIe bandwidth bottleneck, typically induced by a lack
+of VRAM or inefficient asset streaming.</li>
+<li><strong>Watch GPU Utilization:</strong> During these spikes, core
+GPU utilization will simultaneously drop, proving the GPU core is
+starved for data and waiting on the PCIe bus to deliver it.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/correlating-gpu-pc-ie-bus-load-with-frame-time-spikes';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

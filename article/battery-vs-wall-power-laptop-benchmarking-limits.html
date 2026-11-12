@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery vs. Wall Power: Laptop Benchmarking Limits - benchmark</title>
+    <meta name="description" content="Benchmarking a laptop on battery power yields significantly lower scores compared to testing it while plugged into a wall outlet. This performance drop occurs because lithium-ion batteries cannot safely deliver the high wattage required by modern processo">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/battery-vs-wall-power-laptop-benchmarking-limits">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Battery vs. Wall Power: Laptop Benchmarking Limits - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/battery-vs-wall-power-laptop-benchmarking-limits" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Benchmarking a laptop on battery power yields significantly lower scores compared to testing it while plugged into a wall outlet. This performance drop occurs because lithium-ion batteries cannot safely deliver the high wattage required by modern processo" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="battery-vs-wall-power-laptop-benchmarking-limits">Battery vs.
+Wall Power: Laptop Benchmarking Limits</h1>
+<p>Benchmarking a laptop on battery power yields significantly lower
+scores compared to testing it while plugged into a wall outlet. This
+performance drop occurs because lithium-ion batteries cannot safely
+deliver the high wattage required by modern processors and graphics
+cards at peak load. Additionally, operating systems, graphics drivers,
+and motherboard firmware automatically reduce clock speeds, limit
+thermal thresholds, and disable boost technologies when unplugged to
+prevent battery degradation and immediate power depletion. This article
+explains the exact electrical, thermal, and software mechanisms that
+restrict laptop hardware performance on battery power.</p>
+<h2 id="electrical-discharge-limits">Electrical Discharge Limits</h2>
+<p>The primary reason for lower benchmark scores on battery power is
+simple physics. High-performance laptop components require more
+electrical power than a battery can safely provide at once.</p>
+<ul>
+<li><strong>Wall Power:</strong> A typical gaming or workstation laptop
+power brick supplies between 150W and 330W of continuous power. This
+allows both the CPU and GPU to draw maximum wattage simultaneously.</li>
+<li><strong>Battery Power:</strong> Most laptop batteries are capped at
+a maximum capacity of 99.9 Watt-hours (Wh) due to aviation safety
+regulations. Discharging a battery at 200W would drain it completely in
+under 30 minutes and generate dangerous amounts of heat within the
+battery cells. To prevent fires and chemical degradation, the battery's
+internal controller strictly limits the maximum power draw, often
+capping total system power between 40W and 70W.</li>
+</ul>
+<h2 id="cpu-boost-and-power-limits">CPU Boost and Power Limits</h2>
+<p>Modern processors rely on temporary power boosts to achieve high
+benchmark scores. Intel and AMD use specific power states to manage
+this, which are heavily restricted on battery power.</p>
+<p>When plugged into the wall, a CPU can enter its short-term boost
+state (often called PL2 on Intel or PPT on AMD), drawing upwards of 80W
+to 120W to reach maximum clock speeds. On battery power, the
+motherboard's firmware (BIOS) instantly lowers these limits. The CPU is
+often restricted to its base power state or lower (sometimes just 15W to
+35W). Consequently, during a CPU benchmark, the processor cannot reach
+its advertised boost speeds, resulting in drastically lower multi-core
+and single-core scores.</p>
+<h2 id="gpu-wattage-capping">GPU Wattage Capping</h2>
+<p>Dedicated graphics cards (GPUs) are the most power-hungry components
+in a laptop. A laptop GPU might be rated for a Total Graphics Power
+(TGP) of 140W when plugged into the wall.</p>
+<p>The moment the AC adapter is unplugged, the GPU switches to a
+low-power battery profile. It is physically cut off from the power
+required to run its cores and memory at full speed. Both NVIDIA (via
+BatteryBoost) and AMD implement driver-level locks that cap frame rates
+and drop GPU clock speeds by 50% or more on battery. Running a graphical
+benchmark under these conditions tests the power-saving limiter rather
+than the actual capability of the silicon.</p>
+<h2 id="operating-system-and-firmware-intervention">Operating System and
+Firmware Intervention</h2>
+<p>Even if you manually set your operating system’s power plan to "Best
+Performance" while on battery, you will not get wall-power results.
+Hardware-level instructions override the operating system.</p>
+<p>The laptop’s Embedded Controller (EC) detects the removal of AC power
+and forces the system into a protective state. If the EC allowed the CPU
+and GPU to pull maximum wattage from the battery, the sudden voltage
+drop would trigger an immediate system shutdown to protect the hardware.
+Therefore, the EC throttles the hardware regardless of what settings the
+user selects in Windows, macOS, or Linux.</p>
+<h2 id="reduced-cooling-capacity">Reduced Cooling Capacity</h2>
+<p>Thermal management is directly tied to benchmarking performance, as
+hotter components run slower. Laptop cooling fans require electricity to
+spin at high RPMs.</p>
+<p>On wall power, fans can spin at maximum capacity to dissipate heat,
+allowing the CPU and GPU to sustain high speeds during long benchmarks.
+On battery power, the system reduces fan speeds to conserve energy.
+Because the fans spin slower, heat builds up faster inside the chassis,
+causing the hardware to thermally throttle (slow down to prevent
+overheating) much earlier in the benchmarking process.</p>
+<h2 id="bus-and-memory-speed-reductions">Bus and Memory Speed
+Reductions</h2>
+<p>To save additional power on battery, laptops automatically scale back
+secondary components that impact benchmark scores:</p>
+<ul>
+<li><strong>System RAM:</strong> Memory may downclock to lower
+frequencies, increasing latency.</li>
+<li><strong>PCIe Lanes:</strong> The connection between the CPU, GPU,
+and SSD switches to lower power states (such as dropping from PCIe Gen 4
+to Gen 3 speeds), reducing bandwidth.</li>
+<li><strong>Storage:</strong> NVMe SSDs enter aggressive power-saving
+modes, reducing peak read and write speeds during storage
+benchmarks.</li>
+</ul>
+<h2 id="summary-for-accurate-benchmarking">Summary for Accurate
+Benchmarking</h2>
+<p>To measure the true capability of laptop hardware, benchmarks must
+always be run on wall power. Benchmarking on battery power only measures
+the aggressiveness of the manufacturer's power-saving limits and the
+maximum safe discharge rate of the battery, rather than the actual
+performance ceiling of the CPU, GPU, and memory.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/battery-vs-wall-power-laptop-benchmarking-limits';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

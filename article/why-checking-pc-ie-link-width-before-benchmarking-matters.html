@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Checking PCIe Link Width Before Benchmarking Matters - benchmark</title>
+    <meta name="description" content="Before running any computer hardware benchmarks, verifying that your components are operating at their full PCIe link width is a critical step. PCIe link width degradation—such as a standard x16 graphics card connection unexpectedly dropping to x8, x4, or">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-checking-pc-ie-link-width-before-benchmarking-matters">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Checking PCIe Link Width Before Benchmarking Matters - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-checking-pc-ie-link-width-before-benchmarking-matters" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Before running any computer hardware benchmarks, verifying that your components are operating at their full PCIe link width is a critical step. PCIe link width degradation—such as a standard x16 graphics card connection unexpectedly dropping to x8, x4, or" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-checking-pcie-link-width-before-benchmarking-matters">Why
+Checking PCIe Link Width Before Benchmarking Matters</h1>
+<p>Before running any computer hardware benchmarks, verifying that your
+components are operating at their full PCIe link width is a critical
+step. PCIe link width degradation—such as a standard x16 graphics card
+connection unexpectedly dropping to x8, x4, or even x1—severely
+restricts data bandwidth between the CPU and GPU. This article explains
+how link degradation artificially bottlenecks system performance,
+invalidates benchmark scores, and how you can easily detect and fix this
+common hardware issue before testing.</p>
+<h2 id="severe-bandwidth-bottlenecks">Severe Bandwidth Bottlenecks</h2>
+<p>A modern discrete graphics card typically relies on a physical PCIe
+x16 connection to communicate rapidly with the CPU and system memory.
+Each "x" represents a physical data lane. If the link width degrades
+from x16 to x4, the available bandwidth is immediately cut by 75%. While
+minor bandwidth reductions might go unnoticed during everyday desktop
+use, heavy benchmarking workloads saturate a degraded link instantly,
+starving the GPU of the data it needs to render frames efficiently.</p>
+<h2 id="invalidated-benchmark-data">Invalidated Benchmark Data</h2>
+<p>The primary goal of benchmarking is to measure a component's true
+performance potential and compare it accurately against other hardware.
+If a graphics card is silently running at x4 instead of x16, the
+benchmark score no longer reflects the GPU's actual processing power;
+instead, it measures the PCIe bus bottleneck.</p>
+<p>Failing to check the link width beforehand leads to skewed data and
+false conclusions. Testers often waste hours troubleshooting the wrong
+variables—such as reinstalling drivers, adjusting fan curves for
+perceived thermal throttling, or blaming unstable overclocks—when the
+real culprit is simply missing PCIe lanes.</p>
+<h2 id="ruined-1-lows-and-frame-pacing">Ruined 1% Lows and Frame
+Pacing</h2>
+<p>Link width degradation does not affect all benchmarking metrics
+equally. While average frame rates might only drop by 5% to 20%
+depending on the PCIe generation and the specific test, the 1% and 0.1%
+low frame rates often suffer catastrophically.</p>
+<p>Modern gaming benchmarks and rendering tests constantly stream
+massive textures and assets from system RAM and NVMe storage directly to
+the GPU's VRAM. Over a constricted x4 link, this asset streaming gets
+backed up, resulting in micro-stutters and massive frame time spikes.
+Any benchmark looking at frame pacing is rendered completely useless if
+the PCIe link is degraded.</p>
+<h2 id="common-causes-of-link-degradation">Common Causes of Link
+Degradation</h2>
+<p>PCIe lanes can drop without triggering any system error messages. The
+computer will still boot and display an image, even on a single x1 lane.
+Common reasons a system degrades to x4 or x8 include:</p>
+<ul>
+<li><strong>Motherboard Lane Sharing:</strong> Populating specific M.2
+NVMe slots on a motherboard often steals lanes directly from the primary
+PCIe slot, automatically forcing the GPU down to x8 or x4 mode.</li>
+<li><strong>Physical Obstructions:</strong> A tiny speck of dust, dried
+thermal paste, or skin oils on the GPU's gold contact pins can block the
+specific pins responsible for negotiating the x16 width.</li>
+<li><strong>Improper Seating and GPU Sag:</strong> Heavy graphics cards
+can pull slightly out of the motherboard slot on the right side. Because
+the pins that negotiate x8 and x16 speeds are located at the very end of
+the connector, slight sag can break the connection and force the card to
+fallback to x4.</li>
+<li><strong>Faulty Riser Cables:</strong> Using a damaged or low-quality
+PCIe riser cable causes signal integrity loss. To prevent the system
+from crashing, the motherboard will automatically downgrade the link
+width to maintain a stable connection.</li>
+</ul>
+<h2 id="how-to-verify-your-pcie-link-width">How to Verify Your PCIe Link
+Width</h2>
+<p>Checking your link width takes only a few seconds and should be a
+mandatory step in your pre-benchmarking checklist.</p>
+<p>Download and open a hardware monitoring utility like TechPowerUp
+GPU-Z. Locate the "Bus Interface" field on the main tab. It will tell
+you both the maximum supported interface and the current active
+interface. Because modern motherboards and GPUs use power-saving
+features that lower PCIe speeds at idle, click the small question mark
+icon next to the Bus Interface field to start a built-in render test.
+Under load, verify that the active reading matches your hardware's full
+capability (for example, showing <code>@ x16 4.0</code> for a PCIe 4.0
+card) before you begin collecting benchmark data.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-checking-pc-ie-link-width-before-benchmarking-matters';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

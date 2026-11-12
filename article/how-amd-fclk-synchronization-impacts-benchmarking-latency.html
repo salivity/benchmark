@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How AMD FCLK Synchronization Impacts Benchmarking Latency - benchmark</title>
+    <meta name="description" content="This article explores how the synchronization of the Infinity Fabric Clock (FCLK) with the memory controller and RAM speeds directly impacts system latency on AMD Ryzen platforms. It breaks down the technical relationship between FCLK, UCLK, and MCLK, com">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-amd-fclk-synchronization-impacts-benchmarking-latency">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How AMD FCLK Synchronization Impacts Benchmarking Latency - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-amd-fclk-synchronization-impacts-benchmarking-latency" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how the synchronization of the Infinity Fabric Clock (FCLK) with the memory controller and RAM speeds directly impacts system latency on AMD Ryzen platforms. It breaks down the technical relationship between FCLK, UCLK, and MCLK, com" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-amd-fclk-synchronization-impacts-benchmarking-latency">How
+AMD FCLK Synchronization Impacts Benchmarking Latency</h1>
+<p>This article explores how the synchronization of the Infinity Fabric
+Clock (FCLK) with the memory controller and RAM speeds directly impacts
+system latency on AMD Ryzen platforms. It breaks down the technical
+relationship between FCLK, UCLK, and MCLK, compares the architectural
+differences between DDR4 and DDR5 AMD generations, and explains how
+these clock ratios influence both synthetic hardware benchmarks and
+real-world gaming performance.</p>
+<h3 id="understanding-the-three-clock-domains">Understanding the Three
+Clock Domains</h3>
+<p>To understand memory latency on AMD Zen architectures, you must look
+at three distinct frequencies that govern how data moves from your RAM
+to the CPU cores:</p>
+<ul>
+<li><strong>MCLK (Memory Clock):</strong> The actual operating frequency
+of the RAM modules. Because DDR (Double Data Rate) transfers data twice
+per cycle, the MCLK is half of the advertised DDR speed (e.g., DDR4-3600
+runs at an MCLK of 1800 MHz).</li>
+<li><strong>UCLK (Unified Memory Controller Clock):</strong> The
+frequency at which the CPU’s internal memory controller operates.</li>
+<li><strong>FCLK (Infinity Fabric Clock):</strong> The speed of the
+central interconnect that links the CPU cores, cache, and the memory
+controller together.</li>
+</ul>
+<h3 id="the-111-ratio-on-am4-zen-2-and-zen-3">The 1:1:1 Ratio on AM4
+(Zen 2 and Zen 3)</h3>
+<p>On AMD's AM4 platform using DDR4 memory, achieving the lowest
+possible latency requires a synchronous 1:1:1 ratio between FCLK, UCLK,
+and MCLK.</p>
+<p>For example, when using DDR4-3600 RAM, the MCLK is 1800 MHz. In an
+optimal, synchronized state, the UCLK and FCLK will also run at 1800
+MHz. Because all three domains tick at the exact same rate, data passes
+from the RAM, through the memory controller, and across the Infinity
+Fabric to the CPU cores without waiting for disparate clock cycles to
+align. For Zen 2 and Zen 3 processors, the "sweet spot" for this 1:1:1
+ratio typically peaks between 1800 MHz and 1900 MHz (DDR4-3600 to
+DDR4-3800), depending on silicon quality.</p>
+<h3 id="the-desynchronization-latency-penalty">The Desynchronization
+Latency Penalty</h3>
+<p>When you install faster RAM that exceeds the physical limits of the
+CPU's Infinity Fabric (usually above 1900 MHz on AM4), the motherboard
+automatically forces the system into a desynchronized, or coupled,
+state.</p>
+<p>To maintain stability, the UCLK drops to half the speed of the MCLK
+(a 1:2 ratio), and the FCLK operates independently. This
+desynchronization introduces a severe latency buffer. Data must wait at
+the borders of each clock domain to be handed off, adding 5 to 10
+nanoseconds of delay. To overcome this latency penalty, the RAM
+frequency must be pushed vastly higher (often past DDR4-4400) just to
+match the benchmark performance of a synchronized DDR4-3600 setup.</p>
+<h3 id="the-shift-in-am5-zen-4-and-ddr5">The Shift in AM5 (Zen 4 and
+DDR5)</h3>
+<p>With the introduction of DDR5 on the AM5 platform, MCLK speeds
+increased drastically, starting at 2400 MHz (DDR5-4800) and easily
+exceeding 3000 MHz (DDR5-6000). Because the Infinity Fabric cannot
+physically run at 3000 MHz, a 1:1:1 ratio is impossible on Zen 4.</p>
+<p>To solve this, AMD decoupled the FCLK from the memory clocks. On AM5,
+the primary synchronization goal is maintaining a 1:1 ratio solely
+between the UCLK and MCLK, which usually maxes out around 3000 MHz to
+3200 MHz (DDR5-6000 to DDR5-6400).</p>
+<p>However, FCLK synchronization still plays a secondary role in
+latency. Running the FCLK at a 2:3 ratio with the UCLK/MCLK reduces
+latency penalties. This is why DDR5-6000 is considered the sweet spot
+for Zen 4: the MCLK and UCLK run at 3000 MHz (1:1), while the FCLK runs
+at 2000 MHz, creating a clean 2:3 synchronization ratio that minimizes
+data hand-off delays.</p>
+<h3 id="how-synchronization-impacts-hardware-benchmarks">How
+Synchronization Impacts Hardware Benchmarks</h3>
+<p>In hardware benchmarking, FCLK and memory controller synchronization
+dictate performance in specific, memory-sensitive workloads:</p>
+<ul>
+<li><strong>Synthetic Memory Benchmarks:</strong> Tools like AIDA64
+directly measure system latency in nanoseconds. Breaking synchronization
+immediately degrades latency scores, often jumping from ~60ns in a
+synchronized state to over 70ns in a desynchronized state, even if raw
+memory bandwidth (read/write speeds) increases.</li>
+<li><strong>Compression and Productivity:</strong> Benchmarks like
+7-Zip, WinRAR, and Geekbench rely heavily on rapid, constant data
+retrieval from system RAM. Synchronized clocks yield noticeably higher
+scores in these tests compared to higher-frequency, desynchronized
+RAM.</li>
+<li><strong>Gaming Benchmarks:</strong> CPU-bound games (especially when
+benchmarked at 1080p) are highly sensitive to memory latency. While
+average framerates might only shift by a few percent, proper FCLK and
+UCLK synchronization significantly improves 1% and 0.1% low framerates.
+This results in smoother frame times and eliminates micro-stuttering
+during heavy gaming workloads.</li>
+<li><strong>3D Rendering:</strong> Benchmarks like Cinebench are largely
+unaffected by FCLK synchronization. Because the workload fits entirely
+within the CPU's onboard L1/L2/L3 cache, the system rarely accesses main
+system memory, rendering RAM latency irrelevant for the final
+score.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-amd-fclk-synchronization-impacts-benchmarking-latency';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Socket Memory Interleaving Affects Dual-CPU Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores the impact of cross-socket memory interleaving on dual-CPU workstation benchmarks. It explains the fundamental differences between Non-Uniform Memory Access (NUMA) and Uniform Memory Access (UMA) modes, detailing how enabling or disa">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-socket-memory-interleaving-affects-dual-cpu-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Socket Memory Interleaving Affects Dual-CPU Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-socket-memory-interleaving-affects-dual-cpu-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the impact of cross-socket memory interleaving on dual-CPU workstation benchmarks. It explains the fundamental differences between Non-Uniform Memory Access (NUMA) and Uniform Memory Access (UMA) modes, detailing how enabling or disa" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-socket-memory-interleaving-affects-dual-cpu-benchmarks">How
+Socket Memory Interleaving Affects Dual-CPU Benchmarks</h1>
+<p>This article explores the impact of cross-socket memory interleaving
+on dual-CPU workstation benchmarks. It explains the fundamental
+differences between Non-Uniform Memory Access (NUMA) and Uniform Memory
+Access (UMA) modes, detailing how enabling or disabling node
+interleaving alters memory bandwidth, latency, and ultimately, synthetic
+and real-world computer hardware performance scores.</p>
+<h2 id="understanding-cross-socket-memory-interleaving">Understanding
+Cross-Socket Memory Interleaving</h2>
+<p>In a dual-CPU workstation, each processor has its own dedicated
+physical memory slots. By default, modern systems use Non-Uniform Memory
+Access (NUMA). In a NUMA configuration, a CPU accesses its own local
+memory much faster than the remote memory attached to the second
+CPU.</p>
+<p>Memory interleaving across multiple sockets—often called "Node
+Interleaving" in the BIOS—disables NUMA and forces the system into a
+Uniform Memory Access (UMA) mode. When enabled, the memory controller
+alternates memory addresses across both sockets. If a program writes a
+block of data to RAM, half of it goes to CPU 1's memory pool, and the
+other half goes to CPU 2's memory pool, regardless of which CPU is
+actually processing the data.</p>
+<h2 id="impact-on-synthetic-memory-benchmarks">Impact on Synthetic
+Memory Benchmarks</h2>
+<p>Benchmarking tools that specifically test RAM performance, such as
+AIDA64 or PassMark, show drastic differences depending on your
+interleaving settings.</p>
+<ul>
+<li><strong>Memory Latency:</strong> Enabling socket interleaving
+significantly increases average memory latency. Because data is striped
+across both sockets, roughly 50% of all memory requests must travel
+across the processor interconnect (such as Intel UPI or AMD Infinity
+Fabric). This extra physical distance and protocol overhead result in
+poorer latency benchmark scores.</li>
+<li><strong>Memory Bandwidth:</strong> Cross-socket interleaving
+generally reduces peak memory bandwidth in synthetic tests. The
+CPU-to-CPU interconnect becomes a bottleneck, as it cannot match the
+sheer throughput of both CPUs accessing their own local memory channels
+simultaneously and independently.</li>
+</ul>
+<h2 id="impact-on-rendering-and-compute-benchmarks">Impact on Rendering
+and Compute Benchmarks</h2>
+<p>Modern workstation benchmarks—including Cinebench, Blender, and
+V-Ray—are "NUMA-aware." The operating system and the benchmarking
+software work together to ensure that the threads running on CPU 1 only
+use the RAM wired to CPU 1, and the threads on CPU 2 only use the RAM
+wired to CPU 2.</p>
+<p>If you enable cross-socket memory interleaving while running these
+benchmarks, performance will drop. You are forcing a NUMA-aware
+application to constantly fetch data across the CPU interconnect. This
+saturates the interconnect bandwidth, introduces latency, and causes the
+CPUs to wait longer for data, resulting in lower overall rendering and
+compute scores.</p>
+<h2 id="impact-on-non-numa-aware-benchmarks">Impact on Non-NUMA-Aware
+Benchmarks</h2>
+<p>While cross-socket interleaving hurts modern benchmarks, it can
+occasionally improve scores in older or poorly optimized benchmarking
+software.</p>
+<p>If a benchmark is not NUMA-aware, it views the system's RAM as one
+giant pool. It might load a massive dataset entirely into CPU 1's
+memory, and then instruct CPU 2 to process it. This creates a severe
+bottleneck, as 100% of CPU 2's memory requests must cross the
+interconnect, while CPU 1's memory controller is overwhelmed.</p>
+<p>Enabling socket interleaving prevents this worst-case scenario. By
+spreading the data evenly across both sockets, a non-NUMA-aware
+benchmark gets predictable, averaged-out bandwidth and latency. The
+benchmark score will not reach the theoretical hardware maximum, but it
+will avoid catastrophic performance drops.</p>
+<h2 id="channel-interleaving-vs-socket-interleaving">Channel
+Interleaving vs. Socket Interleaving</h2>
+<p>When configuring a dual-CPU workstation for benchmarking, it is vital
+not to confuse socket (node) interleaving with channel interleaving.</p>
+<ul>
+<li><strong>Channel Interleaving:</strong> This stripes data across the
+multiple memory channels attached to a <em>single</em> CPU (e.g.,
+Quad-Channel or Octa-Channel). This should <strong>always be
+enabled</strong> for benchmarking, as it maximizes local memory
+bandwidth.</li>
+<li><strong>Socket (Node) Interleaving:</strong> This stripes data
+across <em>different</em> CPUs. This should generally be
+<strong>disabled</strong> for benchmarking modern hardware.</li>
+</ul>
+<p>For the highest and most accurate hardware benchmark results in a
+dual-CPU workstation, leave NUMA enabled and Node Interleaving disabled
+in the BIOS. This allows the hardware to utilize its full local memory
+bandwidth and achieve the lowest possible latency.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-socket-memory-interleaving-affects-dual-cpu-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

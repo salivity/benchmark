@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Reviewers Test PSU Hold-Up Time and Inrush Current - benchmark</title>
+    <meta name="description" content="This article explains why hardware reviewers rigorously test a Power Supply Unit&#39;s (PSU) hold-up time and inrush current during benchmarks. While often overlooked by average consumers, these two electrical metrics are critical indicators of a power supply">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-reviewers-test-psu-hold-up-time-and-inrush-current">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Reviewers Test PSU Hold-Up Time and Inrush Current - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-reviewers-test-psu-hold-up-time-and-inrush-current" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains why hardware reviewers rigorously test a Power Supply Unit&#39;s (PSU) hold-up time and inrush current during benchmarks. While often overlooked by average consumers, these two electrical metrics are critical indicators of a power supply" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-reviewers-test-psu-hold-up-time-and-inrush-current">Why
+Reviewers Test PSU Hold-Up Time and Inrush Current</h1>
+<p>This article explains why hardware reviewers rigorously test a Power
+Supply Unit's (PSU) hold-up time and inrush current during benchmarks.
+While often overlooked by average consumers, these two electrical
+metrics are critical indicators of a power supply's internal build
+quality, safety, and real-world reliability. Understanding these tests
+reveals whether a PSU can survive brief power grid fluctuations without
+crashing your computer, and whether turning your system on will trip
+your home's circuit breakers or prematurely wear out the power supply's
+internal components.</p>
+<h2 id="what-is-hold-up-time">What is Hold-Up Time?</h2>
+<p>Hold-up time measures how long a power supply can continue to deliver
+stable power to your computer's components after the main AC power from
+the wall is cut off. It is measured in milliseconds (ms).</p>
+<h2 id="why-reviewers-test-hold-up-time">Why Reviewers Test Hold-Up
+Time</h2>
+<p>Reviewers test hold-up time to verify two main things: system
+stability during power flickers and compatibility with Uninterruptible
+Power Supplies (UPS).</p>
+<ol type="1">
+<li><strong>Surviving Brownouts:</strong> The electrical grid is not
+perfect. Brief dips in voltage (brownouts) or millisecond-long outages
+happen frequently. A PSU with a sufficient hold-up time will bridge the
+gap during these micro-outages, keeping your PC running smoothly instead
+of instantly rebooting and causing potential data loss.</li>
+<li><strong>UPS Compatibility:</strong> If you use a battery backup
+(UPS), it takes time for the UPS to detect a power outage and switch
+from wall power to battery power. This transfer usually takes between
+10ms and 12ms. The official ATX specification generally requires a PSU
+to have a hold-up time of around 16ms to 17ms. If a PSU fails this test
+and only holds power for 8ms, your PC will shut off before the UPS
+battery can kick in, rendering the UPS useless.</li>
+<li><strong>Component Quality Check:</strong> Hold-up time is directly
+tied to the size and quality of the PSU's primary (bulk) capacitor.
+Because these large capacitors are expensive, budget manufacturers often
+use smaller, cheaper ones to cut costs. A failed hold-up time test
+immediately exposes this corner-cutting to the reviewer.</li>
+</ol>
+<h2 id="what-is-inrush-current">What is Inrush Current?</h2>
+<p>Inrush current is the maximum, instantaneous surge of electrical
+current drawn by the PSU from the wall outlet the exact moment you flip
+the power switch on. Because the internal capacitors are completely
+empty, they briefly act like a short circuit as they rapidly fill with
+energy, drawing a massive spike of current that is many times higher
+than the PSU's normal operating current.</p>
+<h2 id="why-reviewers-test-inrush-current">Why Reviewers Test Inrush
+Current</h2>
+<p>Reviewers measure inrush current—usually in Amperes (A) at both 115V
+and 230V—to evaluate safety and component longevity.</p>
+<ol type="1">
+<li><strong>Preventing Tripped Breakers:</strong> If a PSU has an
+excessively high inrush current, simply turning on the power strip or
+the PC can trip the circuit breaker in your home. This is especially
+problematic in older homes or rooms where multiple high-draw devices
+share the same circuit.</li>
+<li><strong>Protecting Internal Components:</strong> Massive electrical
+surges put severe stress on the PSU's internal components, including the
+bridge整流器 (rectifiers), fuses, and the mechanical power switch
+itself. Over time, unchecked inrush current can weld relay contacts
+together or blow the PSU's internal fuse.</li>
+<li><strong>Verifying Protection Circuits:</strong> To limit inrush
+current, quality PSUs use a component called an NTC thermistor, paired
+with a bypass relay. Reviewers test inrush current to ensure the
+manufacturer actually included these protective components and that they
+are scaled correctly for the wattage of the unit.</li>
+</ol>
+<h2 id="the-engineering-balancing-act">The Engineering Balancing
+Act</h2>
+<p>Ultimately, reviewers test both metrics because they directly
+conflict with one another. To get a better hold-up time, a PSU needs a
+larger bulk capacitor. However, a larger capacitor creates a much higher
+inrush current when charging up. Testing both hold-up time and inrush
+current allows reviewers to see if the PSU's engineers successfully
+balanced this relationship using high-quality components, rather than
+sacrificing one metric to make the other look good on paper.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-reviewers-test-psu-hold-up-time-and-inrush-current';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

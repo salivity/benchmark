@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How OS Process Priority Impacts Synthetic Benchmark Scores - benchmark</title>
+    <meta name="description" content="Operating system process priority directly influences synthetic benchmark scores by dictating how much processor time and system resources the benchmarking software receives compared to background tasks. By elevating a benchmark&#39;s priority, the operating">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-os-process-priority-impacts-synthetic-benchmark-scores">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How OS Process Priority Impacts Synthetic Benchmark Scores - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-os-process-priority-impacts-synthetic-benchmark-scores" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Operating system process priority directly influences synthetic benchmark scores by dictating how much processor time and system resources the benchmarking software receives compared to background tasks. By elevating a benchmark&#39;s priority, the operating" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-os-process-priority-impacts-synthetic-benchmark-scores">How
+OS Process Priority Impacts Synthetic Benchmark Scores</h1>
+<p>Operating system process priority directly influences synthetic
+benchmark scores by dictating how much processor time and system
+resources the benchmarking software receives compared to background
+tasks. By elevating a benchmark's priority, the operating system's
+scheduler minimizes interruptions and reduces context switching, which
+results in higher and more consistent hardware performance metrics. This
+article explains the mechanics of OS thread scheduling, how different
+priority levels alter CPU and GPU test results, and the system stability
+risks associated with using maximum priority settings.</p>
+<h2 id="the-role-of-the-os-scheduler">The Role of the OS Scheduler</h2>
+<p>Modern operating systems run hundreds of processes and thousands of
+threads simultaneously. Because a CPU has a finite number of cores, the
+OS uses a component called the scheduler to divide CPU time into small
+increments known as time slices or quanta.</p>
+<p>Every running application is assigned a priority level. In Windows,
+these range from "Low" to "Realtime," while Linux and macOS use "nice"
+values ranging from -20 (highest priority) to +19 (lowest priority). By
+default, synthetic benchmarks launch at "Normal" priority. At this
+level, the benchmark must share CPU time equally with background
+services, system telemetry, web browsers, and peripheral software.</p>
+<h2 id="eliminating-background-interference">Eliminating Background
+Interference</h2>
+<p>When a user or the benchmarking software itself elevates the process
+priority to "Above Normal" or "High," the OS scheduler changes how it
+allocates time slices. The scheduler forces standard background tasks to
+wait in a queue, granting the benchmark near-exclusive access to the CPU
+cores.</p>
+<p>In synthetic CPU benchmarks like Cinebench or Geekbench, this
+directly translates to higher scores. The processor spends nearly 100%
+of its clock cycles calculating the benchmark's workload rather than
+rendering desktop animations, checking for software updates, or scanning
+files. Even a 2% reduction in background CPU usage can yield a
+measurable increase in points, which is why competitive overclockers
+routinely adjust process priority.</p>
+<h2 id="reducing-context-switching-and-cache-thrashing">Reducing Context
+Switching and Cache Thrashing</h2>
+<p>The performance gains from higher process priority go beyond simply
+freeing up CPU usage percentages; they also stem from reduced context
+switching.</p>
+<p>A context switch occurs when the CPU stops executing one thread to
+work on another. This process is computationally expensive. The CPU must
+save the current state of the benchmark, load the state of the
+background task, execute it, and then reverse the process.</p>
+<p>Furthermore, context switching causes "cache thrashing." When a
+background process takes over a CPU core, it overwrites the fast L1, L2,
+and L3 cache memory with its own data. When the benchmark regains
+control, the CPU must fetch the benchmark's data from the much slower
+system RAM again. By setting a benchmark to a high priority, the OS
+interrupts the workload far less frequently. The benchmark's data
+remains hot in the CPU cache, significantly boosting efficiency and
+driving up the final score.</p>
+<h2 id="impact-on-gpu-benchmarks">Impact on GPU Benchmarks</h2>
+<p>While process priority is a CPU management feature, it also alters
+scores in synthetic graphics benchmarks like 3DMark. A graphics card
+cannot render frames until the CPU processes the scene logic and sends
+"draw calls" to the GPU.</p>
+<p>If the benchmarking software is running at "Normal" priority and a
+background task momentarily hogs the CPU, the processor may delay
+sending the next frame's instructions to the graphics card. This causes
+the GPU to sit idle for a split second, resulting in a micro-stutter and
+a lower overall frame rate. Elevating the benchmark's CPU priority
+ensures a steady, uninterrupted pipeline of data to the graphics card,
+maximizing GPU utilization and improving both average scores and minimum
+frame rate metrics.</p>
+<h2 id="the-pitfalls-of-realtime-priority">The Pitfalls of "Realtime"
+Priority</h2>
+<p>Pushing process priority to the absolute maximum—such as the
+"Realtime" setting in Windows—often degrades benchmark scores or crashes
+the system entirely.</p>
+<p>At the "Realtime" level, the benchmark is given higher priority than
+critical operating system functions, including mouse and keyboard
+inputs, audio processing, and disk caching. During a heavy all-core CPU
+benchmark set to "Realtime," the system will appear to freeze because
+the OS does not have enough CPU time to update the display or register
+cursor movement.</p>
+<p>More importantly, benchmarks still rely on the OS kernel to manage
+memory allocation and storage I/O. If the benchmark starves the OS of
+the CPU cycles needed to fulfill these basic system requests, the
+benchmark ends up waiting on the OS, leading to lower scores, errored
+runs, or a complete system lockup. Consequently, "High" priority is
+generally the ceiling for achieving optimal synthetic benchmark results
+without compromising system functionality.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-os-process-priority-impacts-synthetic-benchmark-scores';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

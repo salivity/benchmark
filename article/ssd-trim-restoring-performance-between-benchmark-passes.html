@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSD TRIM: Restoring Performance Between Benchmark Passes - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how the SSD TRIM command restores drive performance between intensive hardware benchmarking passes. During heavy testing, solid-state drives experience significant speed degradation due to the physical lim">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/ssd-trim-restoring-performance-between-benchmark-passes">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="SSD TRIM: Restoring Performance Between Benchmark Passes - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/ssd-trim-restoring-performance-between-benchmark-passes" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how the SSD TRIM command restores drive performance between intensive hardware benchmarking passes. During heavy testing, solid-state drives experience significant speed degradation due to the physical lim" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ssd-trim-restoring-performance-between-benchmark-passes">SSD
+TRIM: Restoring Performance Between Benchmark Passes</h1>
+<p>This article provides a comprehensive overview of how the SSD TRIM
+command restores drive performance between intensive hardware
+benchmarking passes. During heavy testing, solid-state drives experience
+significant speed degradation due to the physical limitations of NAND
+flash memory and the buildup of invalid data. By explaining the
+mechanics of data erasure, write amplification, and garbage collection,
+this guide illustrates how executing the TRIM command clears out deleted
+test files, resets the drive's available space, and ensures consistent,
+accurate results across consecutive benchmark runs.</p>
+<h2 id="the-nand-flash-limitation">The NAND Flash Limitation</h2>
+<p>To understand why an SSD slows down during benchmarking, you must
+understand how NAND flash memory writes data. Unlike traditional hard
+drives, an SSD cannot simply overwrite existing data with new data.
+Instead, the existing data must be completely erased before the space
+can be reused.</p>
+<p>SSDs read and write data in small units called
+<strong>pages</strong>, which are grouped together into much larger
+units called <strong>blocks</strong>. While an SSD can read or write to
+a single page, it can only erase data an entire block at a time.</p>
+<h2 id="what-happens-during-a-heavy-benchmark-pass">What Happens During
+a Heavy Benchmark Pass</h2>
+<p>Hardware benchmarks test an SSD by writing, reading, and deleting
+massive amounts of data in a short period. When a benchmark pass
+finishes and deletes its temporary test files, the operating system
+removes the files from its file system directory.</p>
+<p>However, without the TRIM command, the operating system does not tell
+the SSD that those files are gone. To the SSD’s internal controller,
+those pages still appear to hold valid, important data.</p>
+<p>If you immediately run a second heavy benchmark pass, the SSD runs
+out of fresh, empty pages. To write the new benchmark data, the drive is
+forced into a slow process known as the
+<strong>Read-Modify-Write</strong> cycle:</p>
+<ol type="1">
+<li>The SSD copies the entire block (containing both valid data and the
+"deleted" benchmark data) into its internal cache.</li>
+<li>It erases the entire block on the NAND flash.</li>
+<li>It modifies the data in the cache, adding the new benchmark
+data.</li>
+<li>It writes the entire block back to the NAND flash.</li>
+</ol>
+<p>This inefficiency is called <strong>write amplification</strong>.
+Because the SSD is forced to erase blocks right before writing to them,
+write speeds plummet during consecutive benchmark passes, skewing your
+test results.</p>
+<h2 id="how-the-trim-command-restores-performance">How the TRIM Command
+Restores Performance</h2>
+<p>The TRIM command bridges the communication gap between the operating
+system and the SSD. When a benchmark deletes its test files at the end
+of a pass, the operating system sends a TRIM command to the SSD. This
+command tells the SSD's Flash Translation Layer (FTL) the exact
+locations of the pages that no longer contain valid data.</p>
+<p>Once the TRIM command is executed, it triggers the SSD's internal
+<strong>Garbage Collection</strong> process during the idle period
+between benchmark passes. Here is how it restores performance:</p>
+<ol type="1">
+<li><strong>Identification:</strong> The SSD controller looks at the
+TRIM data and marks the pages containing the old benchmark files as
+"invalid."</li>
+<li><strong>Consolidation:</strong> The Garbage Collection process moves
+any remaining valid data from partially full blocks into new
+blocks.</li>
+<li><strong>Proactive Erasure:</strong> With only invalid data left
+behind, the SSD erases the entire block while the system is idle.</li>
+</ol>
+<h2 id="the-impact-on-consecutive-benchmark-passes">The Impact on
+Consecutive Benchmark Passes</h2>
+<p>When you give an SSD a few minutes of idle time after a TRIM command
+is issued, the drive cleans itself up. By the time you initiate the next
+heavy benchmark pass, the blocks have already been erased in the
+background.</p>
+<p>Instead of suffering through the slow Read-Modify-Write penalty, the
+SSD can write the new benchmark data directly to the fresh, empty pages.
+This restores the drive's write speeds, prevents thermal throttling
+caused by excessive controller workload, and ensures that your
+subsequent benchmark passes accurately measure the hardware's peak
+capabilities rather than its bogged-down state.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/ssd-trim-restoring-performance-between-benchmark-passes';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

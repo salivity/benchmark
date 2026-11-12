@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How GPU Bus Width Scales Across Resolutions in Benchmarks - benchmark</title>
+    <meta name="description" content="This article examines how GPU memory bus widths—specifically 128-bit, 256-bit, and 384-bit—scale across 1080p, 1440p, and 4K resolutions during computer hardware benchmarks. As gaming and rendering resolutions increase, the amount of data transferred betw">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-gpu-bus-width-scales-across-resolutions-in-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How GPU Bus Width Scales Across Resolutions in Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-gpu-bus-width-scales-across-resolutions-in-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article examines how GPU memory bus widths—specifically 128-bit, 256-bit, and 384-bit—scale across 1080p, 1440p, and 4K resolutions during computer hardware benchmarks. As gaming and rendering resolutions increase, the amount of data transferred betw" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-gpu-bus-width-scales-across-resolutions-in-benchmarks">How
+GPU Bus Width Scales Across Resolutions in Benchmarks</h1>
+<p>This article examines how GPU memory bus widths—specifically 128-bit,
+256-bit, and 384-bit—scale across 1080p, 1440p, and 4K resolutions
+during computer hardware benchmarks. As gaming and rendering resolutions
+increase, the amount of data transferred between the video memory (VRAM)
+and the GPU core grows exponentially. Consequently, while a 128-bit bus
+can deliver competitive performance at 1080p, benchmarking data
+consistently shows that 256-bit and 384-bit buses are required to
+prevent severe performance bottlenecks at 1440p and 4K.</p>
+<h3 id="understanding-the-memory-bus-highway">Understanding the Memory
+Bus Highway</h3>
+<p>To understand how bus width scales in benchmarks, view the memory bus
+as a highway between the VRAM and the GPU processor. A 128-bit bus is a
+two-lane road, a 256-bit bus is a four-lane highway, and a 384-bit bus
+is a six-lane superhighway.</p>
+<p>When combined with the speed of the VRAM (measured in Gbps), the bus
+width determines the total memory bandwidth (measured in GB/s). Higher
+resolutions require larger textures and bigger frame buffers, meaning
+vastly more data must travel across this highway simultaneously to
+render a single frame.</p>
+<h3 id="1080p-full-hd-benchmark-scaling">1080p (Full HD) Benchmark
+Scaling</h3>
+<p>At 1920x1080, a GPU renders roughly 2.07 million pixels per frame. In
+hardware benchmarks at this resolution, memory bandwidth is rarely the
+limiting factor.</p>
+<ul>
+<li><strong>128-bit:</strong> Provides ample bandwidth for 1080p data
+transfers. The GPU core is fed data fast enough to prevent
+stalling.</li>
+<li><strong>256-bit and 384-bit:</strong> Moving to wider buses at 1080p
+yields minimal frame rate improvements if the GPU core strength remains
+equal. At this level, benchmarks are usually bottlenecked by the CPU or
+the GPU's raw clock speeds rather than memory transfer rates.</li>
+</ul>
+<h3 id="1440p-qhd-benchmark-scaling">1440p (QHD) Benchmark Scaling</h3>
+<p>Stepping up to 2560x1440 increases the pixel count to about 3.68
+million per frame. At this resolution, benchmark scaling begins to
+clearly separate the different bus widths.</p>
+<ul>
+<li><strong>128-bit:</strong> Starts to show its limitations. While
+average frame rates may still look acceptable, benchmarks reveal
+noticeable drops in 1% low frame rates (stuttering), especially when
+high-resolution textures, anti-aliasing, or ray tracing are
+enabled.</li>
+<li><strong>256-bit:</strong> Acts as the ideal baseline for 1440p. It
+provides enough bandwidth to handle heavy texture loads without choking
+the GPU core, resulting in smooth, predictable scaling.</li>
+<li><strong>384-bit:</strong> Performs effortlessly at 1440p, though its
+maximum bandwidth potential often remains slightly underutilized unless
+extreme settings are applied.</li>
+</ul>
+<h3 id="4k-uhd-benchmark-scaling">4K (UHD) Benchmark Scaling</h3>
+<p>At 3840x2160, the pixel count jumps to nearly 8.3 million per
+frame—four times the workload of 1080p. In 4K benchmarks, memory bus
+width becomes a primary dictator of performance.</p>
+<ul>
+<li><strong>128-bit:</strong> Suffers from severe bottlenecks. The frame
+buffer is simply too large for the narrow bus. In 4K benchmarks, GPUs
+with a 128-bit bus experience massive percentage drops in performance
+compared to their 1440p results, as the GPU core sits idle waiting for
+data to trickle through.</li>
+<li><strong>256-bit:</strong> Handles 4K adequately in standard
+rasterized games, but often hits a bandwidth wall in the most demanding
+modern titles. It scales worse from 1440p to 4K than a 384-bit card
+would.</li>
+<li><strong>384-bit:</strong> Excels at 4K. The massive highway allows
+the GPU to seamlessly swap gigantic texture files and process heavy ray
+tracing workloads. In benchmarks, 384-bit GPUs lose the lowest
+percentage of their frame rate when jumping from 1440p to 4K.</li>
+</ul>
+<h3 id="the-impact-of-gpu-cache-on-scaling">The Impact of GPU Cache on
+Scaling</h3>
+<p>Modern GPU architectures attempt to bypass narrow bus limitations by
+adding large amounts of fast on-die cache (such as AMD’s Infinity Cache
+or NVIDIA’s expanded L2 cache). This cache stores frequently used data
+right next to the GPU core, reducing the need to use the memory bus.</p>
+<p>In benchmarks, a 128-bit GPU with a large cache can successfully
+mimic the performance of a 256-bit GPU at 1080p and sometimes 1440p.
+However, at 4K, the sheer size of the resolution data overflows the
+cache. Once the cache is overwhelmed, the GPU is forced to rely on its
+raw bus width again, causing 128-bit cards to fall sharply behind
+256-bit and 384-bit hardware in 4K testing.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-gpu-bus-width-scales-across-resolutions-in-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

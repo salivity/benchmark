@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking Multi-Instance GPU (MIG) in the Enterprise - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how Multi-Instance GPU (MIG) partitioning is evaluated during enterprise computer hardware benchmarking. It examines the specific metrics, testing methodologies, and performance indicators used by hardware">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/benchmarking-multi-instance-gpu-mig-in-the-enterprise">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Benchmarking Multi-Instance GPU (MIG) in the Enterprise - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/benchmarking-multi-instance-gpu-mig-in-the-enterprise" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how Multi-Instance GPU (MIG) partitioning is evaluated during enterprise computer hardware benchmarking. It examines the specific metrics, testing methodologies, and performance indicators used by hardware" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="benchmarking-multi-instance-gpu-mig-in-the-enterprise">Benchmarking
+Multi-Instance GPU (MIG) in the Enterprise</h1>
+<p>This article provides a comprehensive overview of how Multi-Instance
+GPU (MIG) partitioning is evaluated during enterprise computer hardware
+benchmarking. It examines the specific metrics, testing methodologies,
+and performance indicators used by hardware engineers and IT architects
+to validate GPU partitioning. Key focus areas include measuring
+hardware-level isolation, comparing aggregate throughput against
+monolithic configurations, analyzing tail latency for service-level
+agreements, and utilizing standardized suites like MLPerf to determine
+optimal deployment strategies for enterprise workloads.</p>
+<h2
+id="hardware-level-isolation-and-noisy-neighbor-testing">Hardware-Level
+Isolation and "Noisy Neighbor" Testing</h2>
+<p>The primary value proposition of MIG is guaranteed Quality of Service
+(QoS) through dedicated hardware pathways, including separated memory
+bandwidth, cache, and compute cores. Enterprise benchmarking begins by
+validating this isolation.</p>
+<p>Evaluators conduct "noisy neighbor" tests by placing a
+latency-sensitive workload (such as real-time AI inference) on one MIG
+instance while simultaneously running a resource-intensive workload
+(such as deep learning training or stress tests) on adjacent instances
+within the same physical GPU. The benchmark is successful if the latency
+and throughput of the sensitive workload remain completely flat, proving
+that memory bandwidth saturation or cache thrashing on one partition
+does not bleed into another.</p>
+<h2 id="aggregate-throughput-vs-monolithic-baseline">Aggregate
+Throughput vs. Monolithic Baseline</h2>
+<p>To justify the use of MIG, enterprises must prove that multiple
+smaller instances provide better hardware utilization than a single,
+unpartitioned GPU. Benchmarking involves establishing a monolithic
+baseline and comparing it against the sum of all MIG partitions.</p>
+<ul>
+<li><strong>Baseline Measurement:</strong> A workload is run on a full
+GPU to measure total throughput (e.g., images processed per second) and
+GPU compute utilization. Small models often fail to saturate a modern
+enterprise GPU, leaving compute units idle.</li>
+<li><strong>Partitioned Measurement:</strong> The GPU is divided into
+multiple identical MIG slices (e.g., seven instances on an NVIDIA A100
+or H100). The same workload is run concurrently across all
+instances.</li>
+<li><strong>Evaluation:</strong> Evaluators calculate the aggregate
+throughput of the seven instances. In successful MIG implementations for
+smaller models, the combined throughput of the partitions significantly
+exceeds the throughput of the single monolithic GPU.</li>
+</ul>
+<h2 id="tail-latency-and-sla-compliance">Tail Latency and SLA
+Compliance</h2>
+<p>Enterprise environments rely heavily on strict Service-Level
+Agreements (SLAs). Average throughput is rarely sufficient; evaluators
+focus on tail latency, specifically the 95th and 99th percentiles (p95
+and p99).</p>
+<p>During benchmarking, hardware is subjected to variable request rates
+across different MIG profile sizes (e.g., comparing a 1-compute-slice
+profile against a 2-compute-slice profile). Evaluators identify the
+exact saturation point where p99 latency spikes. This data dictates the
+minimum MIG slice size required to run a specific production model
+without violating latency SLAs during peak traffic.</p>
+<h2 id="profile-sizing-and-bottleneck-identification">Profile Sizing and
+Bottleneck Identification</h2>
+<p>MIG allows for various combinations of compute and memory
+allocations. Benchmarking evaluates which specific hardware resource
+bottlenecks a given enterprise application.</p>
+<ol type="1">
+<li><strong>Compute-Bound Testing:</strong> Evaluators run identical
+models across MIG profiles with different compute allocations to measure
+linear scaling. If doubling the compute slice does not nearly double the
+throughput, the workload is likely bottlenecked elsewhere.</li>
+<li><strong>Memory Bandwidth Testing:</strong> Large Language Models
+(LLMs) and recommendation engines are heavily reliant on memory
+bandwidth. Benchmarks measure memory read/write speeds within the
+partition to ensure the dedicated memory paths of a specific MIG profile
+can feed the compute units fast enough.</li>
+</ol>
+<h2 id="standardized-benchmarking-suites">Standardized Benchmarking
+Suites</h2>
+<p>Rather than relying solely on synthetic tests, enterprises use
+industry-standard benchmarking suites tailored for partitioned
+hardware.</p>
+<p>The most prominent tool is <strong>MLPerf Inference</strong>, which
+includes specific provisions for MIG evaluation. Evaluators run MLPerf
+workloads across various scenarios—such as Offline (maximum throughput)
+and Server (latency-constrained)—using standardized models like
+ResNet-50, BERT, or GPT-J. Using a standardized suite allows enterprises
+to compare their internal MIG configurations directly against published,
+audited results from hardware vendors.</p>
+<h2 id="orchestration-and-telemetry-overhead">Orchestration and
+Telemetry Overhead</h2>
+<p>In an enterprise environment, GPUs are rarely managed manually; they
+are deployed via container orchestration platforms like Kubernetes. The
+final phase of hardware benchmarking evaluates operational
+performance.</p>
+<ul>
+<li><strong>Dynamic Reconfiguration:</strong> Benchmarks measure the
+time required to dynamically destroy and recreate MIG partitions on the
+fly as workload demands shift.</li>
+<li><strong>Telemetry Accuracy:</strong> Evaluators stress-test
+monitoring tools (such as NVIDIA DCGM) under heavy MIG workloads to
+ensure that power consumption, thermal data, and memory usage are
+accurately reported per instance without introducing CPU or system bus
+overhead.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/benchmarking-multi-instance-gpu-mig-in-the-enterprise';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

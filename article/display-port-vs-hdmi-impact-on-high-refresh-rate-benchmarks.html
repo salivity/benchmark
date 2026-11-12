@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DisplayPort vs HDMI: Impact on High-Refresh Rate Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores how the bandwidth differences between DisplayPort and HDMI connections directly impact high-refresh-rate computer hardware benchmarks. By examining raw data transfer limits, the role of Display Stream Compression (DSC), and the relat">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/display-port-vs-hdmi-impact-on-high-refresh-rate-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DisplayPort vs HDMI: Impact on High-Refresh Rate Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/display-port-vs-hdmi-impact-on-high-refresh-rate-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how the bandwidth differences between DisplayPort and HDMI connections directly impact high-refresh-rate computer hardware benchmarks. By examining raw data transfer limits, the role of Display Stream Compression (DSC), and the relat" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="displayport-vs-hdmi-impact-on-high-refresh-rate-benchmarks">DisplayPort
+vs HDMI: Impact on High-Refresh Rate Benchmarks</h1>
+<p>This article explores how the bandwidth differences between
+DisplayPort and HDMI connections directly impact high-refresh-rate
+computer hardware benchmarks. By examining raw data transfer limits, the
+role of Display Stream Compression (DSC), and the relationship between
+GPU rendering and display output, this guide clarifies how your choice
+of cable can influence performance metrics, system latency tests, and
+overall benchmarking accuracy.</p>
+<h2 id="raw-bandwidth-specifications">Raw Bandwidth Specifications</h2>
+<p>To understand how cables affect benchmarking, you must first look at
+the maximum data rate of the most common modern standards:</p>
+<ul>
+<li><strong>DisplayPort 1.4:</strong> 32.4 Gbps (25.92 Gbps effective
+data rate)</li>
+<li><strong>HDMI 2.1:</strong> 48 Gbps (42.6 Gbps effective data
+rate)</li>
+<li><strong>DisplayPort 2.1 (UHBR 20):</strong> 80 Gbps (77.37 Gbps
+effective data rate)</li>
+</ul>
+<p>Bandwidth determines the maximum resolution, refresh rate, and color
+depth a cable can carry without compression. In high-refresh tests (such
+as 1440p at 360Hz or 4K at 240Hz), hitting the bandwidth ceiling of a
+cable changes how the graphics card processes and sends the signal to
+the monitor.</p>
+<h2 id="raw-fps-benchmarks-vs-display-output">Raw FPS Benchmarks vs.
+Display Output</h2>
+<p>In standard, uncapped framerate benchmarks, the GPU renders frames as
+fast as possible into its frame buffer, regardless of what the monitor
+can actually display. If a GPU renders 500 frames per second (FPS), it
+will report 500 FPS in the benchmark software, even if you are using an
+older HDMI cable limited to 60Hz.</p>
+<p>However, cable bandwidth will skew raw FPS benchmarks if the tester
+fails to disable vertical synchronization (V-Sync) or Variable Refresh
+Rate (G-Sync/FreeSync) technologies. If these sync technologies are
+active, the benchmark's maximum FPS will cap out at the maximum refresh
+rate the cable's bandwidth can support. For example, testing a GPU at 4K
+on a native HDMI 2.0 connection will cap a V-Sync-enabled benchmark at
+60 FPS, whereas DisplayPort 1.4 or HDMI 2.1 would allow it to scale to
+120 FPS or higher.</p>
+<h2 id="the-impact-of-display-stream-compression-dsc">The Impact of
+Display Stream Compression (DSC)</h2>
+<p>When a high-refresh benchmark exceeds the native bandwidth of
+DisplayPort 1.4 or HDMI 2.1, the GPU utilizes Display Stream Compression
+(DSC) to achieve the target refresh rate. Because HDMI 2.1 has a higher
+bandwidth (48 Gbps) than DisplayPort 1.4 (32.4 Gbps), DisplayPort 1.4
+relies on DSC much sooner during high-refresh testing.</p>
+<p>While DSC is "visually lossless," it requires real-time processing
+from the GPU's display engine. In synthetic benchmarks, this rarely
+reduces raw framerate. However, in extreme high-refresh scenarios, DSC
+can monopolize internal GPU display heads, subtly altering power
+consumption metrics and GPU clock stability, which can cause minor
+variances in benchmark scores between DP 1.4 and HDMI 2.1.</p>
+<h2 id="click-to-photon-and-system-latency-benchmarks">Click-to-Photon
+and System Latency Benchmarks</h2>
+<p>Hardware benchmarking is not limited to raw framerates; it also
+includes system latency testing using tools like Nvidia's LDAT (Latency
+and Display Analysis Tool) or FrameView. In these tests, cable bandwidth
+is critical.</p>
+<p>Click-to-photon latency measures the time it takes for a mouse click
+to result in a pixel changing on the screen. Higher refresh rates
+directly reduce display latency because the screen updates more
+frequently.</p>
+<p>If a reviewer benchmarks a system at 1440p using a lower-bandwidth
+HDMI 2.0 port (which caps the monitor at 144Hz) instead of the monitor’s
+DisplayPort 1.4 port (which allows 240Hz or 360Hz), the resulting
+latency benchmark will be significantly worse. The hardware is capable
+of faster frame delivery, but the bandwidth bottleneck of the HDMI port
+artificially inflates the system latency metrics.</p>
+<h2 id="frame-pacing-and-1-low-metrics">Frame Pacing and 1% Low
+Metrics</h2>
+<p>When benchmarking 1% and 0.1% lows (which measure frame pacing and
+stutters), the interaction between the GPU's display engine and the
+cable bandwidth matters.</p>
+<p>If a cable is operating at the absolute limit of its bandwidth
+capacity, or if it is of poor quality and struggles to maintain the
+required signal integrity for high-refresh rates, it can induce
+micro-stutters or momentary black screens. While the GPU's internal
+rendering pipeline might be smooth, external hardware capture cards used
+in professional benchmarking setups will record these bandwidth-induced
+dropouts as severe frame time spikes, ruining the 1% low data.</p>
+<h2 id="summary-of-best-practices-for-accurate-benchmarking">Summary of
+Best Practices for Accurate Benchmarking</h2>
+<p>To ensure cable bandwidth does not invalidate high-refresh hardware
+benchmarks, testers must follow specific protocols:</p>
+<ol type="1">
+<li><strong>Disable Sync Technologies:</strong> Always turn off V-Sync,
+G-Sync, and FreeSync when measuring raw GPU rendering performance so the
+cable's refresh rate limit does not cap the framerate.</li>
+<li><strong>Match the Cable to the Generation:</strong> When testing
+latency at 4K 240Hz, prefer DisplayPort 2.1 over HDMI 2.1, and HDMI 2.1
+over DisplayPort 1.4, to minimize or eliminate the reliance on DSC.</li>
+<li><strong>Verify Display Settings:</strong> Always confirm in the
+operating system that the monitor is running at its maximum rated
+refresh rate before initiating latency or frame-pacing tests.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/display-port-vs-hdmi-impact-on-high-refresh-rate-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

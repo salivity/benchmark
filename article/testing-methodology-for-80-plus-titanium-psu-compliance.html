@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Methodology for 80 Plus Titanium PSU Compliance - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of the testing methodology used to benchmark computer hardware power supply units (PSUs) for 80 Plus Titanium compliance. It covers the required laboratory conditions, specialized testing equipment, load dist">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/testing-methodology-for-80-plus-titanium-psu-compliance">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Testing Methodology for 80 Plus Titanium PSU Compliance - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/testing-methodology-for-80-plus-titanium-psu-compliance" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of the testing methodology used to benchmark computer hardware power supply units (PSUs) for 80 Plus Titanium compliance. It covers the required laboratory conditions, specialized testing equipment, load dist" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="testing-methodology-for-80-plus-titanium-psu-compliance">Testing
+Methodology for 80 Plus Titanium PSU Compliance</h1>
+<p>This article provides a comprehensive overview of the testing
+methodology used to benchmark computer hardware power supply units
+(PSUs) for 80 Plus Titanium compliance. It covers the required
+laboratory conditions, specialized testing equipment, load distribution
+calculations, and the specific efficiency and power factor thresholds a
+PSU must achieve at 10%, 20%, 50%, and 100% load levels to earn the
+highest tier of efficiency certification.</p>
+<h2 id="required-testing-equipment-and-environment">Required Testing
+Equipment and Environment</h2>
+<p>To accurately benchmark a PSU for 80 Plus Titanium compliance,
+testing must occur in a strictly controlled environment using
+calibrated, industrial-grade equipment.</p>
+<ul>
+<li><strong>Ambient Temperature:</strong> The testing room or thermal
+chamber must be maintained at 23°C (±2°C).</li>
+<li><strong>AC Power Source:</strong> A programmable AC power source is
+required to deliver clean, stable voltage and frequency (115V at 60Hz or
+230V at 50Hz) with minimal total harmonic distortion.</li>
+<li><strong>DC Electronic Loads:</strong> High-precision DC electronic
+load modules are connected to the PSU outputs to draw exact amounts of
+current from each voltage rail.</li>
+<li><strong>Power Analyzer:</strong> A digital power meter is placed
+between the AC source and the PSU to measure true RMS input power,
+current, voltage, and power factor.</li>
+</ul>
+<h2 id="load-distribution-setup">Load Distribution Setup</h2>
+<p>Before testing begins, the benchmark engineer must calculate the
+proportional load for each of the PSU's DC output rails (+12V, +5V,
++3.3V, -12V, and +5VSB). The loads are not applied randomly; they are
+distributed based on the nameplate ratings provided by the PSU
+manufacturer.</p>
+<p>The +5VSB (standby) and -12V rails are loaded proportionally
+alongside the main rails, ensuring the total combined DC power output
+equals the exact target percentage of the PSU's maximum rated
+capacity.</p>
+<h2 id="the-four-load-testing-phases">The Four Load Testing Phases</h2>
+<p>Unlike lower tiers of the 80 Plus program (Bronze through Platinum)
+which only test at 20%, 50%, and 100% loads, the Titanium standard
+introduces a mandatory 10% low-load test.</p>
+<ol type="1">
+<li><strong>Warm-Up Phase:</strong> The PSU is set to 100% load and
+allowed to run for 15 to 30 minutes to reach thermal equilibrium.</li>
+<li><strong>100% Load Test:</strong> Measurements are recorded at full
+rated capacity.</li>
+<li><strong>50% Load Test:</strong> The DC load is reduced to half
+capacity, allowed to stabilize, and measurements are recorded.</li>
+<li><strong>20% Load Test:</strong> The load is dropped to one-fifth
+capacity, stabilized, and measured.</li>
+<li><strong>10% Load Test:</strong> The load is reduced to one-tenth
+capacity, stabilized, and measured.</li>
+</ol>
+<p>At each phase, the PSU must stabilize for several minutes before the
+AC input power and DC output power are logged.</p>
+<h2 id="efficiency-calculation-and-thresholds">Efficiency Calculation
+and Thresholds</h2>
+<p>Efficiency is calculated by dividing the total DC output power (in
+watts) by the total AC input power (in watts), then multiplying by 100
+to get a percentage.</p>
+<p><strong>Efficiency = (Total DC Output Power / Total AC Input Power) ×
+100</strong></p>
+<p>To pass the 80 Plus Titanium benchmark, the PSU must meet or exceed
+the following efficiency thresholds across all four load steps:</p>
+<h3
+id="115v-internal-non-redundant-standard-north-american-consumer-psus">115V
+Internal Non-Redundant (Standard North American Consumer PSUs)</h3>
+<ul>
+<li><strong>10% Load:</strong> 90% efficiency</li>
+<li><strong>20% Load:</strong> 92% efficiency</li>
+<li><strong>50% Load:</strong> 94% efficiency</li>
+<li><strong>100% Load:</strong> 90% efficiency</li>
+</ul>
+<h3
+id="230v-eu-internal-non-redundant-standard-european-consumer-psus">230V
+EU Internal Non-Redundant (Standard European Consumer PSUs)</h3>
+<ul>
+<li><strong>10% Load:</strong> 90% efficiency</li>
+<li><strong>20% Load:</strong> 94% efficiency</li>
+<li><strong>50% Load:</strong> 96% efficiency</li>
+<li><strong>100% Load:</strong> 94% efficiency</li>
+</ul>
+<h2 id="power-factor-correction-pfc-verification">Power Factor
+Correction (PFC) Verification</h2>
+<p>In addition to conversion efficiency, the testing methodology
+requires verifying the PSU's Power Factor Correction (PFC). Power factor
+is the ratio of real power to apparent power.</p>
+<p>For 80 Plus Titanium compliance, the power analyzer must record a
+true power factor of <strong>0.95 or greater at 20% rated load</strong>.
+Lower tiers only require a 0.90 power factor at 50% or 100% loads,
+making Titanium's PFC requirement significantly stricter at light loads.
+If a PSU passes all efficiency metrics but fails to maintain a 0.95
+power factor at the 20% load mark, it fails the Titanium compliance
+test.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/testing-methodology-for-80-plus-titanium-psu-compliance';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

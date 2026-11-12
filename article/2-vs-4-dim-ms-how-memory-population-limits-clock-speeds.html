@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2 vs 4 DIMMs: How Memory Population Limits Clock Speeds - benchmark</title>
+    <meta name="description" content="When benchmarking computer hardware, the number of populated memory slots directly dictates the maximum achievable RAM clock speeds. While installing four DIMMs maximizes capacity, it places a heavy electrical and logical load on the system compared to us">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/2-vs-4-dim-ms-how-memory-population-limits-clock-speeds">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="2 vs 4 DIMMs: How Memory Population Limits Clock Speeds - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/2-vs-4-dim-ms-how-memory-population-limits-clock-speeds" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When benchmarking computer hardware, the number of populated memory slots directly dictates the maximum achievable RAM clock speeds. While installing four DIMMs maximizes capacity, it places a heavy electrical and logical load on the system compared to us" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="2-vs-4-dimms-how-memory-population-limits-clock-speeds">2 vs 4
+DIMMs: How Memory Population Limits Clock Speeds</h1>
+<p>When benchmarking computer hardware, the number of populated memory
+slots directly dictates the maximum achievable RAM clock speeds. While
+installing four DIMMs maximizes capacity, it places a heavy electrical
+and logical load on the system compared to using just two DIMMs. This
+article explains how four-DIMM configurations limit frequency scaling
+due to Integrated Memory Controller (IMC) stress, motherboard trace
+topology, and degraded signal integrity, and why hardware benchmarkers
+almost exclusively use two modules to achieve the highest speeds.</p>
+<h2 id="stress-on-the-integrated-memory-controller-imc">Stress on the
+Integrated Memory Controller (IMC)</h2>
+<p>The Integrated Memory Controller, located inside the CPU, is
+responsible for managing data flow between the processor and the RAM. In
+a standard dual-channel motherboard, using two DIMMs means the IMC only
+has to communicate with one module per channel. Populating all four
+slots forces the IMC to manage two modules per channel. This doubles the
+electrical load and the addressing complexity. To maintain system
+stability under this heavier workload, the IMC must operate at lower
+clock speeds or looser timings.</p>
+<h2 id="motherboard-trace-topology">Motherboard Trace Topology</h2>
+<p>Modern consumer motherboards connect the CPU to the RAM slots using
+specific wiring layouts. The way these copper traces are routed heavily
+favors two DIMMs over four.</p>
+<ul>
+<li><strong>Daisy Chain Topology:</strong> Almost all modern DDR4 and
+DDR5 motherboards use this layout. The electrical traces run from the
+CPU directly to the primary slot in a channel, and then chain to the
+secondary slot. This creates an optimal, clean signal path when only the
+two primary slots are populated. Adding a second pair of DIMMs creates
+unequal trace lengths between the modules, leading to timing skews that
+severely cap maximum frequencies.</li>
+<li><strong>T-Topology:</strong> Older motherboards sometimes used
+T-Topology, which splits the trace equally between both slots in a
+channel. While it handles four DIMMs better, it compromises the maximum
+speed of two-DIMM configurations. Because most users only install two
+sticks of RAM, manufacturers largely abandoned T-Topology in favor of
+Daisy Chain to advertise higher peak memory speeds.</li>
+</ul>
+<h2 id="signal-integrity-and-reflection">Signal Integrity and
+Reflection</h2>
+<p>High-frequency memory benchmarking—especially with DDR5—relies on
+pristine signal integrity. As clock speeds increase, the time window for
+the system to accurately read voltage states (1s and 0s) shrinks to mere
+picoseconds. Populating four DIMMs introduces extra physical connection
+points, increasing electrical capacitance and resistance on the circuit.
+This causes signal reflection, a phenomenon where electrical signals
+bounce back along the copper traces and interfere with incoming data. To
+counteract this electrical noise and prevent crashes during benchmarks,
+the memory frequency must be significantly reduced.</p>
+<h2 id="memory-ranks-and-density">Memory Ranks and Density</h2>
+<p>Memory modules are organized into ranks (typically Single Rank or
+Dual Rank), which are independent 64-bit wide blocks of data. The CPU's
+memory controller must switch between these ranks to access data.
+Installing four Single Rank DIMMs effectively turns each memory channel
+into a Dual Rank setup. Installing four Dual Rank DIMMs creates a Quad
+Rank setup per channel. While having more ranks can slightly improve
+bandwidth at lower speeds through a process called rank interleaving,
+the sheer volume of data pathways overwhelms the IMC at high
+frequencies, drastically lowering the clock speed ceiling.</p>
+<h2 id="the-benchmarking-verdict">The Benchmarking Verdict</h2>
+<p>For maximum overclocking and benchmarking scores, two DIMMs will
+always achieve higher clock speeds than four DIMMs. This limitation is
+so strict that motherboards designed specifically for extreme
+overclocking and world-record benchmarking only feature two physical RAM
+slots. By completely removing the extra two slots from the board,
+manufacturers eliminate unused copper traces that cause signal
+interference, allowing benchmarkers to push two DIMMs to their absolute
+physical limits.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/2-vs-4-dim-ms-how-memory-population-limits-clock-speeds';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

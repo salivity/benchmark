@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Fill State and Fragmentation Degrade SSD Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores how a high drive fill state and file system fragmentation severely degrade Solid State Drive (SSD) benchmark scores. While SSDs do not suffer from the mechanical delays of traditional hard drives, their internal architecture relies h">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-fill-state-and-fragmentation-degrade-ssd-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Fill State and Fragmentation Degrade SSD Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-fill-state-and-fragmentation-degrade-ssd-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how a high drive fill state and file system fragmentation severely degrade Solid State Drive (SSD) benchmark scores. While SSDs do not suffer from the mechanical delays of traditional hard drives, their internal architecture relies h" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-fill-state-and-fragmentation-degrade-ssd-benchmarks">How
+Fill State and Fragmentation Degrade SSD Benchmarks</h1>
+<p>This article explores how a high drive fill state and file system
+fragmentation severely degrade Solid State Drive (SSD) benchmark scores.
+While SSDs do not suffer from the mechanical delays of traditional hard
+drives, their internal architecture relies heavily on available free
+space and efficient data mapping to maintain peak speeds. When an SSD
+fills up or becomes heavily fragmented, critical features like dynamic
+caching shrink, background maintenance stalls, and the drive controller
+becomes overwhelmed with metadata overhead, ultimately resulting in
+significantly lower synthetic benchmark results.</p>
+<h3 id="dynamic-slc-caching-limitations">Dynamic SLC Caching
+Limitations</h3>
+<p>Most modern consumer SSDs use Triple-Level Cell (TLC) or Quad-Level
+Cell (QLC) NAND flash memory, which is inherently slow to write to. To
+achieve high speeds, drives use a portion of their empty space to
+simulate faster Single-Level Cell (SLC) memory, known as a dynamic SLC
+cache.</p>
+<ul>
+<li><strong>Empty Drive:</strong> A large portion of the free space is
+used as high-speed cache. Benchmarking tools write data directly to this
+fast zone, yielding maximum advertised speeds.</li>
+<li><strong>Full Drive:</strong> As the drive fills with user data, the
+dynamic SLC cache shrinks to minimal levels. When a benchmark runs, it
+immediately exhausts the tiny remaining cache, forcing the SSD to write
+directly to the slow TLC or QLC NAND. This causes write benchmark scores
+to plummet.</li>
+</ul>
+<h3 id="garbage-collection-and-write-amplification">Garbage Collection
+and Write Amplification</h3>
+<p>Unlike hard drives, SSDs cannot overwrite existing data directly.
+Data is written to small "pages," but can only be erased in much larger
+"blocks."</p>
+<p>When an SSD has plenty of free space, the controller writes new
+benchmark data to entirely empty blocks. However, when the drive fill
+state is high, fully empty blocks are scarce; instead, most blocks are
+partially filled with valid data and old, deleted data (invalid
+data).</p>
+<p>To write new benchmark data on a nearly full drive, the SSD must
+perform a "read-modify-write" cycle on the fly:</p>
+<ol type="1">
+<li>Read the entire partially filled block into its internal
+memory.</li>
+<li>Erase the entire block on the NAND flash.</li>
+<li>Write the old valid data back, alongside the new benchmark
+data.</li>
+</ol>
+<p>This process, known as write amplification, forces the SSD to do
+several times the amount of actual work for a single write request. If a
+benchmark runs while the drive is forced into this state, write speeds
+drop drastically and latency spikes.</p>
+<h3 id="file-system-fragmentation-and-controller-overhead">File System
+Fragmentation and Controller Overhead</h3>
+<p>A common myth is that fragmentation does not affect SSDs because they
+have no physical read/write heads to move. While physical seek times do
+not exist on flash media, severe file system fragmentation still
+degrades SSD benchmark scores due to software and controller
+bottlenecks.</p>
+<p>When a file system is heavily fragmented, free space is scattered in
+tiny chunks across the logical map of the drive. When benchmarking
+software generates its temporary test file (often 1GB to 64GB in size),
+the operating system must split that test file into thousands of
+fragments to fit the available logical gaps.</p>
+<p>This degrades benchmark scores in three ways:</p>
+<ul>
+<li><strong>I/O Overhead:</strong> Instead of sending a few large,
+continuous write or read commands, the operating system must send
+thousands of small requests to access the fragmented test file.
+Processing these extra commands slows down transfer rates.</li>
+<li><strong>Flash Translation Layer (FTL) Strain:</strong> The SSD
+controller uses an FTL to map the operating system's logical addresses
+to the physical locations on the NAND flash. Fragmented requests force
+the controller to constantly look up and update thousands of disjointed
+entries in its mapping table, taxing the SSD’s processor.</li>
+<li><strong>Reduced Parallelism:</strong> SSDs achieve high sequential
+speeds by writing large chunks of data across multiple NAND chips
+simultaneously. Fragmented data disrupts the controller's ability to
+batch and stripe these requests efficiently, lowering sequential read
+and write scores.</li>
+</ul>
+<h3 id="the-compounding-effect-during-benchmarks">The Compounding Effect
+During Benchmarks</h3>
+<p>Synthetic benchmarks (such as CrystalDiskMark or AS SSD) measure
+maximum theoretical performance by pushing the drive's queue depths and
+bandwidth to their limits. When you benchmark a drive that is both
+nearly full and heavily fragmented, these issues compound.</p>
+<p>The operating system bottlenecks the test by sending fragmented,
+inefficient data requests. Simultaneously, the SSD controller is starved
+of fast SLC cache and is forced to execute slow garbage collection
+routines just to find space for the benchmark's temporary test files.
+The result is a benchmark score that reflects the drive's worst-case
+recovery speed rather than its true hardware capability.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-fill-state-and-fragmentation-degrade-ssd-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

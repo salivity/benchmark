@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How NUMA Configuration Impacts Server Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how Non-Uniform Memory Access (NUMA) node configurations directly influence server hardware benchmarking. It covers the fundamentals of NUMA architecture, how memory locality and CPU interconnects affect l">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-numa-configuration-impacts-server-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How NUMA Configuration Impacts Server Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-numa-configuration-impacts-server-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how Non-Uniform Memory Access (NUMA) node configurations directly influence server hardware benchmarking. It covers the fundamentals of NUMA architecture, how memory locality and CPU interconnects affect l" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-numa-configuration-impacts-server-hardware-benchmarking">How
+NUMA Configuration Impacts Server Hardware Benchmarking</h1>
+<p>This article provides a comprehensive overview of how Non-Uniform
+Memory Access (NUMA) node configurations directly influence server
+hardware benchmarking. It covers the fundamentals of NUMA architecture,
+how memory locality and CPU interconnects affect latency and bandwidth,
+the role of PCIe device locality, and how BIOS settings and operating
+system configurations must be tuned to achieve accurate, repeatable, and
+maximum performance scores during hardware evaluations.</p>
+<h2 id="understanding-numa-architecture">Understanding NUMA
+Architecture</h2>
+<p>In modern multi-socket servers—and even single-socket servers
+utilizing multi-chip module (MCM) designs like AMD EPYC or Intel Xeon
+Scalable processors—system resources are divided into NUMA nodes. Each
+NUMA node contains a specific set of CPU cores, local RAM channels, and
+PCIe lanes.</p>
+<p>While any CPU core can access any memory address or PCIe device in
+the server, the speed of that access is "non-uniform." Accessing RAM
+attached directly to the CPU's own node (local access) is significantly
+faster than accessing RAM attached to a different node (remote
+access).</p>
+<h2 id="memory-latency-and-bandwidth-bottlenecks">Memory Latency and
+Bandwidth Bottlenecks</h2>
+<p>The most direct impact of NUMA configuration on benchmarking occurs
+in memory-bound workloads.</p>
+<ul>
+<li><strong>Local Memory Access:</strong> When a benchmark runs on a
+NUMA node and uses only the RAM assigned to that node, data travels the
+shortest physical path. This yields the lowest memory latency and
+highest possible memory bandwidth.</li>
+<li><strong>Remote Memory Access:</strong> When a benchmark uses more
+memory than a single node can provide, or is improperly scheduled, the
+CPU must fetch data from another node. This requires traversing the CPU
+interconnect (such as Intel UPI or AMD Infinity Fabric). This extra
+"hop" increases latency by 30% to 100%+ and creates bandwidth
+bottlenecks on the interconnect, drastically lowering benchmark
+scores.</li>
+</ul>
+<h2 id="thread-migration-and-os-scheduling">Thread Migration and OS
+Scheduling</h2>
+<p>Operating system schedulers constantly move threads across different
+CPU cores to balance thermal loads and utilization. During a benchmark,
+if the OS migrates a thread from Node 0 to Node 1, the thread's data
+remains in the physical RAM of Node 0.</p>
+<p>Suddenly, a workload that was performing fast local memory reads is
+forced to perform slow remote memory reads. This causes high variance in
+benchmark results, making it difficult to reproduce scores consistently.
+Hardware testers must use CPU affinity (pinning) to lock benchmark
+threads to specific NUMA nodes to prevent this degradation.</p>
+<h2 id="pcie-and-io-device-locality">PCIe and I/O Device Locality</h2>
+<p>Benchmarking storage (NVMe drives), networking (high-speed NICs), or
+compute accelerators (GPUs) is heavily influenced by NUMA. Every PCIe
+slot on a server motherboard is physically wired to a specific CPU
+socket and, consequently, a specific NUMA node.</p>
+<p>If you run a storage benchmark like FIO to test an NVMe drive
+connected to Node 1, but the benchmark application executes on CPU cores
+in Node 0, all I/O data must travel across the CPU interconnect. This
+reduces maximum IOPS (Input/Output Operations Per Second), lowers
+throughput, and inflates storage latency. Accurate I/O benchmarking
+requires running the test software on the exact NUMA node to which the
+PCIe device is physically wired.</p>
+<h2 id="bios-settings-nps-and-sub-numa-clustering">BIOS Settings: NPS
+and Sub-NUMA Clustering</h2>
+<p>Modern server BIOS menus allow administrators to alter how the
+hardware presents NUMA nodes to the operating system.</p>
+<ul>
+<li><strong>Nodes Per Socket (NPS) and Sub-NUMA Clustering
+(SNC):</strong> Settings like AMD’s NPS (NPS1, NPS2, NPS4) or Intel’s
+SNC divide a single physical processor into multiple smaller logical
+NUMA nodes.</li>
+<li><strong>Impact on Benchmarks:</strong> Configuring a system for
+multiple smaller nodes (e.g., NPS4) isolates memory controllers to their
+physically closest CPU cores. This optimizes the server for extreme
+low-latency and high-bandwidth benchmarks (like STREAM or
+High-Performance Computing workloads), provided the benchmark software
+is NUMA-aware. Conversely, setting the BIOS to a single monolithic node
+(e.g., NPS1) increases average memory latency slightly, which may lower
+peak synthetic benchmark scores, but often improves performance for
+unoptimized applications that do not understand NUMA boundaries.</li>
+<li><strong>Node Interleaving:</strong> Enabling Node Interleaving in
+the BIOS disables NUMA entirely by striping memory allocation across all
+nodes evenly. This destroys local memory advantages and usually results
+in lower peak benchmark scores, though it prevents worst-case scenarios
+where a single node's memory controller becomes entirely saturated.</li>
+</ul>
+<h2 id="best-practices-for-numa-benchmarking">Best Practices for NUMA
+Benchmarking</h2>
+<p>To get accurate and optimal results when benchmarking server
+hardware, follow these configuration rules:</p>
+<ol type="1">
+<li><strong>Balance Physical RAM:</strong> Populate DIMM slots
+symmetrically across all CPU sockets and memory channels. An unbalanced
+memory configuration forces uneven NUMA nodes and degrades
+bandwidth.</li>
+<li><strong>Use <code>numactl</code> or Affinity Tools:</strong> On
+Linux, use the <code>numactl</code> command to bind both the benchmark
+process (<code>--cpunodebind</code>) and its memory allocation
+(<code>--membind</code>) to the same node. On Windows, use the
+<code>/affinity</code> flag with the <code>start</code> command or
+configure processor groups.</li>
+<li><strong>Map PCIe Topology:</strong> Use tools like
+<code>lstopo</code> (from the hwloc package) to identify which NUMA node
+controls your target GPU, NIC, or NVMe drive. Bind your benchmarking
+tool to that specific node.</li>
+<li><strong>Match BIOS Settings to the Workload:</strong> Use granular
+NUMA settings (SNC enabled, or NPS2/NPS4) for memory bandwidth and HPC
+benchmarks. Use broader settings (NPS1) for general database or
+virtualization benchmarks that require a large, unified pool of
+memory.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-numa-configuration-impacts-server-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

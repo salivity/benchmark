@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Reviewers Skip the First Game Benchmark Run - benchmark</title>
+    <meta name="description" content="Hardware reviewers routinely discard the first benchmark run after launching a game to ensure accurate and repeatable test results. During the initial playthrough, a computer performs heavy background tasks like shader compilation, asset caching, and ther">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-reviewers-skip-the-first-game-benchmark-run">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Reviewers Skip the First Game Benchmark Run - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-reviewers-skip-the-first-game-benchmark-run" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware reviewers routinely discard the first benchmark run after launching a game to ensure accurate and repeatable test results. During the initial playthrough, a computer performs heavy background tasks like shader compilation, asset caching, and ther" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-reviewers-skip-the-first-game-benchmark-run">Why Reviewers
+Skip the First Game Benchmark Run</h1>
+<p>Hardware reviewers routinely discard the first benchmark run after
+launching a game to ensure accurate and repeatable test results. During
+the initial playthrough, a computer performs heavy background tasks like
+shader compilation, asset caching, and thermal stabilization, which
+cause artificial stuttering and inconsistent frame rates. By treating
+the first pass as a warm-up and only recording subsequent runs, testers
+isolate the true, sustained performance of the CPU and GPU from
+temporary initialization hiccups.</p>
+<h2 id="shader-compilation-stutters">Shader Compilation Stutters</h2>
+<p>When a modern game loads a scene for the first time, the system must
+translate the game’s graphics shaders into code the specific graphics
+card can understand. This process, known as shader compilation, demands
+heavy CPU usage.</p>
+<p>If a reviewer records the very first run, the benchmark will capture
+severe frame drops and stutters caused by the CPU scrambling to compile
+these shaders on the fly. Once compiled, shaders are saved to a local
+cache. Subsequent benchmark runs pull directly from this cache,
+eliminating the stutters and allowing the reviewer to measure the actual
+rendering power of the hardware rather than its ability to compile
+code.</p>
+<h2 id="ram-and-vram-caching">RAM and VRAM Caching</h2>
+<p>The first time a benchmark sequence runs, the system must pull
+gigabytes of textures, audio files, and geometry data from the storage
+drive (SSD or HDD) and load them into the system memory (RAM) and
+graphics memory (VRAM). Even with fast NVMe SSDs, this initial data
+transfer creates a bottleneck that can lower average frame rates and
+ruin 1% low metrics.</p>
+<p>After the first run finishes, most of these necessary assets remain
+cached in the much faster RAM and VRAM. Discarding the first run removes
+storage bottlenecks from the equation, ensuring that CPU and GPU
+benchmarks are actually testing the processors, not the drive speed.</p>
+<h2 id="thermal-stabilization-and-boost-clocks">Thermal Stabilization
+and Boost Clocks</h2>
+<p>Modern CPUs and GPUs use dynamic boosting algorithms—such as AMD
+Precision Boost or Nvidia GPU Boost—that adjust clock speeds based on
+current temperatures. When a game first boots, the hardware is
+relatively cold. This allows the components to boost to
+higher-than-normal clock speeds for the first few minutes, resulting in
+artificially high frame rates.</p>
+<p>Conversely, as the first run progresses, the hardware heats up and
+clock speeds drop to a sustainable thermal equilibrium. Reviewers skip
+the first run so the cooling system and silicon temperatures can
+stabilize. This ensures the recorded benchmark reflects the performance
+a gamer will actually experience during a normal, extended gaming
+session, rather than a brief burst of "cold-boot" speed.</p>
+<h2 id="background-system-initialization">Background System
+Initialization</h2>
+<p>Launching a game triggers several operating system and software
+events that only happen once per session. These include:</p>
+<ul>
+<li><strong>Anti-Cheat Software:</strong> Programs like Easy Anti-Cheat
+or Vanguard perform heavy initial scans upon game boot.</li>
+<li><strong>Overlays and APIs:</strong> Steam, Discord, and graphics
+driver overlays hook into the game's rendering API, causing brief
+frame-time spikes.</li>
+<li><strong>OS Resource Allocation:</strong> Windows Game Mode and
+thread directors take a moment to deprioritize background tasks and
+allocate maximum resources to the game.</li>
+</ul>
+<p>Letting the benchmark run once allows all of these software layers to
+settle. The following runs provide a clean slate where the hardware's
+performance can be measured without interference from the operating
+system's startup routines.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-reviewers-skip-the-first-game-benchmark-run';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

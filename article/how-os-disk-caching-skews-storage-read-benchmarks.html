@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How OS Disk Caching Skews Storage Read Benchmarks - benchmark</title>
+    <meta name="description" content="Operating system disk caching significantly impacts hardware benchmarking by temporarily storing data in fast system memory (RAM) rather than reading it directly from the storage drive. While this feature is designed to boost everyday computer performance">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-os-disk-caching-skews-storage-read-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How OS Disk Caching Skews Storage Read Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-os-disk-caching-skews-storage-read-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Operating system disk caching significantly impacts hardware benchmarking by temporarily storing data in fast system memory (RAM) rather than reading it directly from the storage drive. While this feature is designed to boost everyday computer performance" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-os-disk-caching-skews-storage-read-benchmarks">How OS Disk
+Caching Skews Storage Read Benchmarks</h1>
+<p>Operating system disk caching significantly impacts hardware
+benchmarking by temporarily storing data in fast system memory (RAM)
+rather than reading it directly from the storage drive. While this
+feature is designed to boost everyday computer performance, it severely
+skews storage read tests by measuring the speed of the system's RAM
+instead of the actual hard drive or solid-state drive (SSD). This
+article explains the mechanics of operating system disk caching, how it
+invalidates storage benchmark results, and the methods used to bypass it
+for accurate hardware testing.</p>
+<h2 id="what-is-operating-system-disk-caching">What is Operating System
+Disk Caching?</h2>
+<p>Modern operating systems, including Windows, macOS, and Linux,
+utilize unused system RAM as a buffer for storage devices. This is often
+referred to as the "page cache" or "file system cache." Because RAM is
+exponentially faster than any SSD or mechanical hard drive, the
+operating system keeps copies of recently created, read, or modified
+files in this memory space. When an application requests that data
+again, the OS delivers it instantly from the RAM rather than waiting for
+the slower storage drive to retrieve it.</p>
+<h2 id="how-the-cache-interferes-with-read-tests">How the Cache
+Interferes with Read Tests</h2>
+<p>Standard storage benchmarks measure performance by generating a
+temporary test file, writing it to the target drive, and then reading
+that file back to measure the read speed. Operating system disk caching
+breaks this process through the following sequence:</p>
+<ol type="1">
+<li><strong>The Write Phase:</strong> The benchmarking software creates
+a test file (e.g., a 1GB file) and writes it to the storage drive.</li>
+<li><strong>The Interception:</strong> As the file is written to the
+drive, the operating system simultaneously keeps a copy of that 1GB file
+in the system's unused RAM.</li>
+<li><strong>The Read Phase:</strong> The benchmark software immediately
+requests to read that 1GB file back to calculate the drive's read
+speed.</li>
+<li><strong>The False Result:</strong> Recognizing that the requested
+file is already sitting in the page cache, the operating keys in on the
+RAM copy. The storage drive is completely bypassed.</li>
+</ol>
+<h2 id="the-impact-on-benchmark-scores">The Impact on Benchmark
+Scores</h2>
+<p>When a benchmark reads from the OS cache instead of the physical
+drive, the resulting data is entirely invalid for hardware
+evaluation.</p>
+<p>For example, a standard SATA SSD has a physical hardware limit of
+roughly 550 MB/s to 600 MB/s. A high-end PCIe 4.0 NVMe SSD typically
+maxes out around 7,000 MB/s to 7,500 MB/s. However, DDR4 and DDR5 system
+RAM can easily transfer data at speeds ranging from 25,000 MB/s to over
+60,000 MB/s. If the OS cache interferes, a benchmark on a budget SATA
+SSD might report read speeds of 30,000 MB/s. The test is no longer
+benchmarking the storage drive; it is benchmarking the system
+memory.</p>
+<h2 id="how-to-bypass-disk-caching-for-accurate-results">How to Bypass
+Disk Caching for Accurate Results</h2>
+<p>To get true hardware read speeds, the benchmarking software or the
+user must force the operating system to read directly from the physical
+storage medium. There are three primary methods to achieve this:</p>
+<h3 id="1-using-direct-io">1. Using Direct I/O</h3>
+<p>Professional benchmarking utilities (such as CrystalDiskMark, FIO,
+and Iometer) use specific programming flags to bypass the OS cache. In
+Windows, software uses the <code>FILE_FLAG_NO_BUFFERING</code> flag,
+while Linux utilities use the <code>O_DIRECT</code> flag. These
+instructions explicitly command the operating system not to cache the
+test data in RAM, guaranteeing that all read requests hit the physical
+drive.</p>
+<h3 id="2-exceeding-system-ram-capacity">2. Exceeding System RAM
+Capacity</h3>
+<p>If a benchmarking tool does not support Direct I/O, the user can
+defeat the cache by brute force. If a computer has 16GB of RAM, it is
+physically impossible for the OS to cache a 32GB test file. By setting
+the benchmark's test file size to be significantly larger than the total
+installed system memory, the cache overflows, forcing the system to read
+the data directly from the storage drive.</p>
+<h3 id="3-flushing-the-cache-manually">3. Flushing the Cache
+Manually</h3>
+<p>In scripted or custom testing environments, testers separate the
+write and read phases. First, the test file is written to the drive.
+Next, the tester issues a system command to flush (clear) the OS page
+cache from the RAM. Finally, the read test is executed. Because the RAM
+has been wiped of the cached data, the OS has no choice but to pull the
+file directly from the storage hardware.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-os-disk-caching-skews-storage-read-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

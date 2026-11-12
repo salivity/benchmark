@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking PCIe P2P Speeds in Multi-Card Workstations - benchmark</title>
+    <meta name="description" content="This article explains the methodology and tools used to test PCIe peer-to-peer (P2P) transfer speeds in multi-card workstation configurations. It covers the initial verification of hardware topology, the industry-standard benchmarking software utilized fo">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/benchmarking-pc-ie-p-2-p-speeds-in-multi-card-workstations">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Benchmarking PCIe P2P Speeds in Multi-Card Workstations - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/benchmarking-pc-ie-p-2-p-speeds-in-multi-card-workstations" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the methodology and tools used to test PCIe peer-to-peer (P2P) transfer speeds in multi-card workstation configurations. It covers the initial verification of hardware topology, the industry-standard benchmarking software utilized fo" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="benchmarking-pcie-p2p-speeds-in-multi-card-workstations">Benchmarking
+PCIe P2P Speeds in Multi-Card Workstations</h1>
+<p>This article explains the methodology and tools used to test PCIe
+peer-to-peer (P2P) transfer speeds in multi-card workstation
+configurations. It covers the initial verification of hardware topology,
+the industry-standard benchmarking software utilized for GPUs and
+accelerators, the step-by-step execution of unidirectional and
+bidirectional bandwidth tests, and how hardware evaluators interpret
+these results against theoretical PCIe generation limits.</p>
+<h3 id="1-verifying-hardware-topology">1. Verifying Hardware
+Topology</h3>
+<p>Before running speed tests, benchmarkers must map the physical and
+logical layout of the motherboard. PCIe P2P allows expansion cards, most
+commonly GPUs, to read and write data directly to each other's onboard
+memory over the PCIe bus without routing the data through the system
+RAM.</p>
+<p>Testers use command-line utilities, such as
+<code>nvidia-smi topo -m</code> for NVIDIA hardware or
+<code>rocm-smi --showtopo</code> for AMD hardware, to view the
+connection matrix. The highest P2P speeds occur when cards communicate
+through a dedicated onboard PCIe switch (P2P via PIX/PXB). If the data
+must pass through the CPU's PCIe root complex (PHB) or cross between two
+different CPUs via interconnects like AMD Infinity Fabric or Intel UPI
+(SYS), P2P performance degrades, or the feature may be blocked entirely
+by the system architecture.</p>
+<h3 id="2-industry-standard-benchmarking-tools">2. Industry-Standard
+Benchmarking Tools</h3>
+<p>Hardware testers rely on vendor-specific software development kits
+(SDKs) to isolate and measure raw PCIe P2P performance, predominantly
+using Linux environments to minimize operating system overhead.</p>
+<ul>
+<li><strong>NVIDIA CUDA Samples:</strong> The primary tool for NVIDIA
+GPUs is the <code>p2pBandwidthLatencyTest</code> binary, which testers
+compile directly from the NVIDIA CUDA Toolkit. It specifically isolates
+and measures data transfer rates and latency between all available GPU
+pairs.</li>
+<li><strong>AMD ROCm Bandwidth Test:</strong> For AMD workstation and
+data center cards, testers run the <code>rocm-bandwidth-test</code>
+utility. Using specific flags, this tool validates P2P accessibility and
+benchmarks direct copy speeds between devices.</li>
+<li><strong>NCCL and RCCL Tests:</strong> To test how P2P speeds affect
+real-world machine learning and high-performance computing workloads,
+benchmarkers compile NVIDIA Collective Communications Library (NCCL) or
+AMD RCCL tests. Running binaries like <code>all_reduce_perf</code>
+stresses the PCIe bus across three or more cards simultaneously.</li>
+</ul>
+<h3 id="3-the-testing-methodology">3. The Testing Methodology</h3>
+<p>When a benchmarker runs a P2P test suite, the software executes a
+strict sequence of memory operations to gather accurate metrics:</p>
+<ol type="1">
+<li><strong>P2P Access Check:</strong> The software queries the hardware
+driver to confirm if Device A has permission to directly access the
+memory address space of Device B.</li>
+<li><strong>Memory Allocation:</strong> The benchmark allocates a fixed
+buffer size (typically scaling from a few kilobytes up to several
+gigabytes) in the local memory (VRAM) of each card.</li>
+<li><strong>Baseline Test (P2P Disabled):</strong> The software forces
+data to travel from Card 1, through the CPU and system RAM, and then to
+Card 2. This establishes a baseline speed.</li>
+<li><strong>Unidirectional P2P Test:</strong> P2P is enabled, and data
+is pushed directly from Card 1 to Card 2 using Direct Memory Access
+(DMA). A high-precision timer records the duration of the transfer over
+multiple loops to calculate an average speed in GB/s.</li>
+<li><strong>Bidirectional P2P Test:</strong> Both cards simultaneously
+send and receive data to each other. This saturates the full-duplex
+capability of the PCIe lanes, effectively doubling the total bandwidth
+utilization.</li>
+<li><strong>Latency Measurement:</strong> The benchmark sends an empty
+or microscopic payload (such as 4 bytes) back and forth between the
+cards thousands of times to measure the communication delay, which is
+recorded in microseconds (<span
+class="math inline">\(\mu\)</span>s).</li>
+</ol>
+<h3 id="4-interpreting-the-results">4. Interpreting the Results</h3>
+<p>Benchmark results are evaluated in Gigabytes per second (GB/s) and
+compared against the theoretical limits of the workstation's PCIe
+generation and lane width. Because the PCIe protocol uses encoding
+schemes (such as 128b/130b) and requires packet headers, real-world P2P
+speeds never reach the raw theoretical maximum.</p>
+<ul>
+<li><strong>PCIe 3.0 x16:</strong> Out of a 15.75 GB/s theoretical
+limit, a healthy unidirectional P2P transfer yields roughly 12 to 13
+GB/s.</li>
+<li><strong>PCIe 4.0 x16:</strong> Out of a 31.5 GB/s theoretical limit,
+testers expect to see effective P2P speeds between 25 and 28 GB/s.</li>
+<li><strong>PCIe 5.0 x16:</strong> Out of a 63 GB/s theoretical limit,
+properly functioning P2P transfers achieve roughly 50 to 56 GB/s.</li>
+</ul>
+<p>In bidirectional tests, these numbers should nearly double (e.g.,
+reaching up to 52 GB/s on PCIe 4.0 x16). If the benchmark results are
+significantly lower than these expected ranges, or if the bidirectional
+speed is the exact same as the unidirectional speed, the tester knows a
+bottleneck exists. This usually indicates that the motherboard is
+splitting the x16 lanes into x8/x8, the CPU root complex is throttling
+the P2P packets, or P2P has silently failed and fallen back to routing
+data through the slower system RAM.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/benchmarking-pc-ie-p-2-p-speeds-in-multi-card-workstations';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

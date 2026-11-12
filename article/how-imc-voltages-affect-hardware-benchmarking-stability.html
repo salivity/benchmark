@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How IMC Voltages Affect Hardware Benchmarking Stability - benchmark</title>
+    <meta name="description" content="This article explores the critical relationship between memory controller voltages—specifically VDDIO, VCCSA, and VSOC—and system stability during computer hardware benchmarking. It explains what these specific voltages do on Intel and AMD platforms, how">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-imc-voltages-affect-hardware-benchmarking-stability">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How IMC Voltages Affect Hardware Benchmarking Stability - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-imc-voltages-affect-hardware-benchmarking-stability" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the critical relationship between memory controller voltages—specifically VDDIO, VCCSA, and VSOC—and system stability during computer hardware benchmarking. It explains what these specific voltages do on Intel and AMD platforms, how" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-imc-voltages-affect-hardware-benchmarking-stability">How IMC
+Voltages Affect Hardware Benchmarking Stability</h1>
+<p>This article explores the critical relationship between memory
+controller voltages—specifically VDDIO, VCCSA, and VSOC—and system
+stability during computer hardware benchmarking. It explains what these
+specific voltages do on Intel and AMD platforms, how they maintain
+signal integrity under extreme workloads, the dangers of over-volting,
+and how to find the optimal voltage sweet spot to achieve peak
+benchmarking scores without crashing.</p>
+<h3 id="defining-the-voltages">Defining the Voltages</h3>
+<p>The Integrated Memory Controller (IMC) located inside the CPU
+dictates how effectively the processor communicates with the system RAM.
+Depending on the platform, different voltages power and stabilize this
+pathway:</p>
+<ul>
+<li><strong>VCCSA (System Agent Voltage):</strong> Exclusive to Intel
+platforms, this powers the IMC and other "uncore" components like the
+PCIe controller.</li>
+<li><strong>VSOC (System on Chip Voltage):</strong> Used on AMD Ryzen
+platforms, this is the primary voltage for the IMC, the Infinity Fabric,
+and various I/O controllers.</li>
+<li><strong>VDDIO (Memory I/O Voltage):</strong> Present on both modern
+AMD and Intel (sometimes referred to as CPU VDDQ) platforms, this
+governs the voltage level of the physical data signals traveling across
+the motherboard traces between the CPU and the RAM modules.</li>
+</ul>
+<h3 id="the-role-of-imc-voltage-in-benchmarking">The Role of IMC Voltage
+in Benchmarking</h3>
+<p>Benchmarking pushes computer hardware to its absolute limits.
+Memory-intensive benchmarks—such as Y-Cruncher, Prime95, or
+Geekbench—completely saturate the data bus between the CPU and RAM.</p>
+<p>To get higher benchmark scores, users increase RAM frequency and
+tighten memory timings. However, running memory faster causes the
+electrical signals to degrade, leading to data loss. Increasing VDDIO,
+VCCSA, or VSOC strengthens the IMC's ability to drive and interpret
+these fast electrical signals, maintaining signal integrity when the
+hardware is under maximum stress.</p>
+<h3 id="symptoms-of-insufficient-voltage">Symptoms of Insufficient
+Voltage</h3>
+<p>If the memory controller voltages are too low to support the chosen
+RAM speed or timings, the IMC will fail to keep up with the data stream
+during a benchmark. Common symptoms of an under-volted IMC include:</p>
+<ul>
+<li>Failure to POST (boot) after enabling high-speed XMP or EXPO
+profiles.</li>
+<li>Instant reboots or Blue Screens of Death (BSOD) the moment a
+benchmark load begins.</li>
+<li>Benchmark applications suddenly crashing to the desktop or
+outputting "calculation rounding errors."</li>
+<li>WHEA (Windows Hardware Error Architecture) errors appearing in the
+system logs, indicating corrected or uncorrected hardware data
+corruption.</li>
+<li>Audio crackling or USB dropouts, which are common signs of an
+unstable VSOC on AMD platforms.</li>
+</ul>
+<h3 id="the-danger-of-excessive-voltage-negative-scaling">The Danger of
+Excessive Voltage: Negative Scaling</h3>
+<p>A common misconception in hardware tuning is that more voltage always
+equals more stability. Memory controllers are notorious for exhibiting
+"negative scaling" or "voltage rollover."</p>
+<p>Every CPU has a voltage sweet spot. Pushing VCCSA, VSOC, or VDDIO
+past this point introduces excess heat and electrical noise
+(interference) directly into the CPU package. This noise corrupts the
+data signals, causing the exact same instability and benchmark crashes
+as having too little voltage. Furthermore, running these voltages too
+high can rapidly and permanently degrade the silicon inside the CPU,
+potentially destroying the processor.</p>
+<h3 id="finding-the-stability-sweet-spot">Finding the Stability Sweet
+Spot</h3>
+<p>Achieving rock-solid stability for benchmarking requires dialing in
+the exact voltages your specific CPU silicon prefers. Motherboards often
+over-volt these settings when left on "Auto," which can actively hurt
+stability.</p>
+<ol type="1">
+<li><strong>Establish a Baseline:</strong> Take the voltages off "Auto"
+and set them to a known, safe manual baseline before pushing your memory
+speeds for a benchmark.</li>
+<li><strong>Make Micro-Adjustments:</strong> If a benchmark crashes or
+throws an error, increase the relevant IMC voltage in very small
+increments, such as 0.01V to 0.02V, and retest.</li>
+<li><strong>Watch for Rollover:</strong> If increasing the voltage
+causes the benchmark to fail faster than it did previously, you are
+experiencing negative scaling. Lower the voltage immediately.</li>
+<li><strong>Maintain Voltage Ratios:</strong> These voltages do not
+operate in a vacuum. VDDIO often needs to sit at a specific ratio
+relative to your main RAM voltage (VDD) and your VSOC/VCCSA to prevent
+signal reflection. Keeping VDDIO slightly lower than VSOC (on AMD) or
+synced with RAM VDDQ (on Intel) usually yields the best benchmarking
+stability.</li>
+<li><strong>Manage Thermals:</strong> Because higher IMC voltages
+generate heat inside the CPU, improving your CPU cooling can sometimes
+stabilize a borderline memory overclock without needing to touch the
+voltages at all.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-imc-voltages-affect-hardware-benchmarking-stability';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

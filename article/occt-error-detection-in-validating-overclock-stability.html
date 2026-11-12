@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCCT Error Detection in Validating Overclock Stability - benchmark</title>
+    <meta name="description" content="This article explores the critical role of OCCT (OverClock Checking Tool) error detection in confirming hardware stability when overclocking and benchmarking. It covers why traditional benchmarks are insufficient for stability testing, how OCCT identifies">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/occt-error-detection-in-validating-overclock-stability">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="OCCT Error Detection in Validating Overclock Stability - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/occt-error-detection-in-validating-overclock-stability" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the critical role of OCCT (OverClock Checking Tool) error detection in confirming hardware stability when overclocking and benchmarking. It covers why traditional benchmarks are insufficient for stability testing, how OCCT identifies" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="occt-error-detection-in-validating-overclock-stability">OCCT
+Error Detection in Validating Overclock Stability</h1>
+<p>This article explores the critical role of OCCT (OverClock Checking
+Tool) error detection in confirming hardware stability when overclocking
+and benchmarking. It covers why traditional benchmarks are insufficient
+for stability testing, how OCCT identifies silent calculation errors in
+the CPU, GPU, and RAM, and why monitoring these errors is essential for
+preventing data corruption and system crashes.</p>
+<h3 id="moving-beyond-the-crash-what-is-true-stability">Moving Beyond
+the Crash: What is True Stability?</h3>
+<p>Many hardware enthusiasts mistakenly assume an overclock is stable if
+the computer does not freeze or display a Blue Screen of Death (BSOD)
+during a benchmark. However, pushed hardware often makes microscopic
+calculation mistakes long before the system completely crashes.
+Benchmarking tools are designed to measure maximum performance, not data
+accuracy. OCCT error detection bridges this gap by actively verifying
+the math your hardware performs, ensuring that higher clock speeds
+result in accurate, usable data processing.</p>
+<h3 id="cpu-and-ram-error-detection">CPU and RAM Error Detection</h3>
+<p>When overclocking a processor or system memory, pushing frequencies
+too high or voltages too low causes bits of data to flip incorrectly.
+OCCT stresses these components by forcing them to run intense,
+repetitive mathematical workloads using various instruction sets like
+SSE and AVX.</p>
+<p>Because OCCT already knows the correct answers to these math
+problems, it constantly compares the hardware's output against the
+expected results. If the CPU or RAM returns an incorrect value, OCCT
+immediately flags an error. Detecting these miscalculations early is
+vital, as running a system with an unstable CPU or RAM overclock will
+eventually lead to silent operating system corruption and damaged
+files.</p>
+<h3 id="gpu-core-and-vram-validation">GPU Core and VRAM Validation</h3>
+<p>In graphics card overclocking, instability does not always cause a
+game or benchmark to crash. Instead, it can cause visual glitches known
+as "artifacts," or it can trigger the GPU's built-in error correction,
+which silently lowers performance to fix mistakes on the fly.</p>
+<p>Historically, users had to stare at a benchmarking screen to spot
+visual artifacts manually. OCCT automates and perfects this process. It
+utilizes specialized 3D rendering and compute tests to stress the GPU
+core and Video RAM (VRAM). As the GPU renders frames or processes data,
+OCCT mathematically analyzes the output in real-time. It detects
+pixel-level deviations and memory errors that are invisible to the human
+eye, providing an objective pass-or-fail metric for GPU stability.</p>
+<h3 id="monitoring-whea-errors">Monitoring WHEA Errors</h3>
+<p>In addition to its internal stress tests, OCCT actively monitors the
+Windows Hardware Error Architecture (WHEA) logs. Modern processors and
+motherboards have built-in mechanisms to catch and correct
+hardware-level faults—such as CPU cache errors or PCIe bus
+instability—before they crash the software. While Windows logs these
+events quietly in the background, OCCT surfaces WHEA errors directly on
+its main interface during a test. A spike in WHEA errors tells the user
+that their overclock is unstable, even if the stress test itself hasn't
+failed yet.</p>
+<h3 id="ensuring-valid-benchmark-results">Ensuring Valid Benchmark
+Results</h3>
+<p>Using OCCT error detection alongside benchmarking ensures that your
+performance gains are both real and sustainable. An unstable overclock
+might miraculously survive a short three-minute benchmark run, giving a
+false sense of security, only to fail during a heavy gaming session or a
+long video render. By requiring a system to pass an OCCT stress test
+with zero detected errors, overclockers can guarantee that their
+hardware is genuinely stable, safe from data corruption, and ready for
+daily workloads.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/occt-error-detection-in-validating-overclock-stability';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

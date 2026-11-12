@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking Audio Codecs: Measuring SNR and Crosstalk - benchmark</title>
+    <meta name="description" content="This article explains the exact methodologies and tools used to benchmark computer hardware audio codecs, specifically focusing on Signal-to-Noise Ratio (SNR) and stereo crosstalk. It covers the physical test setups, such as loopback configurations and de">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/benchmarking-audio-codecs-measuring-snr-and-crosstalk">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Benchmarking Audio Codecs: Measuring SNR and Crosstalk - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/benchmarking-audio-codecs-measuring-snr-and-crosstalk" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the exact methodologies and tools used to benchmark computer hardware audio codecs, specifically focusing on Signal-to-Noise Ratio (SNR) and stereo crosstalk. It covers the physical test setups, such as loopback configurations and de" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="benchmarking-audio-codecs-measuring-snr-and-crosstalk">Benchmarking
+Audio Codecs: Measuring SNR and Crosstalk</h1>
+<p>This article explains the exact methodologies and tools used to
+benchmark computer hardware audio codecs, specifically focusing on
+Signal-to-Noise Ratio (SNR) and stereo crosstalk. It covers the physical
+test setups, such as loopback configurations and dedicated audio
+analyzers, the software suites involved, and the step-by-step signal
+processing techniques required to capture accurate decibel readings for
+both metrics under various system conditions.</p>
+<h3 id="the-benchmarking-setup">The Benchmarking Setup</h3>
+<p>To measure an onboard motherboard audio codec or a dedicated sound
+card, reviewers must capture the analog output of the device. This is
+achieved using one of two physical setups:</p>
+<ol type="1">
+<li><strong>External Audio Analyzer (Preferred):</strong> The Line-Out
+port of the computer is connected to a professional-grade external audio
+interface or a dedicated hardware analyzer (such as an Audio Precision
+APx555). This isolates the performance of the computer's
+Digital-to-Analog Converter (DAC) because the measuring device has a
+noise floor far lower than the hardware being tested.</li>
+<li><strong>Loopback Configuration:</strong> A shielded 3.5mm TRS cable
+connects the computer's Line-Out port directly to its own Line-In port.
+While cost-effective, this method measures the combined degradation of
+both the DAC (output) and the Analog-to-Digital Converter (ADC) (input),
+resulting in slightly worse scores than the output hardware produces on
+its own.</li>
+</ol>
+<p>For software-based testing, RightMark Audio Analyzer (RMAA) is the
+standard tool used to generate the test tones and calculate the
+results.</p>
+<h3 id="measuring-signal-to-noise-ratio-snr">Measuring Signal-to-Noise
+Ratio (SNR)</h3>
+<p>Signal-to-Noise Ratio (SNR) compares the level of a desired audio
+signal to the level of background noise (hiss, hum, and electrical
+interference) generated by the hardware. The measurement process follows
+three strict steps:</p>
+<ul>
+<li><strong>Step 1: Reference Signal Generation:</strong> The
+benchmarking software generates a pure, maximum-amplitude sine wave,
+typically at 1 kHz and 0 dBFS (decibels relative to full scale). The
+receiving analyzer measures the Root Mean Square (RMS) voltage of this
+output to establish the maximum signal ceiling.</li>
+<li><strong>Step 2: Noise Floor Capture:</strong> The software stops the
+1 kHz tone and plays a "digital zero" signal (a continuous stream of
+0-bit data, or a maximally quiet dithered signal). A digital zero signal
+is used instead of simply stopping playback because many modern codecs
+automatically shut off their amplifiers when no signal is detected. This
+"auto-mute" feature would artificially inflate the SNR score.</li>
+<li><strong>Step 3: Weighting and Calculation:</strong> The analyzer
+measures the residual electrical noise present during the silent signal.
+An "A-weighting" filter is typically applied to this measurement.
+A-weighting shapes the measurement to match human hearing sensitivity,
+ignoring extreme high and low frequencies that humans cannot hear. The
+difference between the 1 kHz reference signal and the residual noise
+floor is calculated and expressed in decibels (dB or dBA). Higher
+positive numbers indicate cleaner audio.</li>
+</ul>
+<h3 id="measuring-crosstalk-stereo-separation">Measuring Crosstalk
+(Stereo Separation)</h3>
+<p>Crosstalk occurs when an audio signal transmitted on one stereo
+channel bleeds into the other channel, narrowing the stereo soundstage.
+In computer hardware, this is usually caused by closely packed PCB
+traces, shared ground planes, or poor capacitor placement on the
+motherboard.</p>
+<ul>
+<li><strong>Step 1: Channel Isolation:</strong> The testing software
+sends a 1 kHz full-scale sine wave (or a 20 Hz to 20 kHz frequency
+sweep) exclusively to the Left channel. Simultaneously, the Right
+channel is fed a silent digital zero signal.</li>
+<li><strong>Step 2: Leakage Detection:</strong> The analyzer ignores the
+active Left channel and measures the RMS voltage of the silent Right
+channel. It specifically looks for the presence of the 1 kHz tone that
+has electromagnetically leaked across the motherboard or sound card
+circuitry.</li>
+<li><strong>Step 3: Reversal and Calculation:</strong> The amplitude of
+the leaked signal in the silent channel is compared to the amplitude of
+the source signal in the active channel. The test is then
+reversed—playing the tone in the Right channel and measuring the Left—to
+ensure consistent PCB design. Crosstalk is expressed as a negative
+decibel value (e.g., -95 dB). Lower negative numbers (further from zero)
+indicate better channel separation.</li>
+</ul>
+<h3 id="accounting-for-pc-system-load">Accounting for PC System
+Load</h3>
+<p>Unlike standalone audio equipment, computer audio codecs operate
+inside an environment heavy with Electromagnetic Interference (EMI). To
+get a true benchmark of PC hardware, both SNR and crosstalk tests are
+executed twice:</p>
+<ol type="1">
+<li><strong>System Idle:</strong> The computer sits at the desktop with
+minimal background processes.</li>
+<li><strong>System Under Load:</strong> Stress-testing software (such as
+Prime95 and FurMark) is run simultaneously to maximize CPU and GPU power
+draw.</li>
+</ol>
+<p>High electrical currents running through the motherboard and graphics
+card generate EMI, which can bleed into poorly shielded audio pathways.
+Running the SNR and crosstalk tests under load reveals how effectively
+the hardware manufacturer isolated the audio codec from the rest of the
+computer's components.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/benchmarking-audio-codecs-measuring-snr-and-crosstalk';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiplets and Interconnect Speeds in Latency Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores how modern chiplet architectures and the speed of their underlying interconnect fabrics influence latency measurements in computer hardware benchmarks. As processor manufacturers move away from single monolithic dies in favor of modu">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/chiplets-and-interconnect-speeds-in-latency-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Chiplets and Interconnect Speeds in Latency Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/chiplets-and-interconnect-speeds-in-latency-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how modern chiplet architectures and the speed of their underlying interconnect fabrics influence latency measurements in computer hardware benchmarks. As processor manufacturers move away from single monolithic dies in favor of modu" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="chiplets-and-interconnect-speeds-in-latency-benchmarking">Chiplets
+and Interconnect Speeds in Latency Benchmarking</h1>
+<p>This article explores how modern chiplet architectures and the speed
+of their underlying interconnect fabrics influence latency measurements
+in computer hardware benchmarks. As processor manufacturers move away
+from single monolithic dies in favor of modular chiplets, the physical
+distance data must travel increases. Consequently, the speed of the
+interconnect bridging these chiplets becomes a critical bottleneck.
+Understanding the relationship between modular silicon and fabric clock
+speeds is essential for accurately interpreting memory and core-to-core
+latency benchmarks.</p>
+<h2 id="monolithic-vs-chiplet-architecture">Monolithic vs. Chiplet
+Architecture</h2>
+<p>Historically, CPUs were monolithic, meaning all cores, cache, and
+memory controllers existed on a single piece of silicon. This kept
+latency low and predictable.</p>
+<p>Chiplet architectures break these components into smaller, separate
+dies connected on a single package. While this improves manufacturing
+yields and allows for higher core counts, it introduces a physical gap
+between components. Data can no longer travel exclusively across
+microscopic internal pathways; it must now be routed out of one chiplet,
+across a package substrate, and into another. In hardware benchmarking,
+this extra physical distance inherently increases latency
+measurements.</p>
+<h2 id="core-to-core-latency-variations">Core-to-Core Latency
+Variations</h2>
+<p>In a chiplet-based processor, core-to-core latency is no longer
+uniform. Benchmarks that measure how fast one CPU core can communicate
+with another will show vastly different results depending on the
+physical location of the cores being tested.</p>
+<p>If two cores reside on the same chiplet, they share a local cache,
+resulting in ultra-low latency. However, if a benchmark tests
+communication between cores located on two different chiplets, the data
+must traverse the interconnect fabric. This cross-chiplet penalty often
+doubles or triples the latency measurement (measured in nanoseconds)
+compared to intra-chiplet communication.</p>
+<h2 id="memory-access-latency-and-the-io-die">Memory Access Latency and
+the I/O Die</h2>
+<p>Many chiplet designs place the memory controller on a dedicated
+Input/Output (I/O) die, completely separate from the compute chiplets.
+When a CPU core requests data from the system RAM, the request must
+travel from the compute chiplet, across the interconnect to the I/O die,
+out to the RAM, and back the same way.</p>
+<p>In synthetic memory benchmarks like AIDA64, this routing manifests as
+noticeably higher memory latency compared to monolithic processors using
+the exact same RAM speeds and timings. The benchmark is not just
+measuring the speed of the RAM; it is measuring the round-trip delay of
+the chiplet interconnect.</p>
+<h2 id="the-impact-of-interconnect-fabric-speeds">The Impact of
+Interconnect Fabric Speeds</h2>
+<p>The interconnect fabric—such as AMD's Infinity Fabric or Intel's
+Ultra Path Interconnect—acts as the highway between chiplets. The clock
+speed of this fabric directly dictates the severity of the latency
+penalty.</p>
+<p>A faster interconnect fabric reduces the time it takes for data
+packets to cross from one die to another. During benchmarking, manually
+overclocking the interconnect fabric yields immediate reductions in both
+core-to-core and memory latency measurements, even if the CPU core clock
+speeds and RAM frequencies remain untouched. Conversely, a slow
+interconnect will bottleneck the fastest RAM and CPU cores, resulting in
+poor latency benchmark scores.</p>
+<h2 id="synchronization-and-clock-ratios">Synchronization and Clock
+Ratios</h2>
+<p>Latency measurements are also heavily influenced by the
+synchronization between the interconnect fabric and the system memory
+controller. Interconnects operate with the lowest latency when running
+at a 1:1 clock ratio with the memory controller and the RAM itself.</p>
+<p>If a user installs extremely fast RAM that exceeds the maximum stable
+frequency of the interconnect fabric, the motherboard will force the
+fabric into a desynchronized 2:1 mode. Benchmarks immediately penalize
+this desynchronization. Even though the RAM has higher bandwidth, the
+latency benchmark will show a sharp spike (worse performance) because
+data packets must wait for mismatched clock cycles to align before
+crossing between the memory controller and the interconnect fabric.</p>
+<h2 id="synthetic-vs-real-world-benchmarks">Synthetic vs. Real-World
+Benchmarks</h2>
+<p>Not all benchmarks react equally to chiplet and interconnect
+latencies:</p>
+<ul>
+<li><strong>Synthetic Benchmarks:</strong> Tools that specifically test
+memory access times or inter-core communication isolate and expose
+chiplet delays. Monolithic chips almost always beat chiplet designs in
+these specific tests.</li>
+<li><strong>Bandwidth-Heavy Workloads:</strong> Real-world benchmarks
+for 3D rendering, video encoding, and file compression rely on raw data
+throughput and core count. These benchmarks largely ignore latency
+penalties, allowing chiplet CPUs to dominate due to their higher core
+counts.</li>
+<li><strong>Latency-Sensitive Workloads:</strong> High-framerate gaming
+and database management require rapid access to small chunks of data. In
+these benchmarks, interconnect latency directly reduces performance. To
+mask this latency in benchmarks and real-world use, hardware
+manufacturers often pack massive amounts of L3 cache directly onto the
+compute chiplets, reducing the number of times the CPU cores need to use
+the interconnect fabric to fetch data from the RAM.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/chiplets-and-interconnect-speeds-in-latency-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

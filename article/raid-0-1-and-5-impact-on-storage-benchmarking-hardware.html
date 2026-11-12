@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAID 0, 1, and 5: Impact on Storage Benchmarking Hardware - benchmark</title>
+    <meta name="description" content="This article explores the distinct impacts that RAID 0, RAID 1, and RAID 5 configurations have on computer hardware during storage benchmarking. By examining how each Redundant Array of Independent Disks (RAID) level handles data striping, mirroring, and">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/raid-0-1-and-5-impact-on-storage-benchmarking-hardware">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="RAID 0, 1, and 5: Impact on Storage Benchmarking Hardware - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/raid-0-1-and-5-impact-on-storage-benchmarking-hardware" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the distinct impacts that RAID 0, RAID 1, and RAID 5 configurations have on computer hardware during storage benchmarking. By examining how each Redundant Array of Independent Disks (RAID) level handles data striping, mirroring, and" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="raid-0-1-and-5-impact-on-storage-benchmarking-hardware">RAID 0,
+1, and 5: Impact on Storage Benchmarking Hardware</h1>
+<p>This article explores the distinct impacts that RAID 0, RAID 1, and
+RAID 5 configurations have on computer hardware during storage
+benchmarking. By examining how each Redundant Array of Independent Disks
+(RAID) level handles data striping, mirroring, and parity, this guide
+breaks down their specific effects on sequential speeds, input/output
+operations per second (IOPS), and system resource utilization.
+Understanding these metrics is essential for hardware testers and system
+builders aiming to accurately measure and optimize storage
+performance.</p>
+<h2 id="core-benchmarking-metrics-affected-by-raid">Core Benchmarking
+Metrics Affected by RAID</h2>
+<p>When benchmarking storage hardware, software tools generally measure
+four primary metrics. RAID configurations alter these metrics in
+predictable ways:</p>
+<ul>
+<li><strong>Sequential Read/Write:</strong> The speed at which large,
+contiguous files are read from or written to the storage array, measured
+in megabytes or gigabytes per second (MB/s or GB/s).</li>
+<li><strong>Random Read/Write (IOPS):</strong> The number of individual
+read or write tasks the storage can handle per second, crucial for
+operating system responsiveness and database performance.</li>
+<li><strong>Latency:</strong> The time delay between a request for data
+and the delivery of that data.</li>
+<li><strong>System Overhead:</strong> The amount of CPU and RAM usage
+required to manage the storage array during heavy benchmark loads.</li>
+</ul>
+<h2 id="raid-0-maximum-throughput">RAID 0: Maximum Throughput</h2>
+<p>RAID 0 uses data striping, which splits data evenly across two or
+more drives with no redundancy.</p>
+<ul>
+<li><strong>Sequential Speeds:</strong> In benchmarks, RAID 0 delivers
+the highest sequential read and write speeds. Ideally, two drives in
+RAID 0 will yield nearly double the throughput of a single drive,
+scaling upward as more drives are added.</li>
+<li><strong>IOPS and Latency:</strong> Random read and write IOPS scale
+significantly because multiple drive controllers work in parallel.
+Latency remains low because there are no parity calculations
+required.</li>
+<li><strong>Hardware Impact:</strong> RAID 0 requires minimal CPU and
+controller overhead. However, when benchmarking fast NVMe SSDs in RAID
+0, the array can easily saturate the motherboard's PCIe lanes or the
+Direct Media Interface (DMI) bus, shifting the benchmark bottleneck from
+the drives to the motherboard chipset.</li>
+</ul>
+<h2 id="raid-1-read-gains-and-write-penalties">RAID 1: Read Gains and
+Write Penalties</h2>
+<p>RAID 1 relies on mirroring, writing identical data to two or more
+drives simultaneously to ensure fault tolerance.</p>
+<ul>
+<li><strong>Sequential Speeds:</strong> Write benchmarks in RAID 1 will
+perform no better than a single drive—and often slightly worse—because
+the benchmark must wait for the slowest drive in the array to finish
+writing the identical data. Read benchmarks, however, can approach RAID
+0 speeds if the RAID controller supports "split seeks," allowing the
+system to read different pieces of data from both drives at the same
+time.</li>
+<li><strong>IOPS and Latency:</strong> Random read IOPS increase
+significantly under intelligent controllers, while random write IOPS
+remain locked to the capability of a single drive. Write latency
+increases slightly due to the synchronization required between
+drives.</li>
+<li><strong>Hardware Impact:</strong> System overhead is very
+low.Duplicating data stream pathways requires minimal processing power
+from the CPU or hardware RAID card, leaving the rest of the computer
+hardware unaffected during heavy benchmarking.</li>
+</ul>
+<h2 id="raid-5-the-parity-bottleneck">RAID 5: The Parity Bottleneck</h2>
+<p>RAID 5 requires at least three drives and stripes both data and
+parity (error-recovery) information across all drives in the array.</p>
+<ul>
+<li><strong>Sequential Speeds:</strong> Read benchmarks perform
+exceptionally well, scaling roughly at a rate of <span
+class="math inline">\(N-1\)</span> (where <span
+class="math inline">\(N\)</span> is the total number of drives), because
+multiple drives are read simultaneously. Sequential write speeds are
+noticeably slower than RAID 0 because capacity and bandwidth are
+consumed by writing parity blocks.</li>
+<li><strong>IOPS and Latency:</strong> Random read IOPS are high,
+matching the <span class="math inline">\(N-1\)</span> scaling.
+Conversely, random write IOPS suffer heavily due to the "RAID 5 write
+penalty." Every single write operation requires the system to perform
+two reads and two writes (reading old data, reading old parity, writing
+new data, and writing new parity). This drastically increases write
+latency during benchmarks.</li>
+<li><strong>Hardware Impact:</strong> RAID 5 places a heavy load on
+computer hardware during write benchmarks. Calculating parity requires
+continuous XOR (exclusive OR) logic operations. In a software RAID
+setup, this consumes noticeable CPU cycles, potentially lowering overall
+system benchmark scores. In a hardware RAID setup, the benchmark ends up
+testing the speed of the RAID card's onboard processor and cache size
+just as much as the drives themselves.</li>
+</ul>
+<h2 id="summary-of-benchmark-expectations">Summary of Benchmark
+Expectations</h2>
+<p>When evaluating storage hardware using these configurations, testers
+can expect the following outcomes:</p>
+<ol type="1">
+<li><strong>RAID 0</strong> will top the charts in all read and write
+benchmarks, limited only by the motherboard's bus bandwidth.</li>
+<li><strong>RAID 1</strong> will show strong read performance,
+single-drive write performance, and negligible CPU usage.</li>
+<li><strong>RAID 5</strong> will show high read performance, severely
+reduced random write performance, and high CPU or RAID controller
+utilization during write-heavy tests.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/raid-0-1-and-5-impact-on-storage-benchmarking-hardware';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

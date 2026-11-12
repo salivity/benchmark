@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact of Windows Fast Startup on Cold Boot Benchmarking - benchmark</title>
+    <meta name="description" content="Windows Fast Startup, also known as hybrid hibernation, significantly skews cold boot hardware benchmarks by preventing the computer from performing a true shutdown. When enabled, this feature saves the Windows kernel and loaded drivers to a hibernation f">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/impact-of-windows-fast-startup-on-cold-boot-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Impact of Windows Fast Startup on Cold Boot Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/impact-of-windows-fast-startup-on-cold-boot-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Windows Fast Startup, also known as hybrid hibernation, significantly skews cold boot hardware benchmarks by preventing the computer from performing a true shutdown. When enabled, this feature saves the Windows kernel and loaded drivers to a hibernation f" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="impact-of-windows-fast-startup-on-cold-boot-benchmarking">Impact
+of Windows Fast Startup on Cold Boot Benchmarking</h1>
+<p>Windows Fast Startup, also known as hybrid hibernation, significantly
+skews cold boot hardware benchmarks by preventing the computer from
+performing a true shutdown. When enabled, this feature saves the Windows
+kernel and loaded drivers to a hibernation file rather than closing
+them, turning subsequent "cold boots" into system resumes. This article
+explains how Fast Startup alters boot mechanics, why it invalidates
+storage, motherboard, and CPU benchmarking, how persistent kernel states
+degrade post-boot performance testing, and how to properly configure
+Windows for accurate hardware evaluation.</p>
+<h2 id="how-fast-startup-alters-the-boot-process">How Fast Startup
+Alters the Boot Process</h2>
+<p>In a traditional cold boot, the operating system completely shuts
+down, all power is removed from the components, and the system
+initializes from scratch upon powering back on.</p>
+<p>With Fast Startup enabled, Windows alters this process into a hybrid
+hibernation:</p>
+<ol type="1">
+<li>User sessions are completely logged off.</li>
+<li>The Windows kernel and active device drivers are copied from system
+RAM to the primary storage drive in a file named
+<code>hiberfil.sys</code>.</li>
+<li>The hardware enters a low-power state.</li>
+<li>Upon pressing the power button, the system reads the
+<code>hiberfil.sys</code> file and loads the pre-initialized kernel
+directly back into RAM.</li>
+</ol>
+<p>Because the operating system does not build the system state from the
+ground up, any benchmark measuring a "cold boot" with this feature
+active is actually measuring a wake-from-hibernation event.</p>
+<h2 id="invalidation-of-storage-drive-benchmarks">Invalidation of
+Storage Drive Benchmarks</h2>
+<p>Storage reviewers frequently use Windows boot times to benchmark the
+real-world performance of SATA SSDs and NVMe M.2 drives. Fast Startup
+invalidates these tests by changing the type of workload placed on the
+drive.</p>
+<ul>
+<li><strong>True Cold Boot:</strong> Requires the storage drive to
+perform thousands of small random reads (4K random reads) to locate and
+load individual system files, services, and drivers. It also relies
+heavily on the CPU to decompress and execute these files.</li>
+<li><strong>Fast Startup Boot:</strong> Primarily tests the drive's
+sequential read speed. The system simply reads the large, contiguous
+<code>hiberfil.sys</code> file and dumps it into the system memory.</li>
+</ul>
+<p>Consequently, Fast Startup compresses the performance gap between
+budget SATA SSDs and high-end PCIe Gen 4 or Gen 5 NVMe drives, making
+boot time comparisons largely useless for evaluating storage
+hierarchy.</p>
+<h2 id="masking-motherboard-and-ram-initialization">Masking Motherboard
+and RAM Initialization</h2>
+<p>A major component of cold boot benchmarking is measuring how quickly
+a motherboard can complete the Power-On Self-Test (POST) and initialize
+hardware. Fast Startup interferes with the accuracy of these
+metrics.</p>
+<p>When waking from a Fast Startup state, the UEFI/BIOS bypasses several
+full initialization routines because the hardware state was already
+established prior to hibernation. This is particularly impactful when
+benchmarking newer platforms, such as AM5 or LGA1700 using DDR5 memory.
+DDR5 requires "memory training" during a true cold boot, which can add
+15 to 60 seconds to the boot time. Fast Startup skips full memory
+training, hiding a motherboard's true initialization speed from the
+benchmark results.</p>
+<h2 id="impact-on-post-boot-hardware-benchmarks">Impact on Post-Boot
+Hardware Benchmarks</h2>
+<p>The effects of Fast Startup extend beyond the boot process itself and
+can negatively impact synthetic benchmarks (like Cinebench or 3DMark)
+and gaming tests run immediately after booting.</p>
+<ul>
+<li><strong>Persistent Driver States:</strong> Because drivers are
+hibernated rather than reloaded, any micro-stutters, memory leaks, or
+degraded states within the GPU or chipset drivers carry over into the
+next session.</li>
+<li><strong>Skewed RAM Availability:</strong> Cached data and fragmented
+memory pages from the previous session are restored, meaning the system
+does not start with a clean, uniform memory allocation for RAM-sensitive
+benchmarks.</li>
+<li><strong>Inaccurate CPU Uptime:</strong> You can verify Fast
+Startup's interference by opening the Windows Task Manager and checking
+the CPU "Up time" under the Performance tab. After a Fast Startup
+"shutdown" and boot, the timer will not reset to zero, proving the
+system environment is not fresh.</li>
+</ul>
+<h2 id="how-to-standardize-cold-boot-benchmarking">How to Standardize
+Cold Boot Benchmarking</h2>
+<p>To conduct accurate, repeatable hardware benchmarks, Fast Startup
+must be disabled. This forces the hardware to undergo a full POST and
+the operating system to initialize all drivers and services from
+scratch.</p>
+<p><strong>Method 1: Disable via Command Prompt
+(Recommended)</strong></p>
+<ol type="1">
+<li>Open the Start Menu, type <code>cmd</code>, right-click
+<strong>Command Prompt</strong>, and select <strong>Run as
+administrator</strong>.</li>
+<li>Type <code>powercfg /h off</code> and press
+<strong>Enter</strong>.</li>
+</ol>
+<p>This command completely disables hibernation and Fast Startup while
+deleting the <code>hiberfil.sys</code> file.</p>
+<p><strong>Method 2: Disable via Control Panel</strong></p>
+<ol type="1">
+<li>Open the <strong>Control Panel</strong> and navigate to
+<strong>Power Options</strong>.</li>
+<li>Click <strong>Choose what the power buttons do</strong> on the left
+sidebar.</li>
+<li>Click <strong>Change settings that are currently
+unavailable</strong>.</li>
+<li>Uncheck <strong>Turn on fast startup (recommended)</strong> and
+click <strong>Save changes</strong>.</li>
+</ol>
+<p>Alternatively, if testing a system where settings cannot be altered,
+initiating a <strong>Restart</strong> within Windows rather than a
+<strong>Shut Down</strong> completely bypasses Fast Startup, forcing a
+true system reset and full hardware initialization.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/impact-of-windows-fast-startup-on-cold-boot-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

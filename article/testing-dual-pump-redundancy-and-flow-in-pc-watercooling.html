@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Dual-Pump Redundancy and Flow in PC Watercooling - benchmark</title>
+    <meta name="description" content="This article outlines the standardized methodology for benchmarking dual-pump watercooling loops in computer hardware. It covers the required testing equipment, the step-by-step procedures for measuring flow rate scaling, and the protocols for simulating">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/testing-dual-pump-redundancy-and-flow-in-pc-watercooling">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Testing Dual-Pump Redundancy and Flow in PC Watercooling - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/testing-dual-pump-redundancy-and-flow-in-pc-watercooling" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article outlines the standardized methodology for benchmarking dual-pump watercooling loops in computer hardware. It covers the required testing equipment, the step-by-step procedures for measuring flow rate scaling, and the protocols for simulating" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="testing-dual-pump-redundancy-and-flow-in-pc-watercooling">Testing
+Dual-Pump Redundancy and Flow in PC Watercooling</h1>
+<p>This article outlines the standardized methodology for benchmarking
+dual-pump watercooling loops in computer hardware. It covers the
+required testing equipment, the step-by-step procedures for measuring
+flow rate scaling, and the protocols for simulating pump failures to
+evaluate thermal and mechanical redundancy under maximum system
+load.</p>
+<h3 id="1-test-bench-and-sensor-configuration">1. Test Bench and Sensor
+Configuration</h3>
+<p>To acquire accurate data, the watercooling loop must be instrumented
+with calibrated sensors and controlled variables.</p>
+<ul>
+<li><strong>Pump Setup:</strong> Install two identical PWM-controlled
+pumps (such as D5 or DDC models) in a series configuration using a
+dedicated dual-pump top or sequential standalone tops.</li>
+<li><strong>Flow Measurement:</strong> Place a calibrated digital inline
+flow meter (measuring in Liters per Hour or Gallons per Minute) in a
+straight section of tubing to avoid turbulence-induced reading
+errors.</li>
+<li><strong>Thermal Sensors:</strong> Install at least two inline
+coolant temperature sensors—one immediately after the heat-generating
+components (CPU/GPU blocks) and one immediately after the radiators. Set
+up a digital probe to monitor ambient room temperature.</li>
+<li><strong>Data Logging:</strong> Connect all pumps, fans, flow meters,
+and temperature sensors to a dedicated hardware controller capable of
+logging real-time data at one-second intervals.</li>
+</ul>
+<h3 id="2-establishing-the-baseline">2. Establishing the Baseline</h3>
+<p>Before testing flow scaling and redundancy, environmental and
+mechanical variables must be locked to ensure data repeatability.</p>
+<ul>
+<li><strong>Bleed the Loop:</strong> Run the system for 24 hours at
+varying pump speeds to purge all micro-bubbles. Air trapped in the loop
+will invalidate flow rate and thermal transfer data.</li>
+<li><strong>Lock Fan Speeds:</strong> Set all radiator fans to a fixed
+RPM (e.g., 1200 RPM). Do not use automatic fan curves, as fluctuating
+airflow will skew coolant temperature readings.</li>
+<li><strong>Control Ambient Temperature:</strong> Maintain the testing
+room at a strict, unchanging ambient temperature (e.g., 21°C).</li>
+</ul>
+<h3 id="3-flow-rate-benchmarking-methodology">3. Flow Rate Benchmarking
+Methodology</h3>
+<p>This phase measures how effectively the dual pumps overcome loop
+restriction without thermal variables.</p>
+<ul>
+<li><strong>Synchronized Stepping:</strong> With the PC idling, set both
+pumps to run at synchronized PWM duty cycles, starting at 20% and
+increasing in 20% increments up to 100%.</li>
+<li><strong>Stabilization:</strong> Hold each PWM interval for 10
+minutes to allow hydraulic pressure and flow rates to stabilize.</li>
+<li><strong>Data Recording:</strong> Record the average flow rate (L/h)
+and pump RPM for the final 3 minutes of each interval.</li>
+</ul>
+<h3 id="4-thermal-load-standardization">4. Thermal Load
+Standardization</h3>
+<p>To test how flow rate impacts cooling performance, a constant and
+repeatable heat load must be applied.</p>
+<ul>
+<li><strong>Synthetic Load:</strong> Utilize software that generates a
+flat, unchanging power draw (measured in Watts). Run Prime95 (Small
+FFTs, AVX disabled) for the CPU and FurMark for the GPU
+simultaneously.</li>
+<li><strong>Thermal Equilibrium:</strong> Run the load for 30 minutes
+until the coolant temperature stops rising and reaches a steady
+state.</li>
+<li><strong>Delta-T Calculation:</strong> Repeat the synchronized PWM
+stepping from Phase 3 under this full thermal load. At each interval,
+subtract the ambient room temperature from the hottest coolant
+temperature to record the Coolant Delta-T, alongside average CPU and GPU
+core temperatures.</li>
+</ul>
+<h3 id="5-redundancy-and-failover-testing">5. Redundancy and Failover
+Testing</h3>
+<p>This phase evaluates the system's ability to survive a sudden
+mechanical pump failure while under a 100% thermal workload.</p>
+<ul>
+<li><strong>Simulate Primary Pump Failure:</strong> Bring the system to
+thermal equilibrium under full load with both pumps running at a
+standard operational speed (e.g., 50% PWM). Physically disconnect the
+power cable (not the PWM signal wire) from Pump 1.</li>
+<li><strong>Measure Dead-Pump Restriction:</strong> Log the immediate
+drop in flow rate. A stationary pump impeller introduces new restriction
+into the loop; this step measures how well Pump 2 pushes coolant past
+the dead Pump 1.</li>
+<li><strong>Thermal Runaway Observation:</strong> Let the system run on
+the single surviving pump for 30 minutes under full load. Log the new
+coolant temperature equilibrium and verify whether the CPU or GPU hits
+thermal throttling limits.</li>
+<li><strong>Simulate Secondary Pump Failure:</strong> Reconnect Pump 1,
+allow the system to return to its dual-pump baseline equilibrium, and
+repeat the exact power-cut test on Pump 2. This accounts for fluid
+dynamic differences based on the pumps' sequential order in the
+loop.</li>
+</ul>
+<h3 id="6-dynamic-recovery-testing">6. Dynamic Recovery Testing</h3>
+<p>Most users configure their systems to react to a pump failure. This
+step tests the automated recovery methodology.</p>
+<ul>
+<li><strong>Configure Fail-Safes:</strong> Set the hardware controller
+software to boost Pump 2 to 100% PWM if Pump 1 reports 0 RPM, and vice
+versa.</li>
+<li><strong>Execute Dynamic Test:</strong> Under full thermal load with
+both pumps at 50% PWM, cut power to Pump 1.</li>
+<li><strong>Log Recovery:</strong> Measure the time it takes for the
+controller to detect the failure, ramp up the surviving pump, and
+stabilize the flow rate. Record the resulting thermal equilibrium.</li>
+</ul>
+<h3 id="7-data-analysis-and-passfail-criteria">7. Data Analysis and
+Pass/Fail Criteria</h3>
+<p>To conclude the benchmark, compile the logged data into comparative
+charts showing Flow Rate vs. PWM % and Component Temperature vs. Flow
+Rate.</p>
+<p>A dual-pump setup passes the redundancy benchmark if the single
+surviving pump (running at its automated failover speed) can maintain a
+minimum flow rate of 100 L/h (approx. 0.45 GPM), keep coolant
+temperatures below the maximum operating rating of the tubing/pump
+(typically 60°C), and prevent the CPU and GPU from thermal throttling
+under a continuous 100% synthetic load.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/testing-dual-pump-redundancy-and-flow-in-pc-watercooling';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

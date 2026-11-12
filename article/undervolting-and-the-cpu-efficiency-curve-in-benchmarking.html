@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undervolting and the CPU Efficiency Curve in Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores the impact of undervolting a processor on its power efficiency curve during computer hardware benchmarking. By reducing the voltage supplied to the CPU while maintaining or increasing its clock speeds, undervolting significantly lowe">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/undervolting-and-the-cpu-efficiency-curve-in-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Undervolting and the CPU Efficiency Curve in Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/undervolting-and-the-cpu-efficiency-curve-in-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the impact of undervolting a processor on its power efficiency curve during computer hardware benchmarking. By reducing the voltage supplied to the CPU while maintaining or increasing its clock speeds, undervolting significantly lowe" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="undervolting-and-the-cpu-efficiency-curve-in-benchmarking">Undervolting
+and the CPU Efficiency Curve in Benchmarking</h1>
+<p>This article explores the impact of undervolting a processor on its
+power efficiency curve during computer hardware benchmarking. By
+reducing the voltage supplied to the CPU while maintaining or increasing
+its clock speeds, undervolting significantly lowers power consumption
+and heat generation. Consequently, this process shifts the processor's
+efficiency curve favorably, allowing the hardware to achieve higher
+performance-per-watt metrics, avoid thermal throttling, and sustain peak
+boost clocks for longer durations under heavy benchmark loads.</p>
+<h2 id="understanding-the-processor-efficiency-curve">Understanding the
+Processor Efficiency Curve</h2>
+<p>Every processor operates on a pre-defined Voltage-Frequency (V/F)
+curve set by the manufacturer. To reach higher clock speeds (frequency),
+the processor requires more voltage. However, the relationship between
+voltage and power consumption is not linear; it is exponential.</p>
+<p>The dynamic power consumption of a processor is roughly calculated
+using the formula: <strong>Power = Capacitance × Voltage² ×
+Frequency</strong>.</p>
+<p>Because voltage is squared in this equation, a small increase in
+voltage results in a massive spike in power draw and heat output. On a
+graph plotting performance against power consumption (the efficiency
+curve), efficiency drops sharply as the processor approaches its maximum
+clock speeds.</p>
+<h2 id="why-manufacturers-use-excess-voltage">Why Manufacturers Use
+Excess Voltage</h2>
+<p>Chip manufacturers produce millions of processors, and due to
+microscopic variations in silicon quality—often called the "silicon
+lottery"—no two chips are identical. To ensure that even the
+lowest-quality silicon functions stably at advertised speeds,
+manufacturers apply a default V/F curve with a safety margin of extra
+voltage, known as a guardband.</p>
+<p>For the vast majority of processors, this extra voltage is
+unnecessary and only serves to generate excess heat and waste power.
+Undervolting is the process of manually reducing this guardband to find
+the minimum voltage required for a specific chip to remain stable.</p>
+<h2 id="how-undervolting-shifts-the-curve-in-benchmarks">How
+Undervolting Shifts the Curve in Benchmarks</h2>
+<p>Benchmarking software is designed to push computer hardware to its
+absolute limits, exposing the inefficiencies of the default V/F curve.
+When you apply an undervolt, you alter how the processor behaves during
+these stress tests in three distinct ways.</p>
+<h3 id="1-lower-power-draw-at-fixed-frequencies">1. Lower Power Draw at
+Fixed Frequencies</h3>
+<p>If a processor is locked to a specific frequency during a benchmark,
+undervolting directly reduces the wattage required to maintain that
+speed. Because the performance remains identical while power consumption
+drops, the performance-per-watt metric increases. On an efficiency
+graph, this shifts the curve toward using less power for the same
+workload.</p>
+<h3 id="2-higher-clocks-at-power-limits">2. Higher Clocks at Power
+Limits</h3>
+<p>Modern processors from Intel and AMD use automated boosting
+algorithms that push clock speeds as high as possible until the chip
+hits a predetermined power limit (measured in Watts) or thermal
+limit.</p>
+<p>During a heavy multi-core benchmark like Cinebench, a stock processor
+will quickly hit its maximum power limit. When you undervolt the
+processor, each megahertz of frequency costs less power. Because the
+chip is no longer hitting its wattage ceiling as quickly, the boosting
+algorithm uses the newly freed power headroom to push the clock speeds
+higher. In this scenario, the efficiency curve shifts upward: you get
+more performance at the exact same power draw.</p>
+<h3 id="3-elimination-of-thermal-throttling">3. Elimination of Thermal
+Throttling</h3>
+<p>Power consumed by a processor is converted almost entirely into heat.
+During extended benchmarking sessions, a stock processor may exceed its
+safe operating temperature, forcing it to lower its clock speeds and
+voltage to cool down—a process called thermal throttling. This causes
+benchmark scores to drop.</p>
+<p>By reducing the voltage, temperatures drop significantly. This keeps
+the processor below its thermal throttling threshold, allowing it to
+maintain maximum boost clocks throughout the entire duration of the
+benchmark.</p>
+<h2 id="the-limits-of-efficiency-instability">The Limits of Efficiency:
+Instability</h2>
+<p>While undervolting improves the efficiency curve, it has a hard
+limit. If the voltage is reduced too far, the electrical signals inside
+the processor will fail to register correctly during complex
+calculations.</p>
+<p>In a benchmark, this manifests as two things:</p>
+<ul>
+<li><strong>Clock Stretching:</strong> The processor reports a high
+clock speed, but internally skips cycles to prevent crashing, resulting
+in drastically lower benchmark scores.</li>
+<li><strong>System Crashes:</strong> The benchmark software will freeze,
+or the operating system will encounter a fatal error (such as a Blue
+Screen of Death).</li>
+</ul>
+<p>Finding the optimal efficiency curve requires iterative
+benchmarking—lowering the voltage in small increments and running stress
+tests until the exact threshold of stability is found.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/undervolting-and-the-cpu-efficiency-curve-in-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

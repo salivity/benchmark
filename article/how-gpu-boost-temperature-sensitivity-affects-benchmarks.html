@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How GPU Boost Temperature Sensitivity Affects Benchmarks - benchmark</title>
+    <meta name="description" content="Modern graphics processing units (GPUs) rely on dynamic boost algorithms to maximize performance in real-time. Because these algorithms are acutely sensitive to temperature, even minor fluctuations in thermal conditions can cause a GPU to alter its clock">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-gpu-boost-temperature-sensitivity-affects-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How GPU Boost Temperature Sensitivity Affects Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-gpu-boost-temperature-sensitivity-affects-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Modern graphics processing units (GPUs) rely on dynamic boost algorithms to maximize performance in real-time. Because these algorithms are acutely sensitive to temperature, even minor fluctuations in thermal conditions can cause a GPU to alter its clock" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-gpu-boost-temperature-sensitivity-affects-benchmarks">How
+GPU Boost Temperature Sensitivity Affects Benchmarks</h1>
+<p>Modern graphics processing units (GPUs) rely on dynamic boost
+algorithms to maximize performance in real-time. Because these
+algorithms are acutely sensitive to temperature, even minor fluctuations
+in thermal conditions can cause a GPU to alter its clock speeds. This
+article explores how GPU boost mechanics operate, why temperature
+sensitivity directly alters hardware performance, and how this dynamic
+creates noticeable score differences when benchmarking identical
+computer hardware.</p>
+<h2 id="the-mechanics-of-gpu-boost-algorithms">The Mechanics of GPU
+Boost Algorithms</h2>
+<p>Modern GPUs from manufacturers like NVIDIA and AMD do not operate at
+fixed clock speeds. Instead, they use opportunistic scaling algorithms
+that automatically increase the core clock speed well beyond the
+advertised boost clock.</p>
+<p>The algorithm continuously monitors three primary telemetry metrics
+in real-time:</p>
+<ul>
+<li><strong>Power draw</strong> (measured in watts)</li>
+<li><strong>Voltage limits</strong> (measured in millivolts)</li>
+<li><strong>Core and hotspot temperatures</strong> (measured in degrees
+Celsius)</li>
+</ul>
+<p>As long as the GPU remains below the hard-coded limits for all three
+metrics, the boost algorithm will aggressively push the clock speed
+higher to extract maximum performance during a workload.</p>
+<h2 id="temperature-thresholds-vs-thermal-throttling">Temperature
+Thresholds vs. Thermal Throttling</h2>
+<p>A common misconception is that a GPU only loses performance when it
+hits its maximum thermal limit—typically between 83°C and 95°C—resulting
+in heavy thermal throttling. In reality, modern boost algorithms are
+sensitive to temperature across the entire thermal spectrum.</p>
+<p>Starting at relatively low temperatures, often around 40°C to 50°C,
+the GPU utilizes a behavior known as thermal stepping or frequency
+binning. As silicon gets hotter, it becomes less efficient, leaks more
+current, and requires higher voltage to remain stable at high
+frequencies. To maintain stability and stay within power limits, the
+algorithm steps down the clock speed by a single "bin" (typically 12.5
+MHz to 15 MHz) for every 3°C to 5°C increase in temperature.</p>
+<p>Consequently, a GPU operating at 55°C will naturally boost higher
+than the exact same GPU operating at 70°C, even though neither
+temperature is considered dangerously hot.</p>
+<h2 id="how-temperature-sensitivity-skew-benchmark-scores">How
+Temperature Sensitivity Skew Benchmark Scores</h2>
+<p>Because core clock speed directly dictates how quickly a GPU can
+process data and render frames, these micro-adjustments in frequency
+directly translate to different benchmark scores. This creates several
+scenarios where identical hardware produces inconsistent results:</p>
+<h3 id="cold-runs-vs-warm-runs">Cold Runs vs. Warm Runs</h3>
+<p>If you run a short benchmark immediately after booting a computer,
+the GPU's metal heatsink and liquid cooling (if applicable) are at room
+temperature. It takes time for this thermal mass to heat up. During a
+"cold run," the GPU stays in lower temperature brackets for a longer
+portion of the test, sustaining higher clock speeds and generating an
+artificially high score. Running the exact same test ten minutes later,
+once the cooler is heat-soaked, will yield a lower score.</p>
+<h3 id="ambient-room-temperature">Ambient Room Temperature</h3>
+<p>Computer cooling systems cannot cool hardware below the ambient
+temperature of the room without exotic cooling methods. A benchmark
+conducted in an air-conditioned room at 18°C (64°F) feeds colder air
+into the GPU than a room at 28°C (82°F). That 10°C difference is enough
+to cost the GPU two or three frequency bins, dropping the clock speed by
+30 MHz to 45 MHz and noticeably lowering the final benchmark score.</p>
+<h3 id="case-airflow-and-cooler-variance">Case Airflow and Cooler
+Variance</h3>
+<p>Two users with the exact same graphics card model will get different
+scores if one user has a high-airflow mesh computer case and the other
+has a restrictive, solid-front case. Furthermore, different board
+partners (like ASUS, MSI, or Gigabyte) slap different coolers onto the
+exact same GPU chip. A thicker heatsink or more aggressive fan curve
+keeps the core temperature lower, allowing the boost algorithm to
+maintain higher clocks and beat competing models in benchmarks, even if
+the underlying silicon is identical.</p>
+<h2 id="achieving-consistent-benchmark-results">Achieving Consistent
+Benchmark Results</h2>
+<p>To prevent GPU boost temperature sensitivity from invalidating
+hardware comparisons, testers must standardize their benchmarking
+process:</p>
+<ol type="1">
+<li><strong>Pre-Heat the Hardware:</strong> Always run a demanding
+workload or a "warm-up" benchmark loop for 10 to 15 minutes before
+recording any data. This ensures the GPU reaches thermal equilibrium
+(steady state).</li>
+<li><strong>Control Ambient Temperatures:</strong> Perform comparative
+benchmarks in a room with a strictly controlled thermostat to ensure the
+intake air temperature remains identical across all tests.</li>
+<li><strong>Lock Fan Speeds:</strong> Automatic fan curves react
+differently to sudden spikes in load. Setting the GPU and case fans to a
+fixed percentage (e.g., 70% or 100%) removes fan hysteresis as a
+variable.</li>
+</ol>
+<p>By eliminating thermal variables, the GPU boost algorithm stabilizes,
+ensuring that benchmark score differences reflect actual hardware
+capabilities rather than temporary environmental advantages.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-gpu-boost-temperature-sensitivity-affects-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

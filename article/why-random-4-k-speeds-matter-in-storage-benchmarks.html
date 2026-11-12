@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Random 4K Speeds Matter in Storage Benchmarks - benchmark</title>
+    <meta name="description" content="Benchmarking computer storage involves much more than measuring how fast a drive can transfer a single, massive movie file. This article explains the critical purpose of testing random 4K read and write speeds in storage benchmarks. It covers what the ter">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-random-4-k-speeds-matter-in-storage-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Random 4K Speeds Matter in Storage Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-random-4-k-speeds-matter-in-storage-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Benchmarking computer storage involves much more than measuring how fast a drive can transfer a single, massive movie file. This article explains the critical purpose of testing random 4K read and write speeds in storage benchmarks. It covers what the ter" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-random-4k-speeds-matter-in-storage-benchmarks">Why Random 4K
+Speeds Matter in Storage Benchmarks</h1>
+<p>Benchmarking computer storage involves much more than measuring how
+fast a drive can transfer a single, massive movie file. This article
+explains the critical purpose of testing random 4K read and write speeds
+in storage benchmarks. It covers what the term "random 4K" actually
+means, how it differs from the sequential speeds advertised by
+manufacturers, and why this specific metric is the most accurate
+indicator of a computer's everyday responsiveness and real-world
+performance.</p>
+<h3 id="what-does-random-4k-mean">What Does "Random 4K" Mean?</h3>
+<p>To understand the purpose of the benchmark, you must first understand
+the terminology:</p>
+<ul>
+<li><strong>4K (4 Kilobytes):</strong> When you format a storage drive
+(like an SSD or HDD), the file system divides the drive into small
+chunks called allocation units or clusters. For modern file systems like
+Windows NTFS, the default size of this chunk is 4 kilobytes. This means
+the smallest amount of space a file can take up is 4K, and the operating
+system processes most basic data in 4K blocks.</li>
+<li><strong>Random:</strong> Data is rarely saved in one neat,
+continuous line. Over time, as files are created, modified, and deleted,
+those 4K blocks of data get scattered all over the drive. "Random" means
+the storage drive has to jump to entirely different locations to find or
+save these 4K blocks.</li>
+</ul>
+<h3 id="sequential-vs-random-speeds">Sequential vs. Random Speeds</h3>
+<p>Storage manufacturers heavily advertise <strong>sequential</strong>
+read and write speeds on their packaging. Sequential testing measures
+how fast a drive can read or write a massive file (like a 20GB video)
+where all the data is lined up neatly in one continuous row. It is the
+best-case scenario for a drive and produces the highest numbers.</p>
+<p>However, your computer rarely performs purely sequential tasks. The
+vast majority of daily computing involves accessing thousands of tiny
+files scattered across the drive. Testing random 4K speeds strips away
+the marketing numbers and reveals how the drive handles the hardest,
+most common type of workload.</p>
+<h3 id="why-random-4k-read-speeds-matter">Why Random 4K Read Speeds
+Matter</h3>
+<p>Random 4K read performance directly dictates how fast and "snappy"
+your computer feels during basic use.</p>
+<p>When you boot up your operating system, launch a web browser, or load
+a video game, the computer is not loading one giant file. Instead, it
+has to locate and read thousands of tiny 4K files—such as system
+drivers, configuration files, and Dynamic Link Libraries (DLLs)—that are
+stored in random locations. A drive with high random 4K read speeds will
+boot up faster, open applications almost instantly, and load game assets
+without hitching.</p>
+<h3 id="why-random-4k-write-speeds-matter">Why Random 4K Write Speeds
+Matter</h3>
+<p>While you use your computer, the operating system is constantly
+writing small bits of data in the background without your direct
+input.</p>
+<p>Examples of random 4K writes include:</p>
+<ul>
+<li>Saving temporary web browser caches as you scroll through
+websites.</li>
+<li>Updating operating system logs and registry entries.</li>
+<li>Autosaving documents you are actively working on.</li>
+<li>Downloading and installing software updates, which usually consist
+of thousands of small files.</li>
+</ul>
+<p>If a storage drive has poor random 4K write speeds, the drive will
+become overwhelmed by these background tasks. This creates a bottleneck,
+causing your system to stutter, freeze, or feel sluggish while
+multitasking, even if you have a powerful processor and plenty of
+RAM.</p>
+<h3 id="understanding-queue-depth-qd1-vs-qd32">Understanding Queue Depth
+(QD1 vs. QD32)</h3>
+<p>When benchmarking random 4K speeds, software usually tests the drive
+at different "Queue Depths" (QD). Queue Depth refers to how many data
+requests are waiting in line for the drive to process at the exact same
+time.</p>
+<ul>
+<li><strong>4K QD1 (Queue Depth 1):</strong> The benchmark sends one 4K
+task, waits for it to finish, and then sends the next. This is the most
+important metric for everyday consumers and gamers. Most daily desktop
+tasks happen at a low queue depth, making 4K QD1 the ultimate test of a
+drive's raw latency and real-world responsiveness.</li>
+<li><strong>4K QD32 (Queue Depth 32):</strong> The benchmark floods the
+drive with 32 requests at the same time. Consumer PCs rarely hit this
+level of simultaneous storage traffic. The purpose of high queue depth
+testing is to find the absolute limit of the drive's controller and to
+simulate heavy workstation, database, or server workloads.</li>
+</ul>
+<h3 id="summary">Summary</h3>
+<p>The purpose of testing random 4K read and write speeds is to simulate
+real-world computing. While sequential benchmarks show how fast a drive
+can move a massive file in an ideal scenario, random 4K benchmarks
+reveal how fast your operating system will boot, how quickly your apps
+will launch, and how smoothly your computer will run during everyday
+multitasking.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-random-4-k-speeds-matter-in-storage-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

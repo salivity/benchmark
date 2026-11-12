@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing UPS Battery Switchover Time Under Full Load - benchmark</title>
+    <meta name="description" content="This article outlines the standard methodology for accurately benchmarking an Uninterruptible Power Supply (UPS) battery switchover time under a 100% load capacity. It covers the essential testing equipment required, the precise setup of the hardware load">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/testing-ups-battery-switchover-time-under-full-load">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Testing UPS Battery Switchover Time Under Full Load - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/testing-ups-battery-switchover-time-under-full-load" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article outlines the standard methodology for accurately benchmarking an Uninterruptible Power Supply (UPS) battery switchover time under a 100% load capacity. It covers the essential testing equipment required, the precise setup of the hardware load" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="testing-ups-battery-switchover-time-under-full-load">Testing UPS
+Battery Switchover Time Under Full Load</h1>
+<p>This article outlines the standard methodology for accurately
+benchmarking an Uninterruptible Power Supply (UPS) battery switchover
+time under a 100% load capacity. It covers the essential testing
+equipment required, the precise setup of the hardware load and
+oscilloscope, the step-by-step execution of the power cut simulation,
+and how to analyze the resulting waveform data to determine the exact
+transfer time in milliseconds.</p>
+<h3 id="required-testing-equipment">Required Testing Equipment</h3>
+<p>To measure UPS switchover time (also known as transfer time) with
+lab-grade accuracy, you cannot rely on software monitoring tools. You
+need physical hardware capable of capturing electrical changes at the
+millisecond level:</p>
+<ul>
+<li><strong>The Unit Under Test (UUT):</strong> The UPS with its
+internal battery charged to 100% capacity.</li>
+<li><strong>Programmable AC Electronic Load:</strong> A device capable
+of drawing a precise, constant wattage equal to the maximum rating of
+the UPS. (Using an actual PC is discouraged for this specific test, as
+PC power draw fluctuates wildly).</li>
+<li><strong>Digital Storage Oscilloscope (DSO):</strong> For capturing
+and measuring the AC output waveform.</li>
+<li><strong>High-Voltage Differential Probe:</strong> To safely connect
+the oscilloscope to the high-voltage AC output of the UPS without
+causing a ground loop or damaging the scope.</li>
+<li><strong>Dedicated Circuit Breaker Switch:</strong> Placed between
+the wall outlet and the UPS input to simulate an instantaneous utility
+power failure.</li>
+</ul>
+<h3 id="hardware-setup">Hardware Setup</h3>
+<ol type="1">
+<li><strong>Isolate the Mains Power:</strong> Plug the dedicated circuit
+breaker switch into the wall outlet, and plug the UPS input cord into
+this switch. Do not simply unplug the UPS from the wall during testing,
+as this removes the ground connection and creates arcing, which skews
+results.</li>
+<li><strong>Connect the Load:</strong> Plug the programmable electronic
+load into the primary battery-backed outlet of the UPS.</li>
+<li><strong>Attach the Probes:</strong> Connect the high-voltage
+differential probe to the oscilloscope. Attach the probe's leads to the
+Hot and Neutral terminals at the connection point between the UPS output
+and the electronic load.</li>
+</ol>
+<h3 id="oscilloscope-configuration">Oscilloscope Configuration</h3>
+<p>Configure the oscilloscope to capture the exact moment the power
+drops:</p>
+<ul>
+<li><strong>Vertical Scale (Voltage):</strong> Set to display the full
+AC waveform clearly (e.g., 50V or 100V per division, depending on
+whether you are testing 120V or 230V systems).</li>
+<li><strong>Horizontal Scale (Timebase):</strong> Set to 5 milliseconds
+(ms) or 10ms per division. This resolution is tight enough to measure
+the transfer gap accurately while still showing the wave before and
+after the event.</li>
+<li><strong>Trigger Mode:</strong> Set to "Single" or "Normal" mode
+using a "Dropout" or "Pulse Width" trigger. Alternatively, if using a
+two-channel scope, use a second probe on the AC <em>input</em> line to
+trigger the scope the exact instant the breaker is flipped.</li>
+</ul>
+<h3 id="executing-the-benchmark">Executing the Benchmark</h3>
+<ol type="1">
+<li><strong>Apply Full Load:</strong> Turn on the UPS and configure the
+electronic load to draw 100% of the UPS's rated wattage (not VA). For
+example, if a 1500VA UPS is rated for 900W, set the load to a constant
+900W.</li>
+<li><strong>Stabilize:</strong> Allow the system to run for 5 minutes so
+the internal components reach normal operating temperatures.</li>
+<li><strong>Arm the Oscilloscope:</strong> Press the "Single" capture
+button on the oscilloscope so it is waiting for the trigger event.</li>
+<li><strong>Cut the Power:</strong> Flip the dedicated circuit breaker
+switch to cut the AC input to the UPS.</li>
+<li><strong>Verify Capture:</strong> Ensure the oscilloscope
+successfully froze the waveform showing the transition from utility
+power to battery inverter power.</li>
+<li><strong>Repeat for Phase Variance:</strong> AC power cycles between
+peak voltage and zero voltage (zero-crossing) 50 or 60 times a second. A
+UPS reacts differently depending on where the sine wave is when the
+power dies. Repeat this test at least 10 times, recharging the battery
+to 100% between tests, to capture the "worst-case" switchover scenario
+(usually when power is cut right at the peak of the sine wave).</li>
+</ol>
+<h3 id="analyzing-the-waveform-data">Analyzing the Waveform Data</h3>
+<p>Once you have captured the waveform on the oscilloscope, use the
+scope’s vertical cursors to measure the switchover time:</p>
+<ol type="1">
+<li><strong>Place Cursor A:</strong> Align the first cursor at the exact
+point where the normal AC sine wave collapses and drops toward zero
+volts.</li>
+<li><strong>Place Cursor B:</strong> Align the second cursor at the
+exact point where the UPS inverter engages and the output voltage
+returns to its nominal root-mean-square (RMS) level.</li>
+<li><strong>Read the Delta (<span
+class="math inline">\(\Delta\)</span>t):</strong> The time difference
+between Cursor A and Cursor B is your switchover time, measured in
+milliseconds.</li>
+</ol>
+<h3 id="evaluating-the-results-for-computer-hardware">Evaluating the
+Results for Computer Hardware</h3>
+<p>In computer hardware benchmarking, the switchover time is judged
+against the ATX Power Supply Unit (PSU) specification. The ATX standard
+dictates that a PC power supply must have a "hold-up time" of at least
+16ms at full load.</p>
+<p>Therefore, for a UPS to pass the benchmark and prevent a computer
+from rebooting under full load, its worst-case switchover time must be
+strictly less than 16ms. Line-interactive and standby UPS units
+typically score between 4ms and 10ms, while double-conversion (online)
+UPS units should always measure at 0ms.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/testing-ups-battery-switchover-time-under-full-load';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

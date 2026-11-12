@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Monitoring WHEA Loggers is Crucial in Benchmarking - benchmark</title>
+    <meta name="description" content="Monitoring the Windows Hardware Error Architecture (WHEA) logger is essential when benchmarking computer hardware to ensure true system stability. This article explains what WHEA errors are and why simply completing a benchmark without crashing does not g">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-monitoring-whea-loggers-is-crucial-in-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Monitoring WHEA Loggers is Crucial in Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-monitoring-whea-loggers-is-crucial-in-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Monitoring the Windows Hardware Error Architecture (WHEA) logger is essential when benchmarking computer hardware to ensure true system stability. This article explains what WHEA errors are and why simply completing a benchmark without crashing does not g" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-monitoring-whea-loggers-is-crucial-in-benchmarking">Why
+Monitoring WHEA Loggers is Crucial in Benchmarking</h1>
+<p>Monitoring the Windows Hardware Error Architecture (WHEA) logger is
+essential when benchmarking computer hardware to ensure true system
+stability. This article explains what WHEA errors are and why simply
+completing a benchmark without crashing does not guarantee a reliable
+system. By actively tracking these hardware-level alerts, you can
+identify silent performance degradation, prevent long-term operating
+system corruption, and accurately validate your CPU, GPU, and memory
+configurations during heavy stress tests.</p>
+<h3 id="what-is-the-whea-logger">What is the WHEA Logger?</h3>
+<p>WHEA stands for Windows Hardware Error Architecture. It is a built-in
+Windows subsystem that communicates directly with your computer’s
+hardware—specifically the CPU, RAM, motherboard chipset, and PCIe
+devices. When a piece of hardware makes a calculation mistake or
+experiences a communication failure, it reports this to the WHEA logger,
+which then records it in the Windows Event Viewer.</p>
+<h3 id="detecting-the-illusion-of-stability">Detecting the Illusion of
+Stability</h3>
+<p>The most common mistake in hardware benchmarking and overclocking is
+assuming that a system is stable just because it did not crash or
+display a Blue Screen of Death (BSOD).</p>
+<p>Hardware errors generally fall into two categories:</p>
+<ul>
+<li><strong>Uncorrected Errors:</strong> Fatal errors that immediately
+crash the system to prevent damage or data loss.</li>
+<li><strong>Corrected Errors:</strong> Minor faults that the hardware
+catches and fixes on the fly.</li>
+</ul>
+<p>When a corrected error occurs (often logged as WHEA Event ID 19), the
+benchmark continues to run. Without monitoring the WHEA logger, you
+might finish a stress test and falsely believe your hardware
+configuration is entirely stable, when in reality, it is barely holding
+together on the edge of failure.</p>
+<h3 id="stopping-performance-degradation">Stopping Performance
+Degradation</h3>
+<p>Benchmarking is all about measuring peak performance, and WHEA errors
+directly hurt your scores. When your CPU, RAM, or PCIe bus encounters an
+unstable state and generates a corrected error, the system must pause
+for a fraction of a millisecond to re-run the failed calculation or
+resend the lost data packet.</p>
+<p>If your system is generating hundreds of WHEA errors per minute
+during a benchmark, the hardware is spending valuable clock cycles
+fixing its own mistakes instead of rendering frames or processing data.
+Monitoring WHEA ensures that your benchmark scores reflect actual
+hardware performance rather than error-correction overhead.</p>
+<h3 id="preventing-silent-data-corruption">Preventing Silent Data
+Corruption</h3>
+<p>Ignoring WHEA loggers during benchmarking puts your operating system
+and personal files at risk. This is especially true when benchmarking
+memory (RAM) or the CPU's internal interconnect (such as AMD’s Infinity
+Fabric or Intel’s Ring Bus).</p>
+<p>If unstable hardware writes faulty data to your storage drive before
+the system realizes an error has occurred, it results in silent data
+corruption. Over time, this corrupts Windows system files, leading to
+random application crashes, broken updates, and an eventually unbootable
+operating system. Catching the first WHEA error during a benchmark
+allows you to stop the test immediately before corrupt data is written
+to your drive.</p>
+<h3 id="pinpointing-the-exact-hardware-culprit">Pinpointing the Exact
+Hardware Culprit</h3>
+<p>When a benchmark fails, it can be difficult to know which component
+caused the issue. The WHEA logger removes the guesswork by providing
+specific error codes and hardware IDs.</p>
+<p>By reading the WHEA logs, you can determine the exact nature of the
+failure:</p>
+<ul>
+<li><strong>Cache Hierarchy Errors:</strong> Usually point to an
+unstable CPU core voltage or frequency. If you look at the processor's
+APIC ID in the log, you can even identify the exact physical core that
+failed.</li>
+<li><strong>Bus/Interconnect Errors:</strong> Typically indicate issues
+with the CPU's memory controller, Infinity Fabric, or insufficient
+System Agent/SoC voltage.</li>
+<li><strong>PCIe Errors:</strong> Point toward an unstable GPU
+overclock, a faulty riser cable, or a failing NVMe SSD.</li>
+</ul>
+<h3 id="how-to-monitor-whea-errors">How to Monitor WHEA Errors</h3>
+<p>You do not need to dig through the complex Windows Event Viewer while
+running a benchmark. The most efficient way to monitor WHEA loggers is
+to use a dedicated hardware monitoring tool like HWiNFO64.</p>
+<p>At the very bottom of the HWiNFO64 sensor list, there is a dedicated
+section called "Windows Hardware Errors (WHEA)." Before starting any
+benchmark, open this tool and keep it running in the background. A truly
+successful and stable benchmark run will always result in a "0" count
+for Total Errors. If that number ticks up by even a single digit, the
+hardware configuration has failed the test and requires adjustment.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-monitoring-whea-loggers-is-crucial-in-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifying SVI2 TFN CPU Power With Physical Shunt Resistors - benchmark</title>
+    <meta name="description" content="This article provides a complete overview of how computer hardware benchmarkers verify the accuracy of software-based CPU power reporting, specifically the SVI2 TFN sensor, against physical reality. It details the mechanics of internal CPU telemetry, the">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/verifying-svi-2-tfn-cpu-power-with-physical-shunt-resistors">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Verifying SVI2 TFN CPU Power With Physical Shunt Resistors - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/verifying-svi-2-tfn-cpu-power-with-physical-shunt-resistors" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a complete overview of how computer hardware benchmarkers verify the accuracy of software-based CPU power reporting, specifically the SVI2 TFN sensor, against physical reality. It details the mechanics of internal CPU telemetry, the" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="verifying-svi2-tfn-cpu-power-with-physical-shunt-resistors">Verifying
+SVI2 TFN CPU Power With Physical Shunt Resistors</h1>
+<p>This article provides a complete overview of how computer hardware
+benchmarkers verify the accuracy of software-based CPU power reporting,
+specifically the SVI2 TFN sensor, against physical reality. It details
+the mechanics of internal CPU telemetry, the implementation of physical
+shunt resistors on the power delivery path, the necessary calculations
+for Voltage Regulator Module (VRM) efficiency losses, and the final data
+comparison methodology used to expose power reporting inaccuracies.</p>
+<h3 id="understanding-svi2-tfn-telemetry">Understanding SVI2 TFN
+Telemetry</h3>
+<p>SVI2 TFN stands for Serial VID Interface 2 Telemetry Functionality.
+It is the digital communication protocol used primarily by AMD
+processors to communicate with the motherboard's VRM controller.</p>
+<p>To report CPU package power in monitoring software, the VRM
+controller measures the current and voltage exiting the power stages and
+sends this data back to the processor via the SVI2 interface. While
+convenient, this software readout relies entirely on the calibration of
+the motherboard components. Motherboard manufacturers can intentionally
+or accidentally skew these values by altering the resistance values
+programmed into the VRM controller, making the CPU believe it is drawing
+less power than it actually is to boost performance artificially.</p>
+<h3 id="the-physical-shunt-resistor-method">The Physical Shunt Resistor
+Method</h3>
+<p>To verify if the SVI2 TFN sensor is telling the truth, hardware
+testers bypass software entirely and measure the electricity physically
+using shunt resistors. A shunt resistor is a precision component with an
+extremely low, known resistance, typically measured in milliohms.</p>
+<p>Benchmarking labs place these shunt resistors directly in series with
+the 8-pin EPS12V power cables that supply electricity from the power
+supply to the motherboard's CPU socket. As electricity flows through the
+shunt resistor, it causes a tiny, measurable drop in voltage from one
+side of the resistor to the other.</p>
+<p>By connecting a Data Acquisition (DAQ) system or a high-precision
+oscilloscope across the shunt resistor, testers measure this exact
+voltage drop. They then apply two fundamental electrical formulas:</p>
+<ol type="1">
+<li><strong>Ohm's Law (<span class="math inline">\(I = V /
+R\)</span>):</strong> Dividing the measured voltage drop (<span
+class="math inline">\(V\)</span>) by the known resistance of the shunt
+(<span class="math inline">\(R\)</span>) reveals the exact electrical
+current (<span class="math inline">\(I\)</span>) in amperes.</li>
+<li><strong>Power Law (<span class="math inline">\(P = V \times
+I\)</span>):</strong> Multiplying that exact current (<span
+class="math inline">\(I\)</span>) by the 12V supply voltage (<span
+class="math inline">\(V\)</span>) yields the true, undeniable wattage
+flowing into the motherboard's CPU power circuit.</li>
+</ol>
+<h3 id="accounting-for-vrm-efficiency-losses">Accounting for VRM
+Efficiency Losses</h3>
+<p>A direct comparison between the EPS12V shunt resistor power and the
+SVI2 TFN software readout is not immediately possible because they
+measure different points in the circuit. The shunt resistor measures
+power <em>before</em> the motherboard's VRM, while SVI2 TFN measures
+power <em>after</em> the VRM, right at the CPU package.</p>
+<p>Because VRMs step down the 12V power from the power supply to the
+~1.2V required by the CPU, some energy is lost as heat. To make an
+accurate comparison, testers must calculate and subtract this VRM heat
+loss from the shunt resistor measurement. This is done in one of three
+ways:</p>
+<ul>
+<li><strong>Datasheet Modeling:</strong> Testers identify the specific
+MOSFETs or power stages on the motherboard, look up their efficiency
+curves on manufacturer datasheets, and calculate the expected heat loss
+at a given current and temperature.</li>
+<li><strong>Clamp Meters and Thermal Profiling:</strong> Testers
+estimate losses by measuring the thermal output of the VRM heatsinks
+alongside inductor resistance losses.</li>
+<li><strong>PCB Interception:</strong> In extreme validation scenarios,
+engineers cut the copper traces on the motherboard between the VRM
+output and the CPU socket, soldering ultra-low-resistance shunts
+directly onto the board to measure post-VRM power directly, bypassing
+the need to calculate efficiency losses.</li>
+</ul>
+<h3 id="the-verification-process">The Verification Process</h3>
+<p>Once the physical measurement hardware is in place and VRM efficiency
+models are established, the verification benchmark begins.</p>
+<p>The tester runs a steady-state, heavy all-core workload, such as
+Prime95 or Cinebench, to force a constant power draw. Simultaneously,
+they log the software SVI2 TFN package power using a tool like HWiNFO
+and record the hardware voltage drops using their DAQ equipment. The
+test is run for a fixed duration, and the timestamps of both logs are
+synchronized.</p>
+<p>Finally, the tester takes the raw wattage recorded at the shunt
+resistors, subtracts the calculated VRM efficiency loss (typically
+between 5% and 12% depending on the load and motherboard quality), and
+compares the resulting number to the SVI2 TFN software readout. If the
+adjusted shunt measurement shows 200 Watts reaching the socket, and SVI2
+TFN reports 198 Watts, the telemetry is verified as accurate. If SVI2
+TFN reports 160 Watts under the same conditions, the tester has
+successfully proven that the motherboard's telemetry is miscalibrated or
+intentionally spoofing power data.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/verifying-svi-2-tfn-cpu-power-with-physical-shunt-resistors';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How NTFS and Btrfs Compression Skews Storage Benchmarks - benchmark</title>
+    <meta name="description" content="File system compression in NTFS and Btrfs significantly alters storage benchmarking results by shifting the workload from the storage drive to the CPU and system memory. When transparent compression is active, benchmarking software ends up measuring the s">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-ntfs-and-btrfs-compression-skews-storage-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How NTFS and Btrfs Compression Skews Storage Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-ntfs-and-btrfs-compression-skews-storage-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="File system compression in NTFS and Btrfs significantly alters storage benchmarking results by shifting the workload from the storage drive to the CPU and system memory. When transparent compression is active, benchmarking software ends up measuring the s" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ntfs-and-btrfs-compression-skews-storage-benchmarks">How
+NTFS and Btrfs Compression Skews Storage Benchmarks</h1>
+<p>File system compression in NTFS and Btrfs significantly alters
+storage benchmarking results by shifting the workload from the storage
+drive to the CPU and system memory. When transparent compression is
+active, benchmarking software ends up measuring the speed of data
+compression and decompression algorithms rather than the raw physical
+throughput of the SSD or hard drive. This article explains the mechanics
+of file system compression, how it artificially inflates or deflates
+benchmark scores depending on the test data, and how to configure your
+testing environment for accurate hardware evaluation.</p>
+<h3 id="the-mechanics-of-transparent-compression">The Mechanics of
+Transparent Compression</h3>
+<p>Both Windows’ NTFS and Linux’s Btrfs offer transparent file
+compression. "Transparent" means the operating system compresses data in
+the background before writing it to the disk and decompresses it when
+reading it back, without the user or the application knowing.</p>
+<p>When a benchmarking tool sends a 10 GB test file to a drive with
+compression enabled, the file system intercepts that data in the system
+RAM. The CPU compresses the data, and only the smaller, compressed
+result is physically written to the storage medium. However, the
+benchmarking tool still calculates throughput based on the original 10
+GB size, completely unaware that the drive only did a fraction of the
+work.</p>
+<h3 id="artificial-inflation-the-compressible-data-trap">Artificial
+Inflation: The Compressible Data Trap</h3>
+<p>Many storage benchmarks—such as <code>dd</code> on Linux or default
+profiles in CrystalDiskMark on Windows—generate test files filled with
+repeating patterns or pure zeros (0x00). They do this so the CPU does
+not become a bottleneck while generating the test data.</p>
+<p>File system compression algorithms excel at shrinking repetitive
+data. A 10 GB stream of zeros can be compressed into a few megabytes of
+metadata.</p>
+<ul>
+<li><strong>Write Skewing:</strong> The benchmarking tool sends 10 GB of
+zeros. Btrfs or NTFS compresses this in RAM using the CPU, writes almost
+nothing to the physical drive, and reports to the benchmark that the
+write is complete. The benchmark then displays impossible throughput
+speeds—often exceeding the theoretical limits of the PCIe bus or SATA
+interface—because it is actually measuring RAM and CPU cache
+speeds.</li>
+<li><strong>Read Skewing:</strong> When reading the file back, the drive
+reads a tiny amount of data, the CPU expands it into 10 GB of zeros in
+RAM, and passes it to the benchmark. Again, the reported read speed
+reflects CPU decompression speed, not storage read speed.</li>
+</ul>
+<h3 id="throughput-deflation-the-cpu-bottleneck">Throughput Deflation:
+The CPU Bottleneck</h3>
+<p>While compression usually inflates scores, it can also artificially
+lower them when testing high-speed NVMe SSDs (such as PCIe 4.0 and 5.0
+drives).</p>
+<p>Compression requires significant CPU processing power. If a benchmark
+uses moderately compressible data, the CPU must work hard to shrink it
+before the drive can write it. If the CPU can only compress data at
+1,500 MB/s, a PCIe 4.0 SSD capable of 7,000 MB/s will sit idle waiting
+for the CPU. The resulting benchmark will falsely show the drive peaking
+at 1,500 MB/s.</p>
+<h3 id="ntfs-vs-btrfs-compression-behaviors">NTFS vs. Btrfs Compression
+Behaviors</h3>
+<p>While both file systems skew results, they do so differently based on
+their underlying algorithms.</p>
+<p><strong>NTFS</strong> uses the LZNT1 algorithm. It is an older,
+relatively heavy algorithm designed to save space on slow mechanical
+hard drives. Because LZNT1 is not optimized for modern multi-core CPUs
+or multi-gigabit SSD speeds, enabling NTFS compression on a modern NVMe
+drive almost always results in severe throughput deflation during
+real-world or pseudo-random data benchmarks.</p>
+<p><strong>Btrfs</strong> allows users to choose between ZLIB, LZO, and
+ZSTD algorithms. LZO and ZSTD are modern, ultra-fast algorithms. When
+benchmarking on Btrfs with ZSTD or LZO enabled, massive throughput
+inflation is common during synthetic tests because the algorithms can
+compress zero-fill data faster than any SSD can write. Btrfs also uses
+heuristics to detect incompressible data; if it detects random data, it
+will skip compression, causing benchmark speeds to fluctuate wildly
+mid-test as the file system switches compression on and off.</p>
+<h3 id="how-to-prevent-benchmark-skewing">How to Prevent Benchmark
+Skewing</h3>
+<p>To measure the actual hardware performance of a storage device rather
+than the efficiency of the file system and CPU, you must isolate the
+drive from compression variables.</p>
+<ol type="1">
+<li><strong>Use Incompressible Data:</strong> Configure your
+benchmarking software to use fully random data (high entropy). File
+systems cannot compress random data, forcing them to write the full
+payload to the disk. Note that the CPU will still waste cycles
+<em>trying</em> to compress the first few blocks before giving up, which
+adds slight latency.</li>
+<li><strong>Disable File System Compression:</strong> Before running
+hardware benchmarks, ensure the target folder or drive has compression
+turned off. In Windows, uncheck "Compress this drive to save disk space"
+in the drive's Properties. In Linux (Btrfs), mount the drive without the
+<code>compress</code> or <code>compress-force</code> flags, or set the
+<code>nodatacow</code> attribute on the specific benchmarking
+directory.</li>
+<li><strong>Test Unformatted Volumes:</strong> For pure hardware
+throughput testing, use tools like <code>fio</code> (Flexible I/O
+Tester) or Iometer to test the raw block device directly, bypassing the
+file system entirely.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-ntfs-and-btrfs-compression-skews-storage-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

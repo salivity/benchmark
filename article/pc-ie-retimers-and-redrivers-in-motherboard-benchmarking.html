@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCIe Retimers and Redrivers in Motherboard Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores how PCIe signal conditioning components—specifically retimers and redrivers—impact computer hardware benchmarking on motherboards with long copper traces. As PCIe generations advance to 4.0 and 5.0, high-frequency signals degrade rap">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/pc-ie-retimers-and-redrivers-in-motherboard-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="PCIe Retimers and Redrivers in Motherboard Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/pc-ie-retimers-and-redrivers-in-motherboard-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how PCIe signal conditioning components—specifically retimers and redrivers—impact computer hardware benchmarking on motherboards with long copper traces. As PCIe generations advance to 4.0 and 5.0, high-frequency signals degrade rap" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="pcie-retimers-and-redrivers-in-motherboard-benchmarking">PCIe
+Retimers and Redrivers in Motherboard Benchmarking</h1>
+<p>This article explores how PCIe signal conditioning
+components—specifically retimers and redrivers—impact computer hardware
+benchmarking on motherboards with long copper traces. As PCIe
+generations advance to 4.0 and 5.0, high-frequency signals degrade
+rapidly over distance, necessitating these components to prevent data
+loss. We will examine the functional differences between redrivers and
+retimers, how they prevent performance-throttling errors, and the subtle
+latency trade-offs they introduce during synthetic and real-world
+benchmarking of GPUs and NVMe SSDs.</p>
+<h3 id="the-long-trace-problem">The Long Trace Problem</h3>
+<p>Modern hardware benchmarks push massive amounts of data through a
+motherboard's copper pathways, known as traces. In PCIe 4.0 (16 GT/s)
+and PCIe 5.0 (32 GT/s), the frequency of these signals is so high that
+the motherboard material itself absorbs the signal over short
+distances—often just a few inches.</p>
+<p>On larger motherboards (such as E-ATX or workstation boards) or when
+routing lanes to secondary PCIe slots and distant M.2 drives, the traces
+become too long for the signal to survive intact. The signal suffers
+from attenuation (loss of strength) and jitter (timing errors). Without
+signal conditioning, the system will either fail to detect the hardware
+or automatically downgrade the link speed to an older, slower PCIe
+generation, ruining benchmark results.</p>
+<h3 id="redrivers-vs-retimers">Redrivers vs. Retimers</h3>
+<p>To fix signal degradation on long traces, motherboard manufacturers
+place signal conditioning chips along the pathway. There are two
+types:</p>
+<ul>
+<li><strong>Redrivers:</strong> These are analog components. A redriver
+takes a weakening signal, applies equalization to sharpen the waveform,
+and amplifies it so it can travel further. Because it is a purely analog
+boost, a redriver also amplifies any background noise the signal has
+picked up along the way. Redrivers are inexpensive and used for
+moderately long traces.</li>
+<li><strong>Retimers:</strong> These are advanced, mixed-signal (analog
+and digital) devices. A retimer is protocol-aware, meaning it actually
+understands the PCIe data. It captures the degraded signal, decodes the
+data, strips away all accumulated noise and jitter, and transmits a
+brand-new, clean signal using its own internal clock. Retimers are
+required for extremely long traces and are standard in PCIe 5.0
+motherboards.</li>
+</ul>
+<h3 id="preventing-bandwidth-loss-in-benchmarks">Preventing Bandwidth
+Loss in Benchmarks</h3>
+<p>The primary positive effect of redrivers and retimers in benchmarking
+is the preservation of maximum sustained bandwidth.</p>
+<p>When a high-speed PCIe signal degrades over a long trace without
+conditioning, the receiving hardware experiences Cyclic Redundancy Check
+(CRC) errors. When an error occurs, the PCIe controller must pause and
+request that the data packet be sent again.</p>
+<p>In a benchmark environment, constant packet retransmission is
+devastating to performance:</p>
+<ul>
+<li><strong>GPU Benchmarks:</strong> It causes severe micro-stuttering,
+drops in 1% low framerates, and lower overall scores in bandwidth-heavy
+tests like 3DMark PCI Express feature tests.</li>
+<li><strong>Storage Benchmarks:</strong> Sequential read and write
+speeds in tools like CrystalDiskMark will plummet, as the NVMe drive
+spends clock cycles resending corrupted data rather than pushing new
+data.</li>
+</ul>
+<p>By maintaining signal integrity, retimers and redrivers ensure zero
+packet loss, allowing hardware in distant slots to achieve the same peak
+throughput as hardware located right next to the CPU.</p>
+<h3 id="the-latency-trade-off">The Latency Trade-off</h3>
+<p>While signal conditioners save bandwidth, they introduce a
+microscopic penalty: latency.</p>
+<p>Redrivers operate with near-zero latency (typically picoseconds)
+because they amplify the signal on the fly. Retimers, however, must
+decode, clock, and re-encode the data. This process takes time, usually
+adding several nanoseconds of delay (equivalent to a few clock cycles)
+to the data path.</p>
+<p>In GPU gaming benchmarks, a few nanoseconds of latency are entirely
+imperceptible and fall within the margin of error. However, in synthetic
+storage benchmarking, this latency is measurable. When testing an
+ultra-fast PCIe 5.0 NVMe SSD on a long trace routed through a retimer,
+you will see slightly lower scores in 4K Random Read/Write tests at
+Queue Depth 1 (QD1). Because QD1 tests rely entirely on how fast a
+single request can travel back and forth, the retimer’s processing delay
+slightly bottlenecks the drive's true latency performance.</p>
+<h3 id="thermal-throttling-of-the-signal-path">Thermal Throttling of the
+Signal Path</h3>
+<p>Retimers are essentially miniature processors and generate
+significant heat during heavy workloads. During prolonged stress-testing
+benchmarks, an uncooled retimer can overheat. If a retimer thermally
+throttles, it can cause the PCIe link to become unstable, resulting in
+sudden benchmark crashes or drastic mid-test performance drops. Quality
+motherboards integrate retimers under the main VRM or chipset heatsinks
+to ensure consistent benchmark repeatability.</p>
+<h3 id="slot-selection-for-accurate-benchmarking">Slot Selection for
+Accurate Benchmarking</h3>
+<p>Understanding signal conditioning dictates how hardware should be
+installed for accurate benchmarking.</p>
+<p>Motherboard engineers design the primary PCIe x16 slot and the top
+M.2 slot with the shortest possible traces to the CPU. This often
+eliminates the need for retimers entirely, or at least minimizes the
+work they have to do.</p>
+<p>If you are benchmarking a GPU or SSD to find its absolute peak
+capability, it must be installed in the primary slots closest to the
+CPU. Moving the hardware to a bottom slot forces the data through longer
+traces and active retimers. While bandwidth will remain high, the added
+latency of the retimer and the potential for routing through the
+motherboard chipset will result in slightly lower synthetic benchmark
+scores.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/pc-ie-retimers-and-redrivers-in-motherboard-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

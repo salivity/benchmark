@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevation and Air Density in PC Thermal Benchmarking - benchmark</title>
+    <meta name="description" content="Computer hardware reviewers meticulously document room elevation and air density during thermal benchmarking to ensure scientific accuracy, transparency, and repeatability. Because air is the primary medium for dissipating heat in a PC, variations in atmo">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/elevation-and-air-density-in-pc-thermal-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Elevation and Air Density in PC Thermal Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/elevation-and-air-density-in-pc-thermal-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Computer hardware reviewers meticulously document room elevation and air density during thermal benchmarking to ensure scientific accuracy, transparency, and repeatability. Because air is the primary medium for dissipating heat in a PC, variations in atmo" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="elevation-and-air-density-in-pc-thermal-benchmarking">Elevation
+and Air Density in PC Thermal Benchmarking</h1>
+<p>Computer hardware reviewers meticulously document room elevation and
+air density during thermal benchmarking to ensure scientific accuracy,
+transparency, and repeatability. Because air is the primary medium for
+dissipating heat in a PC, variations in atmospheric pressure and
+altitude directly impact how well a cooler performs. This article
+explains the physics behind air density, how elevation alters cooling
+efficiency, and why disclosing these environmental variables is crucial
+for accurately comparing hardware test results across the globe.</p>
+<h2 id="the-physics-of-heat-transfer">The Physics of Heat Transfer</h2>
+<p>Whether a computer uses a traditional air cooler or a liquid
+all-in-one (AIO) cooler, heat is ultimately transferred from metal散热
+(heatsink fins or radiator fins) into the surrounding air.</p>
+<p>The effectiveness of this heat transfer relies on the <strong>mass
+flow rate</strong> of the air, not just the volume of the air. Heat is
+absorbed by individual air molecules. Therefore, the more air molecules
+that pass over a hot heatsink in a given second, the more heat is
+carried away.</p>
+<p>Air density measures the mass of air per unit of volume. When air is
+dense, it is packed with molecules, making it highly efficient at
+absorbing thermal energy. When air is less dense, there are fewer
+molecules available in the same amount of space to absorb that heat.</p>
+<h2 id="how-elevation-changes-air-density">How Elevation Changes Air
+Density</h2>
+<p>Elevation is the primary driver of air density variations in fixed
+testing locations. At sea level, the weight of the atmosphere compresses
+the air, resulting in high barometric pressure and high air density.</p>
+<p>As elevation increases, there is less atmospheric weight pressing
+down from above. Consequently, the air expands and becomes thinner. A
+hardware reviewer located in Denver, Colorado (approx. 1,600 meters or
+5,280 feet above sea level) is testing in an environment with roughly
+17% less air density than a reviewer located in Miami, Florida (sea
+level).</p>
+<h2 id="the-impact-on-cooling-fans">The Impact on Cooling Fans</h2>
+<p>Computer fans are designed to move a specific volume of air, usually
+measured in Cubic Feet per Minute (CFM), at a specific rotational speed
+(RPM).</p>
+<p>If a fan is locked at 1,500 RPM, it will move the exact same
+<em>volume</em> of air at sea level as it does on top of a mountain.
+However, because the air at high altitudes is less dense, that fixed
+volume contains significantly less <em>mass</em>.</p>
+<p>Because the fan is pushing fewer air molecules through the heatsink
+or radiator at high elevations:</p>
+<ul>
+<li>The thermal transfer efficiency drops.</li>
+<li>The heatsink stays hotter for longer.</li>
+<li>The CPU or GPU reports higher temperatures under load.</li>
+<li>Fans on automatic curves must spin faster and louder to achieve the
+same cooling performance seen at sea level.</li>
+</ul>
+<h2 id="other-factors-affecting-air-density">Other Factors Affecting Air
+Density</h2>
+<p>While elevation provides a baseline for atmospheric pressure, air
+density also fluctuates based on local weather systems, ambient room
+temperature, and humidity.</p>
+<ul>
+<li><strong>Temperature:</strong> Warm air is less dense than cold air.
+Even if reviewers normalize their data for ambient temperature, the
+physical density change still slightly alters airflow mechanics.</li>
+<li><strong>Barometric Pressure:</strong> Storm systems can lower local
+air pressure, temporarily reducing air density even at sea level.</li>
+<li><strong>Humidity:</strong> Contrary to popular belief, humid air is
+actually slightly less dense than dry air because water vapor molecules
+are lighter than nitrogen and oxygen molecules. However, water has a
+higher heat capacity, which complicates the thermal equation.</li>
+</ul>
+<p>By using weather stations in their labs to log exact air density,
+reviewers account for all of these variables simultaneously rather than
+relying on elevation alone.</p>
+<h2 id="why-documentation-matters-for-consumers">Why Documentation
+Matters for Consumers</h2>
+<p>Hardware benchmarking is only useful if the data is contextualized.
+If Reviewer A (at sea level) tests a CPU cooler and records a maximum
+temperature of 70°C, and Reviewer B (at high altitude) tests the exact
+same cooler under the exact same workload and records 76°C, consumers
+might assume one of the reviewers made a mistake or received a defective
+product.</p>
+<p>By publishing room elevation and air density, reviewers validate
+their methodology. It allows readers and engineers to understand
+<em>why</em> discrepancies exist between different testing outlets.
+Furthermore, it allows the reviewers themselves to track atmospheric
+changes in their own labs over time, ensuring that a cooler tested in
+the dead of winter is judged fairly against a cooler tested during a
+summer low-pressure system.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/elevation-and-air-density-in-pc-thermal-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

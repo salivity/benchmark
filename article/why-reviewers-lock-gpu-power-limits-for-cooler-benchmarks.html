@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Reviewers Lock GPU Power Limits for Cooler Benchmarks - benchmark</title>
+    <meta name="description" content="Hardware reviewers lock GPU power limits to reference specifications during benchmarking to create a fair, apples-to-apples comparison of cooler designs. Because aftermarket graphics cards come with varying factory power limits and dynamic boost algorithm">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-reviewers-lock-gpu-power-limits-for-cooler-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Reviewers Lock GPU Power Limits for Cooler Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-reviewers-lock-gpu-power-limits-for-cooler-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware reviewers lock GPU power limits to reference specifications during benchmarking to create a fair, apples-to-apples comparison of cooler designs. Because aftermarket graphics cards come with varying factory power limits and dynamic boost algorithm" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-reviewers-lock-gpu-power-limits-for-cooler-benchmarks">Why
+Reviewers Lock GPU Power Limits for Cooler Benchmarks</h1>
+<p>Hardware reviewers lock GPU power limits to reference specifications
+during benchmarking to create a fair, apples-to-apples comparison of
+cooler designs. Because aftermarket graphics cards come with varying
+factory power limits and dynamic boost algorithms, testing them at
+out-of-the-box settings results in different amounts of heat being
+generated. By standardizing the power draw to a fixed wattage, reviewers
+ensure every cooler is tasked with dissipating the exact same thermal
+load, successfully isolating the physical cooling solution as the sole
+variable being tested.</p>
+<h3 id="watts-directly-equal-heat">Watts Directly Equal Heat</h3>
+<p>In computer hardware, virtually 100% of the electrical power consumed
+by a GPU is converted into heat. Therefore, a graphics card drawing 350
+watts generates significantly more heat than the exact same GPU core
+drawing 300 watts.</p>
+<p>To scientifically measure how well a heatsink and fan assembly
+performs, the heat source must remain constant across all tested models.
+Locking the power limit guarantees that every GPU in the test group
+produces the exact same thermal output.</p>
+<h3 id="eliminating-factory-overclock-variances">Eliminating Factory
+Overclock Variances</h3>
+<p>Board partners (such as ASUS, MSI, and Gigabyte) take the same base
+GPU chip and sell it across multiple product tiers. A base-model card
+usually adheres to the reference power limit set by NVIDIA or AMD—for
+example, 250 watts. However, a premium factory-overclocked model might
+ship with a default power limit of 300 watts to achieve slightly higher
+gaming performance.</p>
+<p>If a reviewer tests these cards at their default settings, the
+comparison is flawed:</p>
+<ul>
+<li>The base cooler only has to dissipate 250 watts of heat.</li>
+<li>The premium cooler has to dissipate 300 watts of heat.</li>
+</ul>
+<p>Under these default conditions, the premium card might run just as
+hot as the base card, misleading consumers into thinking the larger,
+more expensive cooler is no better than the cheap one. Locking both
+cards to the 250-watt reference spec forces an equal workload, revealing
+the true thermal advantage of the larger cooler.</p>
+<h3 id="controlling-dynamic-boost-algorithms">Controlling Dynamic Boost
+Algorithms</h3>
+<p>Modern GPUs do not run at fixed clock speeds or voltages. Instead,
+they use dynamic boosting algorithms that constantly monitor temperature
+and power draw. If the algorithm detects that the GPU is running cool,
+it will automatically increase clock speeds and voltage, which increases
+power consumption and heat.</p>
+<p>Without a strict power lock, a superior cooler lowers the GPU
+temperature, which inadvertently triggers the GPU to draw more power and
+generate more heat. Capping the power limit to the reference
+specification prevents the GPU from moving the thermal goalposts during
+the benchmark.</p>
+<h3 id="pairing-power-locks-with-noise-normalization">Pairing Power
+Locks with Noise Normalization</h3>
+<p>Locking the power limit is usually combined with noise-normalized
+testing to get the ultimate measure of cooler efficiency. Just as
+manufacturers alter power limits, they also use vastly different factory
+fan curves.</p>
+<p>One card might achieve low temperatures simply because its fans are
+programmed to spin at a loud, aggressive 2,500 RPM, while a competing
+card runs hotter because it prioritizes silence at 1,200 RPM.</p>
+<p>To find out which physical heatsink and fan design is actually
+better, reviewers do two things:</p>
+<ol type="1">
+<li>Lock the GPU power limit so every card generates the same heat.</li>
+<li>Lock the fan speeds to a specific noise level (such as 35 dBA) using
+a sound meter.</li>
+</ol>
+<p>When heat generation and fan noise are completely standardized, the
+graphics card that records the lowest temperature objectively possesses
+the best-engineered cooler.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-reviewers-lock-gpu-power-limits-for-cooler-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

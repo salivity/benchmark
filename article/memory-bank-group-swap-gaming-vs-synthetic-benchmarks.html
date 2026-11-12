@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Bank Group Swap: Gaming vs. Synthetic Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores the impact of the BIOS setting known as Bank Group Swap (BGS) on computer hardware performance. Specifically, it explains how BGS alters memory controller behavior to favor either synthetic bandwidth benchmarks or real-world gaming p">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/memory-bank-group-swap-gaming-vs-synthetic-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Memory Bank Group Swap: Gaming vs. Synthetic Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/memory-bank-group-swap-gaming-vs-synthetic-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the impact of the BIOS setting known as Bank Group Swap (BGS) on computer hardware performance. Specifically, it explains how BGS alters memory controller behavior to favor either synthetic bandwidth benchmarks or real-world gaming p" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="memory-bank-group-swap-gaming-vs-synthetic-benchmarks">Memory
+Bank Group Swap: Gaming vs. Synthetic Benchmarks</h1>
+<p>This article explores the impact of the BIOS setting known as Bank
+Group Swap (BGS) on computer hardware performance. Specifically, it
+explains how BGS alters memory controller behavior to favor either
+synthetic bandwidth benchmarks or real-world gaming performance, helping
+users understand why enabling this feature yields higher memory read and
+write scores while disabling it often leads to better frame rates in
+games.</p>
+<h3 id="what-is-bank-group-swap-bgs">What is Bank Group Swap (BGS)?</h3>
+<p>Modern system memory, such as DDR4 and DDR5, is organized into
+independent sections called banks, which are further clustered into bank
+groups. The CPU's memory controller can access different bank groups
+simultaneously, which is faster than accessing the same bank group
+consecutively.</p>
+<p>Bank Group Swap (BGS) is a BIOS feature, primarily prominent on AMD
+Ryzen platforms, that alters how physical memory addresses are assigned
+to these bank groups. It changes the order in which the memory
+controller distributes data across the RAM, aiming to prevent
+bottlenecks where the CPU has to wait for a single bank group to finish
+a task before starting the next one.</p>
+<h3 id="how-bgs-affects-synthetic-bandwidth">How BGS Affects Synthetic
+Bandwidth</h3>
+<p>When running synthetic memory benchmarks, such as AIDA64, the
+software tests the maximum possible throughput of the RAM using
+sequential, predictable data streams.</p>
+<p>Enabling BGS significantly boosts performance in these synthetic
+tests. Because the data requests in synthetic benchmarks are linear and
+predictable, the BGS algorithm successfully interleaves the workload
+across multiple bank groups. This maximizes parallel processing within
+the memory modules, resulting in noticeably higher read, write, and copy
+bandwidth speeds (measured in MB/s or GB/s). If your goal is to achieve
+the highest possible score in a synthetic memory benchmark, BGS should
+be enabled.</p>
+<h3 id="how-bgs-affects-gaming-performance">How BGS Affects Gaming
+Performance</h3>
+<p>Gaming workloads behave very differently from synthetic benchmarks.
+Instead of smooth, sequential streams of data, games generate highly
+erratic, random memory access requests as the CPU fetches physics data,
+AI behavior, and asset locations on the fly.</p>
+<p>In this scenario, raw bandwidth becomes less important than low
+latency (the time it takes to fetch a specific piece of data). Having
+BGS enabled can actually hurt gaming performance. The way standard BGS
+hashes memory addresses often causes "bank conflicts" during random
+access patterns, forcing the CPU to wait longer for the data it needs to
+render the next frame.</p>
+<p>By disabling BGS, the memory controller falls back to a mapping
+method that favors random access patterns. While your maximum
+theoretical bandwidth drops, the effective latency for gaming workloads
+improves, resulting in higher average frame rates and better 1% low
+frame times.</p>
+<h3 id="the-middle-ground-bgs-alt">The Middle Ground: BGS Alt</h3>
+<p>Many motherboard manufacturers include an option called "Bank Group
+Swap Alt" (Alternative). BGS Alt uses a slightly different algorithm to
+map memory addresses, specifically tuned to accommodate the random
+access patterns of video games without entirely sacrificing the parallel
+advantages of bank groups. For gamers, setting BGS to Disabled and BGS
+Alt to Enabled frequently yields the best performance in 3D
+applications.</p>
+<h3 id="summary-of-settings-for-hardware-benchmarking">Summary of
+Settings for Hardware Benchmarking</h3>
+<ul>
+<li><strong>BGS Enabled:</strong> Best for synthetic benchmarks (e.g.,
+AIDA64) and productivity workloads that rely on massive, sequential data
+throughput.</li>
+<li><strong>BGS Disabled:</strong> Best for gaming benchmarks (e.g.,
+3DMark CPU Profile, in-game benchmark tools) where random memory access
+and low latency dictate frame rates.</li>
+<li><strong>BGS Disabled + BGS Alt Enabled:</strong> Often the optimal
+configuration for daily gaming, providing the ideal balance of
+low-latency random access and efficient bank utilization.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/memory-bank-group-swap-gaming-vs-synthetic-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

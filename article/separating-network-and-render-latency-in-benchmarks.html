@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Separating Network and Render Latency in Benchmarks - benchmark</title>
+    <meta name="description" content="Benchmarking computer hardware requires absolute precision, making it essential to isolate the performance of local components from external factors like internet speed. This article provides an overview of how hardware reviewers and engineers separate ne">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/separating-network-and-render-latency-in-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Separating Network and Render Latency in Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/separating-network-and-render-latency-in-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Benchmarking computer hardware requires absolute precision, making it essential to isolate the performance of local components from external factors like internet speed. This article provides an overview of how hardware reviewers and engineers separate ne" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="separating-network-and-render-latency-in-benchmarks">Separating
+Network and Render Latency in Benchmarks</h1>
+<p>Benchmarking computer hardware requires absolute precision, making it
+essential to isolate the performance of local components from external
+factors like internet speed. This article provides an overview of how
+hardware reviewers and engineers separate network latency from local
+rendering latency by using client-side action triggers, software
+telemetry APIs, optical hardware analyzers, and offline testing
+environments to measure true system responsiveness.</p>
+<h3 id="the-difference-between-render-and-network-latency">The
+Difference Between Render and Network Latency</h3>
+<p>To separate the two metrics, benchmarkers first define the boundaries
+of each pipeline:</p>
+<ul>
+<li><strong>Local Rendering Latency (System Latency):</strong> The time
+it takes for a user input (like a mouse click) to be registered by the
+operating system, processed by the CPU, rendered into a frame by the
+GPU, and displayed as pixels on the monitor.</li>
+<li><strong>Network Latency (Ping/RTT):</strong> The time it takes for
+data packets to leave the local network interface card, travel to a
+remote server, be processed by the server, and return to the local
+machine.</li>
+</ul>
+<p>When testing a graphics card or processor, network latency introduces
+variable delays that corrupt hardware data. Testers use four primary
+methods to strip network lag from their measurements.</p>
+<h3 id="1-targeting-client-side-actions">1. Targeting Client-Side
+Actions</h3>
+<p>In multiplayer games, actions are divided into client-side and
+server-side events. A server-side event, such as a "hit marker"
+confirming damage on an opponent, requires a round-trip network
+communication. However, client-side events happen instantly on the local
+hardware before the network is even notified.</p>
+<p>When benchmarking, testers measure client-side events such as camera
+rotation, a user interface menu opening, or the initial muzzle flash of
+a weapon. Because the local game engine renders a muzzle flash
+immediately upon clicking the mouse—without waiting for server
+confirmation—measuring the time between the click and the flash isolates
+local rendering latency completely, even while connected to an online
+server.</p>
+<h3 id="2-optical-hardware-analyzers-click-to-photon">2. Optical
+Hardware Analyzers (Click-to-Photon)</h3>
+<p>To measure client-side actions without relying on software estimates,
+reviewers use hardware devices like the NVIDIA Latency and Display
+Analysis Tool (LDAT) or the Open Source Latency Testing Tool
+(OSLTT).</p>
+<p>These devices consist of a light sensor strapped directly to the
+monitor and a modified mouse wired to the sensor. When the tester
+triggers a mouse click, the device starts a timer. The instant the light
+sensor detects the brightness change of a local action (like a muzzle
+flash) on the screen, the timer stops. This "click-to-photon"
+measurement captures the entire local hardware pipeline—from mouse
+microcontroller to monitor response time—while remaining completely
+blind to network conditions.</p>
+<h3 id="3-software-telemetry-and-graphics-apis">3. Software Telemetry
+and Graphics APIs</h3>
+<p>When measuring internal rendering stages rather than total display
+latency, benchmarkers use software tools like Intel PresentMon, NVIDIA
+FrameView, and built-in technologies like NVIDIA Reflex Analyzer.</p>
+<p>These tools hook directly into the game's graphics API (such as
+DirectX 12 or Vulkan) and record precise timestamps as a single frame
+moves through the local PC:</p>
+<ol type="1">
+<li><strong>Input Sampled:</strong> The CPU reads the mouse or keyboard
+state.</li>
+<li><strong>Simulation Time:</strong> The CPU calculates game world
+updates and prepares the frame instructions.</li>
+<li><strong>Render Queue:</strong> The frame waits in line for the
+GPU.</li>
+<li><strong>GPU Render Time:</strong> The graphics card draws the
+frame.</li>
+<li><strong>Present:</strong> The frame is sent to the display
+engine.</li>
+</ol>
+<p>Because these telemetry tools only track the lifecycle of a frame
+inside the local operating system and hardware buses, network packet
+delays do not appear in the data. Even if a player is experiencing
+severe network packet loss, the local software pipeline continues
+rendering frames and reporting accurate hardware latency.</p>
+<h3 id="4-offline-environments-and-local-loopbacks">4. Offline
+Environments and Local Loopbacks</h3>
+<p>The simplest way to eliminate network latency is to remove the
+external network from the test bench. Hardware reviewers prioritize
+games with built-in benchmarking tools, single-player campaigns, or
+offline bot modes.</p>
+<p>When a multiplayer-only game must be tested, engineers often run a
+dedicated server instance on a separate machine connected via a Local
+Area Network (LAN) or on the benchmarking PC itself (a local loopback).
+This reduces network transit time to less than a millisecond and
+eliminates internet routing variance, ensuring that any performance
+bottlenecks observed are strictly the result of the CPU, RAM, and GPU
+being tested.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/separating-network-and-render-latency-in-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

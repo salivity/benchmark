@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How GPU Power Excursion Tolerance Prevents System Reboots - benchmark</title>
+    <meta name="description" content="This article explains how GPU power excursion tolerance prevents sudden computer reboots during intensive hardware benchmarking. Modern graphics cards frequently generate massive, millisecond-long power spikes known as transient loads. Without adequate ex">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-gpu-power-excursion-tolerance-prevents-system-reboots">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How GPU Power Excursion Tolerance Prevents System Reboots - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-gpu-power-excursion-tolerance-prevents-system-reboots" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how GPU power excursion tolerance prevents sudden computer reboots during intensive hardware benchmarking. Modern graphics cards frequently generate massive, millisecond-long power spikes known as transient loads. Without adequate ex" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-gpu-power-excursion-tolerance-prevents-system-reboots">How
+GPU Power Excursion Tolerance Prevents System Reboots</h1>
+<p>This article explains how GPU power excursion tolerance prevents
+sudden computer reboots during intensive hardware benchmarking. Modern
+graphics cards frequently generate massive, millisecond-long power
+spikes known as transient loads. Without adequate excursion tolerance,
+these spikes trip a power supply's safety mechanisms, forcing an
+immediate system shutdown. By utilizing modern power supply standards
+that account for these surges, hardware can absorb extreme benchmarking
+loads and maintain complete system stability.</p>
+<h2 id="understanding-transient-loads-in-benchmarking">Understanding
+Transient Loads in Benchmarking</h2>
+<p>When you run heavy benchmarking software, the Graphics Processing
+Unit (GPU) does not draw a flat, continuous stream of power. Instead,
+the workload fluctuates rapidly as the benchmark renders different
+scenes or computes complex shaders.</p>
+<p>During these rapid transitions from idle or low states to maximum
+load, the GPU demands an immediate influx of electricity. This creates a
+transient power spike—also known as a power excursion. For a fraction of
+a second (often measured in microseconds or milliseconds), a GPU rated
+for 450 watts might suddenly draw 900 to 1,350 watts.</p>
+<h2 id="why-transient-spikes-cause-system-reboots">Why Transient Spikes
+Cause System Reboots</h2>
+<p>A Power Supply Unit (PSU) is equipped with built-in safety features
+to prevent hardware fires and component damage. The two most relevant
+features during benchmarking are:</p>
+<ul>
+<li><strong>Over Power Protection (OPP):</strong> Shuts down the PSU if
+total power draw exceeds safe limits.</li>
+<li><strong>Over Current Protection (OCP):</strong> Shuts down the PSU
+if current on a specific rail exceeds safe limits.</li>
+</ul>
+<p>Older or lower-tier PSUs are not designed to differentiate between a
+harmless microsecond GPU power spike and a dangerous electrical short
+circuit. When a heavy benchmark triggers a transient spike that exceeds
+the PSU’s continuous power rating, the OPP or OCP circuits trip
+instantly. This cuts all power to the motherboard and components,
+resulting in a sudden black screen and an immediate system reboot.</p>
+<h2 id="how-power-excursion-tolerance-solves-the-problem">How Power
+Excursion Tolerance Solves the Problem</h2>
+<p>Power excursion tolerance is the engineered capacity of a PSU to
+safely output power well above its continuous maximum rating for
+extremely brief periods. This tolerance prevents reboots through three
+primary mechanisms:</p>
+<h3 id="1-delayed-safety-tripping">1. Delayed Safety Tripping</h3>
+<p>PSUs designed with high excursion tolerance—specifically those built
+to the ATX 3.0 and ATX 3.1 standards—feature recalibrated OPP and OCP
+circuits. Instead of tripping the exact microsecond power exceeds the
+continuous rating, the safety circuits are programmed with a time-delay
+buffer. They allow massive power spikes to pass through as long as the
+spike drops back down to normal levels within a few milliseconds.</p>
+<h3 id="2-the-300-gpu-excursion-rule">2. The 300% GPU Excursion
+Rule</h3>
+<p>Modern ATX 3.0 compliant power supplies are strictly required to
+handle extreme GPU power excursions. Specifically, the standard dictates
+that a PSU must sustain a power spike equal to 300% of the GPU's rated
+continuous power for 100 microseconds. Furthermore, the PSU as a whole
+must tolerate a 200% total system power excursion for the same duration.
+Because the PSU expects and supports this surge, benchmarking spikes no
+longer trigger a shutdown.</p>
+<h3 id="3-upgraded-bulk-capacitors">3. Upgraded Bulk Capacitors</h3>
+<p>To physically deliver this burst of energy without dropping voltage,
+high-tolerance PSUs utilize larger, higher-grade bulk capacitors. These
+capacitors act like miniature batteries that store energy. When a
+benchmark forces the GPU to demand an instant surge of power, the
+capacitors discharge their stored energy immediately, smoothing out the
+spike before the main transformer becomes overwhelmed.</p>
+<h3 id="4-active-communication-via-sense-pins">4. Active Communication
+via Sense Pins</h3>
+<p>Modern GPUs use 12VHPWR or 12V-2x6 power connectors, which include
+dedicated sideband "sense" pins. These pins allow the PSU and the GPU to
+communicate directly. The PSU tells the GPU exactly how much power
+excursion it can tolerate. If a benchmark pushes the GPU toward a spike
+that the PSU cannot handle, the GPU will automatically throttle its own
+clock speeds by a tiny fraction of a second to cap the spike, preventing
+the PSU from tripping and saving the system from a reboot.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-gpu-power-excursion-tolerance-prevents-system-reboots';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

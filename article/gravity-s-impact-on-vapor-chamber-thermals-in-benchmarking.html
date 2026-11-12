@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravity&#39;s Impact on Vapor Chamber Thermals in Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores how the physical orientation of vapor chambers relative to gravity influences thermal performance during computer hardware benchmarking. While vapor chambers are designed to function in any position using capillary action, gravity ca">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/gravity-s-impact-on-vapor-chamber-thermals-in-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Gravity&#39;s Impact on Vapor Chamber Thermals in Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/gravity-s-impact-on-vapor-chamber-thermals-in-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how the physical orientation of vapor chambers relative to gravity influences thermal performance during computer hardware benchmarking. While vapor chambers are designed to function in any position using capillary action, gravity ca" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="gravitys-impact-on-vapor-chamber-thermals-in-benchmarking">Gravity's
+Impact on Vapor Chamber Thermals in Benchmarking</h1>
+<p>This article explores how the physical orientation of vapor chambers
+relative to gravity influences thermal performance during computer
+hardware benchmarking. While vapor chambers are designed to function in
+any position using capillary action, gravity can still aid or hinder the
+return of condensed liquid to the heat source, particularly in large
+modern GPU and CPU coolers. Understanding these gravitational effects is
+crucial for hardware testers and PC builders using non-standard case
+layouts to ensure accurate, consistent, and repeatable thermal
+benchmarks.</p>
+<h2 id="how-vapor-chambers-work">How Vapor Chambers Work</h2>
+<p>To understand gravity's impact, you must first understand the
+mechanics of a vapor chamber. A vapor chamber is essentially a flat,
+two-dimensional heat pipe used to spread heat rapidly away from a
+concentrated source, such as a CPU die or GPU core.</p>
+<p>Inside the sealed vacuum of the chamber is a small amount of working
+fluid (usually purified water) and a textured internal wall known as a
+wick. The cooling cycle happens in four steps:</p>
+<ol type="1">
+<li><strong>Evaporation:</strong> Heat from the processor boils the
+fluid, turning it into vapor.</li>
+<li><strong>Spreading:</strong> The vapor rapidly expands to fill the
+low-pressure chamber, carrying thermal energy away from the heat
+source.</li>
+<li><strong>Condensation:</strong> The vapor touches the cooler side of
+the chamber (attached to heatsink fins), loses its heat, and condenses
+back into a liquid.</li>
+<li><strong>Return:</strong> The liquid is absorbed by the wick
+structure and pulled back to the heat source via capillary action,
+repeating the cycle.</li>
+</ol>
+<h2 id="the-role-of-gravity-in-the-cooling-cycle">The Role of Gravity in
+the Cooling Cycle</h2>
+<p>Gas vapor moves freely and rapidly regardless of orientation, meaning
+gravity has virtually no effect on the evaporation and spreading phases.
+However, gravity directly impacts the <strong>return phase</strong>
+because the condensed working fluid has mass.</p>
+<p>Depending on how the hardware is mounted, gravity will interact with
+the wick’s capillary action in one of three ways:</p>
+<ul>
+<li><strong>Gravity-Assisted:</strong> The heat source is below the
+condensation zone. Gravity pulls the condensed liquid straight back to
+the processor, accelerating the cooling cycle and yielding the best
+thermal performance.</li>
+<li><strong>Gravity-Neutral:</strong> The vapor chamber is completely
+flat and horizontal. Gravity neither helps nor hinders the lateral
+movement of the liquid. The chamber relies entirely on capillary
+action.</li>
+<li><strong>Gravity-Opposed (Adverse):</strong> The heat source is
+located above the condensation zone. The wick's capillary action must
+physically pull the liquid upward against the pull of gravity.</li>
+</ul>
+<h2 id="the-dry-out-phenomenon">The "Dry-Out" Phenomenon</h2>
+<p>When a vapor chamber is placed in a gravity-opposed orientation, the
+return of the liquid slows down. If the processor generates heat faster
+than the wick can pull liquid back up against gravity, the area directly
+over the chip runs out of fluid.</p>
+<p>This is known as "dry-out." When dry-out occurs, the vapor chamber
+stops functioning as a phase-change cooler and acts merely as a hollow
+piece of metal. In hardware benchmarking, this manifests as rapid,
+runaway temperature spikes, immediate thermal throttling, and fans
+ramping up to 100% speed with no resulting drop in processor
+temperature.</p>
+<h2 id="how-orientation-skewers-hardware-benchmarks">How Orientation
+Skewers Hardware Benchmarks</h2>
+<p>Hardware reviewers and benchmarkers frequently encounter thermal
+discrepancies caused by vapor chamber orientation. This usually happens
+because of the differences between open-air test benches and standard PC
+cases.</p>
+<h3 id="1-open-air-test-benches-vs-standard-mid-towers">1. Open-Air Test
+Benches vs. Standard Mid-Towers</h3>
+<p>On an open-air test bench, the motherboard lays flat (horizontal).
+This places a directly mounted GPU in a vertical orientation, standing
+upright on its PCIe slot. In a standard ATX case, the motherboard is
+vertical, placing the GPU in a horizontal position. While a GPU's vapor
+chamber is mostly flat, this 90-degree shift changes how gravity pulls
+on the liquid pool inside the chamber. While minor on smaller cards,
+massive 300W+ GPUs with expansive vapor chambers can show a 2°C to 5°C
+difference between a test bench and a standard case purely due to
+orientation.</p>
+<h3 id="2-vertical-io-and-sff-cases">2. Vertical I/O and SFF Cases</h3>
+<p>The most severe benchmarking anomalies occur in cases that rotate the
+motherboard 90 degrees so the I/O ports face straight up or straight
+down (common in certain Small Form Factor and thermaltake-style
+chassis). This hangs the GPU vertically by its I/O bracket.</p>
+<p>In this orientation, the length of the vapor chamber—and any attached
+heat pipes—runs strictly vertical. If the GPU core sits near the top of
+the loop relative to the cooler's cold zones, gravity traps the
+condensed liquid at the bottom of the card. During stress testing, a GPU
+that normally runs at 70°C in a standard layout can easily hit its 88°C+
+thermal throttle limit in a vertical I/O layout.</p>
+<h3 id="3-cpu-vapor-chamber-coolers">3. CPU Vapor Chamber Coolers</h3>
+<p>High-end air coolers and some AIO pump blocks increasingly use vapor
+chamber baseplates. On a standard vertical motherboard, a CPU vapor
+chamber sits sideways. Manufacturers design the internal wick (often
+using sintered copper powder) to be strong enough to overcome gravity
+across the short distance of a CPU socket. However, if a tester
+benchmarks a CPU cooler on a flat test bench, the vapor chamber becomes
+gravity-assisted (liquid falls directly down onto the CPU), which can
+yield slightly better thermal results than a user will actually
+experience in a standard vertical case.</p>
+<h2 id="best-practices-for-accurate-thermal-benchmarking">Best Practices
+for Accurate Thermal Benchmarking</h2>
+<p>To account for the physics of vapor chambers during hardware testing,
+benchmarkers must adhere to the following rules:</p>
+<ul>
+<li><strong>Maintain Orientation Consistency:</strong> Never compare
+thermal benchmarks of a component tested on a flat, open-air bench
+directly against one tested in a vertical chassis. The gravitational
+load on the vapor chamber is different.</li>
+<li><strong>Test Rotation Sensitivity:</strong> When reviewing a new GPU
+or CPU cooler, briefly run a high-load stress test (like FurMark or
+Prime95) while physically rotating the test bench 90 degrees in each
+direction. A sharp spike in junction or hotspot temperatures indicates a
+vapor chamber that is highly sensitive to gravity.</li>
+<li><strong>Specify Test Methodology:</strong> Always explicitly state
+the orientation of the motherboard and the PCIe devices in the benchmark
+data. Saying "tested in an open-air environment" is insufficient without
+noting whether the motherboard tray was horizontal or vertical.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/gravity-s-impact-on-vapor-chamber-thermals-in-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

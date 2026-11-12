@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRM Designs: Doublers vs Teamed vs Direct in Benchmarks - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how motherboard Voltage Regulator Module (VRM) phase designs—specifically direct, doubled, and teamed configurations—affect computer hardware benchmarking. We will examine the mechanics of each topology, h">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/vrm-designs-doublers-vs-teamed-vs-direct-in-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="VRM Designs: Doublers vs Teamed vs Direct in Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/vrm-designs-doublers-vs-teamed-vs-direct-in-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how motherboard Voltage Regulator Module (VRM) phase designs—specifically direct, doubled, and teamed configurations—affect computer hardware benchmarking. We will examine the mechanics of each topology, h" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="vrm-designs-doublers-vs-teamed-vs-direct-in-benchmarks">VRM
+Designs: Doublers vs Teamed vs Direct in Benchmarks</h1>
+<p>This article provides a comprehensive overview of how motherboard
+Voltage Regulator Module (VRM) phase designs—specifically direct,
+doubled, and teamed configurations—affect computer hardware
+benchmarking. We will examine the mechanics of each topology, how they
+handle electrical ripple and transient loads, and their direct impact on
+thermal performance, CPU boost clocks, and stability during intensive
+benchmarking scenarios.</p>
+<h2 id="understanding-vrm-metrics-in-benchmarking">Understanding VRM
+Metrics in Benchmarking</h2>
+<p>Before comparing the three designs, it is necessary to understand the
+three main electrical factors that influence benchmark scores:</p>
+<ul>
+<li><strong>Thermal Performance:</strong> VRMs generate heat when
+converting 12V power from the power supply into the lower voltage
+required by the CPU. If VRMs overheat during a long benchmark, they will
+throttle power delivery, causing the CPU clock speeds and benchmark
+scores to drop.</li>
+<li><strong>Transient Response:</strong> When a CPU instantly shifts
+from idle to a 100% benchmarking load, the voltage briefly drops (droop)
+and spikes. Transient response measures how fast the VRM can stabilize
+this voltage. Faster response means better stability at lower
+voltages.</li>
+<li><strong>Voltage Ripple:</strong> This refers to tiny fluctuations in
+the voltage delivered to the CPU. Lower ripple provides "cleaner" power,
+allowing overclockers to achieve stable benchmark runs at higher clock
+speeds without needing excessive voltage.</li>
+</ul>
+<h2 id="direct-phase-design">Direct Phase Design</h2>
+<p>In a direct phase design, the Pulse Width Modulation (PWM) controller
+connects directly to each individual power stage without any
+intermediary chips.</p>
+<p><strong>How it performs in benchmarks:</strong></p>
+<ul>
+<li><strong>Transient Response:</strong> Superior. Because there is no
+middleman chip between the controller and the power stage, the VRM
+reacts instantly to sudden benchmark loads.</li>
+<li><strong>Voltage Ripple:</strong> Excellent, as each phase fires
+sequentially (interleaved) to smooth out power delivery.</li>
+<li><strong>Thermal Performance:</strong> Varies. Most consumer PWM
+controllers only support up to 8, 12, or 16 direct phases. A lower phase
+count means fewer components to spread the heat across, which can lead
+to higher temperatures in prolonged benchmarks like Prime95 unless
+high-amperage power stages are used.</li>
+<li><strong>Best Use Case:</strong> Extreme overclocking (such as Liquid
+Nitrogen runs) where instantaneous power adjustments are required to
+keep the CPU from crashing during sudden load changes.</li>
+</ul>
+<h2 id="doubled-phase-design-doublers">Doubled Phase Design
+(Doublers)</h2>
+<p>A doubled topology takes a single signal from the PWM controller and
+feeds it into a small chip called a doubler. The doubler splits the
+signal, sending it to two separate power stages that fire
+alternately.</p>
+<p><strong>How it performs in benchmarks:</strong></p>
+<ul>
+<li><strong>Transient Response:</strong> Good, though technically the
+slowest of the three. The signal takes a few extra nanoseconds to pass
+through the doubler chip. In standard air or water-cooled benchmarking,
+this delay is completely unnoticeable.</li>
+<li><strong>Voltage Ripple:</strong> Exceptional. Because the doubler
+forces the two power stages to fire out of sync (interleaved), the
+electrical output is smoothed out at twice the rate, resulting in very
+clean power.</li>
+<li><strong>Thermal Performance:</strong> Exceptional. Doublers allow
+motherboard manufacturers to put massive amounts of power stages on the
+board, spreading the heat over a wide surface area.</li>
+<li><strong>Best Use Case:</strong> Sustained, heavy all-core benchmarks
+like Cinebench, Blender, or y-cruncher on ambient cooling, where keeping
+VRM temperatures low and power delivery smooth is the top priority.</li>
+</ul>
+<h2 id="teamed-phase-design-twin--parallel">Teamed Phase Design (Twin /
+Parallel)</h2>
+<p>A teamed design eliminates the doubler chip. Instead, the motherboard
+routes a single PWM signal to two power stages simultaneously. Both
+power stages turn on and off at the exact same time, acting as one giant
+phase.</p>
+<p><strong>How it performs in benchmarks:</strong></p>
+<ul>
+<li><strong>Transient Response:</strong> Superior. By removing the
+doubler chip, the teamed design achieves the same instantaneous response
+time as a direct phase design.</li>
+<li><strong>Voltage Ripple:</strong> Good, but technically inferior to
+doublers. Because the two power stages fire at the exact same time
+rather than alternating, it does not double the effective switching
+frequency. Therefore, it only reduces ripple as well as a standard
+lower-phase direct design.</li>
+<li><strong>Thermal Performance:</strong> Exceptional. Like the doubled
+design, it physically uses two power stages per PWM channel, spreading
+the thermal load across double the components.</li>
+<li><strong>Best Use Case:</strong> High-end daily overclocking and
+modern gaming benchmarks. Modern CPUs aggressively spike from low power
+to high power in milliseconds. Teamed VRMs offer the fast transient
+response needed for these spikes while maintaining the thermal benefits
+of having a high number of physical components.</li>
+</ul>
+<h2 id="real-world-benchmark-impact">Real-World Benchmark Impact</h2>
+<p>When translating these electrical characteristics into actual
+benchmark software, the differences often come down to the cooling
+method and the workload:</p>
+<ul>
+<li><strong>Stock Settings and Gaming Benchmarks (3DMark, Cyberpunk
+2077):</strong> There is zero difference in benchmark scores between
+direct, doubled, and teamed VRMs, provided the VRM has enough physical
+capacity to not overheat.</li>
+<li><strong>Sustained Rendering Benchmarks (Cinebench,
+Handbrake):</strong> Doubled and teamed designs perform identically well
+here. Their ability to spread heat across many power stages prevents VRM
+thermal throttling, allowing the CPU to maintain its maximum boost clock
+indefinitely. A direct design with a low phase count might run hotter
+and throttle if not paired with a hefty heatsink.</li>
+<li><strong>Extreme Overclocking Benchmarks (SuperPi, 3DMark CPU Profile
+on LN2):</strong> Direct and teamed designs take the lead. When pushing
+a CPU to its absolute architectural limit, the nanoseconds saved by
+bypassing a doubler chip can be the difference between a completed
+benchmark run and a blue screen when the benchmark transitions from a
+loading screen to a heavy calculation.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/vrm-designs-doublers-vs-teamed-vs-direct-in-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

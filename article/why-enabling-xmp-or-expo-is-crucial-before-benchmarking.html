@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Enabling XMP or EXPO is Crucial Before Benchmarking - benchmark</title>
+    <meta name="description" content="This article provides a quick overview of why verifying the activation of Intel XMP or AMD EXPO memory profiles is a mandatory step before benchmarking computer hardware. By exploring how default RAM speeds create artificial bottlenecks, skew CPU and GPU">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-enabling-xmp-or-expo-is-crucial-before-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Enabling XMP or EXPO is Crucial Before Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-enabling-xmp-or-expo-is-crucial-before-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a quick overview of why verifying the activation of Intel XMP or AMD EXPO memory profiles is a mandatory step before benchmarking computer hardware. By exploring how default RAM speeds create artificial bottlenecks, skew CPU and GPU" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-enabling-xmp-or-expo-is-crucial-before-benchmarking">Why
+Enabling XMP or EXPO is Crucial Before Benchmarking</h1>
+<p>This article provides a quick overview of why verifying the
+activation of Intel XMP or AMD EXPO memory profiles is a mandatory step
+before benchmarking computer hardware. By exploring how default RAM
+speeds create artificial bottlenecks, skew CPU and GPU metrics, and ruin
+comparative data, this guide explains how failing to enable these
+profiles invalidates benchmark results and misrepresents a system's true
+capabilities.</p>
+<h3 id="bypassing-default-memory-speeds">Bypassing Default Memory
+Speeds</h3>
+<p>Out of the box, system memory (RAM) does not run at the high speeds
+printed on its retail packaging. Instead, motherboards default to
+baseline JEDEC standards—typically 2133 MHz for DDR4 or 4800 MHz for
+DDR5—to ensure the system can boot safely. Intel’s Extreme Memory
+Profile (XMP) and AMD’s Extended Profiles for Overclocking (EXPO) are
+built-in BIOS configurations that automatically set the correct voltage,
+frequency, and timings required for your RAM to run at its advertised
+performance levels.</p>
+<h3 id="eliminating-artificial-cpu-bottlenecks">Eliminating Artificial
+CPU Bottlenecks</h3>
+<p>Modern processors rely heavily on fast memory to feed data to their
+cores. Without XMP or EXPO enabled, the CPU is forced to wait longer for
+data transfers, resulting in wasted clock cycles. This is especially
+critical for architectures like AMD Ryzen, where the internal
+communication speed between CPU cores (Infinity Fabric) is directly tied
+to the speed of the system memory. Benchmarking a CPU with baseline RAM
+speeds will yield artificially low single-core and multi-core scores
+that do not reflect the processor's actual power.</p>
+<h3 id="ensuring-accurate-gpu-testing">Ensuring Accurate GPU
+Testing</h3>
+<p>Although graphics cards have their own dedicated video memory (VRAM),
+they still depend on the CPU and system RAM to process game logic and
+prepare frames for rendering. When system memory runs at slow default
+speeds, the CPU cannot feed instructions to the GPU fast enough. In
+gaming benchmarks, this creates a bottleneck that lowers average frame
+rates and drastically worsens 1% and 0.1% low frame times. If you
+benchmark a graphics card without XMP or EXPO active, you may mistakenly
+conclude the GPU is underperforming when the system RAM is the actual
+limiting factor.</p>
+<h3 id="maintaining-valid-comparative-data">Maintaining Valid
+Comparative Data</h3>
+<p>The primary purpose of benchmarking is to compare your system’s
+performance against other similar setups to ensure your hardware is
+functioning correctly. Almost all professional hardware reviewers,
+manufacturers, and public benchmark databases test systems with XMP or
+EXPO enabled. If your profiles are disabled, you are not conducting an
+apples-to-apples comparison. Your scores will fall significantly below
+the expected average, making it impossible to accurately diagnose
+genuine issues like thermal throttling or defective components.</p>
+<h3 id="guarding-against-silent-bios-resets">Guarding Against Silent
+BIOS Resets</h3>
+<p>Enabling XMP or EXPO once during the initial PC build is not
+sufficient; it must be verified before every benchmarking session.
+Motherboard BIOS updates, unexpected power outages, unstable overclocks,
+or minor hardware changes can trigger a safety mechanism that silently
+resets the BIOS to its factory defaults. Taking a few seconds to check
+the Windows Task Manager or a utility like CPU-Z before running a test
+guarantees your memory is running at its rated speed, ensuring your
+benchmark results are valid and reliable.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-enabling-xmp-or-expo-is-crucial-before-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Docker Containers Impact Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="Containerization technologies like Docker are increasingly used to distribute and run hardware benchmarks due to their portability and consistency. However, running benchmarks inside containers rather than directly on bare metal can impact the accuracy of">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-docker-containers-impact-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Docker Containers Impact Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-docker-containers-impact-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Containerization technologies like Docker are increasingly used to distribute and run hardware benchmarks due to their portability and consistency. However, running benchmarks inside containers rather than directly on bare metal can impact the accuracy of" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-docker-containers-impact-hardware-benchmarking">How Docker
+Containers Impact Hardware Benchmarking</h1>
+<p>Containerization technologies like Docker are increasingly used to
+distribute and run hardware benchmarks due to their portability and
+consistency. However, running benchmarks inside containers rather than
+directly on bare metal can impact the accuracy of the results. While CPU
+and memory benchmarks experience negligible differences, storage I/O and
+networking tests can suffer significant performance degradation due to
+container abstraction layers. Furthermore, the host operating system
+plays a massive role in whether the container accesses hardware directly
+or through a hidden virtual machine. This article breaks down the exact
+impact of Docker on each hardware component during benchmarking and how
+to configure containers for near-native test results.</p>
+<h2 id="cpu-and-memory-near-native-performance">CPU and Memory:
+Near-Native Performance</h2>
+<p>When benchmarking a processor or RAM on a Linux host, Docker
+introduces almost zero overhead. Unlike traditional virtual machines
+(VMs) that emulate hardware through a hypervisor, Docker uses
+operating-system-level virtualization. Containers share the host
+machine's OS kernel and execute instructions directly on the physical
+CPU.</p>
+<ul>
+<li><strong>CPU Impact:</strong> Raw compute benchmarks (such as
+calculating prime numbers, rendering, or compiling code) typically show
+less than a 1% variance between bare metal and a Docker container.</li>
+<li><strong>Memory Impact:</strong> RAM bandwidth and latency tests
+perform identically to bare metal, provided the container is not
+restricted by artificial memory limits in its configuration.</li>
+</ul>
+<p>The features that isolate containers—Linux namespaces and control
+groups (cgroups)—only police resource allocation and visibility. They do
+not intercept or slow down the actual execution of CPU instructions or
+memory addressing.</p>
+<h2 id="storage-and-disk-io-significant-overhead">Storage and Disk I/O:
+Significant Overhead</h2>
+<p>Storage benchmarking is heavily impacted by containerization. By
+default, Docker uses a union file system (such as OverlayFS) that relies
+on a Copy-on-Write (CoW) mechanism.</p>
+<p>When a benchmark tool writes data to the container's internal file
+system, the storage driver must goes through extra processing layers,
+significantly increasing latency and reducing Input/Output Operations
+Per Second (IOPS). Benchmarking an NVMe SSD inside a standard container
+layer will yield falsely low performance metrics.</p>
+<p><strong>The Fix:</strong> To benchmark storage hardware accurately
+using a containerized tool, you must bypass the union file system. By
+mounting a host directory directly into the container using a "bind
+mount" or a Docker Volume, read and write operations go directly to the
+host's file system, restoring bare-metal disk performance.</p>
+<h2 id="network-hardware-latency-and-throughput-bottlenecks">Network
+Hardware: Latency and Throughput Bottlenecks</h2>
+<p>Benchmarking network interface cards (NICs) from inside a container
+will yield poor results if you use Docker’s default settings. By
+default, Docker creates a virtual bridge network. Every packet sent or
+received by the container must pass through Network Address Translation
+(NAT) and virtual ethernet interfaces managed by the host CPU.</p>
+<p>This virtualization layer increases network latency, reduces maximum
+throughput, and consumes extra CPU cycles, which can bottleneck
+high-speed hardware like 10GbE or 100GbE network cards.</p>
+<p><strong>The Fix:</strong> Running the container with the
+<code>--network=host</code> flag removes the network isolation between
+the container and the host. The benchmark tool will directly utilize the
+host’s physical network stack, eliminating the NAT overhead and
+providing accurate hardware metrics.</p>
+<h2 id="gpu-benchmarking-direct-pass-through">GPU Benchmarking: Direct
+Pass-Through</h2>
+<p>Graphics Processing Units (GPUs) cannot be accessed by standard
+Docker containers out of the box. However, using specialized runtimes
+like the NVIDIA Container Toolkit allows the host's GPU drivers to be
+exposed directly to the container.</p>
+<p>Once configured, the container does not emulate the GPU; it passes
+API calls (like CUDA or Vulkan) straight to the physical hardware. Aside
+from a slight delay when the container initially loads the driver
+libraries, 3D rendering, machine learning, and compute benchmarks run at
+99% to 100% of bare-metal speeds.</p>
+<h2 id="the-operating-system-trap-linux-vs-windows-and-macos">The
+Operating System Trap: Linux vs. Windows and macOS</h2>
+<p>The most critical factor in containerized benchmarking is the host
+operating system. Docker is natively a Linux technology.</p>
+<ul>
+<li><strong>On Linux:</strong> Containers run directly on the host
+kernel, offering the near-native hardware access described above.</li>
+<li><strong>On Windows and macOS:</strong> Docker Desktop runs
+containers inside a lightweight Linux Virtual Machine (using WSL2 on
+Windows or HyperKit/Virtualization.framework on macOS).</li>
+</ul>
+<p>If you run a Dockerized hardware benchmark on Windows or macOS, you
+are not benchmarking your bare-metal hardware. You are benchmarking a
+virtual machine. This adds hypervisor overhead to the CPU, restricts RAM
+allocation to whatever is assigned to the VM, and severely bottlenecks
+disk and network I/O. Accurate hardware benchmarking via Docker can only
+be achieved on a native Linux host.</p>
+<h2 id="why-use-containers-for-benchmarking">Why Use Containers for
+Benchmarking?</h2>
+<p>Despite the need for careful configuration, hardware testers
+frequently use Docker because it guarantees
+<strong>reproducibility</strong>.</p>
+<p>Hardware benchmarks are sensitive to software variables, such as
+compiler versions, system libraries, and background tasks. By packaging
+a benchmark suite inside a Docker container, testers ensure that the
+exact same software environment is used across vastly different hardware
+configurations. As long as host networking, volume mounts, and a native
+Linux OS are used, Docker provides a standardized, reliable method for
+evaluating computer hardware.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-docker-containers-impact-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

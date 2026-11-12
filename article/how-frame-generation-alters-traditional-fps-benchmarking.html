@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Frame Generation Alters Traditional FPS Benchmarking - benchmark</title>
+    <meta name="description" content="Frame generation technology has fundamentally disrupted the decades-old standard of using Frames Per Second (FPS) as the ultimate metric for computer hardware benchmarking. By using artificial intelligence and optical flow accelerators to insert synthetic">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-frame-generation-alters-traditional-fps-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Frame Generation Alters Traditional FPS Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-frame-generation-alters-traditional-fps-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Frame generation technology has fundamentally disrupted the decades-old standard of using Frames Per Second (FPS) as the ultimate metric for computer hardware benchmarking. By using artificial intelligence and optical flow accelerators to insert synthetic" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-frame-generation-alters-traditional-fps-benchmarking">How
+Frame Generation Alters Traditional FPS Benchmarking</h1>
+<p>Frame generation technology has fundamentally disrupted the
+decades-old standard of using Frames Per Second (FPS) as the ultimate
+metric for computer hardware benchmarking. By using artificial
+intelligence and optical flow accelerators to insert synthetic frames
+between traditionally rendered ones, technologies like NVIDIA DLSS 3,
+AMD FSR 3, and Intel XeSS artificially inflate frame rates without
+proportionally increasing true rendering performance. This article
+explores how frame generation breaks the historical link between high
+FPS and low input latency, complicates direct GPU comparisons,
+introduces image quality variables into performance testing, and forces
+hardware reviewers to adopt entirely new benchmarking methodologies.</p>
+<h2 id="synthetic-frames-vs-rendered-frames">Synthetic Frames vs.
+Rendered Frames</h2>
+<p>Traditionally, an FPS counter measured how many frames the CPU and
+GPU could simulate and draw from scratch every second. A higher number
+meant the hardware was objectively faster at processing game logic and
+geometry.</p>
+<p>Frame generation changes this by analyzing two completed frames and
+generating an intermediate "fake" frame without involving the CPU or the
+game engine. If a benchmark reports 120 FPS with frame generation
+enabled, the hardware is only truly rendering 60 frames per second.
+Consequently, comparing a graphics card running native rendering to one
+using frame generation is no longer an apples-to-apples comparison of
+raw compute power.</p>
+<h2 id="the-disconnect-between-fps-and-input-latency">The Disconnect
+Between FPS and Input Latency</h2>
+<p>Before frame generation, higher FPS always resulted in lower input
+latency. A game running at 120 FPS felt twice as responsive to mouse and
+keyboard inputs as a game running at 60 FPS.</p>
+<p>Frame generation severs this connection. To create an interpolated
+frame, the GPU must hold back a newly rendered frame to compare it with
+the previous one. This delay adds input lag. Furthermore, the generated
+frames do not process user input. As a result, a game running at 120 FPS
+with frame generation will look as smooth as a native 120 FPS
+experience, but it will feel like a 60 FPS (or worse) experience in
+terms of responsiveness. Because of this, hardware benchmarks can no
+longer rely on FPS alone to indicate how a game feels; they must now
+include end-to-end system latency measurements in milliseconds.</p>
+<h2 id="the-requirement-for-baseline-performance">The Requirement for
+Baseline Performance</h2>
+<p>In traditional benchmarking, any boost to FPS was beneficial,
+especially at the low end. Pushing a struggling GPU from 25 FPS to 45
+FPS via hardware overclocking or resolution scaling made an unplayable
+game playable.</p>
+<p>Frame generation does not work well at low frame rates. Because the
+technology relies on existing frames to guess what happens next, a low
+base frame rate means there is too much time—and too much visual
+change—between frames. Using frame generation to boost 20 FPS to 40 FPS
+results in severe visual artifacts and sluggish, unplayable input lag.
+Frame generation requires a baseline of roughly 60 native FPS to
+function correctly. Therefore, benchmarks cannot use frame generation to
+crown a budget GPU as viable for heavy workloads, as the technology is
+primarily a "win-more" feature for hardware that is already performing
+well.</p>
+<h2 id="image-quality-as-a-performance-metric">Image Quality as a
+Performance Metric</h2>
+<p>Historically, a rendered frame at a set resolution looked identical
+regardless of the GPU brand producing it, making FPS a purely
+quantitative metric. Frame generation introduces qualitative variables
+into benchmarking.</p>
+<p>Because generated frames are only estimates, they often contain
+visual errors, such as ghosting behind fast-moving objects, shimmering,
+or garbled heads-up display (HUD) elements. Furthermore, one vendor's
+frame generation algorithm may produce fewer visual flaws than
+another's. Hardware testers can no longer just look at a bar chart of
+frame rates; they must visually inspect the output to determine if the
+artificially high FPS comes at the cost of a degraded image.</p>
+<h2 id="how-hardware-benchmarking-has-adapted">How Hardware Benchmarking
+Has Adapted</h2>
+<p>To maintain accuracy and consumer trust, modern hardware benchmarking
+has evolved to accommodate frame generation through the following
+changes:</p>
+<ul>
+<li><strong>Segregated Charts:</strong> Reviewers no longer lump all
+results into one graph. Benchmarks are now strictly separated into
+Native Rendering, Upscaling (DLSS/FSR Super Resolution), and Upscaling +
+Frame Generation categories.</li>
+<li><strong>Mandatory Latency Testing:</strong> Tools like NVIDIA
+FrameView and hardware latency analyzers are now standard in
+benchmarking suites to show the latency penalty incurred by turning on
+frame generation.</li>
+<li><strong>Focus on Frame Pacing:</strong> An average FPS counter can
+hide micro-stutters. Reviewers now look closely at frame time graphs to
+ensure the generated frames are spaced evenly between real frames, as
+poor frame pacing ruins the illusion of smoothness.</li>
+<li><strong>CPU Bottleneck Masking:</strong> Because frame generation
+bypasses the CPU, it can artificially mask a weak processor in GPU
+benchmarks. Testers must disable frame generation to accurately measure
+CPU gaming performance.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-frame-generation-alters-traditional-fps-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

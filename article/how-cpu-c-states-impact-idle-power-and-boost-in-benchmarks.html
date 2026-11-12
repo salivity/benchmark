@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CPU C-States Impact Idle Power and Boost in Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores the direct impact of CPU power-saving modes, known as C-states, on computer hardware benchmarking. It covers how enabling or disabling these states alters idle power consumption and dictates how modern processors handle single-core a">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-cpu-c-states-impact-idle-power-and-boost-in-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CPU C-States Impact Idle Power and Boost in Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-cpu-c-states-impact-idle-power-and-boost-in-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the direct impact of CPU power-saving modes, known as C-states, on computer hardware benchmarking. It covers how enabling or disabling these states alters idle power consumption and dictates how modern processors handle single-core a" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-cpu-c-states-impact-idle-power-and-boost-in-benchmarks">How
+CPU C-States Impact Idle Power and Boost in Benchmarks</h1>
+<p>This article explores the direct impact of CPU power-saving modes,
+known as C-states, on computer hardware benchmarking. It covers how
+enabling or disabling these states alters idle power consumption and
+dictates how modern processors handle single-core and multi-core boost
+frequencies. By understanding the trade-offs between wake-up latency,
+thermal headroom, and power budgets, hardware enthusiasts can optimize
+their BIOS settings for maximum performance and score consistency.</p>
+<h3 id="what-are-c-states">What Are C-States?</h3>
+<p>C-states (CPU Power States) are idle power-saving modes built into
+modern processors. They range from C0, which is the normal active
+operating state where the CPU is executing instructions, to deeper sleep
+states like C1, C3, C6, and beyond. With each progressively deeper
+C-state, the processor turns off more internal components, reduces core
+voltage, and lowers clock speeds to save energy when specific cores are
+not in use.</p>
+<h3 id="the-effect-on-idle-power-consumption">The Effect on Idle Power
+Consumption</h3>
+<p>The most immediate effect of toggling C-states is seen in your
+system's idle power draw and baseline temperatures.</p>
+<ul>
+<li><strong>C-States Enabled:</strong> When the system is idle, unused
+cores enter deep sleep states. Voltage drops to near zero for sleeping
+cores, and clock speeds plummet. This results in significantly lower
+power consumption at the wall and much lower idle temperatures.</li>
+<li><strong>C-States Disabled:</strong> Every core on the processor is
+forced to remain in the C0 (active) state at all times, regardless of
+workload. Even when sitting on an empty desktop, the CPU maintains high
+clock speeds and voltages. This drastically increases idle power draw
+and raises the baseline temperature of the processor and cooling
+loop.</li>
+</ul>
+<h3 id="the-effect-on-cpu-boost-clocks">The Effect on CPU Boost
+Clocks</h3>
+<p>Historically, overclockers disabled C-states to achieve higher
+stability. However, on modern architectures from AMD and Intel, C-states
+are directly tied to how the processor boosts.</p>
+<ul>
+<li><strong>Single-Core Boost (C-States Enabled):</strong> Modern boost
+algorithms—such as Intel Thermal Velocity Boost and AMD Precision
+Boost—rely on C-states to reach their advertised maximum frequencies. To
+push one or two cores to their absolute frequency limits, the CPU must
+put the remaining cores into deep C-states (like C6). This saves power
+and reduces heat on the inactive cores, allowing the CPU to redirect its
+total power and thermal budget to the active cores.</li>
+<li><strong>Single-Core Boost (C-States Disabled):</strong> Disabling
+C-states often prevents a stock CPU from reaching its maximum
+single-core boost clock. Because all cores are forced to stay awake and
+draw power, the processor hits its power or thermal limit faster,
+restricting how high a single core can boost.</li>
+<li><strong>All-Core Boost:</strong> In heavy multi-threaded workloads
+where all cores are 100% utilized, all cores are naturally in the C0
+state. Therefore, enabling or disabling C-states has a minimal direct
+impact on maximum all-core boost frequencies, except for how it affects
+starting temperatures.</li>
+</ul>
+<h3 id="benchmarking-implications">Benchmarking Implications</h3>
+<p>When benchmarking hardware, the decision to enable or disable
+C-states depends entirely on the type of benchmark being run and the
+cooling method used.</p>
+<p><strong>When to Disable C-States:</strong></p>
+<ul>
+<li><strong>Manual All-Core Overclocking:</strong> If you lock all cores
+to a specific frequency and voltage, disabling C-states prevents voltage
+fluctuations, leading to greater system stability during heavy stress
+tests.</li>
+<li><strong>Latency-Sensitive Benchmarks:</strong> It takes time
+(measured in microseconds) for a core to wake up from a deep sleep state
+like C6 back to C0. Disabling C-states eliminates this "wake-up
+latency." This makes the system slightly more responsive and yields
+higher scores in benchmarks that measure memory latency, storage IOPS,
+or rapid, bursty workloads.</li>
+<li><strong>Run-to-Run Consistency:</strong> Keeping the CPU locked in
+the C0 state removes the variable of cores sleeping and waking up,
+leading to more consistent, repeatable benchmark scores.</li>
+</ul>
+<p><strong>When to Enable C-States:</strong></p>
+<ul>
+<li><strong>Stock CPU Benchmarking:</strong> If you are benchmarking a
+modern CPU at its default settings, C-states must be enabled to allow
+the factory boost algorithms to function correctly.</li>
+<li><strong>Lightly Threaded Benchmarks:</strong> For benchmarks that
+only stress one to four cores, enabling C-states ensures the inactive
+cores go to sleep, freeing up the power and thermal headroom needed for
+the active cores to hit peak frequencies.</li>
+<li><strong>Thermal Management Before a Run:</strong> Enabling C-states
+keeps the CPU cool right up until the moment the benchmark starts. A
+lower starting temperature gives the processor more thermal headroom to
+sustain higher boost clocks for a longer duration once the benchmark
+begins.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-cpu-c-states-impact-idle-power-and-boost-in-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

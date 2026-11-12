@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Reset BIOS Before Baseline Hardware Benchmarking? - benchmark</title>
+    <meta name="description" content="Clearing the CMOS or loading optimized defaults in the BIOS is a critical first step before conducting baseline benchmarks on computer hardware. This article explains how resetting your motherboard settings eliminates hidden performance variables, prevent">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-reset-bios-before-baseline-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Reset BIOS Before Baseline Hardware Benchmarking? - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-reset-bios-before-baseline-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Clearing the CMOS or loading optimized defaults in the BIOS is a critical first step before conducting baseline benchmarks on computer hardware. This article explains how resetting your motherboard settings eliminates hidden performance variables, prevent" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-reset-bios-before-baseline-hardware-benchmarking">Why Reset
+BIOS Before Baseline Hardware Benchmarking?</h1>
+<p>Clearing the CMOS or loading optimized defaults in the BIOS is a
+critical first step before conducting baseline benchmarks on computer
+hardware. This article explains how resetting your motherboard settings
+eliminates hidden performance variables, prevents system instability
+from previous configurations, and establishes a true out-of-the-box
+standard. By starting with a clean slate, you ensure that your benchmark
+results are accurate, repeatable, and genuinely reflective of the
+hardware's stock capabilities.</p>
+<h2 id="eliminating-leftover-tweaks-and-overclocks">Eliminating Leftover
+Tweaks and Overclocks</h2>
+<p>The primary purpose of a baseline benchmark is to measure how your
+hardware performs at its factory specifications. If you have previously
+adjusted CPU multipliers, tweaked voltages, or altered base clock (BCLK)
+frequencies, your system is no longer running at stock. Clearing the
+CMOS (Complementary Metal-Oxide-Semiconductor) or selecting "Load
+Optimized Defaults" in the BIOS wipes away these manual adjustments,
+ensuring that leftover settings do not artificially inflate or degrade
+your baseline scores.</p>
+<h2 id="standardizing-memory-profiles">Standardizing Memory
+Profiles</h2>
+<p>RAM speed and timings have a significant impact on both CPU and GPU
+benchmark results. Many users enable XMP (Extreme Memory Profile) or
+EXPO (Extended Profiles for Overclocking) and forget they are active.
+Technically, these profiles are factory overclocks. Resetting the BIOS
+reverts your memory back to basic JEDEC standard speeds. This gives you
+a true baseline, allowing you to later enable XMP/EXPO and accurately
+measure the exact performance gain provided by faster memory speeds.</p>
+<h2 id="resetting-power-limits-and-fan-curves">Resetting Power Limits
+and Fan Curves</h2>
+<p>Modern processors rely heavily on thermal and power headroom to boost
+their clock speeds automatically. Previous BIOS changes to Package Power
+Tracking (PPT), motherboard-enforced power limits, or custom fan curves
+will alter how long and how high a CPU can boost during a heavy
+benchmarking load. Loading optimized defaults restores the motherboard's
+standard power delivery rules and default cooling profiles, ensuring
+thermal performance is measured consistently.</p>
+<h2 id="preventing-hardware-instability">Preventing Hardware
+Instability</h2>
+<p>Benchmarking pushes computer components to their absolute limits,
+which can quickly expose minor system instabilities. A slightly
+undervolted CPU or an unstable memory timing might work fine for web
+browsing, but it can cause a system crash or silent data corruption
+during a heavy benchmark run. Corrupt runs result in lower, inaccurate
+scores. Factory defaults are designed for maximum compatibility and
+stability, guaranteeing that your baseline test completes without
+errors.</p>
+<h2 id="ensuring-valid-comparisons">Ensuring Valid Comparisons</h2>
+<p>A baseline benchmark is essentially the "control group" in a
+scientific experiment. You use this data to accomplishes two things:</p>
+<ul>
+<li>Compare your system's performance against reviews and other users
+with identical hardware.</li>
+<li>Measure the exact percentage of performance gained after you apply
+new overclocks, update drivers, or upgrade components.</li>
+</ul>
+<p>If your baseline is contaminated by forgotten BIOS settings, any
+future comparisons become invalid.</p>
+<h2 id="clear-cmos-vs-load-optimized-defaults">Clear CMOS vs. Load
+Optimized Defaults</h2>
+<p>Both methods achieve the same goal of resetting the system, though
+they work slightly differently:</p>
+<ul>
+<li><strong>Load Optimized Defaults:</strong> This is done directly
+inside the BIOS menu. It resets all user-configurable settings back to
+the motherboard manufacturer's recommended factory state.</li>
+<li><strong>Clearing CMOS:</strong> This is done physically on the
+motherboard (via a jumper, button, or by removing the CMOS battery). It
+completely wipes the volatile memory that stores BIOS settings, forcing
+the motherboard to reload its foundational factory configuration from
+scratch. This is particularly useful if you have swapped in a new CPU or
+RAM before benchmarking, as it forces the motherboard to freshly retrain
+and recognize the new hardware.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-reset-bios-before-baseline-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

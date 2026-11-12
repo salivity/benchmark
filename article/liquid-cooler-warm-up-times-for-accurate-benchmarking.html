@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Cooler Warm-Up Times for Accurate Benchmarking - benchmark</title>
+    <meta name="description" content="Achieving accurate hardware benchmarks with a liquid cooler requires pre-heating the coolant to thermal equilibrium, which typically takes between 15 and 60 minutes depending on the loop size and hardware power output. Without a proper warm-up phase, the">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/liquid-cooler-warm-up-times-for-accurate-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Liquid Cooler Warm-Up Times for Accurate Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/liquid-cooler-warm-up-times-for-accurate-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Achieving accurate hardware benchmarks with a liquid cooler requires pre-heating the coolant to thermal equilibrium, which typically takes between 15 and 60 minutes depending on the loop size and hardware power output. Without a proper warm-up phase, the" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="liquid-cooler-warm-up-times-for-accurate-benchmarking">Liquid
+Cooler Warm-Up Times for Accurate Benchmarking</h1>
+<p>Achieving accurate hardware benchmarks with a liquid cooler requires
+pre-heating the coolant to thermal equilibrium, which typically takes
+between 15 and 60 minutes depending on the loop size and hardware power
+output. Without a proper warm-up phase, the liquid simply absorbs the
+initial heat spike without reflecting the radiator's actual ability to
+dissipate heat, resulting in artificially low temperature readings. This
+article explains the exact warm-up durations needed for All-In-One (AIO)
+and custom liquid coolers, why thermal saturation matters, and how to
+verify your system is ready for testing.</p>
+<h2 id="recommended-warm-up-durations">Recommended Warm-Up
+Durations</h2>
+<p>The time required to warm up a liquid cooler depends entirely on the
+volume of liquid in the system and the wattage of the components heating
+it.</p>
+<ul>
+<li><strong>Small AIO Coolers (120mm to 240mm):</strong> 15 to 20
+minutes.</li>
+<li><strong>Large AIO Coolers (280mm to 420mm):</strong> 20 to 30
+minutes.</li>
+<li><strong>Standard Custom Loops (1 to 2 radiators):</strong> 30 to 45
+minutes.</li>
+<li><strong>Large Custom Loops (3+ radiators or external
+radiators):</strong> 45 to 60+ minutes.</li>
+</ul>
+<h2 id="why-liquid-coolers-need-a-warm-up-phase">Why Liquid Coolers Need
+a Warm-Up Phase</h2>
+<p>Air coolers reach their maximum operating temperature within a few
+minutes because metal heatpipes have a very low thermal capacity. Liquid
+coolers, however, use water-based coolants with a high specific heat
+capacity.</p>
+<p>When you start a benchmark on a cold system, the coolant absorbs a
+massive amount of thermal energy before its own temperature rises. If
+you run a short benchmark—such as a single run of Cinebench or a
+5-minute gaming test—on a cold liquid cooler, you are only measuring the
+cold water's ability to absorb heat. You are not measuring the radiator
+and fans' ability to exhaust that heat from the system. Warming up the
+cooler ensures the liquid reaches thermal equilibrium, where the heat
+entering the loop equals the heat leaving the radiator.</p>
+<h2 id="how-to-warm-up-your-system-properly">How to Warm Up Your System
+Properly</h2>
+<p>To reach thermal saturation efficiently, you must apply a consistent,
+heavy thermal load to the components inside the cooling loop.</p>
+<ol type="1">
+<li><strong>Lock Your Fan and Pump Speeds:</strong> Set your fans and
+pump to the exact speeds or curves you intend to use during the
+benchmark.</li>
+<li><strong>Apply a Synthetic Load:</strong> Use a stress-testing
+utility that generates a steady power draw. For CPUs, use Prime95 (Small
+FFTs) or Cinebench in a continuous loop. For GPUs, use FurMark or 3DMark
+Stress Tests. If both components share a custom loop, stress both
+simultaneously.</li>
+<li><strong>Monitor Temperatures:</strong> Open hardware monitoring
+software like HWiNFO64 to track your temperatures in real time.</li>
+</ol>
+<h2 id="how-to-know-when-the-cooler-is-ready">How to Know When the
+Cooler is Ready</h2>
+<p>Time alone is just an estimate; temperature stability is the true
+indicator of thermal equilibrium.</p>
+<p>If your cooler has a built-in coolant temperature sensor, watch the
+liquid temperature. When the liquid temperature stops rising and remains
+completely flat (within 0.5°C) for at least 5 consecutive minutes, the
+cooler is fully warmed up.</p>
+<p>If you do not have a coolant sensor, monitor the CPU package
+temperature or GPU core temperature under a constant wattage load. Once
+the component's peak temperature plateaus and stops creeping upward for
+5 to 10 minutes, the liquid has reached saturation. You can now stop the
+warm-up stress test and immediately begin your actual benchmarking
+run.</p>
+<h2 id="factors-that-affect-warm-up-time">Factors That Affect Warm-Up
+Time</h2>
+<p>Several variables can shorten or extend your warm-up phase:</p>
+<ul>
+<li><strong>Component Wattage (TDP):</strong> A 250-watt CPU will heat
+up a 360mm AIO much faster than a 65-watt CPU. Low-power components may
+require an extra 10 minutes to fully saturate a large cooler.</li>
+<li><strong>Fan Speed:</strong> Running fans at 100% speed will cause
+the system to reach thermal equilibrium faster than running them at a
+quiet 30% speed, as the maximum temperature ceiling will be lower.</li>
+<li><strong>Ambient Temperature:</strong> Ensure the room temperature is
+stable. If the room itself heats up during the warm-up phase, your
+benchmark results will skew higher over time.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/liquid-cooler-warm-up-times-for-accurate-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

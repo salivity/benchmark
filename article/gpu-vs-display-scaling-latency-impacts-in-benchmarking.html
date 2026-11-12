@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU vs Display Scaling: Latency Impacts in Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores the differences between GPU scaling and display scaling, focusing on how each method affects system latency during computer hardware benchmarks. You will learn the mechanics of both scaling techniques, their actual millisecond impact">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/gpu-vs-display-scaling-latency-impacts-in-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="GPU vs Display Scaling: Latency Impacts in Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/gpu-vs-display-scaling-latency-impacts-in-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the differences between GPU scaling and display scaling, focusing on how each method affects system latency during computer hardware benchmarks. You will learn the mechanics of both scaling techniques, their actual millisecond impact" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="gpu-vs-display-scaling-latency-impacts-in-benchmarking">GPU vs
+Display Scaling: Latency Impacts in Benchmarking</h1>
+<p>This article explores the differences between GPU scaling and display
+scaling, focusing on how each method affects system latency during
+computer hardware benchmarks. You will learn the mechanics of both
+scaling techniques, their actual millisecond impact on modern
+components, and how to configure your test bench to ensure accurate,
+consistent, and repeatable benchmarking results.</p>
+<h2 id="the-mechanics-of-scaling">The Mechanics of Scaling</h2>
+<p>Scaling is required when the resolution rendered by a game or
+benchmark does not match the native physical resolution of the monitor.
+For example, running a 1080p benchmark on a 4K monitor requires the
+image to be stretched to fill the screen. There are two ways to handle
+this:</p>
+<ul>
+<li><strong>Display Scaling:</strong> The GPU sends the raw, unscaled
+1080p signal through the display cable. The monitor’s internal scaler
+chip intercepts the signal, resizes the image to 4K, and displays it on
+the panel.</li>
+<li><strong>GPU Scaling:</strong> The GPU renders the image at 1080p,
+uses its own hardware to upscale the image to 4K, and sends a native 4K
+signal to the monitor. The monitor's internal scaler is bypassed
+entirely.</li>
+</ul>
+<h2 id="how-display-scaling-affects-latency">How Display Scaling Affects
+Latency</h2>
+<p>Display scaling offloads the resizing workload from the graphics card
+to the monitor. In the past, this was the preferred method for low
+latency, as older GPUs had to use their rendering cores to scale
+images.</p>
+<p>However, display scaling latency depends entirely on the quality of
+the monitor's internal scaler chip:</p>
+<ul>
+<li><strong>Low-End/Older Monitors:</strong> Many standard monitors use
+cheap scaler chips that must buffer an entire frame in the monitor's
+memory before resizing it. At 60Hz, a single frame buffer adds 16.67
+milliseconds of input latency.</li>
+<li><strong>High-End Gaming Monitors:</strong> Modern gaming monitors
+utilize fast, dedicated scalers that process the image line-by-line
+rather than buffering the whole frame. This results in near-zero scaling
+latency, often adding less than 1 millisecond to the total signal
+path.</li>
+</ul>
+<h2 id="how-gpu-scaling-affects-latency">How GPU Scaling Affects
+Latency</h2>
+<p>A common misconception is that GPU scaling reduces framerates and
+increases render latency by stealing resources from the graphics card.
+On modern hardware from NVIDIA, AMD, and Intel, this is false.</p>
+<p>Modern GPUs feature a dedicated hardware block called the
+<strong>Display Engine</strong>, which is completely separate from the
+shader cores used for rendering games.</p>
+<ul>
+<li><strong>Processing Latency:</strong> Because the rendered frame is
+already sitting in the GPU’s VRAM, the Display Engine scales the image
+as it is being scanned out to the display cable. This process happens in
+microseconds, adding virtually zero measurable latency to the
+system.</li>
+<li><strong>Bandwidth Limitations:</strong> Because GPU scaling sends a
+native-resolution signal to the monitor, it requires more cable
+bandwidth. If you are benchmarking a high-refresh-rate scenario on an
+older cable standard, GPU scaling might force chroma subsampling (color
+compression) or limit your maximum refresh rate, which indirectly hurts
+latency.</li>
+</ul>
+<h2 id="the-impact-on-hardware-benchmarking">The Impact on Hardware
+Benchmarking</h2>
+<p>When benchmarking computer hardware—especially when using tools like
+NVIDIA LDAT or OSRTT to measure "click-to-photon" (end-to-end) system
+latency—your scaling choice can skew your data.</p>
+<h3 id="1-isolating-cpugpu-performance">1. Isolating CPU/GPU
+Performance</h3>
+<p>Benchmarking often requires testing at 1080p to create a CPU
+bottleneck, even if the test bench uses a 1440p or 4K monitor. Because
+modern GPU Display Engines handle scaling independently of the rendering
+pipeline, turning on GPU scaling will not lower your average FPS or 1%
+lows. Both scaling methods yield identical framerate metrics on modern
+architectures.</p>
+<h3 id="2-consistency-across-test-benches">2. Consistency Across Test
+Benches</h3>
+<p>If you are benchmarking latency across multiple systems connected to
+different monitors, <strong>Display Scaling introduces a
+variable</strong>. One monitor might add 0.5ms of scaling lag, while
+another adds 12ms. By forcing GPU Scaling, you bypass the monitors'
+internal scalers, ensuring that the scaling workload is handled solely
+by the hardware you are actually testing.</p>
+<h3 id="3-signal-handshake-and-mode-switching">3. Signal Handshake and
+Mode Switching</h3>
+<p>During automated benchmarking runs that switch resolutions, Display
+Scaling forces the monitor to change its active signal mode. This causes
+the screen to go black for a few seconds and can occasionally cause
+benchmark software to crash or record massive latency spikes during the
+transition. GPU scaling keeps the monitor locked at its native
+resolution and refresh rate, resulting in instant resolution changes and
+cleaner benchmark data.</p>
+<h2 id="best-practices-for-benchmarking">Best Practices for
+Benchmarking</h2>
+<p>To ensure your hardware benchmarks are accurate and free from
+scaling-induced latency anomalies, follow these rules:</p>
+<ol type="1">
+<li><strong>Run Native Resolution Whenever Possible:</strong> The best
+way to eliminate scaling latency is to avoid scaling altogether. Match
+your benchmark resolution to your monitor's native resolution.</li>
+<li><strong>Use GPU Scaling for Multi-System Latency Tests:</strong>
+When testing at non-native resolutions (like 720p or 1080p on a 4K
+panel) to measure system latency, enable GPU scaling. This standardizes
+the signal output and removes the monitor's scaler chip as a
+variable.</li>
+<li><strong>Use Display Scaling Only on Verified Monitors:</strong> If
+you are testing legacy GPUs (pre-2015) that lack modern dedicated
+display engines, or if you are hitting cable bandwidth limits, use
+Display Scaling—provided you are using a high-end gaming monitor known
+to have a zero-frame-buffer scaler.</li>
+<li><strong>Document Your State:</strong> Always note whether GPU or
+Display scaling was used in your benchmark methodology, as
+click-to-photon latency numbers cannot be accurately compared if the
+scaling methods differ.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/gpu-vs-display-scaling-latency-impacts-in-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

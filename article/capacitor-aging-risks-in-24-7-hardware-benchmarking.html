@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitor Aging Risks in 24/7 Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="Running continuous 24/7 stress loads to benchmark computer hardware significantly accelerates capacitor aging, primarily due to sustained high temperatures and maximum electrical current draw. This article provides an overview of how relentless benchmarki">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/capacitor-aging-risks-in-24-7-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Capacitor Aging Risks in 24/7 Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/capacitor-aging-risks-in-24-7-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Running continuous 24/7 stress loads to benchmark computer hardware significantly accelerates capacitor aging, primarily due to sustained high temperatures and maximum electrical current draw. This article provides an overview of how relentless benchmarki" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="capacitor-aging-risks-in-247-hardware-benchmarking">Capacitor
+Aging Risks in 24/7 Hardware Benchmarking</h1>
+<p>Running continuous 24/7 stress loads to benchmark computer hardware
+significantly accelerates capacitor aging, primarily due to sustained
+high temperatures and maximum electrical current draw. This article
+provides an overview of how relentless benchmarking degrades different
+types of capacitors, the resulting risks of system instability,
+decreased power regulation, and catastrophic hardware failure in power
+supplies, motherboards, and graphics cards, as well as how to mitigate
+this damage.</p>
+<h2 id="the-cause-heat-and-ripple-current">The Cause: Heat and Ripple
+Current</h2>
+<p>Capacitors store and smooth out electrical energy, ensuring a steady
+flow of power to sensitive components like the CPU and GPU. During 24/7
+benchmarking, hardware draws maximum wattage continuously, which
+subjects capacitors to two main aging factors:</p>
+<ul>
+<li><strong>Thermal Stress:</strong> Capacitor lifespan is directly tied
+to temperature. A general rule of thumb in electronics is that for every
+10°C increase in operating temperature, a capacitor's lifespan is cut in
+half. Continuous benchmarking traps heat inside the chassis and on the
+circuit boards, rapidly consuming the rated hours of the
+capacitors.</li>
+<li><strong>Ripple Current:</strong> High loads cause fluctuations in
+the AC power converted to DC, known as ripple. Filtering this constant,
+heavy ripple generates internal friction and heat within the capacitor
+itself, degrading its internal materials from the inside out.</li>
+</ul>
+<h2 id="power-supply-unit-psu-degradation">Power Supply Unit (PSU)
+Degradation</h2>
+<p>The PSU relies heavily on large aluminum electrolytic capacitors,
+which contain a liquid electrolyte that naturally evaporates over time.
+Under 24/7 maximum stress loads, this evaporation accelerates
+drastically.</p>
+<p>As PSU capacitors age, their capacitance (ability to hold a charge)
+drops, and their Equivalent Series Resistance (ESR) rises. This leads
+to:</p>
+<ul>
+<li><strong>Dirty Power Delivery:</strong> The PSU can no longer
+effectively filter out voltage ripple. High ripple is sent directly to
+the motherboard and GPU, forcing their smaller onboard capacitors to
+work harder, creating a domino effect of degradation.</li>
+<li><strong>Inability to Handle Transient Spikes:</strong> Modern GPUs
+and CPUs experience microsecond power spikes. Aged PSU capacitors cannot
+react quickly enough to supply this power, leading to sudden system
+reboots or hard shut-offs during benchmarks.</li>
+<li><strong>Decreased Efficiency:</strong> Higher internal resistance
+means more electricity is wasted as heat, drawing more power from the
+wall to achieve the same hardware performance.</li>
+</ul>
+<h2 id="motherboard-and-gpu-vrm-failure">Motherboard and GPU VRM
+Failure</h2>
+<p>Motherboards and graphics cards use Voltage Regulator Modules (VRMs)
+to step down power for the CPU and GPU cores. These typically use solid
+polymer capacitors and Multilayer Ceramic Capacitors (MLCCs). While more
+durable than liquid electrolytic capacitors, they are not immune to 24/7
+stress.</p>
+<ul>
+<li><strong>Loss of Stability:</strong> As VRM capacitors degrade, the
+steady voltage required for high clock speeds falters. A system that was
+previously stable during a benchmark will begin experiencing Blue
+Screens of Death (BSODs), driver crashes, or benchmark application
+errors.</li>
+<li><strong>Increased Vdroop:</strong> Aging capacitors struggle to
+maintain voltage levels when a heavy load is applied. This forces the
+hardware to either throttle its performance or crash due to
+under-voltage.</li>
+<li><strong>Catastrophic Short Circuits:</strong> When solid polymer or
+ceramic capacitors reach the end of their lifespan under extreme heat,
+they can crack, vent, or blow out entirely. A shorted MLCC on a GPU or
+motherboard often burns a hole right through the PCB layers, permanently
+destroying the component.</li>
+</ul>
+<h2 id="impact-on-benchmarking-accuracy">Impact on Benchmarking
+Accuracy</h2>
+<p>Beyond physical hardware loss, capacitor aging ruins the integrity of
+the benchmarking process itself.</p>
+<ul>
+<li><strong>Skewed Results:</strong> Degraded power delivery triggers
+thermal and power-limit throttling on modern CPUs and GPUs. A system
+with aged capacitors will quietly score lower in benchmarks than it did
+when the capacitors were fresh, invalidating long-term performance
+comparisons.</li>
+<li><strong>Data Corruption:</strong> Sudden power losses or memory
+instability caused by poor voltage regulation can corrupt the operating
+system, the benchmarking software, or the storage drives holding the
+test results.</li>
+</ul>
+<h2 id="mitigating-capacitor-aging-during-247-loads">Mitigating
+Capacitor Aging During 24/7 Loads</h2>
+<p>To protect hardware used for continuous benchmarking, specific
+precautions must be taken to slow the rate of capacitor degradation:</p>
+<ul>
+<li><strong>Over-spec the PSU:</strong> Use a power supply rated for
+roughly double the system's maximum load. PSUs run coolest and produce
+the least ripple when operating at 40% to 60% of their maximum
+capacity.</li>
+<li><strong>Direct VRM Cooling:</strong> CPU water blocks do not cool
+the motherboard's capacitors. Ensure dedicated high-RPM fans are blowing
+directly over the motherboard VRMs and GPU backplate during 24/7
+runs.</li>
+<li><strong>Control Ambient Temperature:</strong> Lowering the room
+temperature directly lowers the operating temperature of the capacitors,
+exponentially extending their lifespan under load.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/capacitor-aging-risks-in-24-7-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

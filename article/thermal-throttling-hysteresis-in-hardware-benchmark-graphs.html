@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermal Throttling Hysteresis in Hardware Benchmark Graphs - benchmark</title>
+    <meta name="description" content="This article explores how thermal throttling hysteresis appears in computer hardware benchmark graphs. By understanding the mechanics of hysteresis, you will learn to identify the specific visual patterns—such as sawtooth waves in time-series graphs and c">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/thermal-throttling-hysteresis-in-hardware-benchmark-graphs">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Thermal Throttling Hysteresis in Hardware Benchmark Graphs - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/thermal-throttling-hysteresis-in-hardware-benchmark-graphs" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how thermal throttling hysteresis appears in computer hardware benchmark graphs. By understanding the mechanics of hysteresis, you will learn to identify the specific visual patterns—such as sawtooth waves in time-series graphs and c" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="thermal-throttling-hysteresis-in-hardware-benchmark-graphs">Thermal
+Throttling Hysteresis in Hardware Benchmark Graphs</h1>
+<p>This article explores how thermal throttling hysteresis appears in
+computer hardware benchmark graphs. By understanding the mechanics of
+hysteresis, you will learn to identify the specific visual patterns—such
+as sawtooth waves in time-series graphs and closed rectangular loops in
+scatter plots—that indicate a processor or graphics card is cycling
+between peak performance and thermal protection states.</p>
+<h2 id="the-mechanics-of-thermal-hysteresis">The Mechanics of Thermal
+Hysteresis</h2>
+<p>To prevent a CPU or GPU from rapidly flickering between throttled and
+un-throttled states at a single temperature limit, engineers program a
+hysteresis band into the hardware.</p>
+<p>The hardware triggers thermal throttling at a high threshold (e.g.,
+95°C) by aggressively reducing clock speeds and voltage. However, it
+does not restore full power the moment the temperature drops to 94°C.
+Instead, it waits until the component cools down to a designated lower
+recovery threshold (e.g., 85°C) before ramping performance back up. This
+gap between the trigger point and the recovery point is what creates
+unique shapes on benchmark graphs.</p>
+<h2 id="time-series-graphs-the-sawtooth-and-square-waves">Time-Series
+Graphs: The Sawtooth and Square Waves</h2>
+<p>Most benchmarking tools (like MSI Afterburner or HWiNFO) plot metrics
+over time. In these standard time-series graphs, hysteresis does not
+look like a loop; instead, it appears as a repeating wave pattern.</p>
+<ul>
+<li><strong>Temperature (Sawtooth Wave):</strong> The temperature line
+rises steadily to the upper thermal limit, drops sharply as throttling
+engages, hits the lower recovery limit, and immediately climbs again.
+This creates a jagged, repeating sawtooth shape.</li>
+<li><strong>Clock Speed and Power (Square Wave):</strong> These metrics
+usually form a square wave. The line remains flat and high until the
+thermal limit is hit, drops vertically to a lower flat plateau while the
+chip cools, and then jumps vertically back up once the recovery
+temperature is reached.</li>
+<li><strong>Phase Shift:</strong> When overlaying temperature and clock
+speed on the same timeline, the two lines operate out of phase. Clock
+speed drops at the exact moment the temperature peaks, and clock speed
+rises at the exact moment the temperature hits its valley.</li>
+</ul>
+<h2 id="x-y-scatter-plots-the-literal-hysteresis-loop">X-Y Scatter
+Plots: The Literal Hysteresis Loop</h2>
+<p>To see the actual "loop" in the benchmark data, you must look at a
+scatter plot or phase-space graph that plots <strong>Clock Speed
+(Y-axis) against Temperature (X-axis)</strong>, removing time as a
+primary axis. If a component is caught in a hysteresis cycle during a
+benchmark, the plotted data points will trace a continuous rectangular
+or oval loop moving in a counter-clockwise direction:</p>
+<ol type="1">
+<li><strong>The Heating Phase (Top Edge):</strong> As the benchmark
+begins, data points move horizontally from left to right along the top
+of the graph (rising temperature, high constant clock speed).</li>
+<li><strong>The Throttling Drop (Right Edge):</strong> Upon hitting the
+maximum thermal limit on the far right, the data points plummet
+vertically downward (high temperature, dropping clock speed).</li>
+<li><strong>The Cooling Phase (Bottom Edge):</strong> The points now
+move horizontally from right to left along the bottom of the graph
+(falling temperature, low constant clock speed).</li>
+<li><strong>The Recovery Jump (Left Edge):</strong> Once the lower
+recovery temperature is reached on the left, the data points shoot
+vertically back up to the original high clock speed, closing the
+loop.</li>
+</ol>
+<h2 id="interpreting-the-graph-shapes">Interpreting the Graph
+Shapes</h2>
+<p>Analyzing the geometry of these patterns reveals how the hardware and
+cooling solution are interacting:</p>
+<ul>
+<li><strong>Wide Loops / Long Sawtooth Teeth:</strong> This indicates a
+large temperature gap between the throttle point and the recovery point,
+or an inadequate cooler that takes a long time to dissipate heat. In
+benchmarks, this results in prolonged periods of low performance and
+severe frame-time spikes.</li>
+<li><strong>Narrow Loops / Rapid Sawtooth Teeth:</strong> This indicates
+a tight hysteresis band. The hardware recovers performance quickly,
+resulting in higher average benchmark scores, though the system is
+rapidly switching power states.</li>
+<li><strong>No Loop (Flatlining):</strong> Modern hardware relies
+heavily on smooth, dynamic boost algorithms that make micro-adjustments
+to voltage and frequency. On a graph, this looks like a gentle curve
+that flattens out at a target temperature. If a harsh hysteresis loop or
+sawtooth pattern appears on modern hardware, it indicates that the
+cooling solution is completely overwhelmed, forcing the chip to bypass
+its smooth boost algorithms and enter an emergency hard-throttle
+state.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/thermal-throttling-hysteresis-in-hardware-benchmark-graphs';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

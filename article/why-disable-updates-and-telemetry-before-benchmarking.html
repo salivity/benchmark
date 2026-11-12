@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Disable Updates and Telemetry Before Benchmarking? - benchmark</title>
+    <meta name="description" content="This article explains the critical importance of disabling automatic updates and system telemetry before running computer hardware benchmarks. By halting these background processes, you prevent unexpected processor, memory, and disk usage spikes that inev">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-disable-updates-and-telemetry-before-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Disable Updates and Telemetry Before Benchmarking? - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-disable-updates-and-telemetry-before-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the critical importance of disabling automatic updates and system telemetry before running computer hardware benchmarks. By halting these background processes, you prevent unexpected processor, memory, and disk usage spikes that inev" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-disable-updates-and-telemetry-before-benchmarking">Why
+Disable Updates and Telemetry Before Benchmarking?</h1>
+<p>This article explains the critical importance of disabling automatic
+updates and system telemetry before running computer hardware
+benchmarks. By halting these background processes, you prevent
+unexpected processor, memory, and disk usage spikes that inevitably skew
+performance metrics. Ultimately, eliminating these variables ensures
+that benchmark results are accurate, repeatable, and truly reflective of
+the hardware's maximum capabilities.</p>
+<h2 id="preventing-unwanted-cpu-and-ram-usage">Preventing Unwanted CPU
+and RAM Usage</h2>
+<p>Hardware benchmarks are designed to push components to their absolute
+limits. Telemetry services—which collect and transmit system data to
+software vendors—and automatic updates operate silently in the
+background. When these services trigger during a test, they consume
+valuable CPU cycles and occupy system RAM. Even a minor background load
+taking up 5% of your processor's capacity will result in a noticeably
+lower benchmark score, misrepresenting the actual power of the CPU.</p>
+<h2 id="eliminating-disk-readwrite-interference">Eliminating Disk
+Read/Write Interference</h2>
+<p>Storage drives have a finite amount of bandwidth. Automatic updates
+constantly download, extract, and write files to your Solid State Drive
+(SSD) or Hard Disk Drive (HDD). Similarly, telemetry services
+continuously log data to the drive. If these processes occur during a
+storage benchmark or a game loading test, they steal Input/Output
+Operations Per Second (IOPS) and bandwidth from the benchmark software.
+Disabling them ensures the drive's full speed is dedicated solely to the
+test.</p>
+<h2 id="avoiding-thermal-and-power-throttling">Avoiding Thermal and
+Power Throttling</h2>
+<p>Modern processors and graphics cards dynamically adjust their clock
+speeds based on temperature and power availability. If background
+updates are running prior to or during a benchmark, the hardware
+generates extra heat and draws more power. This can cause the system to
+reach its thermal or power limits faster than it normally would,
+triggering thermal throttling. When hardware throttles, it lowers its
+speed to cool down, which ruins the benchmark results.</p>
+<h2 id="ensuring-test-consistency-and-reproducibility">Ensuring Test
+Consistency and Reproducibility</h2>
+<p>Accurate benchmarking requires a controlled environment. To compare
+two pieces of hardware, or to measure the impact of an overclock, every
+test must be run under identical conditions. Telemetry and auto-updates
+are unpredictable; they do not run at a constant rate and can spike
+randomly. If an update triggers during one test run and remains idle
+during the next, the data becomes useless for comparison. Turning them
+off establishes a flat, predictable baseline.</p>
+<h2 id="reducing-network-latency-and-interrupts">Reducing Network
+Latency and Interrupts</h2>
+<p>While many hardware benchmarks are run offline, some rely on network
+connectivity or measure system latency. Telemetry uploads and update
+downloads consume network bandwidth. Furthermore, heavy network activity
+forces the CPU to handle network interrupts, which increases system
+latency. This can cause frame time spikes (stuttering) in gaming
+benchmarks and lower overall system responsiveness.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-disable-updates-and-telemetry-before-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

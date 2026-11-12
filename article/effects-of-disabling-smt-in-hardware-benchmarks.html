@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Effects of Disabling SMT in Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="Disabling Simultaneous Multithreading (SMT) or Intel’s proprietary Hyper-Threading significantly alters computer hardware benchmark results depending on the specific workload being tested. This article provides a straightforward look at how turning off th">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/effects-of-disabling-smt-in-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Effects of Disabling SMT in Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/effects-of-disabling-smt-in-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Disabling Simultaneous Multithreading (SMT) or Intel’s proprietary Hyper-Threading significantly alters computer hardware benchmark results depending on the specific workload being tested. This article provides a straightforward look at how turning off th" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="effects-of-disabling-smt-in-hardware-benchmarks">Effects of
+Disabling SMT in Hardware Benchmarks</h1>
+<p>Disabling Simultaneous Multithreading (SMT) or Intel’s proprietary
+Hyper-Threading significantly alters computer hardware benchmark results
+depending on the specific workload being tested. This article provides a
+straightforward look at how turning off these technologies drastically
+reduces multi-threaded productivity scores, improves or stabilizes
+gaming and single-threaded metrics, and lowers thermal output to create
+more headroom for extreme overclocking benchmarks.</p>
+<h3 id="multi-threaded-workloads">Multi-Threaded Workloads</h3>
+<p>SMT allows a single physical CPU core to process two software threads
+at the same time. In synthetic benchmarks designed to stress the entire
+processor—such as Cinebench, Blender, or V-Ray—disabling SMT results in
+a massive performance drop.</p>
+<p>When you disable SMT, the operating system loses half of its logical
+processors. Consequently, multi-core benchmark scores typically fall by
+15% to 30%. Without SMT, the CPU can no longer fill idle execution
+pipeline stages with secondary instructions, leading to lower overall
+computational throughput in heavy productivity tasks.</p>
+<h3 id="single-threaded-and-gaming-benchmarks">Single-Threaded and
+Gaming Benchmarks</h3>
+<p>In workloads that do not utilize many threads, such as legacy
+software, lightly-threaded applications, and many video games, disabling
+SMT can actually increase benchmark scores.</p>
+<p>When two threads share a single physical core, they must compete for
+the same execution resources and CPU cache. Turning off SMT eliminates
+this resource contention. Each active software thread gets full,
+uninterrupted access to the physical core's L1, L2, and L3 cache. In
+gaming benchmarks, this often translates to slightly higher average
+frame rates and noticeably better 1% and 0.1% low frame times, as the
+system experiences less thread-scheduling latency.</p>
+<h3 id="thermal-and-power-consumption-metrics">Thermal and Power
+Consumption Metrics</h3>
+<p>Forcing two threads through a single physical core requires more
+power and generates more heat. When benchmarking a system for thermal
+efficiency or power draw, disabling SMT results in a substantial
+decrease in both metrics.</p>
+<p>A CPU running a heavy stress test like Prime95 or OCCT with SMT
+disabled will typically run 5°C to 15°C cooler and consume significantly
+less wattage compared to the same CPU at the same clock speed with SMT
+enabled.</p>
+<h3 id="overclocking-headroom">Overclocking Headroom</h3>
+<p>Because disabling SMT reduces heat output and voltage requirements,
+competitive overclockers frequently turn it off to achieve higher
+physical core clock speeds.</p>
+<p>In benchmarks that prioritize raw frequency over thread count (such
+as SuperPi, Geekbench single-core, or specific 3DMark tests on
+high-core-count processors), disabling SMT stabilizes the processor.
+This stability allows the user to push the physical cores 100 MHz to 200
+MHz higher than what would be possible with SMT enabled. In competitive
+benchmarking, this extra frequency often yields a higher score than
+having double the logical threads running at a lower speed.</p>
+<h3 id="summary-of-effects">Summary of Effects</h3>
+<ul>
+<li><strong>Rendering and Encoding Benchmarks:</strong> Scores decrease
+by 15% to 30%.</li>
+<li><strong>Single-Core Benchmarks:</strong> Scores remain the same or
+increase slightly due to dedicated cache access.</li>
+<li><strong>Gaming Benchmarks:</strong> Frame times become more
+consistent, and average FPS may increase slightly in CPU-bound
+scenarios.</li>
+<li><strong>Thermal Benchmarks:</strong> Temperatures and power
+consumption drop significantly under full load.</li>
+<li><strong>Overclocking Benchmarks:</strong> Maximum achievable stable
+clock speeds increase.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/effects-of-disabling-smt-in-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

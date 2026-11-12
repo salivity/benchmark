@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How ECC Memory Overhead Appears in Server Benchmarks - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how Error-Correcting Code (ECC) memory overhead manifests during server hardware benchmarking. It breaks down the specific performance penalties observed in memory latency and bandwidth tests, explains how">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-ecc-memory-overhead-appears-in-server-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How ECC Memory Overhead Appears in Server Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-ecc-memory-overhead-appears-in-server-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how Error-Correcting Code (ECC) memory overhead manifests during server hardware benchmarking. It breaks down the specific performance penalties observed in memory latency and bandwidth tests, explains how" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ecc-memory-overhead-appears-in-server-benchmarks">How ECC
+Memory Overhead Appears in Server Benchmarks</h1>
+<p>This article provides a comprehensive overview of how
+Error-Correcting Code (ECC) memory overhead manifests during server
+hardware benchmarking. It breaks down the specific performance penalties
+observed in memory latency and bandwidth tests, explains how active
+error correction impacts CPU utilization and benchmark consistency, and
+details the power consumption differences compared to non-ECC memory. By
+understanding these metrics, system administrators and hardware testers
+can accurately interpret server benchmark results.</p>
+<h2 id="increased-memory-latency">Increased Memory Latency</h2>
+<p>When benchmarking memory latency using tools like Intel Memory
+Latency Checker (MLC) or AIDA64, ECC memory consistently shows higher
+latency than non-ECC memory of the same clock speed and timings.</p>
+<p>The memory controller must perform an mathematical calculation
+(typically using a Hamming code or Triple Modular Redundancy) on every
+read and write operation to generate and verify error-correction bits.
+In benchmarks, this appears as an additional delay of 1 to 2
+nanoseconds, or roughly a 1% to 2% increase in overall memory access
+latency. This overhead is constant, even when no memory errors are
+occurring.</p>
+<h2 id="reduced-memory-bandwidth">Reduced Memory Bandwidth</h2>
+<p>In synthetic bandwidth benchmarks like the STREAM benchmark, ECC
+memory exhibits slightly lower throughput compared to non-ECC
+counterparts.</p>
+<p>Because the memory controller must process extra parity data
+alongside the actual payload, a small portion of the memory pipeline's
+efficiency is lost. Furthermore, Registered (RDIMM) or Load-Reduced
+(LRDIMM) modules—which are almost universally used alongside ECC in
+servers—introduce an extra clock cycle of delay via the onboard
+register. In benchmark results, this translates to a 1% to 3% reduction
+in sustained read, write, and copy speeds (measured in MB/s or
+GB/s).</p>
+<h2 id="performance-drops-during-active-error-correction">Performance
+Drops During Active Error Correction</h2>
+<p>The most dramatic appearance of ECC overhead in benchmarking occurs
+when the memory actually encounters and corrects a single-bit error
+(Correctable Error) during a test run.</p>
+<ul>
+<li><strong>Minimal Error Rates:</strong> If a single-bit error is
+corrected on the fly by the memory controller without OS intervention,
+the benchmark score will barely change, showing only a microscopic dip
+in transfer speed for that specific clock cycle.</li>
+<li><strong>High Error Rates (SMI Interrupts):</strong> If a memory
+module is failing and generating thousands of correctable errors per
+second, the system triggers System Management Interrupts (SMIs) to log
+these events in the system event log (SEL). During an SMI, the CPU halts
+all other operations. In CPU benchmarks (like Cinebench or SPECrate) or
+storage I/O benchmarks, this manifests as severe stuttering, erratic
+frame times, latency spikes, and a drop in overall compute scores by 10%
+or more.</li>
+</ul>
+<h2 id="higher-power-consumption-and-thermal-output">Higher Power
+Consumption and Thermal Output</h2>
+<p>Hardware benchmarks that measure performance-per-watt (such as
+SPECpower) will reveal ECC overhead in the system's power draw
+metrics.</p>
+<p>Standard DDR4 ECC memory uses an extra 8 bits for every 64 bits of
+data (a 72-bit bus), requiring an extra physical DRAM chip on the
+module. During heavy memory stress tests like Prime95 (Large FFTs) or
+Linpack, a server populated with ECC RAM will draw approximately 10% to
+12% more power at the DIMM level than a non-ECC equivalent. This also
+appears in thermal benchmarks as slightly elevated ambient chassis and
+memory temperatures.</p>
+<h2 id="ddr5-on-die-ecc-vs-side-band-ecc">DDR5 On-Die ECC vs. Side-Band
+ECC</h2>
+<p>When benchmarking newer DDR5 server platforms, ECC overhead appears
+in two distinct ways. All DDR5 memory includes "on-die ECC" to maintain
+reliability at higher densities. The overhead for this is baked into the
+base latency of the DDR5 specification and cannot be isolated in
+comparisons.</p>
+<p>However, true server-grade DDR5 ECC modules use "side-band ECC,"
+which adds two extra bits per 32-bit sub-channel to protect data in
+transit between the RAM and the CPU. When comparing standard DDR5 to
+DDR5 side-band ECC in benchmarks, the same traditional 1% to 2% latency
+and bandwidth penalties will still appear in the final test results.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-ecc-memory-overhead-appears-in-server-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

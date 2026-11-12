@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CPU AVX Offset Lowers Clock Speeds in Benchmarks - benchmark</title>
+    <meta name="description" content="This article explains the function of the CPU AVX offset and how it dynamically reduces processor clock speeds during intensive vector workloads. You will learn what Advanced Vector Extensions (AVX) are, why they generate extreme heat and power draw durin">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-cpu-avx-offset-lowers-clock-speeds-in-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CPU AVX Offset Lowers Clock Speeds in Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-cpu-avx-offset-lowers-clock-speeds-in-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the function of the CPU AVX offset and how it dynamically reduces processor clock speeds during intensive vector workloads. You will learn what Advanced Vector Extensions (AVX) are, why they generate extreme heat and power draw durin" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-cpu-avx-offset-lowers-clock-speeds-in-benchmarks">How CPU
+AVX Offset Lowers Clock Speeds in Benchmarks</h1>
+<p>This article explains the function of the CPU AVX offset and how it
+dynamically reduces processor clock speeds during intensive vector
+workloads. You will learn what Advanced Vector Extensions (AVX) are, why
+they generate extreme heat and power draw during hardware benchmarking,
+and how the AVX offset feature acts as a safety mechanism to maintain
+system stability without sacrificing performance in everyday tasks.</p>
+<h2 id="what-is-avx">What is AVX?</h2>
+<p>Advanced Vector Extensions (AVX) are specialized instructions built
+into modern CPUs. They are designed to handle heavy mathematical
+calculations, known as vector workloads, much faster than standard
+processor instructions.</p>
+<p>Software that relies on AVX includes:</p>
+<ul>
+<li>3D rendering programs</li>
+<li>Video encoding software</li>
+<li>Scientific simulations</li>
+<li>Synthetic hardware benchmarks (such as Prime95, Cinebench, and
+OCCT)</li>
+</ul>
+<p>Because AVX instructions process massive amounts of data
+simultaneously in a single clock cycle, they push the CPU silicon to its
+absolute physical limits.</p>
+<h2 id="the-heat-and-power-problem-in-benchmarking">The Heat and Power
+Problem in Benchmarking</h2>
+<p>When benchmarking computer hardware, users often overclock their CPUs
+to achieve the highest possible scores. However, an overclock that is
+completely stable during gaming or web browsing can instantly crash when
+an AVX benchmark begins.</p>
+<p>AVX workloads require significantly more voltage and electrical
+current than standard tasks. The moment an AVX benchmark starts, the CPU
+experiences a massive spike in power consumption and a rapid, extreme
+rise in temperature. Without intervention, this sudden spike causes
+thermal throttling or complete system instability (such as a Blue Screen
+of Death).</p>
+<h2 id="how-the-avx-offset-works">How the AVX Offset Works</h2>
+<p>The AVX offset is a motherboard BIOS setting designed to solve the
+AVX heat and stability problem. It allows the CPU to run at a high clock
+speed for normal tasks, while automatically lowering the clock speed the
+exact moment an AVX workload is detected.</p>
+<p>CPU clock speeds are determined by a base clock (usually 100 MHz)
+multiplied by a core ratio (multiplier). For example, a 100 MHz base
+clock with a multiplier of 50 results in a 5.0 GHz clock speed (100 x 50
+= 5000 MHz).</p>
+<p>The AVX offset works by subtracting a user-defined number from that
+multiplier whenever AVX instructions are active:</p>
+<ol type="1">
+<li><strong>Detection:</strong> You launch a heavy vector benchmark, and
+the CPU detects incoming AVX instructions.</li>
+<li><strong>Reduction:</strong> If your CPU is running at 5.0 GHz
+(multiplier of 50) and you have an AVX offset set to 3, the motherboard
+instantly reduces the multiplier to 47.</li>
+<li><strong>Stabilization:</strong> The CPU clock speed drops to 4.7 GHz
+for the duration of the benchmark. This slight reduction in speed
+drastically lowers the voltage requirement and heat output, preventing
+the system from crashing.</li>
+<li><strong>Recovery:</strong> The millisecond the AVX benchmark
+finishes, the offset is removed, and the CPU returns to its full 5.0 GHz
+speed.</li>
+</ol>
+<h2 id="why-it-matters-for-hardware-benchmarking">Why It Matters for
+Hardware Benchmarking</h2>
+<p>Before the introduction of the AVX offset, overclockers had to limit
+their maximum CPU speeds entirely based on worst-case AVX benchmark
+scenarios. If a CPU could handle 5.1 GHz in games, but only 4.8 GHz in
+an AVX stress test, the user was forced to run the CPU at 4.8 GHz at all
+times to ensure the system would never crash.</p>
+<p>With the AVX offset, hardware enthusiasts can have the best of both
+worlds. They can configure a high overclock for daily use and gaming,
+while relying on the AVX offset to safely downclock the processor during
+heavy vector benchmarks and rendering tasks.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-cpu-avx-offset-lowers-clock-speeds-in-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

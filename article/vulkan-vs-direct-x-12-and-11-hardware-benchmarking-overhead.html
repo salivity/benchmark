@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulkan vs DirectX 12 and 11: Hardware Benchmarking Overhead - benchmark</title>
+    <meta name="description" content="This article compares the application programming interface (API) overhead of Vulkan, DirectX 12, and DirectX 11 during computer hardware benchmarking. It explains how the high driver overhead of DirectX 11 creates processor bottlenecks, and how modern lo">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/vulkan-vs-direct-x-12-and-11-hardware-benchmarking-overhead">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Vulkan vs DirectX 12 and 11: Hardware Benchmarking Overhead - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/vulkan-vs-direct-x-12-and-11-hardware-benchmarking-overhead" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article compares the application programming interface (API) overhead of Vulkan, DirectX 12, and DirectX 11 during computer hardware benchmarking. It explains how the high driver overhead of DirectX 11 creates processor bottlenecks, and how modern lo" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="vulkan-vs-directx-12-and-11-hardware-benchmarking-overhead">Vulkan
+vs DirectX 12 and 11: Hardware Benchmarking Overhead</h1>
+<p>This article compares the application programming interface (API)
+overhead of Vulkan, DirectX 12, and DirectX 11 during computer hardware
+benchmarking. It explains how the high driver overhead of DirectX 11
+creates processor bottlenecks, and how modern low-level APIs like Vulkan
+and DirectX 12 reduce this workload to measure the true performance
+capabilities of graphics cards and processors.</p>
+<h2 id="understanding-api-overhead-in-benchmarking">Understanding API
+Overhead in Benchmarking</h2>
+<p>API overhead refers to the CPU time and resources required to
+translate an application's rendering commands into instructions the GPU
+can understand. When benchmarking hardware, high API overhead is
+undesirable because it artificially limits the GPU's performance by
+overloading the CPU. Lower overhead allows benchmarking software to push
+more draw calls—requests made by the CPU to the GPU to render
+objects—resulting in a more accurate test of the hardware's physical
+limits.</p>
+<h2 id="directx-11-high-overhead-and-cpu-bottlenecks">DirectX 11: High
+Overhead and CPU Bottlenecks</h2>
+<p>DirectX 11 is a high-level API designed during an era when processors
+had fewer cores. When benchmarking with DirectX 11, the graphics driver
+manages memory allocation, state validation, and synchronization
+automatically.</p>
+<p>While this makes development easier, it creates significant API
+overhead:</p>
+<ul>
+<li><strong>Single-Core Dependency:</strong> DirectX 11 relies heavily
+on a single primary CPU thread to issue draw calls. Even if a modern CPU
+has 16 cores, a DirectX 11 benchmark will often bottleneck on just one
+of them.</li>
+<li><strong>Limited Draw Calls:</strong> Because the driver does so much
+background work, the CPU takes longer to process each frame. In
+synthetic draw-call benchmarks, DirectX 11 typically maxes out at a
+fraction of the throughput achieved by newer APIs.</li>
+<li><strong>Skewed GPU Results:</strong> When testing a high-end GPU at
+lower resolutions (like 1080p) using DirectX 11, the benchmark often
+measures the CPU's single-thread speed rather than the GPU's actual
+rendering power.</li>
+</ul>
+<h2 id="vulkan-and-directx-12-low-level-efficiency">Vulkan and DirectX
+12: Low-Level Efficiency</h2>
+<p>Both Vulkan and DirectX 12 are low-level APIs built to eliminate the
+bottlenecks of DirectX 11. They strip away heavy driver management and
+give the benchmarking software direct control over the hardware.</p>
+<p>In hardware benchmarks, this shift results in three major
+improvements over DirectX 11:</p>
+<ul>
+<li><strong>Multi-Core Scaling:</strong> Both APIs allow the CPU to
+split rendering tasks and command lists across multiple cores
+simultaneously. Benchmarks using Vulkan or DirectX 12 scale effectively
+with high-core-count processors.</li>
+<li><strong>Massive Draw Call Increases:</strong> Without the driver
+constantly validating commands, the CPU can feed instructions to the GPU
+up to ten times faster in synthetic API overhead tests.</li>
+<li><strong>Better 1% Low Framerates:</strong> By reducing the time the
+CPU spends managing the driver, frame pacing improves, resulting in
+smoother minimum framerates during intensive benchmark runs.</li>
+</ul>
+<h2 id="vulkan-vs-directx-12-head-to-head-overhead">Vulkan vs. DirectX
+12: Head-to-Head Overhead</h2>
+<p>When comparing Vulkan directly to DirectX 12 in hardware benchmarks,
+the API overhead between the two is nearly identical, as they share the
+same foundational philosophy. However, subtle differences emerge
+depending on the hardware and operating system being tested:</p>
+<ul>
+<li><strong>CPU Utilization:</strong> Vulkan often demonstrates slightly
+lower CPU overhead than DirectX 12 on older or mid-range processors. It
+is highly efficient at distributing workloads across all available
+threads, sometimes yielding higher framerates in CPU-bound
+scenarios.</li>
+<li><strong>Driver Implementation:</strong> AMD GPUs historically
+perform slightly better in Vulkan benchmarks due to AMD's early
+involvement in developing Mantle, the precursor to Vulkan. NVIDIA GPUs
+generally show equal efficiency in both DirectX 12 and Vulkan, though
+NVIDIA's DirectX 11 driver optimization remains unusually strong
+compared to competitors.</li>
+<li><strong>Cross-Platform Benchmarking:</strong> DirectX 12 is
+restricted to Windows and Xbox ecosystems. Vulkan is cross-platform,
+making it the standard low-overhead API for benchmarking hardware across
+Windows, Linux, and Android without introducing
+operating-system-specific translation overhead.</li>
+</ul>
+<h2 id="what-this-means-for-hardware-testing">What This Means for
+Hardware Testing</h2>
+<p>Choosing the right API is critical for accurate hardware
+benchmarking.</p>
+<p>If you are benchmarking a GPU's raw compute and rendering capability,
+Vulkan or DirectX 12 must be used. They remove the CPU from the equation
+as much as possible, ensuring the graphics card is the primary component
+under stress.</p>
+<p>If you are benchmarking a CPU's single-threaded gaming performance,
+DirectX 11 remains useful precisely because of its high overhead. It
+forces a single core to work harder, exposing weaknesses in processors
+that rely on high core counts rather than fast individual cores.
+Conversely, benchmarking a CPU in Vulkan or DirectX 12 will accurately
+test its multi-threading efficiency and cache architecture.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/vulkan-vs-direct-x-12-and-11-hardware-benchmarking-overhead';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

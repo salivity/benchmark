@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVMe SSD Thermal Throttling in Storage Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores how thermal throttling in NVMe Solid State Drives (SSDs) manifests during intensive storage benchmarking. When pushed to their limits by synthetic workloads, high-speed NVMe drives generate significant heat, forcing onboard controlle">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/nv-me-ssd-thermal-throttling-in-storage-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="NVMe SSD Thermal Throttling in Storage Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/nv-me-ssd-thermal-throttling-in-storage-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how thermal throttling in NVMe Solid State Drives (SSDs) manifests during intensive storage benchmarking. When pushed to their limits by synthetic workloads, high-speed NVMe drives generate significant heat, forcing onboard controlle" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="nvme-ssd-thermal-throttling-in-storage-benchmarks">NVMe SSD
+Thermal Throttling in Storage Benchmarks</h1>
+<p>This article explores how thermal throttling in NVMe Solid State
+Drives (SSDs) manifests during intensive storage benchmarking. When
+pushed to their limits by synthetic workloads, high-speed NVMe drives
+generate significant heat, forcing onboard controllers to intentionally
+reduce performance to prevent permanent silicon damage. Below, we
+examine the exact indicators of thermal throttling during benchmark
+runs, including sudden throughput drops, latency spikes, sawtooth
+performance graphs, and how to distinguish heat issues from normal cache
+exhaustion.</p>
+<h2 id="sudden-drops-in-sequential-throughput">Sudden Drops in
+Sequential Throughput</h2>
+<p>During heavy sequential read and write tests—such as those conducted
+in CrystalDiskMark, AS SSD, or ATTO—thermal throttling primarily appears
+as a sudden, drastic reduction in data transfer speeds. A PCIe 4.0 or
+5.0 drive operating at 7,000 MB/s to 10,000 MB/s may suddenly plummet to
+1,000 MB/s or lower, sometimes dropping below the speeds of older SATA
+drives.</p>
+<p>This performance cliff happens the exact moment the SSD controller
+reaches its programmed thermal threshold, which typically lies between
+70°C and 85°C. To protect the hardware, the firmware drastically cuts
+the controller's clock speeds and voltage, resulting in an immediate
+bottleneck during the benchmark run.</p>
+<h2 id="the-sawtooth-performance-graph">The "Sawtooth" Performance
+Graph</h2>
+<p>In sustained benchmarks that graph performance over time, such as the
+AIDA64 Disk Benchmark, HD Tune Pro, or IOMeter, thermal throttling
+creates a distinct "sawtooth" pattern. This erratic oscillation occurs
+in four repeating stages:</p>
+<ol type="1">
+<li>The drive hits its thermal limit under load and throttles speeds
+aggressively.</li>
+<li>The reduced workload allows the controller to cool down by a few
+degrees.</li>
+<li>Once temperatures drop below a safe threshold, the drive boosts its
+speed back up.</li>
+<li>The renewed high speed quickly generates heat, triggering the
+throttle again.</li>
+</ol>
+<p>Instead of a flat, stable performance line, the benchmark results
+will show a jagged, up-and-down graph that indicates the cooling
+solution is insufficient for continuous workloads.</p>
+<h2 id="severe-latency-spikes-and-iops-degradation">Severe Latency
+Spikes and IOPS Degradation</h2>
+<p>Thermal throttling does not just affect raw bandwidth; it heavily
+impacts drive responsiveness. In benchmarks measuring Random 4K
+performance and Input/Output Operations Per Second (IOPS), throttling
+manifests as severe latency spikes and plummeting IOPS scores.</p>
+<p>Access times, which are normally measured in fractions of a
+millisecond, will suddenly spike into tens or hundreds of milliseconds.
+The drive artificially delays processing read and write queues to reduce
+the electrical load within the controller. If a benchmark measures
+"Quality of Service" (QoS) or 99th-percentile latency, a thermally
+throttled drive will produce abysmal scores due to these artificial
+delays.</p>
+<h2 id="telemetry-and-smart-data-triggers">Telemetry and SMART Data
+Triggers</h2>
+<p>Alongside visual drops in benchmark scores, system monitoring tools
+running concurrently (such as HWiNFO64 or CrystalDiskInfo) will
+explicitly log the throttling event. Modern NVMe drives feature multiple
+thermal sensors—usually one on the controller and another on the NAND
+flash memory.</p>
+<p>During a throttled benchmark run, the drive's SMART data will show
+the controller temperature hitting its critical limit. In advanced
+monitoring software, you will see the "Thermal Throttling" status flag
+flip from "No" to "Yes," and the "Warning Composite Temperature Time"
+counter will actively tick upward for every second the benchmark forces
+the drive to remain in its overheated state.</p>
+<h2
+id="distinguishing-thermal-throttling-from-slc-cache-exhaustion">Distinguishing
+Thermal Throttling from SLC Cache Exhaustion</h2>
+<p>When analyzing storage benchmark data, it is vital not to confuse
+thermal throttling with SLC cache exhaustion, as both result in massive
+speed drops during testing. You can tell them apart by looking at the
+workload type and the shape of the performance drop:</p>
+<ul>
+<li><strong>SLC Cache Exhaustion:</strong> This occurs <em>only</em>
+during sustained write benchmarks. Once the drive's fast SLC buffer
+fills up, speeds drop to a lower, yet relatively stable, flat line as
+the drive writes directly to slower TLC or QLC NAND blocks.</li>
+<li><strong>Thermal Throttling:</strong> This occurs during both
+<em>read and write</em> benchmarks. Because read operations do not
+utilize the SLC write cache, a massive speed drop during a pure
+sequential read test is almost guaranteed to be thermal throttling.
+Furthermore, thermal throttling results in fluctuating, unstable speeds
+that directly correlate with peak temperature readings, whereas cache
+exhaustion happens at a predictable data-volume limit regardless of the
+drive's temperature.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/nv-me-ssd-thermal-throttling-in-storage-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

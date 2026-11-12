@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Memory Junction Throttling in Mining and AI Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores the critical impact of GPU memory junction temperature throttling on computer hardware benchmarking during cryptocurrency mining and artificial intelligence (AI) workloads. It covers the mechanics of memory junction temperatures, how">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/gpu-memory-junction-throttling-in-mining-and-ai-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="GPU Memory Junction Throttling in Mining and AI Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/gpu-memory-junction-throttling-in-mining-and-ai-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the critical impact of GPU memory junction temperature throttling on computer hardware benchmarking during cryptocurrency mining and artificial intelligence (AI) workloads. It covers the mechanics of memory junction temperatures, how" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="gpu-memory-junction-throttling-in-mining-and-ai-benchmarks">GPU
+Memory Junction Throttling in Mining and AI Benchmarks</h1>
+<p>This article explores the critical impact of GPU memory junction
+temperature throttling on computer hardware benchmarking during
+cryptocurrency mining and artificial intelligence (AI) workloads. It
+covers the mechanics of memory junction temperatures, how thermal
+throttling degrades performance to protect hardware, and the specific
+ways this phenomenon skews benchmarking data in memory-intensive
+applications.</p>
+<h3 id="what-is-gpu-memory-junction-temperature">What is GPU Memory
+Junction Temperature?</h3>
+<p>The GPU memory junction temperature (often referred to as Tjunction
+or TJMax) is the temperature reading taken from the hottest sensor
+inside the Video Random Access Memory (VRAM) modules, rather than the
+surface of the chip. High-speed memory types, such as GDDR6X, generate
+immense heat under heavy loads.</p>
+<p>When the memory junction temperature reaches a manufacturer-defined
+ceiling—typically around 110°C—the GPU initiates thermal throttling.
+This is a protective mechanism that drastically reduces the memory clock
+speeds and voltage to prevent permanent silicon damage. While this saves
+the hardware, it severely cripples performance.</p>
+<h3 id="effects-on-cryptocurrency-mining-benchmarks">Effects on
+Cryptocurrency Mining Benchmarks</h3>
+<p>Cryptocurrency mining algorithms are predominantly memory-bound,
+meaning their performance relies heavily on VRAM speed and bandwidth
+rather than the GPU core itself. When benchmarking a GPU for mining,
+memory junction throttling has immediate and obvious consequences:</p>
+<ul>
+<li><strong>Drastic Hashrate Drops:</strong> The moment the VRAM hits
+its thermal limit, the memory clock downclocks. In a benchmark, this
+manifests as a sudden, steep drop in the megahash or gigahash rate,
+often reducing output by 20% to 50%.</li>
+<li><strong>Fluctuating Efficiency Metrics:</strong> Mining benchmarks
+heavily weigh power efficiency (hashrate per watt). Throttling causes
+the GPU to cycle between high and low states, making it impossible to
+record a stable power draw or an accurate efficiency score.</li>
+<li><strong>Misleading Hardware Comparisons:</strong> A GPU with
+superior silicon might score lower in a mining benchmark than an
+inferior card simply because the manufacturer used low-quality thermal
+pads on the VRAM. The benchmark ends up testing the cooler's limits
+rather than the GPU's actual compute potential.</li>
+</ul>
+<h3 id="effects-on-ai-and-machine-learning-runs">Effects on AI and
+Machine Learning Runs</h3>
+<p>Artificial intelligence workloads, including training deep neural
+networks and running inference on Large Language Models (LLMs), require
+massive memory bandwidth. The GPU cores constantly pull model weights
+and datasets from the VRAM. Memory junction throttling disrupts AI
+benchmarking in the following ways:</p>
+<ul>
+<li><strong>Data Starvation:</strong> When VRAM throttles, it cannot
+feed data to the Tensor or compute cores fast enough. The GPU cores sit
+idle waiting for data, which artificially lowers the overall compute
+utilization score in the benchmark.</li>
+<li><strong>Increased Training Times:</strong> Benchmarks that measure
+the time it takes to complete a set number of training epochs will show
+severely degraded results. A throttling GPU will take significantly
+longer to complete the run, skewing time-to-train metrics.</li>
+<li><strong>Reduced Tokens Per Second:</strong> In LLM inference
+benchmarks, generation speed is directly tied to memory bandwidth.
+Throttling directly reduces the tokens-per-second metric, making the
+hardware appear less capable of handling real-time AI tasks than it
+actually is.</li>
+</ul>
+<h3 id="how-throttling-skews-benchmark-validity">How Throttling Skews
+Benchmark Validity</h3>
+<p>For hardware testers, consistency is paramount. Memory junction
+throttling introduces a variable that ruins the repeatability of
+benchmarks.</p>
+<p>Short-duration benchmarks may finish before the VRAM heat-soaks and
+reaches the throttling threshold, resulting in artificially high scores
+that do not reflect real-world, sustained usage. Conversely,
+long-duration stress tests will trigger throttling, resulting in scores
+that reflect thermal failure rather than raw performance. Furthermore,
+ambient room temperature and PC case airflow will heavily dictate when
+throttling begins, meaning two testers with the exact same GPU can get
+vastly different AI and mining benchmark results.</p>
+<h3 id="preventing-throttling-for-accurate-results">Preventing
+Throttling for Accurate Results</h3>
+<p>To benchmark the true performance of a GPU in AI and mining without
+thermal interference, hardware testers must actively manage VRAM
+temperatures. This is achieved by setting aggressive 100% fan curves
+during testing, undervolting the GPU to reduce overall heat soak,
+testing on an open-air test bench, and, in extreme cases, replacing the
+factory thermal pads on the VRAM modules with higher-conductivity
+alternatives.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/gpu-memory-junction-throttling-in-mining-and-ai-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

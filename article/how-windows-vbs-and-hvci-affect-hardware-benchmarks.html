@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Windows VBS and HVCI Affect Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how Windows Virtualization-Based Security (VBS) and Hypervisor-Protected Code Integrity (HVCI) negatively impact computer hardware benchmarking. While these features are designed to protect systems from ma">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-windows-vbs-and-hvci-affect-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Windows VBS and HVCI Affect Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-windows-vbs-and-hvci-affect-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how Windows Virtualization-Based Security (VBS) and Hypervisor-Protected Code Integrity (HVCI) negatively impact computer hardware benchmarking. While these features are designed to protect systems from ma" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-windows-vbs-and-hvci-affect-hardware-benchmarks">How Windows
+VBS and HVCI Affect Hardware Benchmarks</h1>
+<p>This article provides a comprehensive overview of how Windows
+Virtualization-Based Security (VBS) and Hypervisor-Protected Code
+Integrity (HVCI) negatively impact computer hardware benchmarking. While
+these features are designed to protect systems from malware by isolating
+memory, they introduce a virtualization layer that taxes the CPU and
+memory. Consequently, enabling VBS and HVCI leads to lower synthetic
+benchmark scores, reduced gaming frame rates, and blocked access to
+hardware monitoring tools, forcing testers to disable them to measure
+true hardware performance.</p>
+<h2 id="understanding-vbs-and-hvci">Understanding VBS and HVCI</h2>
+<p>Virtualization-Based Security (VBS) is a Windows feature that uses
+hardware virtualization to create an isolated, secure region of system
+memory. The normal operating system cannot access this "virtual secure
+mode," which protects critical system processes from malicious
+attacks.</p>
+<p>Hypervisor-Protected Code Integrity (HVCI), commonly listed as
+"Memory Integrity" in the Windows Security settings, is a specific
+security feature that runs inside the VBS environment. HVCI checks all
+kernel-mode drivers and system binaries in that isolated memory space to
+ensure they are securely signed and unmodified before they are allowed
+to execute. Both features are enabled by default on clean installations
+of Windows 11.</p>
+<h2 id="the-root-cause-of-performance-loss">The Root Cause of
+Performance Loss</h2>
+<p>Benchmarking software is designed to push hardware to its absolute
+limits by executing instructions as fast as the silicon allows. VBS and
+HVCI disrupt this direct access.</p>
+<p>When these features are active, the Windows hypervisor sits between
+the hardware and the operating system. Every time an application or game
+executes code, allocates memory, or calls on a driver, the hypervisor
+intercepts the action to verify its security. This constant checking
+creates CPU overhead and increases memory latency, diverting system
+resources away from the benchmark task.</p>
+<h2 id="impact-on-different-benchmark-categories">Impact on Different
+Benchmark Categories</h2>
+<p>The performance penalty of VBS and HVCI varies depending on the type
+of hardware being tested, typically resulting in a 5% to 15% performance
+drop across the board.</p>
+<h3 id="cpu-benchmarks">CPU Benchmarks</h3>
+<p>Synthetic CPU benchmarks, such as Cinebench, Geekbench, and 3DMark
+CPU Profile, rely on rapid instruction execution and memory access. With
+VBS enabled, multi-core and single-core scores drop noticeably. Tasks
+that require heavy virtualization or frequent kernel-level calls suffer
+the most, as the CPU spends valuable clock cycles running security
+checks rather than rendering or calculating benchmark workloads.</p>
+<h3 id="gaming-and-gpu-benchmarks">Gaming and GPU Benchmarks</h3>
+<p>Gaming benchmarks are heavily impacted by HVCI. Modern games
+constantly stream assets, compile shaders, and make rapid calls to
+graphics and audio drivers. Because HVCI must verify these continuous
+operations, games experience a bottleneck at the CPU level. This results
+in lower average frame rates (often 5% to 10% lower) and significantly
+worse 1% low frame rates, which manifests as stuttering during the
+benchmark run.</p>
+<h3 id="memory-and-storage-benchmarks">Memory and Storage
+Benchmarks</h3>
+<p>Because VBS isolates memory using address translation, it directly
+harms RAM performance. Benchmarks like AIDA64 show increased memory
+latency and reduced read, write, and copy bandwidth when VBS is active.
+Storage benchmarks like CrystalDiskMark can also show slightly lower
+random read/write speeds due to the overhead added to the storage
+controller drivers.</p>
+<h2 id="interference-with-benchmarking-tools">Interference with
+Benchmarking Tools</h2>
+<p>Beyond raw performance loss, VBS and HVCI actively break certain
+benchmarking and overclocking utilities.</p>
+<p>Many hardware monitoring tools (like HWiNFO, CPU-Z, or
+motherboard-specific overclocking software) use low-level kernel drivers
+to read CPU voltages, clock speeds, and temperatures directly from the
+hardware registers. HVCI often flags these legitimate drivers as
+security risks, blocking them from loading. As a result, benchmarkers
+may see missing voltage readings, inaccurate clock speed reporting, or
+an inability to apply overclocking profiles from within Windows.</p>
+<h2 id="the-problem-of-inconsistent-baselines">The Problem of
+Inconsistent Baselines</h2>
+<p>For hardware reviewers and enthusiasts, VBS creates a major
+consistency problem. While clean installations of Windows 11 turn VBS on
+by default, systems that were upgraded from Windows 10 often leave it
+turned off.</p>
+<p>If a tester compares a new CPU on a fresh Windows 11 install (VBS On)
+against an older CPU tested on an upgraded OS (VBS Off), the data is
+invalidated. The newer hardware will appear artificially slower due to
+the software-induced penalty.</p>
+<h2 id="conclusion-for-hardware-testers">Conclusion for Hardware
+Testers</h2>
+<p>To accurately measure the raw capability of a CPU, GPU, or RAM kit,
+VBS and HVCI must be disabled. Leaving them on measures how well the
+hardware handles virtualization overhead rather than its actual maximum
+performance. However, because these features provide robust protection
+against ransomware and rootkits, users should re-enable them after
+benchmarking is complete for safe daily use.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-windows-vbs-and-hvci-affect-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

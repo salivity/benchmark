@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Fast Telemetry Polling Affects PC Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="Monitoring hardware telemetry during a benchmark is essential for analyzing performance, thermals, and power consumption. However, setting the sensor polling interval too fast—such as 10 milliseconds (ms) instead of the standard 1000ms—can actively degrad">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-fast-telemetry-polling-affects-pc-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Fast Telemetry Polling Affects PC Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-fast-telemetry-polling-affects-pc-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Monitoring hardware telemetry during a benchmark is essential for analyzing performance, thermals, and power consumption. However, setting the sensor polling interval too fast—such as 10 milliseconds (ms) instead of the standard 1000ms—can actively degrad" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-fast-telemetry-polling-affects-pc-hardware-benchmarks">How
+Fast Telemetry Polling Affects PC Hardware Benchmarks</h1>
+<p>Monitoring hardware telemetry during a benchmark is essential for
+analyzing performance, thermals, and power consumption. However, setting
+the sensor polling interval too fast—such as 10 milliseconds (ms)
+instead of the standard 1000ms—can actively degrade the performance you
+are trying to measure. This article explains how hyper-frequent polling
+introduces the "observer effect" into PC benchmarking, resulting in
+increased CPU overhead, bus contention, reduced frame rate stability (1%
+lows), and artificially lower benchmark scores.</p>
+<h3 id="the-math-behind-the-polling-rate">The Math Behind the Polling
+Rate</h3>
+<p>A polling interval dictates how often monitoring software (like
+HWiNFO, MSI Afterburner, or CapFrameX) asks your hardware sensors for
+data.</p>
+<ul>
+<li><strong>1000ms (1 second):</strong> The software queries the system
+1 time per second.</li>
+<li><strong>10ms:</strong> The software queries the system 100 times per
+second.</li>
+</ul>
+<p>If your monitoring software is tracking 50 different sensors (CPU
+core clocks, voltages, temperatures, fan speeds, GPU metrics, and RAM
+thermals), a 10ms polling rate triggers 5,000 individual data requests
+every single second.</p>
+<h3 id="increased-cpu-overhead-and-interrupts">Increased CPU Overhead
+and Interrupts</h3>
+<p>Reading a hardware sensor is not a passive activity. To get a
+temperature or voltage reading, the monitoring software must send an
+interrupt request to the CPU.</p>
+<p>At a 1000ms interval, this workload is negligible, consuming less
+than 0.1% of CPU resources. At a 10ms interval, the CPU is constantly
+interrupted to fetch sensor data and hand it over to the monitoring
+software. This steals valuable processing cycles away from the benchmark
+itself. In CPU-bound benchmarks like Cinebench or 3DMark Time Spy's CPU
+test, a 10ms polling rate can noticeably reduce your final score simply
+because the processor is busy managing telemetry.</p>
+<h3 id="smbus-and-i2c-contention">SMBus and I2C Contention</h3>
+<p>Many motherboard, RAM, and power supply sensors communicate via the
+System Management Bus (SMBus) or I2C bus. These are archaic,
+low-bandwidth communication lanes that were never designed for
+high-speed data transfer.</p>
+<p>When you poll sensors at 10ms, you flood the SMBus with requests.
+Because the bus is slow, the CPU often has to wait for the sensor to
+respond—a state known as "I/O wait." This creates a bottleneck that
+manifests as system latency. Furthermore, polling at this speed
+increases the risk of sensor collisions, which can cause monitoring
+software to report corrupted data (such as a fan suddenly reading 65,000
+RPM) or cause system stability issues.</p>
+<h3 id="degraded-1-and-01-low-frame-rates">Degraded 1% and 0.1% Low
+Frame Rates</h3>
+<p>In gaming benchmarks, average frame rates might only drop by 1% to 3%
+when using a 10ms polling rate. However, the impact on frame time
+consistency—measured as 1% and 0.1% lows—is severe.</p>
+<p>Graphics cards have dedicated microcontrollers to manage power and
+thermals. When software queries the GPU via the PCIe bus every 10ms to
+check hotspot temperatures and power draw, it briefly interrupts the
+GPU's primary rendering tasks and driver operations. These constant
+micro-interruptions cause frame time spikes, translating directly into
+visible micro-stuttering during the benchmark run.</p>
+<h3 id="memory-and-storage-bloat">Memory and Storage Bloat</h3>
+<p>Once the telemetry data is collected, the software must process it,
+render it on a graph, or write it to a log file.</p>
+<p>Generating 100 lines of data per second creates massive CSV log
+files. Writing this data continuously requires RAM allocation and
+storage I/O operations. While modern NVMe SSDs are fast, the constant
+background write operations still require CPU instruction cycles and
+memory bandwidth, further contaminating the isolated environment
+required for an accurate benchmark.</p>
+<h3 id="disrupting-boost-algorithms">Disrupting Boost Algorithms</h3>
+<p>Modern CPUs and GPUs use opportunistic boost algorithms that adjust
+clock speeds and voltages in milliseconds based on workload and thermal
+headroom.</p>
+<p>When benchmarking lighter workloads (such as single-core tests or
+esports gaming titles), unused CPU cores are supposed to enter deep
+sleep states (C-states) so the active cores can boost higher. A 10ms
+polling rate constantly wakes up sleeping cores to answer telemetry
+requests. Because all cores remain active, the processor consumes more
+power and generates more heat at idle, reducing the thermal and power
+headroom available for the cores actually running the benchmark.</p>
+<h3 id="choosing-the-right-polling-interval">Choosing the Right Polling
+Interval</h3>
+<p>To get accurate benchmark results, you must balance data resolution
+with system overhead:</p>
+<ul>
+<li><strong>1000ms to 2000ms:</strong> Ideal for synthetic scoring
+benchmarks and long-term stability testing. It provides enough data to
+see thermal trends with virtually zero performance impact.</li>
+<li><strong>250ms to 500ms:</strong> The sweet spot for gaming
+benchmarks. It captures rapid changes in GPU power and clock speeds
+without inducing micro-stutter.</li>
+<li><strong>10ms to 50ms:</strong> Should only be used by hardware
+engineers and extreme overclockers diagnosing transient power spikes or
+immediate thermal throttling issues. It should never be used when trying
+to achieve a valid performance score.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-fast-telemetry-polling-affects-pc-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

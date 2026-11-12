@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Memory tREFI Tuning Reduces Gaming Latency Penalties - benchmark</title>
+    <meta name="description" content="This article explains how tuning the memory Refresh Interval (tREFI) minimizes latency penalties during gaming benchmarks. By extending the time between mandatory memory cell refresh cycles, hardware enthusiasts can keep RAM accessible to the CPU for long">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-memory-t-refi-tuning-reduces-gaming-latency-penalties">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Memory tREFI Tuning Reduces Gaming Latency Penalties - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-memory-t-refi-tuning-reduces-gaming-latency-penalties" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how tuning the memory Refresh Interval (tREFI) minimizes latency penalties during gaming benchmarks. By extending the time between mandatory memory cell refresh cycles, hardware enthusiasts can keep RAM accessible to the CPU for long" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-memory-trefi-tuning-reduces-gaming-latency-penalties">How
+Memory tREFI Tuning Reduces Gaming Latency Penalties</h1>
+<p>This article explains how tuning the memory Refresh Interval (tREFI)
+minimizes latency penalties during gaming benchmarks. By extending the
+time between mandatory memory cell refresh cycles, hardware enthusiasts
+can keep RAM accessible to the CPU for longer periods. This adjustment
+directly reduces processor stalls, improves frame time consistency,
+boosts 1% low framerates, and maximizes overall system performance
+during intensive hardware evaluations.</p>
+<h2 id="understanding-dram-refresh-and-trefi">Understanding DRAM Refresh
+and tREFI</h2>
+<p>System memory (DRAM) stores data as electrical charges inside
+microscopic capacitors. Because these capacitors naturally leak charge
+over time, the memory controller must periodically read and rewrite the
+data to prevent corruption.</p>
+<p>The <strong>tREFI (Refresh Interval)</strong> timing dictates how
+frequently the memory controller sends a refresh command to the RAM. It
+is measured in clock cycles. A lower tREFI value means the memory
+refreshes frequently, while a higher tREFI value extends the pause
+between these maintenance cycles.</p>
+<h2 id="the-latency-penalty-explained">The Latency Penalty
+Explained</h2>
+<p>When a refresh command is issued, the memory enters a state governed
+by another timing called <strong>tRFC (Refresh Cycle Time)</strong>.
+During this window, the refreshing memory banks are completely locked
+out from performing read or write operations.</p>
+<p>If the CPU requests gaming data—such as player coordinates, physics
+calculations, or asset states—while the RAM is refreshing, the CPU is
+forced to wait. This wait state introduces a severe latency penalty. In
+gaming benchmarks, these microscopic pauses manifest as frame time
+spikes, micro-stutters, and lower minimum framerates.</p>
+<h2 id="how-tuning-trefi-reduces-latency">How Tuning tREFI Reduces
+Latency</h2>
+<p>Motherboard manufacturers set conservative (low) default tREFI values
+to ensure system stability under worst-case thermal conditions. Tuning
+tREFI involves manually increasing this value in the BIOS, often
+multiplying the default interval by four to eight times.</p>
+<p>Increasing the tREFI value reduces latency penalties through three
+direct mechanisms:</p>
+<ul>
+<li><strong>Fewer CPU Stalls:</strong> By spacing out the refresh
+commands, the memory spends a higher percentage of time available for
+active CPU read and write requests. The CPU hits a "locked" memory state
+far less often.</li>
+<li><strong>Increased Bandwidth Efficiency:</strong> Because less time
+is wasted on maintenance cycles, more clock cycles are dedicated to
+transferring actual game data between the RAM and the processor.</li>
+<li><strong>Synergy with tRFC:</strong> While lowering tRFC reduces the
+<em>duration</em> of the lockout penalty, increasing tREFI reduces the
+<em>frequency</em> of the penalty. Tuning both creates a compounding
+reduction in overall memory latency.</li>
+</ul>
+<h2 id="impact-on-gaming-benchmarks">Impact on Gaming Benchmarks</h2>
+<p>Synthetic benchmarks and real-world gaming tests react strongly to
+tREFI adjustments, particularly in CPU-bound scenarios (such as gaming
+at 1080p resolution).</p>
+<p>In synthetic tests like AIDA64, maxing out the tREFI value typically
+drops measured memory latency by 3 to 6 nanoseconds. In gaming
+benchmarks, the reduction in memory lockouts primarily benefits frame
+pacing. While average framerates (FPS) may see a modest bump of 2% to
+5%, the <strong>1% and 0.1% low framerates</strong> often see
+substantial gains. This results in a visibly smoother benchmark run with
+fewer jarring frame drops during asset-heavy scenes.</p>
+<h2 id="thermal-limitations-of-trefi-tuning">Thermal Limitations of
+tREFI Tuning</h2>
+<p>There is a physical limit to how high tREFI can be set. DRAM
+capacitors leak their electrical charge much faster as temperatures
+rise. If you set the tREFI value too high—waiting too long between
+refreshes—while the memory modules are running hot (typically above 50°C
+to 55°C), the capacitors will lose their data before the next refresh
+arrives. This results in game crashes, operating system corruption, and
+failed benchmark runs. Therefore, maximizing tREFI requires adequate
+case airflow or dedicated memory cooling.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-memory-t-refi-tuning-reduces-gaming-latency-penalties';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

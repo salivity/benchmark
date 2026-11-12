@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How SLC Cache Exhaustion Impacts Storage Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores how Single-Level Cell (SLC) cache exhaustion fundamentally alters the benchmarking results of modern solid-state drives (SSDs). By examining what SLC caching is, why standard benchmarks often fail to expose its limits, and what happe">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-slc-cache-exhaustion-impacts-storage-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How SLC Cache Exhaustion Impacts Storage Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-slc-cache-exhaustion-impacts-storage-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Single-Level Cell (SLC) cache exhaustion fundamentally alters the benchmarking results of modern solid-state drives (SSDs). By examining what SLC caching is, why standard benchmarks often fail to expose its limits, and what happe" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-slc-cache-exhaustion-impacts-storage-benchmarks">How SLC
+Cache Exhaustion Impacts Storage Benchmarks</h1>
+<p>This article explores how Single-Level Cell (SLC) cache exhaustion
+fundamentally alters the benchmarking results of modern solid-state
+drives (SSDs). By examining what SLC caching is, why standard benchmarks
+often fail to expose its limits, and what happens to write speeds when
+the cache fills up, you will understand how to accurately interpret
+storage performance metrics and avoid misleading hardware
+assessments.</p>
+<h2 id="understanding-the-slc-cache">Understanding the SLC Cache</h2>
+<p>Modern consumer SSDs primarily use Triple-Level Cell (TLC) or
+Quad-Level Cell (QLC) NAND flash memory to store data efficiently and
+affordably. Because writing data directly to TLC and QLC memory is
+inherently slow, manufacturers program a portion of the drive to operate
+in Single-Level Cell (SLC) mode, which only stores one bit of data per
+cell instead of three or four. This SLC cache acts as a high-speed
+buffer, absorbing incoming data quickly and moving it to the slower,
+permanent storage areas later when the drive is idle.</p>
+<h2 id="the-flaw-in-short-duration-benchmarks">The Flaw in
+Short-Duration Benchmarks</h2>
+<p>Most popular consumer benchmarking tools, such as CrystalDiskMark or
+AS SSD, use relatively small test files (typically 1GB to 16GB) by
+default. Because these small data payloads fit entirely within the
+drive's SLC cache, the benchmark only measures the speed of the
+high-speed buffer.</p>
+<p>This results in benchmark scores that match the manufacturer's
+advertised maximum speeds. While these numbers look impressive, they
+only reflect burst performance and create a false impression of the
+drive's true sustained capabilities.</p>
+<h2 id="the-performance-cliff-of-cache-exhaustion">The Performance Cliff
+of Cache Exhaustion</h2>
+<p>SLC cache exhaustion occurs when a continuous data write operation
+exceeds the capacity of the SLC buffer. When a benchmark pushes past
+this limit, the test results change drastically.</p>
+<p>Once the cache is full, the SSD is forced to do two things at once:
+write new incoming data directly to the slower native TLC or QLC memory,
+and simultaneously fold (compress and move) the data already in the SLC
+cache to free up space. This heavy dual workload causes write speeds to
+plummet instantly. In benchmark graphs, this is visible as a sharp
+drop-off, commonly referred to as a "performance cliff."</p>
+<h2 id="the-severity-of-the-speed-drop">The Severity of the Speed
+Drop</h2>
+<p>The degree to which cache exhaustion alters benchmark results depends
+on the drive's underlying hardware and current capacity:</p>
+<ul>
+<li><strong>TLC vs. QLC NAND:</strong> On a high-end TLC drive, a
+sequential write speed of 7,000 MB/s might drop to 1,500 MB/s after
+cache exhaustion—still a very usable speed. However, on a budget QLC
+drive, the speed can drop from 5,000 MB/s down to 100 MB/s or less,
+making it slower than a traditional mechanical hard drive.</li>
+<li><strong>Drive Fill State:</strong> Most modern SSDs use a dynamic
+SLC cache, meaning the cache size shrinks as the drive fills up with
+permanent files. Benchmarking an empty drive yields a massive SLC cache
+and prolonged high speeds. Benchmarking a drive that is 80% full will
+result in almost immediate cache exhaustion, yielding drastically lower
+benchmark scores because there is very little free space left to act as
+an SLC buffer.</li>
+<li><strong>Latency Spikes:</strong> Aside from raw speed drops, cache
+exhaustion drastically increases drive latency. Benchmarks measuring
+access times and Input/Output Operations Per Second (IOPS) will show
+severe degradation, as the drive controller is overwhelmed with managing
+data relocation.</li>
+</ul>
+<h2 id="how-to-benchmark-for-cache-exhaustion">How to Benchmark for
+Cache Exhaustion</h2>
+<p>To get a complete picture of a storage drive's performance,
+benchmarking must go beyond the SLC cache. Hardware reviewers achieve
+this by running sustained sequential write tests that span the entire
+capacity of the drive, logging the exact gigabyte threshold where the
+cache runs out.</p>
+<p>For everyday users using standard benchmarking software, increasing
+the test file size to 64GB or higher and increasing the number of test
+passes will usually force the drive into a state of cache exhaustion.
+This reveals the drive's true native write speed, providing an accurate
+representation of how the hardware will perform during heavy workloads
+like large file transfers, massive game installations, or 4K video
+rendering.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-slc-cache-exhaustion-impacts-storage-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

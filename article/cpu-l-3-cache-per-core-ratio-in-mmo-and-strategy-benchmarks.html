@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU L3 Cache Per Core Ratio in MMO and Strategy Benchmarks - benchmark</title>
+    <meta name="description" content="This article examines how the ratio of CPU L3 cache capacity to core count directly dictates performance scaling when benchmarking Massively Multiplayer Online (MMO) and strategy games. It covers the mechanics of L3 cache allocation, why simulation-heavy">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/cpu-l-3-cache-per-core-ratio-in-mmo-and-strategy-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CPU L3 Cache Per Core Ratio in MMO and Strategy Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/cpu-l-3-cache-per-core-ratio-in-mmo-and-strategy-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article examines how the ratio of CPU L3 cache capacity to core count directly dictates performance scaling when benchmarking Massively Multiplayer Online (MMO) and strategy games. It covers the mechanics of L3 cache allocation, why simulation-heavy" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="cpu-l3-cache-per-core-ratio-in-mmo-and-strategy-benchmarks">CPU
+L3 Cache Per Core Ratio in MMO and Strategy Benchmarks</h1>
+<p>This article examines how the ratio of CPU L3 cache capacity to core
+count directly dictates performance scaling when benchmarking Massively
+Multiplayer Online (MMO) and strategy games. It covers the mechanics of
+L3 cache allocation, why simulation-heavy gaming genres are uniquely
+bound by memory latency, how a higher cache-per-core ratio eliminates
+data bottlenecks, and how this metric impacts frame time consistency and
+simulation speed in hardware benchmarks.</p>
+<h2 id="understanding-the-l3-cache-to-core-ratio">Understanding the L3
+Cache-to-Core Ratio</h2>
+<p>Level 3 (L3) cache is a pool of high-speed memory built directly onto
+the processor die, shared among the CPU cores. The L3 cache-to-core
+ratio is calculated by dividing the total available L3 cache within a
+single core complex by the number of cores sharing it.</p>
+<p>While L1 and L2 caches are small and dedicated to individual cores,
+L3 cache is much larger and dynamic. If a processor has 32MB of unified
+L3 cache across 8 cores, the baseline ratio is 4MB per core. However,
+because L3 is shared, a single heavily loaded core can utilize a much
+larger portion of that 32MB pool if the other cores are idle.
+Conversely, if a 16-core CPU has 32MB of L3 cache split across two
+separate 8-core complexes (16MB per complex), the effective ceiling of
+L3 cache available to any single core is cut in half.</p>
+<h2 id="why-mmos-and-strategy-games-crave-cache">Why MMOs and Strategy
+Games Crave Cache</h2>
+<p>Unlike first-person shooters or action-adventure games that are
+primarily limited by graphics card (GPU) rendering, MMOs and strategy
+games are heavily bound by CPU simulation tasks.</p>
+<ul>
+<li><strong>MMOs</strong> must track the movement, combat calculations,
+gear states, and network packets of hundreds of unpredictable human
+players in a single concentrated area.</li>
+<li><strong>Strategy and Simulation Games</strong> (such as 4X, grand
+strategy, and factory-building titles) constantly calculate AI decision
+trees, pathfinding, resource logistics, and physics for thousands of
+independent entities simultaneously.</li>
+</ul>
+<p>These calculations generate massive amounts of constantly changing
+data instructions. This working data set is far too large to fit into
+the tiny L1 and L2 caches. Consequently, the CPU relies entirely on the
+L3 cache to hold the game's simulation state.</p>
+<h2 id="the-penalty-of-cache-misses">The Penalty of Cache Misses</h2>
+<p>When benchmarking hardware, the primary determinant of performance
+scaling in these genres is the "cache hit rate." When the CPU needs data
+to calculate the next frame or simulation tick, it checks the cache.</p>
+<p>If the L3 cache-to-core ratio is low, the cache fills up quickly,
+resulting in a "cache miss." When a cache miss occurs, the CPU must
+fetch the required game data from the system RAM. Accessing system RAM
+takes vastly longer than accessing on-die L3 cache (often 50 to 80
+nanoseconds for RAM versus ~10 nanoseconds for L3 cache). During this
+delay, the CPU core sits idle, waiting for data. In benchmarks, this
+translates directly into lower average frame rates, severe
+micro-stuttering, and poor 1% and 0.1% low frame times.</p>
+<h2 id="thread-allocation-and-cache-scaling">Thread Allocation and Cache
+Scaling</h2>
+<p>Most MMO and strategy game engines cannot distribute their workloads
+evenly across 12, 16, or 24 CPU cores. Because game logic is
+sequential—Event B cannot be calculated until the result of Event A is
+known—these games rely heavily on one to four primary threads.</p>
+<p>Because the workload is concentrated on a few cores, adding more
+cores to a CPU does not improve benchmark results in these genres.
+Instead, increasing the L3 cache per core provides massive performance
+scaling. When a CPU features a high L3-to-core ratio (such as processors
+utilizing 3D vertical cache stacking, yielding 96MB of L3 cache for 8
+cores, or a 12MB-per-core ratio), the primary game threads can store
+nearly the entire active simulation loop on the CPU die.</p>
+<h2 id="how-this-translates-to-hardware-benchmarks">How This Translates
+to Hardware Benchmarks</h2>
+<p>When evaluating CPU hardware for MMOs and strategy games, the L3
+cache-to-core ratio manifests in two distinct benchmark metrics:</p>
+<h3 id="1-frame-rate-consistency-1-and-01-lows">1. Frame Rate
+Consistency (1% and 0.1% Lows)</h3>
+<p>In crowded MMO hubs or late-game strategy battles, the volume of
+entity data spikes. CPUs with a low cache-per-core ratio suffer
+immediate drops in minimum frame rates as they are forced to constantly
+read from system RAM. CPUs with a high cache-per-core ratio absorb these
+data spikes within the L3 pool, resulting in vastly superior 1% and 0.1%
+low frame rates and a visibly smoother experience.</p>
+<h3 id="2-simulation-speed-and-turn-times">2. Simulation Speed and Turn
+Times</h3>
+<p>Many strategy game benchmarks measure performance in "time per turn"
+or "ticks per second" rather than frames per second. In late-game
+scenarios where thousands of AI units are active, a higher L3 cache
+capacity per core reduces the time the CPU spends waiting on memory
+transfers. This scales linearly with the cache ratio, allowing
+processors with massive L3 pools to process game turns and simulation
+ticks significantly faster than processors with higher clock speeds or
+higher core counts, but less cache per core.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/cpu-l-3-cache-per-core-ratio-in-mmo-and-strategy-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

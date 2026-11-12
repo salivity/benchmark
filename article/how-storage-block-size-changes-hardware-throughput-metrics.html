@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Storage Block Size Changes Hardware Throughput Metrics - benchmark</title>
+    <meta name="description" content="This article explores how changing storage block sizes—specifically 4K, 64K, and 1M—drastically alters throughput metrics during computer hardware benchmarking. You will learn the mathematical relationship between block size and data transfer rates, how d">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-storage-block-size-changes-hardware-throughput-metrics">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Storage Block Size Changes Hardware Throughput Metrics - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-storage-block-size-changes-hardware-throughput-metrics" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how changing storage block sizes—specifically 4K, 64K, and 1M—drastically alters throughput metrics during computer hardware benchmarking. You will learn the mathematical relationship between block size and data transfer rates, how d" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-storage-block-size-changes-hardware-throughput-metrics">How
+Storage Block Size Changes Hardware Throughput Metrics</h1>
+<p>This article explores how changing storage block sizes—specifically
+4K, 64K, and 1M—drastically alters throughput metrics during computer
+hardware benchmarking. You will learn the mathematical relationship
+between block size and data transfer rates, how different block sizes
+stress distinct components of a storage drive, and why small blocks
+measure transactional speed while large blocks measure maximum
+bandwidth.</p>
+<h2 id="the-core-formula">The Core Formula</h2>
+<p>To understand how block size affects benchmarking, you must first
+understand the relationship between Input/Output Operations Per Second
+(IOPS) and throughput (measured in MB/s or GB/s). The formula is
+straightforward:</p>
+<p><strong>Throughput = IOPS × Block Size</strong></p>
+<p>When you change the block size in a benchmark, you shift the workload
+between processing many small transactions and moving massive,
+continuous streams of data. Because of this, a storage drive will show
+wildly different throughput numbers depending on the block size
+selected.</p>
+<h2 id="4k-block-size-testing-latency-and-iops">4K Block Size: Testing
+Latency and IOPS</h2>
+<p>A 4 Kilobyte (4K) block size is the standard for measuring random
+read and write performance, as it matches the default page size of most
+modern operating systems.</p>
+<ul>
+<li><strong>Throughput Impact:</strong> Throughput in MB/s will look
+relatively low.</li>
+<li><strong>IOPS Impact:</strong> IOPS will be at their highest.</li>
+<li><strong>Hardware Bottleneck:</strong> The storage controller,
+firmware, and system CPU.</li>
+<li><strong>Real-World Equivalent:</strong> Booting an operating system,
+running databases, and loading background application files.</li>
+</ul>
+<p>At 4K, every tiny piece of data requires its own command, address
+lookup, and completion signal. Because the drive spends most of its time
+managing this high transactional overhead, it cannot reach its maximum
+data transfer speed. For example, a fast SSD achieving 100,000 IOPS at a
+4K block size will only generate about 409 MB/s of throughput.</p>
+<h2 id="64k-block-size-the-balanced-transition">64K Block Size: The
+Balanced Transition</h2>
+<p>Moving to a 64 Kilobyte (64K) block size shifts the benchmark from
+testing pure transactional overhead to testing data movement
+efficiency.</p>
+<ul>
+<li><strong>Throughput Impact:</strong> Throughput increases
+significantly compared to 4K.</li>
+<li><strong>IOPS Impact:</strong> IOPS drop noticeably as the drive
+takes longer to transfer each individual block.</li>
+<li><strong>Hardware Bottleneck:</strong> Internal drive parallelism and
+DRAM cache buffers.</li>
+<li><strong>Real-World Equivalent:</strong> Loading game assets, editing
+high-resolution photos, and moderate file transfers.</li>
+</ul>
+<p>At 64K, the benchmark packs 16 times more data into a single I/O
+request than it does at 4K. This reduces the strain on the storage
+controller. Instead of getting bogged down by command processing, the
+drive can focus on pushing data simultaneously across multiple internal
+NAND flash channels (on an SSD) or reading continuous sectors (on a hard
+drive).</p>
+<h2 id="1m-block-size-maximizing-bandwidth">1M Block Size: Maximizing
+Bandwidth</h2>
+<p>A 1 Megabyte (1M) block size is used to find the absolute physical
+speed limit of the storage interface and the storage media itself.</p>
+<ul>
+<li><strong>Throughput Impact:</strong> Throughput reaches its absolute
+peak, often matching the advertised speeds on the hardware box.</li>
+<li><strong>IOPS Impact:</strong> IOPS drop to a very low number.</li>
+<li><strong>Hardware Bottleneck:</strong> The physical interface (SATA,
+PCIe 4.0, PCIe 5.0) and the raw write/read speed of the memory chips or
+magnetic platters.</li>
+<li><strong>Real-World Equivalent:</strong> Moving large video files,
+creating full system backups, and streaming uncompressed media.</li>
+</ul>
+<p>With 1M blocks, command overhead is virtually eliminated. The storage
+controller receives a single command and simply opens the floodgates to
+transfer a massive chunk of data. A high-end PCIe 4.0 NVMe SSD only
+needs to process about 7,000 IOPS at a 1M block size to completely
+saturate the motherboard's PCIe bus and deliver 7,000 MB/s (7 GB/s) of
+throughput.</p>
+<h2 id="summary-of-the-hardware-shift">Summary of the Hardware
+Shift</h2>
+<p>When you change the block size in a storage benchmark, you are
+changing which part of the hardware you are testing:</p>
+<ol type="1">
+<li><strong>4K tests the brains:</strong> It measures how fast the
+drive's controller and the computer's CPU can process queues and locate
+data.</li>
+<li><strong>64K tests the architecture:</strong> It measures how well
+the drive transitions from heavy processing to sustained data delivery
+using its internal channels.</li>
+<li><strong>1M tests the pipes:</strong> It measures the raw bandwidth
+limit of the physical connection and the maximum speed of the storage
+media.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-storage-block-size-changes-hardware-throughput-metrics';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

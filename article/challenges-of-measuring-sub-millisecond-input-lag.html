@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenges of Measuring Sub-Millisecond Input Lag - benchmark</title>
+    <meta name="description" content="Measuring sub-millisecond input lag in computer hardware is exceptionally difficult due to physical limitations in testing equipment, software inconsistencies, and the complex nature of the PC rendering pipeline. As gaming peripherals and displays push pa">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/challenges-of-measuring-sub-millisecond-input-lag">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Challenges of Measuring Sub-Millisecond Input Lag - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/challenges-of-measuring-sub-millisecond-input-lag" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Measuring sub-millisecond input lag in computer hardware is exceptionally difficult due to physical limitations in testing equipment, software inconsistencies, and the complex nature of the PC rendering pipeline. As gaming peripherals and displays push pa" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="challenges-of-measuring-sub-millisecond-input-lag">Challenges of
+Measuring Sub-Millisecond Input Lag</h1>
+<p>Measuring sub-millisecond input lag in computer hardware is
+exceptionally difficult due to physical limitations in testing
+equipment, software inconsistencies, and the complex nature of the PC
+rendering pipeline. As gaming peripherals and displays push past the
+1000Hz barrier, hardware reviewers must measure delays lasting only a
+few hundred microseconds. This article explores the primary hurdles
+benchmarkers face when attempting to capture sub-millisecond latency,
+including sensor thresholds, operating system jitter, USB polling
+desynchronization, and display response anomalies.</p>
+<h3 id="sensor-and-camera-limitations">Sensor and Camera
+Limitations</h3>
+<p>To accurately measure an event taking less than one millisecond
+(1,000 microseconds), the measuring tool must operate at a significantly
+higher frequency than the event itself. Standard high-speed cameras
+shooting at 1,000 frames per second (FPS) only capture one frame per
+millisecond, rendering them useless for sub-millisecond precision.
+Benchmarkers must utilize specialized cameras running at 10,000 FPS or
+higher, which require extreme studio lighting and output at drastically
+reduced resolutions, making it hard to spot the exact frame where a
+pixel changes.</p>
+<p>To bypass camera limitations, testers use photodiode sensors that
+detect luminance changes on a screen. However, these sensors have their
+own internal processing delays. Furthermore, a photodiode requires a
+specific brightness threshold to trigger. If a display takes a fraction
+of a millisecond to ramp up to that brightness, the sensor logs the
+display's pixel response time rather than the pure input lag of the
+system.</p>
+<h3 id="physical-actuation-inconsistencies">Physical Actuation
+Inconsistencies</h3>
+<p>Measuring total system latency requires triggering an input device,
+such as a mouse or keyboard. Using an automated mechanical rig to
+physically press a switch introduces physical variance. Even the most
+precise solenoids or linear actuators suffer from microscopic
+inconsistencies in travel speed and contact bounce.</p>
+<p>To achieve sub-millisecond accuracy, benchmarkers often bypass the
+physical switch entirely by soldering wires directly to the device's
+Printed Circuit Board (PCB) to simulate a click electrically. However,
+this method fails to measure the latency of modern optical or
+Hall-effect switches, which rely on physical light obstruction or
+magnetic field changes that cannot be easily bypassed with a simple wire
+jumper.</p>
+<h3 id="usb-polling-and-clock-desynchronization">USB Polling and Clock
+Desynchronization</h3>
+<p>Modern peripherals boast polling rates of 4,000Hz (0.25ms intervals)
+and 8,000Hz (0.125ms intervals). While this enables sub-millisecond data
+transmission, the microcontroller inside the mouse or keyboard does not
+share a synchronized clock with the motherboard's USB host
+controller.</p>
+<p>If an electrical input is triggered just microseconds after a USB
+polling event has occurred, the signal must wait in a buffer until the
+next polling cycle. This asynchronous relationship creates a variable
+delay known as polling jitter. Because the clocks drift slightly over
+time, capturing a static, repeatable sub-millisecond measurement is
+impossible without running hundreds of tests to map the distribution of
+the variance.</p>
+<h3 id="operating-system-and-render-pipeline-jitter">Operating System
+and Render Pipeline Jitter</h3>
+<p>A consumer operating system like Windows is not a real-time operating
+system. When an input signal reaches the PC, it must navigate the OS
+kernel, background interrupts, the game engine, the graphics driver, and
+the GPU render queue.</p>
+<p>System tasks, CPU power-state shifts, and memory management routines
+constantly interrupt this flow. These software-level events introduce
+random latency spikes that regularly exceed several milliseconds.
+Because the baseline noise of the operating system is larger than the
+sub-millisecond metric being measured, testers must capture thousands of
+data points to filter out OS jitter and find the true hardware latency
+through statistical averaging.</p>
+<h3 id="display-refresh-and-pixel-transition-times">Display Refresh and
+Pixel Transition Times</h3>
+<p>In end-to-end latency testing, the display is the final bottleneck.
+Even on a cutting-edge 540Hz monitor, a new refresh cycle only occurs
+every 1.85 milliseconds. Unless the system is running with variable
+refresh rate (VRR) technology deactivated and pushing thousands of
+frames per second, the time it takes for the monitor to draw the frame
+will mask sub-millisecond hardware improvements.</p>
+<p>Additionally, liquid crystal displays (LCDs) suffer from Gray-to-Gray
+(GtG) pixel transition times, which usually take between 1 and 5
+milliseconds. While OLED displays solve this with near-instantaneous
+pixel response times (often under 0.2 milliseconds), screens still
+update sequentially from top to bottom. Moving a luminance sensor just a
+few millimeters up or down the screen changes the latency reading by
+hundreds of microseconds, requiring absolute physical precision during
+test setups.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/challenges-of-measuring-sub-millisecond-input-lag';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

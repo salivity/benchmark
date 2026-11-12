@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hidden Risks of Extreme Stress Tests Like FurMark - benchmark</title>
+    <meta name="description" content="This article provides an overview of the significant risks associated with using extreme stress testing software, such as FurMark, to benchmark computer hardware. While these utilities are designed to push graphics processing units (GPUs) to their absolut">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/the-hidden-risks-of-extreme-stress-tests-like-fur-mark">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Hidden Risks of Extreme Stress Tests Like FurMark - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/the-hidden-risks-of-extreme-stress-tests-like-fur-mark" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of the significant risks associated with using extreme stress testing software, such as FurMark, to benchmark computer hardware. While these utilities are designed to push graphics processing units (GPUs) to their absolut" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-hidden-risks-of-extreme-stress-tests-like-furmark">The
+Hidden Risks of Extreme Stress Tests Like FurMark</h1>
+<p>This article provides an overview of the significant risks associated
+with using extreme stress testing software, such as FurMark, to
+benchmark computer hardware. While these utilities are designed to push
+graphics processing units (GPUs) to their absolute limits to verify
+stability and thermal capacity, they generate synthetic workloads that
+far exceed normal usage. In the sections below, we will directly examine
+the primary dangers of running these extreme tests, including severe
+thermal damage, Voltage Regulator Module (VRM) failure, power supply
+overload, and shortened hardware lifespans.</p>
+<h2 id="the-power-virus-phenomenon">The "Power Virus" Phenomenon</h2>
+<p>Extreme stress tests like FurMark are often referred to by hardware
+engineers and enthusiasts as "power viruses." Unlike standard
+benchmarking tools or demanding video games, which fluctuate in
+workload, FurMark uses specific rendering algorithms designed
+exclusively to maximize power draw and heat output. It forces nearly
+every part of the GPU to operate at 100% capacity simultaneously. This
+creates an unnatural scenario that your computer will never encounter
+during actual gaming, video editing, or 3D rendering.</p>
+<h2 id="voltage-regulator-module-vrm-failure">Voltage Regulator Module
+(VRM) Failure</h2>
+<p>The most acute danger of running FurMark is not actually to the main
+GPU chip, but to the Voltage Regulator Modules (VRMs). The VRMs are
+responsible for delivering clean, stable power to the graphics card.</p>
+<ul>
+<li><strong>Extreme Amperage:</strong> Synthetic stress tests pull
+continuous, maximum amperage through the VRMs.</li>
+<li><strong>Lack of Sensors:</strong> Many graphics cards only monitor
+the temperature of the main GPU core, not the VRMs.</li>
+<li><strong>Silent Failure:</strong> While the GPU core might read a
+safe temperature, the VRMs can easily exceed their thermal limits (often
+100°C to 125°C) without triggering the fans to spin faster. This can
+cause the VRMs to burn out, instantly destroying the graphics card.</li>
+</ul>
+<h2 id="thermal-degradation-and-silicon-damage">Thermal Degradation and
+Silicon Damage</h2>
+<p>Heat is the primary enemy of electronics. Pushing a component to its
+absolute thermal limit causes physical stress on the hardware
+materials.</p>
+<ul>
+<li><strong>Solder Joint Cracking:</strong> Rapidly heating a GPU to
+extreme temperatures and then cooling it down causes thermal expansion
+and contraction. Over time, this weakens the microscopic solder joints
+connecting the GPU die to the circuit board.</li>
+<li><strong>Thermal Paste Pump-Out:</strong> Extreme heat can cause
+standard thermal paste to thin out and degrade rapidly, reducing the
+cooler's effectiveness for future everyday use.</li>
+<li><strong>Electromigration:</strong> High temperatures combined with
+high voltage accelerate electromigration—a process where metal atoms in
+the silicon chip slowly move out of place, permanently degrading the
+processor's stability and lifespan.</li>
+</ul>
+<h2 id="power-supply-unit-psu-overload">Power Supply Unit (PSU)
+Overload</h2>
+<p>When a graphics card is subjected to an extreme stress test, its
+power consumption spikes dramatically. This places a massive, sustained
+load on the computer's Power Supply Unit.</p>
+<ul>
+<li><strong>Tripping Safety Mechanisms:</strong> A high-quality PSU will
+likely trip its Over Current Protection (OCP) or Over Temperature
+Protection (OTP), causing the computer to suddenly shut down.</li>
+<li><strong>Catastrophic Failure:</strong> If you are using a budget,
+aging, or poorly manufactured PSU, the sustained peak load from FurMark
+can cause the power supply's internal capacitors to blow. A failing PSU
+can send lethal voltage spikes through the motherboard, destroying
+multiple components at once.</li>
+</ul>
+<h2 id="overriding-hardware-protections">Overriding Hardware
+Protections</h2>
+<p>Both AMD and Nvidia have recognized the dangers of FurMark. Modern
+graphics cards include built-in drivers and BIOS-level protections that
+detect when FurMark is running and automatically throttle the card's
+clock speeds and voltage to prevent damage.</p>
+<p>However, users who overclock their hardware often disable power
+limits, modify the BIOS, or increase voltage manually to achieve higher
+benchmark scores. Doing this removes the safety net. Running an extreme
+stress test on an unlocked, overvolted card can result in immediate and
+permanent hardware failure, which is typically not covered by the
+manufacturer's warranty.</p>
+<h2 id="safer-alternatives-for-benchmarking">Safer Alternatives for
+Benchmarking</h2>
+<p>Because extreme stress tests do not reflect real-world usage and
+carry high risks, it is much safer to use standard benchmarking tools to
+test stability and thermal performance. Software like 3DMark, Unigine
+Heaven, or Unigine Superposition places heavy, realistic gaming loads on
+the GPU. These tools effectively reveal unstable overclocks and cooling
+issues without putting your VRMs and power supply at risk of
+catastrophic failure.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/the-hidden-risks-of-extreme-stress-tests-like-fur-mark';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

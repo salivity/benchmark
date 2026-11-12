@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Voltage-Frequency Curve Optimization in MSI Afterburner - benchmark</title>
+    <meta name="description" content="This article explains the mechanics and benefits of optimizing the GPU core voltage-frequency (V/F) curve using MSI Afterburner for computer hardware benchmarking. It covers how modern graphics cards dynamically adjust clock speeds based on power and ther">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/gpu-voltage-frequency-curve-optimization-in-msi-afterburner">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="GPU Voltage-Frequency Curve Optimization in MSI Afterburner - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/gpu-voltage-frequency-curve-optimization-in-msi-afterburner" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the mechanics and benefits of optimizing the GPU core voltage-frequency (V/F) curve using MSI Afterburner for computer hardware benchmarking. It covers how modern graphics cards dynamically adjust clock speeds based on power and ther" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="gpu-voltage-frequency-curve-optimization-in-msi-afterburner">GPU
+Voltage-Frequency Curve Optimization in MSI Afterburner</h1>
+<p>This article explains the mechanics and benefits of optimizing the
+GPU core voltage-frequency (V/F) curve using MSI Afterburner for
+computer hardware benchmarking. It covers how modern graphics cards
+dynamically adjust clock speeds based on power and thermal limits, why
+fine-tuning the V/F relationship maximizes benchmark scores, and the
+exact methods used to manipulate the curve for peak performance and
+stability.</p>
+<h3 id="understanding-the-voltage-frequency-curve">Understanding the
+Voltage-Frequency Curve</h3>
+<p>Modern GPUs do not operate at a single, static clock speed. Instead,
+they use dynamic boost algorithms (such as NVIDIA GPU Boost or AMD
+Precision Boost) governed by a built-in lookup table known as the
+voltage-frequency curve. This curve dictates the exact core frequency
+(measured in megahertz, MHz) the GPU will run at for any given voltage
+level (measured in millivolts, mV).</p>
+<p>In MSI Afterburner, pressing <code>Ctrl + F</code> opens the
+Voltage/Frequency Curve Editor. In this graph:</p>
+<ul>
+<li><strong>The horizontal X-axis</strong> represents the core voltage
+(mV).</li>
+<li><strong>The vertical Y-axis</strong> represents the core clock
+frequency (MHz).</li>
+<li><strong>The square nodes</strong> along the line represent
+individual voltage-frequency states the GPU can use.</li>
+</ul>
+<h3 id="why-curve-optimization-improves-benchmark-scores">Why Curve
+Optimization Improves Benchmark Scores</h3>
+<p>Hardware benchmarking pushes a GPU to its absolute limits to measure
+maximum performance. During a benchmark, the GPU attempts to climb as
+high up the V/F curve as possible. However, it is restricted by three
+main factors: temperature limits, power limits, and voltage limits.</p>
+<p>By default, GPU manufacturers apply extra voltage to the curve to
+ensure every chip they produce is stable. This excess voltage generates
+unnecessary heat and consumes extra power. When the GPU hits its thermal
+or power limit during a benchmark, it throttles—dropping down the curve
+to lower voltages and lower clock speeds, which reduces your benchmark
+score.</p>
+<p>Optimizing the V/F curve solves this by forcing the GPU to run at
+higher frequencies using less voltage. This reduces heat output and
+power consumption, allowing the GPU to sustain its peak boost clock for
+the entire duration of the benchmark without throttling.</p>
+<h3 id="methods-for-optimizing-the-curve">Methods for Optimizing the
+Curve</h3>
+<p>There are three ways to manipulate the V/F curve in MSI Afterburner
+to prepare for a benchmark.</p>
+<h4 id="1-the-traditional-offset">1. The Traditional Offset</h4>
+<p>Dragging the standard "Core Clock" slider in the main MSI Afterburner
+interface simply raises the entire V/F curve uniformly. While quick,
+this method is inefficient for benchmarking because a +150 MHz offset
+might be stable at low voltages, but unstable at high voltages, leading
+to crashes under heavy load.</p>
+<h4 id="2-manual-undervolting-and-overclocking-flattening-the-curve">2.
+Manual Undervolting and Overclocking (Flattening the Curve)</h4>
+<p>This is the most effective method for achieving high benchmark
+scores. It involves finding the highest stable frequency at a specific,
+capped voltage.</p>
+<ol type="1">
+<li>Open the Curve Editor (<code>Ctrl + F</code>).</li>
+<li>Choose a target voltage on the X-axis that is lower than the GPU's
+maximum default voltage (for example, 975mV instead of 1050mV).</li>
+<li>Click and drag the node at 975mV up to your desired overclocked
+frequency on the Y-axis (for example, 2050MHz).</li>
+<li>Hold the <code>Shift</code> key, click to the left of the 975mV
+node, and drag across to the right end of the graph to highlight all
+higher voltage nodes.</li>
+<li>Release <code>Shift</code> and drag any of the highlighted nodes
+down so that they sit lower than your 2050MHz target point.</li>
+<li>Click the "Apply" checkmark in the main MSI Afterburner window. The
+software will automatically flatten the line after 975mV.</li>
+</ol>
+<p>This flat line instructs the GPU to reach 2050MHz at 975mV, and
+prevents it from ever drawing more than 975mV. The result is a cooler
+GPU that does not hit its power limit, resulting in a sustained, flat
+clock speed throughout the benchmark.</p>
+<h4 id="3-automated-oc-scanner">3. Automated OC Scanner</h4>
+<p>MSI Afterburner includes a built-in "OC Scanner" button located at
+the top left of the Curve Editor. When activated, this tool runs an
+automated stress test on each individual voltage node. It pushes the
+frequency up at a specific voltage until it detects an error, then backs
+off slightly and moves to the next node. After about 20 to 30 minutes,
+it generates a custom, non-linear V/F curve tailored to the exact
+silicon quality of your specific GPU.</p>
+<h3 id="validating-the-curve-in-benchmarks">Validating the Curve in
+Benchmarks</h3>
+<p>An optimized curve means nothing if the system crashes during the
+test. Once a custom V/F curve is applied, you must run your chosen
+benchmarking software to verify stability.</p>
+<p>While the benchmark runs, monitor your GPU metrics using MSI
+Afterburner's On-Screen Display (OSD). Look for the following
+outcomes:</p>
+<ul>
+<li><strong>Success:</strong> The benchmark completes without crashing,
+no visual artifacts (flashing dots or distorted textures) appear, and
+the OSD shows the core clock remaining locked at your target
+frequency.</li>
+<li><strong>Instability:</strong> If the benchmark crashes or displays
+artifacts, your chosen frequency is too high for the allotted voltage.
+Open the Curve Editor and either lower the frequency of your target node
+by 15 MHz to 30 MHz, or repeat the flattening process at the next higher
+voltage node to the right (giving the core more power to sustain that
+speed).</li>
+<li><strong>Power Throttling:</strong> If the core clock still drops
+during the benchmark, the GPU is still hitting its power limit. You must
+redo the curve using a lower target voltage on the X-axis to reduce
+overall wattage.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/gpu-voltage-frequency-curve-optimization-in-msi-afterburner';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

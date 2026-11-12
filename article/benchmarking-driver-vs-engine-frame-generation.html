@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking Driver vs. Engine Frame Generation - benchmark</title>
+    <meta name="description" content="This article explores the critical differences between GPU driver-level frame generation, such as AMD Fluid Motion Frames (AFMF), and engine-level solutions like Nvidia DLSS 3 and AMD FSR 3 when benchmarking computer hardware. It covers how these technolo">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/benchmarking-driver-vs-engine-frame-generation">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Benchmarking Driver vs. Engine Frame Generation - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/benchmarking-driver-vs-engine-frame-generation" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the critical differences between GPU driver-level frame generation, such as AMD Fluid Motion Frames (AFMF), and engine-level solutions like Nvidia DLSS 3 and AMD FSR 3 when benchmarking computer hardware. It covers how these technolo" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="benchmarking-driver-vs-engine-frame-generation">Benchmarking
+Driver vs. Engine Frame Generation</h1>
+<p>This article explores the critical differences between GPU
+driver-level frame generation, such as AMD Fluid Motion Frames (AFMF),
+and engine-level solutions like Nvidia DLSS 3 and AMD FSR 3 when
+benchmarking computer hardware. It covers how these technologies access
+game data differently, the unique challenges they pose for frame rate
+capture tools, how dynamic disabling impacts test consistency, and why
+traditional frames-per-second (FPS) metrics must be separated when
+evaluating hardware performance using these two distinct methods.</p>
+<h2 id="pipeline-integration-and-data-access">Pipeline Integration and
+Data Access</h2>
+<p>To understand how to benchmark these technologies, you must first
+understand where they sit in the rendering pipeline.</p>
+<p>Engine-level frame generation is integrated directly into the game by
+the developers. Because it operates inside the game engine, it has
+access to crucial spatial data, including motion vectors (which tell the
+GPU exactly where objects are moving from frame to frame), depth
+buffers, and separated UI elements.</p>
+<p>Driver-level frame generation operates entirely outside the game
+engine. The GPU driver intercepts the final rendered frames just before
+they are sent to the display. Because it has no access to the game’s
+internal motion vectors or depth data, it relies purely on optical flow
+analysis—comparing two completed 2D images to guess how pixels moved,
+and then interpolating a new frame between them.</p>
+<h2 id="telemetry-and-benchmarking-software-compatibility">Telemetry and
+Benchmarking Software Compatibility</h2>
+<p>The placement of these technologies in the rendering pipeline
+drastically changes how hardware reviewers capture performance data.</p>
+<p>Standard benchmarking tools like CapFrameX, MSI Afterburner (RTSS),
+and Intel PresentMon hook into the graphics API (DirectX or Vulkan) to
+count frames as the game engine presents them. Because engine-level
+frame generation creates frames <em>inside</em> this pipeline, these
+third-party tools can accurately detect, measure, and log the generated
+frames alongside native frames.</p>
+<p>Driver-level frame generation happens <em>after</em> the game engine
+presents the frame to the operating system. Consequently, traditional
+benchmarking software cannot see the interpolated frames. If a game runs
+at 60 FPS natively and driver-level generation doubles it to 120 FPS,
+MSI Afterburner will still report 60 FPS. To benchmark driver-level
+solutions, testers are forced to use the GPU manufacturer's proprietary
+overlay and logging tools, making independent verification and
+cross-vendor comparisons much more difficult.</p>
+<h2 id="test-consistency-and-dynamic-disabling">Test Consistency and
+Dynamic Disabling</h2>
+<p>A core rule of hardware benchmarking is repeatability. Engine-level
+frame generation provides consistent behavior: once enabled, it stays
+enabled, generating a frame for every native frame regardless of what is
+happening on screen.</p>
+<p>Driver-level solutions like AFMF often use a dynamic toggle to
+preserve image quality. Because optical flow analysis struggles with
+rapid changes on screen, driver-level frame generation will temporarily
+disable itself during fast camera pans or sudden movements to prevent
+severe visual artifacting.</p>
+<p>In a benchmark scenario, this creates massive variance. If a tester
+moves the mouse slightly faster in one run than in another, the driver
+may disable frame generation more frequently, resulting in a lower
+average FPS. This makes apples-to-apples hardware comparisons nearly
+impossible in fast-paced games.</p>
+<h2 id="frame-pacing-and-latency">Frame Pacing and Latency</h2>
+<p>Frame generation increases the smoothness of visuals on screen, but
+it does not improve the responsiveness of the game. In fact, both
+methods add input latency because the GPU must hold onto a newly
+rendered frame to compare it with the previous one before generating the
+middle frame.</p>
+<p>Engine-level solutions combat this by integrating directly with
+engine-level latency reduction technologies, such as Nvidia Reflex or
+AMD Anti-Lag 2. These tools synchronize the CPU and GPU workloads
+precisely, keeping latency manageable and predictable during
+benchmarks.</p>
+<p>Driver-level frame generation cannot control the game engine's CPU
+queue directly. It must rely on driver-level latency reducers, which are
+less effective. Furthermore, because the driver is guessing frame
+insertion timing outside the game loop, frame pacing (the consistency of
+time between frames) is often much worse in driver-level
+implementations. Standard frame time graphs will not reflect the
+micro-stutter a user might actually see on their monitor when using
+driver-level interpolation.</p>
+<h2 id="visual-fidelity-vs-performance-metrics">Visual Fidelity vs.
+Performance Metrics</h2>
+<p>Historically, 120 FPS on one graphics card looked identical to 120
+FPS on another, assuming the same game settings. Frame generation breaks
+this parity, and the divide between driver-level and engine-level makes
+it worse.</p>
+<p>Because engine-level generation isolates the game's Heads-Up Display
+(HUD), crosshair, and menus, these static elements remain sharp while
+the 3D world is interpolated behind them. Driver-level generation cannot
+tell the difference between the 3D game world and a 2D health bar. It
+attempts to interpolate the entire screen, which results in visible
+distortion, ghosting, and shimmering around UI elements and text.</p>
+<p>When benchmarking hardware, a reviewer cannot equate 120 FPS achieved
+via driver-level Smooth Motion with 120 FPS achieved via engine-level
+FSR 3 or DLSS 3. The engine-level result represents a significantly
+higher quality visual experience and more consistent frame pacing, even
+though the final FPS number on a benchmark chart appears identical.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/benchmarking-driver-vs-engine-frame-generation';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

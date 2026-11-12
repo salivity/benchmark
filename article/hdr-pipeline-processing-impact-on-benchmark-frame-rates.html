@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDR Pipeline Processing: Impact on Benchmark Frame Rates - benchmark</title>
+    <meta name="description" content="High Dynamic Range (HDR) significantly enhances visual fidelity by expanding contrast and color accuracy, but it also alters the graphics rendering pipeline during hardware benchmarking. This article explains how HDR pipeline processing impacts computer h">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/hdr-pipeline-processing-impact-on-benchmark-frame-rates">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="HDR Pipeline Processing: Impact on Benchmark Frame Rates - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/hdr-pipeline-processing-impact-on-benchmark-frame-rates" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="High Dynamic Range (HDR) significantly enhances visual fidelity by expanding contrast and color accuracy, but it also alters the graphics rendering pipeline during hardware benchmarking. This article explains how HDR pipeline processing impacts computer h" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="hdr-pipeline-processing-impact-on-benchmark-frame-rates">HDR
+Pipeline Processing: Impact on Benchmark Frame Rates</h1>
+<p>High Dynamic Range (HDR) significantly enhances visual fidelity by
+expanding contrast and color accuracy, but it also alters the graphics
+rendering pipeline during hardware benchmarking. This article explains
+how HDR pipeline processing impacts computer hardware performance. It
+covers the technical shifts in bit-depth, memory bandwidth demands,
+post-processing overhead, and the resulting frame rate differences you
+can expect when benchmarking graphics cards with HDR enabled versus
+Standard Dynamic Range (SDR).</p>
+<h2 id="the-shift-from-sdr-to-hdr-rendering">The Shift from SDR to HDR
+Rendering</h2>
+<p>To understand the performance impact, it is necessary to look at how
+a GPU processes frames. Most modern game engines already calculate
+lighting internally using high dynamic range values (typically 16-bit
+floating-point, or FP16).</p>
+<p>In an SDR pipeline, this rich internal data is compressed and clamped
+down to an 8-bit integer format per color channel before being sent to
+the monitor. When benchmarking in HDR, the pipeline skips this
+compression. Instead, it outputs the data into a 10-bit (HDR10) or
+16-bit frame buffer. While the core 3D rendering workload remains
+largely the same, handling the final output stages requires extra GPU
+resources.</p>
+<h2 id="memory-bandwidth-and-frame-buffer-size">Memory Bandwidth and
+Frame Buffer Size</h2>
+<p>The most measurable impact of HDR on frame rates comes from increased
+memory bandwidth usage.</p>
+<p>An 8-bit SDR pixel requires 32 bits of data (8 bits each for Red,
+Green, Blue, and Alpha). A 10-bit HDR pixel requires the same 32-bit
+container (10 bits for R, G, B, and 2 bits for Alpha), which results in
+a minimal bandwidth increase. However, if the game utilizes a 16-bit
+floating-point (FP16) swap chain for higher precision HDR, each pixel
+demands 64 bits of data.</p>
+<p>Doubling the data size of the final frame buffers places a heavier
+load on the GPU's memory bus. When benchmarking at high resolutions like
+4K, this increased bandwidth demand can reduce frame rates, particularly
+on graphics cards with narrower memory buses or lower VRAM
+throughput.</p>
+<h2 id="tone-mapping-and-post-processing-overhead">Tone Mapping and
+Post-Processing Overhead</h2>
+<p>Enabling an HDR pipeline alters the post-processing phase at the end
+of a frame's lifecycle. The GPU must execute specific shaders to
+handle:</p>
+<ul>
+<li><strong>Color Space Conversion:</strong> Expanding colors from the
+standard Rec. 709 gamut to the wider Rec. 2020 color space requires
+additional mathematical calculations per pixel.</li>
+<li><strong>HDR Tone Mapping:</strong> The GPU must map the game's
+internal brightness values to the specific luminance capabilities (nits)
+of the connected display.</li>
+<li><strong>UI Compositing:</strong> Game interfaces and HUD elements
+are normally created in SDR. In an HDR pipeline, the GPU must runs an
+extra pass to composite and scale the brightness of the SDR interface
+over the HDR game world.</li>
+</ul>
+<p>Each of these steps adds microseconds to the frame render time, which
+slightly lowers the final frames per second (FPS) metric in a
+benchmark.</p>
+<h2 id="the-actual-fps-impact-in-benchmarks">The Actual FPS Impact in
+Benchmarks</h2>
+<p>On modern mid-range to high-end GPUs, the performance penalty for
+running an HDR pipeline is relatively small. Because modern
+architectures are optimized for FP16 calculations and feature advanced
+memory compression, the frame rate drop usually falls between <strong>1%
+and 5%</strong> compared to SDR at the same resolution.</p>
+<p>However, the performance hit can reach <strong>8% to 10%</strong> in
+specific benchmarking scenarios:</p>
+<ul>
+<li>Testing at 4K or 8K resolutions where memory bandwidth is already
+saturated.</li>
+<li>Benchmarking older or entry-level GPUs that lack dedicated hardware
+routing for wide-gamut color spaces.</li>
+<li>Using operating system-level features like Windows Auto HDR, which
+injects an external post-processing pass onto an existing SDR
+pipeline.</li>
+</ul>
+<h2 id="benchmarking-consistency">Benchmarking Consistency</h2>
+<p>Because HDR pipeline processing introduces a measurable—albeit
+small—workload variation, hardware benchmarks must treat HDR as a
+distinct testing variable. Comparing a GPU benchmarked in SDR against
+another benchmarked in HDR will yield inaccurate conclusions. For strict
+hardware evaluation, HDR should either be disabled across all test
+benches to isolate raw rasterization and ray-tracing performance, or
+enabled uniformly using the exact same display metadata to accurately
+measure the hardware's HDR penalty.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/hdr-pipeline-processing-impact-on-benchmark-frame-rates';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

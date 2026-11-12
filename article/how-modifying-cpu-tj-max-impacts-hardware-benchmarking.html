@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Modifying CPU TjMax Impacts Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="Modifying a CPU&#39;s maximum junction temperature (TjMax) directly alters how computer hardware performs during intensive benchmarking by shifting the thermal throttling threshold. Raising this limit allows processors to sustain higher clock speeds and draw">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-modifying-cpu-tj-max-impacts-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Modifying CPU TjMax Impacts Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-modifying-cpu-tj-max-impacts-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Modifying a CPU&#39;s maximum junction temperature (TjMax) directly alters how computer hardware performs during intensive benchmarking by shifting the thermal throttling threshold. Raising this limit allows processors to sustain higher clock speeds and draw" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-modifying-cpu-tjmax-impacts-hardware-benchmarking">How
+Modifying CPU TjMax Impacts Hardware Benchmarking</h1>
+<p>Modifying a CPU's maximum junction temperature (TjMax) directly
+alters how computer hardware performs during intensive benchmarking by
+shifting the thermal throttling threshold. Raising this limit allows
+processors to sustain higher clock speeds and draw more power for longer
+periods, leading to higher benchmark scores at the cost of increased
+heat output and potential silicon degradation. Conversely, lowering the
+TjMax forces earlier thermal throttling, resulting in reduced multi-core
+performance scores, lower power consumption, and cooler operating
+temperatures. Understanding how TjMax adjustments manipulate thermal
+headroom is essential for accurately interpreting benchmark data and
+evaluating hardware stability.</p>
+<h2 id="understanding-tjmax-and-thermal-throttling">Understanding TjMax
+and Thermal Throttling</h2>
+<p>TjMax, or Temperature Junction Maximum, is the hardcoded thermal
+limit set by the CPU manufacturer. When the internal sensors of a
+processor reach this specific temperature—typically between 95°C and
+105°C for modern consumer CPUs—the processor initiates thermal
+throttling.</p>
+<p>During thermal throttling, the CPU automatically reduces its
+operating frequency (clock speed) and voltage to decrease heat
+generation. In the context of benchmarking, hitting TjMax means the
+processor can no longer maintain its maximum boost clocks, directly
+reducing the final benchmark score. Users can modify this threshold in
+the motherboard BIOS to change when this protective behavior occurs.</p>
+<h2 id="raising-the-tjmax-threshold">Raising the TjMax Threshold</h2>
+<p>Enthusiasts and overclockers sometimes increase the TjMax (for
+example, raising a 100°C limit to 110°C) to extract maximum performance
+during competitive benchmarking. This modification changes hardware
+behavior in several ways:</p>
+<ul>
+<li><strong>Sustained Boost Clocks:</strong> The CPU delays thermal
+throttling, allowing it to maintain peak all-core boost frequencies for
+a longer duration during heavy workloads.</li>
+<li><strong>Higher Multi-Core Scores:</strong> Synthetic benchmarks that
+stress all cores simultaneously, such as Cinebench or Blender, will
+yield higher scores because the processor completes more calculations
+before throttling.</li>
+<li><strong>Increased Power Draw:</strong> Because voltage and frequency
+remain high at elevated temperatures, power consumption increases
+significantly. Furthermore, hotter silicon suffers from higher
+electrical leakage, requiring even more power to remain stable.</li>
+<li><strong>Instability Risks:</strong> Heat degrades electrical
+signaling stability. Raising TjMax often causes benchmarks to crash or
+produce calculation errors (WHEA errors) unless the user has extreme
+cooling solutions to manage the runaway temperatures.</li>
+</ul>
+<h2 id="lowering-the-tjmax-threshold">Lowering the TjMax Threshold</h2>
+<p>Users with small form factor (SFF) PCs or inadequate cooling often
+lower the TjMax (for example, setting a thermal limit of 75°C or 80°C).
+In benchmarking, this creates a strict thermal ceiling:</p>
+<ul>
+<li><strong>Immediate Throttling in Heavy Workloads:</strong> Under an
+all-core benchmark, the CPU will hit the lowered TjMax within seconds.
+It will then aggressively downclock to maintain that exact
+temperature.</li>
+<li><strong>Reduced Multi-Thread Performance:</strong> Benchmarks that
+rely on sustained, maximum power will show a noticeable drop in scores
+compared to a stock configuration.</li>
+<li><strong>Unchanged Single-Core Performance:</strong> Single-core
+benchmarks generate much less heat than multi-core tests. A CPU with a
+lowered TjMax will rarely hit its thermal limit during single-threaded
+tasks, meaning those specific benchmark scores remain largely
+unaffected.</li>
+<li><strong>Improved Efficiency Metrics:</strong> Lowering TjMax forces
+the CPU down its voltage-frequency curve into a more efficient operating
+range. While raw performance drops, the "performance-per-watt" metric in
+benchmarks improves drastically.</li>
+</ul>
+<h2 id="short-duration-vs-long-duration-benchmarks">Short-Duration vs.
+Long-Duration Benchmarks</h2>
+<p>The impact of TjMax modification depends heavily on the length of the
+benchmark.</p>
+<p>In short, bursty benchmarks like Geekbench, the workload is separated
+by brief idle periods. This allows the CPU cooler to dissipate heat
+between tests. Unless the TjMax is set exceptionally low, modifying the
+threshold will show minimal changes in behavior or scoring during short
+tests because the CPU rarely reaches its thermal limit.</p>
+<p>In continuous, long-duration benchmarks like a 10-minute Cinebench
+loop or Prime95, the cooling system's thermal capacity becomes fully
+saturated. Here, TjMax modifications dictate the entire behavior of the
+test. The benchmark ceases to measure the raw potential of the CPU and
+instead measures how much performance the cooling solution can sustain
+at the newly defined temperature limit.</p>
+<h2 id="secondary-effects-on-other-hardware">Secondary Effects on Other
+Hardware</h2>
+<p>Modifying the CPU's TjMax does not happen in isolation; it alters the
+behavior of surrounding components during a benchmark:</p>
+<ul>
+<li><strong>Motherboard VRMs:</strong> Raising the TjMax increases
+sustained current draw, causing the motherboard's Voltage Regulator
+Modules (VRMs) to heat up faster. If the VRMs overheat during a
+benchmark, they will throttle the power delivery, tanking the CPU
+benchmark score regardless of the CPU's own TjMax setting.</li>
+<li><strong>Cooling Systems:</strong> Fan curves are usually tied to CPU
+temperatures. Lowering TjMax results in quieter benchmark runs, while
+raising it forces cooling fans and liquid cooler pumps to run at 100%
+capacity instantly.</li>
+<li><strong>GPU Performance in Combined Tests:</strong> In gaming
+benchmarks like 3DMark that stress both the CPU and GPU, raising the CPU
+TjMax dumps more heat into the PC chassis. This increases the ambient
+temperature inside the case, which can cause the graphics card to run
+hotter and boost lower, potentially reducing the overall combined
+benchmark score.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-modifying-cpu-tj-max-impacts-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

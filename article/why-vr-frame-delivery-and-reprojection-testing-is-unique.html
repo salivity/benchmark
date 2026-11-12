@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why VR Frame Delivery and Reprojection Testing is Unique - benchmark</title>
+    <meta name="description" content="Benchmarking computer hardware for Virtual Reality (VR) is fundamentally different from traditional flat-screen gaming benchmarks. While standard hardware testing focuses primarily on average frames per second (FPS) and basic frame times, VR benchmarking">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-vr-frame-delivery-and-reprojection-testing-is-unique">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why VR Frame Delivery and Reprojection Testing is Unique - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-vr-frame-delivery-and-reprojection-testing-is-unique" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Benchmarking computer hardware for Virtual Reality (VR) is fundamentally different from traditional flat-screen gaming benchmarks. While standard hardware testing focuses primarily on average frames per second (FPS) and basic frame times, VR benchmarking" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-vr-frame-delivery-and-reprojection-testing-is-unique">Why VR
+Frame Delivery and Reprojection Testing is Unique</h1>
+<p>Benchmarking computer hardware for Virtual Reality (VR) is
+fundamentally different from traditional flat-screen gaming benchmarks.
+While standard hardware testing focuses primarily on average frames per
+second (FPS) and basic frame times, VR benchmarking must account for
+ultra-strict latency requirements, dual-eye rendering, and software
+failsafes known as reprojection. This article explores why evaluating VR
+performance requires specialized testing methodologies that look beyond
+raw framerate to measure actual frame delivery, synthetic frame
+generation, and the physical comfort of the user.</p>
+<h2 id="the-failure-of-average-fps">The Failure of Average FPS</h2>
+<p>In traditional PC gaming, a dip from 90 FPS to 75 FPS is barely
+noticeable,especially on a variable refresh rate (G-Sync or FreeSync)
+monitor. Because of this, average FPS remains the gold standard for
+flat-screen hardware reviews.</p>
+<p>In VR, average FPS is a flawed metric. VR headsets operate at fixed
+refresh rates, such as 90Hz or 120Hz, and do not use variable refresh
+rate technology. Because the display is strapped directly to the user's
+face, occupying their entire field of view, any inconsistency between
+head movement and frame delivery causes immediate disorientation and
+motion sickness. Therefore, VR benchmarking is not about how fast a
+system can run on average, but whether it can deliver a frame inside a
+strict, unwavering time window—11.1 milliseconds for 90Hz, or 8.3
+milliseconds for 120Hz—every single time.</p>
+<h2 id="understanding-reprojection-and-synthetic-frames">Understanding
+Reprojection and Synthetic Frames</h2>
+<p>What makes VR benchmarking truly unique is how the software handles
+performance drops. When a GPU cannot deliver a VR frame on time, it does
+not simply display the frame late, as this would cause severe visual
+judder. Instead, the VR runtime (such as SteamVR or Oculus) steps in
+with a technique called reprojection (also known as Asynchronous
+Spacewarp or Motion Smoothing).</p>
+<p>When reprojection triggers, the system forces the game to run at half
+the headset's refresh rate (e.g., dropping from 90 FPS to 45 FPS). The
+VR software then analyzes the previous frames and the user's head
+movement to generate a "synthetic" frame to fill in the gap.</p>
+<p>For a hardware tester, this presents a massive challenge:</p>
+<ul>
+<li><strong>Skewed Metrics:</strong> The headset is still receiving 90
+frames per second, meaning basic framerate counters might not register a
+performance problem, even though half of the frames are fake.</li>
+<li><strong>Visual Artifacts:</strong> Synthetic frames are guesses.
+While they keep head movement smooth, they cause visual warping and
+ghosting in the game world. A benchmark must track how often
+reprojection occurs because a high reprojection rate means a degraded
+visual experience, even if the framerate appears stable.</li>
+</ul>
+<h2 id="the-heavy-toll-of-dual-rendering-and-distortion">The Heavy Toll
+of Dual Rendering and Distortion</h2>
+<p>VR workloads stress computer hardware differently than standard
+monitors. A VR headset requires the PC to render two separate images
+simultaneously—one for each eye—from slightly different angles to create
+stereoscopic 3D depth. This significantly increases the CPU draw-call
+overhead and nearly doubles the geometry workload on the GPU.</p>
+<p>Furthermore, VR lenses bend the image to cover the human field of
+view. To counteract this, the GPU must render the game at a much higher
+resolution than the physical display panels and apply a reverse "barrel"
+distortion before sending the frame to the headset. Benchmarking VR
+requires testing how hardware handles this specific pipeline, as a GPU
+that excels at standard 4K gaming might bottleneck in VR due to memory
+bandwidth limitations or driver inefficiencies with stereo
+rendering.</p>
+<h2 id="motion-to-photon-latency">Motion-to-Photon Latency</h2>
+<p>In flat-screen gaming, input lag measures the time between a mouse
+click and the action on screen. In VR, testers must account for
+"motion-to-photon" latency—the exact time it takes for a physical head
+movement to be reflected in the headset's pixels.</p>
+<p>To keep this latency below the human perception threshold of 20
+milliseconds, VR runtimes tightly control when the CPU and GPU are
+allowed to start working on a frame. Standard benchmarking tools like
+Fraps or basic PresentMon setups only measure the beginning of the
+rendering pipeline. They cannot see what happens inside the VR
+compositor, which is the final step where reprojection and lens
+distortion occur.</p>
+<p>Because of this, hardware reviewers must use specialized VR
+benchmarking tools (such as FCAT VR or CapFrameX utilizing OpenVR/OpenXR
+APIs). These tools tap directly into the VR runtime to distinguish
+between real rendered frames, dropped frames, and synthetically
+reprojected frames.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Testing VR hardware cannot be reduced to a simple bar chart of
+average framerates. It requires a deep analysis of frame pacing,
+compositor overhead, and the frequency of synthetic frame generation.
+Because poor performance in VR translates directly to physical
+discomfort for the user, measuring the consistency of frame delivery and
+the absence of reprojection is the only accurate way to benchmark a
+system's true VR capabilities.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-vr-frame-delivery-and-reprojection-testing-is-unique';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

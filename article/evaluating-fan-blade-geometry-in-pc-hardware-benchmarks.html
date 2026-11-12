@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluating Fan Blade Geometry in PC Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how computer hardware reviewers and engineers benchmark PC cooling fans based on their blade geometry. It covers the fundamental physical differences between airflow and static pressure fan blades, and exp">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/evaluating-fan-blade-geometry-in-pc-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Evaluating Fan Blade Geometry in PC Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/evaluating-fan-blade-geometry-in-pc-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how computer hardware reviewers and engineers benchmark PC cooling fans based on their blade geometry. It covers the fundamental physical differences between airflow and static pressure fan blades, and exp" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="evaluating-fan-blade-geometry-in-pc-hardware-benchmarks">Evaluating
+Fan Blade Geometry in PC Hardware Benchmarks</h1>
+<p>This article provides a comprehensive overview of how computer
+hardware reviewers and engineers benchmark PC cooling fans based on
+their blade geometry. It covers the fundamental physical differences
+between airflow and static pressure fan blades, and explains the exact
+testing methodologies—such as radiator thermal testing, anemometer wind
+tunnels, and noise-normalized benchmarking—used to evaluate how these
+geometric designs perform in real-world and synthetic scenarios.</p>
+<h2
+id="understanding-the-geometry-airflow-vs-static-pressure">Understanding
+the Geometry: Airflow vs. Static Pressure</h2>
+<p>Before testing begins, benchmarkers categorize fans by their blade
+design.</p>
+<ul>
+<li><strong>Airflow-oriented fans</strong> typically feature a higher
+number of thinner blades set at a steeper angle. There is noticeable
+space between the blades. This geometry is designed to move the maximum
+volume of air (measured in Cubic Feet per Minute, or CFM) when there is
+nothing blocking the fan's path.</li>
+<li><strong>Static pressure-oriented fans</strong> have wider, often
+swept-back blades that take up most of the space within the fan frame,
+sometimes even overlapping. This geometry prevents air from bouncing
+back through the fan when pushing against an obstacle, generating
+localized air pressure (measured in millimeters of water, or
+mmH2O).</li>
+</ul>
+<h2 id="unrestricted-airflow-testing">Unrestricted Airflow Testing</h2>
+<p>To evaluate a blade geometry's ability to move air in an open
+environment, reviewers use an anemometer, a device that measures wind
+speed.</p>
+<p>The fan is placed at one end of a standardized tube or wind tunnel
+with no obstacles in the path. The anemometer sits at the other end. As
+the fan spins at fixed RPMs (Revolutions Per Minute), the anemometer
+reads the air velocity, which is then converted into CFM. In this
+benchmark, steep, multi-blade airflow geometries almost always win, as
+they scoop and throw large volumes of air rapidly through the open
+tube.</p>
+<h2 id="impedance-and-obstacle-testing-static-pressure">Impedance and
+Obstacle Testing (Static Pressure)</h2>
+<p>A fan's raw CFM rating becomes useless if the blade geometry cannot
+overcome physical resistance. To benchmark static pressure, reviewers
+introduce deliberate impedance.</p>
+<p>Reviewers attach the fan to a high-density liquid cooling radiator, a
+thick dual-tower CPU heatsink, or a restrictive dust filter. There are
+two ways this is measured:</p>
+<ol type="1">
+<li><strong>Airflow Retention:</strong> Placing the fan and the obstacle
+inside the anemometer tube to see how much CFM is lost compared to the
+unrestricted test.</li>
+<li><strong>Thermal Delta-T:</strong> Mounting the fan to a CPU cooler
+on a test bench, running a heavy, fixed wattage load on the processor,
+and measuring the CPU temperature.</li>
+</ol>
+<p>In these scenarios, airflow-focused geometries fail because the air
+hits the radiator fins and bounces back through the wide gaps between
+the fan blades. Static pressure geometries excel here, using their wide,
+tightly packed blades to force air through the microscopic gaps in the
+heatsink, resulting in lower CPU temperatures.</p>
+<h2 id="pressure-airflow-p-q-curve-mapping">Pressure-Airflow (P-Q) Curve
+Mapping</h2>
+<p>For the most scientifically rigorous benchmarks, reviewers use
+specialized P-Q chamber wind tunnels.</p>
+<p>This machine gradually closes a blast gate in front of the fan while
+it runs at 100% speed. When the gate is fully open, the machine measures
+maximum airflow. When the gate is fully closed, a barometer measures the
+maximum static pressure. By taking measurements at every point in
+between, benchmarkers generate a graph showing the exact impedance
+threshold where one blade geometry overtakes another in performance.</p>
+<h2 id="noise-normalized-benchmarking">Noise-Normalized
+Benchmarking</h2>
+<p>Blade geometry dictates not just how air moves, but how air sounds
+when it chops through the atmosphere and hits obstacles. Steep airflow
+blades often create a high-pitched turbulence whine when placed against
+a radiator, whereas swept-back static pressure blades tend to produce a
+lower-frequency hum.</p>
+<p>Because any fan can cool well if spun fast enough, modern hardware
+benchmarking relies heavily on noise-normalization.</p>
+<ol type="1">
+<li>The reviewer places a decibel meter (sound level meter) at a fixed
+distance—usually 30cm to 50cm—from the fan inside a quiet room or
+anechoic chamber.</li>
+<li>The fan speed is manually adjusted until it hits a specific noise
+target, commonly 35 dBA or 40 dBA.</li>
+<li>The reviewer then runs the thermal and anemometer tests at that
+exact RPM.</li>
+</ol>
+<p>Noise-normalized testing is the ultimate evaluation of fan blade
+geometry. It reveals which blade design moves the most air through an
+obstacle per decibel of noise generated, separating efficient
+engineering from fans that simply rely on brute-force motor speed.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/evaluating-fan-blade-geometry-in-pc-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

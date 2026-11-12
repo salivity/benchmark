@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Multi-Monitor Setups Affect Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores the performance and power overhead caused by multi-monitor setups during computer hardware benchmarking. Connecting more than one display alters baseline system metrics by forcing higher graphics card memory clock speeds, increasing">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-multi-monitor-setups-affect-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Multi-Monitor Setups Affect Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-multi-monitor-setups-affect-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the performance and power overhead caused by multi-monitor setups during computer hardware benchmarking. Connecting more than one display alters baseline system metrics by forcing higher graphics card memory clock speeds, increasing" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-multi-monitor-setups-affect-hardware-benchmarks">How
+Multi-Monitor Setups Affect Hardware Benchmarks</h1>
+<p>This article explores the performance and power overhead caused by
+multi-monitor setups during computer hardware benchmarking. Connecting
+more than one display alters baseline system metrics by forcing higher
+graphics card memory clock speeds, increasing idle power consumption,
+and introducing slight CPU and GPU resource competition under heavy
+loads. Understanding how extra displays skew both idle and load data is
+essential for achieving accurate, repeatable, and standardized hardware
+benchmark results.</p>
+<h2 id="impact-on-idle-metrics">Impact on Idle Metrics</h2>
+<p>When benchmarking a system at idle, the goal is to measure the lowest
+possible power state, temperature, and resource utilization.
+Multi-monitor setups directly interfere with these baseline
+measurements.</p>
+<h3 id="elevated-vram-clock-speeds">Elevated VRAM Clock Speeds</h3>
+<p>Graphics cards are designed to downclock their core and video memory
+(VRAM) frequencies when simply displaying a static desktop. However,
+driving multiple displays—especially those with different resolutions or
+refresh rates—often prevents the VRAM from entering its lowest power
+state (P-state). Instead, the memory clock may remain locked at its
+maximum frequency to prevent screen flickering, artificially inflating
+idle metrics.</p>
+<h3 id="increased-power-consumption-and-temperatures">Increased Power
+Consumption and Temperatures</h3>
+<p>Because the GPU cannot downclock properly with multiple monitors
+attached, idle power draw increases significantly. A graphics card that
+normally consumes 10 to 15 watts at idle on a single screen may draw 30
+to 50 watts with two or three monitors connected. This constant power
+draw generates excess heat, raising the baseline idle temperature by 5°C
+to 15°C and frequently triggering the GPU fans to spin when they would
+otherwise remain off.</p>
+<h3 id="background-os-overhead">Background OS Overhead</h3>
+<p>At idle, the operating system still has to manage the desktop space
+across all connected screens. In Windows, the Desktop Window Manager
+(DWM) consumes additional system RAM and a small amount of VRAM simply
+to maintain the framebuffers for the extra displays, skewing baseline
+memory allocation tests.</p>
+<h2 id="impact-on-load-metrics">Impact on Load Metrics</h2>
+<p>During load testing, the system is pushed to its absolute limits to
+measure maximum performance, thermal throttling, and peak power draw.
+While the percentage impact of multiple monitors is smaller under load
+than at idle, it is still measurable and can invalidate strict hardware
+comparisons.</p>
+<h3 id="gpu-framebuffer-and-compute-overhead">GPU Framebuffer and
+Compute Overhead</h3>
+<p>Every connected monitor requires a dedicated framebuffer stored in
+the GPU's VRAM. At higher resolutions like 4K, a secondary display
+consumes several hundred megabytes of VRAM just to display the desktop.
+In benchmarks that push VRAM capacity to the limit, this missing memory
+can lead to stuttering or lower minimum frame rates. Furthermore, the
+GPU must dedicate a tiny fraction of its compute power to composite and
+output the secondary display signal, typically resulting in a 1% to 3%
+reduction in maximum synthetic benchmark scores and gaming frame
+rates.</p>
+<h3 id="cpu-interrupts-and-compositing">CPU Interrupts and
+Compositing</h3>
+<p>Multi-monitor setups are frequently used to display hardware
+monitoring software (like HWiNFO or MSI Afterburner) on a secondary
+screen while a benchmark runs on the primary screen. Rendering these
+live graphs and updating sensor data requires CPU cycles and triggers
+system interrupts. Under heavy CPU or gaming benchmarks, this background
+activity reduces single-core and multi-core scores and introduces
+frame-time variance (micro-stuttering).</p>
+<h3 id="thermal-headroom-reduction">Thermal Headroom Reduction</h3>
+<p>Because the system starts from a higher idle temperature and power
+baseline, a multi-monitor setup reaches its thermal and power limits
+faster under load. For modern CPUs and GPUs that rely on dynamic
+boosting algorithms based on thermal headroom, starting a benchmark 10°C
+warmer can result in slightly lower sustained boost clocks over a long
+stress test.</p>
+<h2 id="the-mixed-refresh-rate-problem">The Mixed Refresh Rate
+Problem</h2>
+<p>The overhead of a multi-monitor setup is amplified when mixing
+different display specifications, such as pairing a 1440p 144Hz gaming
+monitor with a 1080p 60Hz secondary monitor.</p>
+<p>When displays operate at different refresh rates, the GPU's display
+engine has to work harder to synchronize timings during the vertical
+blanking interval (VBlank). Under load, if hardware-accelerated content
+(like a browser, video, or monitoring tool) is active on the 60Hz
+monitor, the OS compositor may occasionally force the 144Hz monitor to
+stutter or drop frames to match the slower display, ruining 1% and 0.1%
+low frame-rate metrics.</p>
+<h2 id="best-practices-for-accurate-benchmarking">Best Practices for
+Accurate Benchmarking</h2>
+<p>To eliminate multi-monitor overhead and gather clean, comparable
+data, follow these testing standards:</p>
+<ul>
+<li><strong>Disconnect Extra Displays:</strong> Physically unplug the
+video cables (DisplayPort or HDMI) from the graphics card for all
+secondary monitors. Simply turning a monitor off via its power button
+often leaves the system detecting it as a "phantom" display, maintaining
+the overhead.</li>
+<li><strong>Log Data Silently:</strong> Instead of watching hardware
+monitoring apps on a second screen, configure the software to log sensor
+data to a spreadsheet file in the background with the user interface
+minimized.</li>
+<li><strong>Use Identical Displays if Required:</strong> If a specific
+multi-monitor workload is being benchmarked, use monitors with identical
+resolutions and refresh rates to minimize timing synchronization
+penalties.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-multi-monitor-setups-affect-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

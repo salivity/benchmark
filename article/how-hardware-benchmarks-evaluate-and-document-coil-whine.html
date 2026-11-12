@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Hardware Benchmarks Evaluate and Document Coil Whine - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how computer hardware reviewers and engineers evaluate, measure, and document coil whine during the benchmarking process. It covers the controlled environments required for accurate acoustic testing, the s">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-hardware-benchmarks-evaluate-and-document-coil-whine">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Hardware Benchmarks Evaluate and Document Coil Whine - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-hardware-benchmarks-evaluate-and-document-coil-whine" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how computer hardware reviewers and engineers evaluate, measure, and document coil whine during the benchmarking process. It covers the controlled environments required for accurate acoustic testing, the s" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-hardware-benchmarks-evaluate-and-document-coil-whine">How
+Hardware Benchmarks Evaluate and Document Coil Whine</h1>
+<p>This article provides a comprehensive overview of how computer
+hardware reviewers and engineers evaluate, measure, and document coil
+whine during the benchmarking process. It covers the controlled
+environments required for accurate acoustic testing, the specific
+software workloads used to trigger electromagnetically induced noise,
+the equipment utilized to capture both volume and frequency data, and
+the standardized methods used to present these findings to
+consumers.</p>
+<h2 id="establishing-the-testing-environment">Establishing the Testing
+Environment</h2>
+<p>To evaluate coil whine accurately, benchmarkers must first isolate
+the component being tested—typically a graphics card (GPU), motherboard,
+or power supply unit (PSU)—from other noise sources.</p>
+<ul>
+<li><strong>Ambient Noise Floor:</strong> Testing takes place in
+sound-treated rooms or semi-anechoic chambers where the ambient noise
+floor is exceptionally low, usually below 20 to 30 decibels (dBA).</li>
+<li><strong>Open Test Bench:</strong> Hardware is mounted on an open-air
+test bench rather than inside a closed PC case to prevent case panels
+from muffling the sound.</li>
+<li><strong>Zero-RPM Isolation:</strong> All other system fans,
+including the CPU cooler and PSU fans, are either turned off, replaced
+with passive cooling solutions, or liquid-cooled with the radiator
+placed in an adjacent room.</li>
+<li><strong>Fan Stop:</strong> When testing a GPU, reviewers will often
+manually stop the card's fans for a few seconds during a heavy load to
+measure the coil whine entirely independent of wind and bearing
+noise.</li>
+</ul>
+<h2 id="triggering-coil-whine-with-workloads">Triggering Coil Whine with
+Workloads</h2>
+<p>Coil whine is caused by the vibration of electromagnetic coils
+(inductors) as power passes through them. Because it fluctuates based on
+the electrical load, testers use specific benchmarking scenarios to
+trigger the worst-case acoustic scenarios.</p>
+<ul>
+<li><strong>Uncapped Framerates:</strong> Reviewers run older games or
+basic 3D menus without framerate limits. Generating thousands of frames
+per second forces the hardware to switch power states rapidly, producing
+a high-pitched squeal.</li>
+<li><strong>Synthetic Stress Tests:</strong> Software like FurMark,
+3DMark, and Prime95 applies maximum, sustained electrical current to the
+VRMs (Voltage Regulator Modules), producing a lower-pitched, buzzing
+coil whine.</li>
+<li><strong>Ray Tracing and AI Workloads:</strong> Benchmarks that
+utilize every part of a modern silicon die simultaneously (such as
+Cyberpunk 2077 with Path Tracing) draw maximum wattage and trigger
+severe transient power spikes, which heavily induce coil
+vibrations.</li>
+</ul>
+<h2 id="measuring-the-acoustic-output">Measuring the Acoustic
+Output</h2>
+<p>Simple decibel meters often fail to capture the annoyance of coil
+whine because low-frequency fan noise easily masks high-frequency whine
+on a standard dBA scale. Therefore, professional evaluators use a
+combination of tools.</p>
+<ul>
+<li><strong>Sound Level Meters:</strong> A calibrated microphone is
+placed at a standardized distance from the component—typically 10
+centimeters to 50 centimeters away—to record the overall volume in
+A-weighted decibels (dBA).</li>
+<li><strong>Frequency Spectrum Analysis:</strong> Because human ears are
+highly sensitive to high frequencies, testers use directional
+microphones connected to spectrum analyzers. This equipment measures the
+sound across the entire frequency range (20 Hz to 20,000 Hz). Coil whine
+visibly spikes in the 2,000 Hz to 15,000 Hz range, allowing testers to
+isolate it from fan noise, which usually sits below 1,000 Hz.</li>
+<li><strong>Acoustic Cameras:</strong> High-end labs use acoustic
+cameras—devices combining an array of microphones with a visual
+camera—to create a "heatmap" of noise. This pinpoints the exact inductor
+on the circuit board that is vibrating.</li>
+</ul>
+<h2 id="documenting-the-results">Documenting the Results</h2>
+<p>Once the data is gathered, benchmarkers must translate the acoustic
+measurements into formats that consumers can easily understand.</p>
+<ul>
+<li><strong>Spectrogram Charts:</strong> Reviewers publish frequency
+graphs (spectrograms) showing the volume of noise at specific
+frequencies. A sharp spike in the upper-mid to high frequencies visually
+confirms the presence of coil whine to the reader.</li>
+<li><strong>Direct Audio and Video Recordings:</strong> Because sound
+perception is subjective, testers record uncompressed audio of the
+component under various loads. They present this in videos, switching
+between idle, gaming, and high-FPS menu states so the audience can hear
+the pitch changes.</li>
+<li><strong>Subjective Grading Scales:</strong> Many publications
+categorize coil whine using a standardized tier list (e.g.,
+Imperceptible, Mild, Moderate, Severe) based on whether the noise can be
+heard over the system fans when placed inside a standard closed PC
+case.</li>
+<li><strong>Hardware Context Logging:</strong> Coil whine is often the
+result of an electrical interaction between two components rather than a
+single faulty part. Proper documentation always includes the exact model
+of the Power Supply Unit (PSU) and motherboard used during the
+benchmark, sometimes noting if swapping the PSU eliminated the
+whine.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-hardware-benchmarks-evaluate-and-document-coil-whine';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

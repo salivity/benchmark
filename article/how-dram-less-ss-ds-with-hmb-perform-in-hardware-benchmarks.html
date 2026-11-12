@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How DRAM-Less SSDs with HMB Perform in Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="This article provides a comprehensive overview of how DRAM-less Solid State Drives (SSDs) utilizing Host Memory Buffer (HMB) technology perform in computer hardware benchmarks. It briefly explains the mechanics of HMB, analyzes how these budget-friendly d">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-dram-less-ss-ds-with-hmb-perform-in-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How DRAM-Less SSDs with HMB Perform in Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-dram-less-ss-ds-with-hmb-perform-in-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how DRAM-less Solid State Drives (SSDs) utilizing Host Memory Buffer (HMB) technology perform in computer hardware benchmarks. It briefly explains the mechanics of HMB, analyzes how these budget-friendly d" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-dram-less-ssds-with-hmb-perform-in-hardware-benchmarks">How
+DRAM-Less SSDs with HMB Perform in Hardware Benchmarks</h1>
+<p>This article provides a comprehensive overview of how DRAM-less Solid
+State Drives (SSDs) utilizing Host Memory Buffer (HMB) technology
+perform in computer hardware benchmarks. It briefly explains the
+mechanics of HMB, analyzes how these budget-friendly drives compare to
+traditional DRAM-equipped SSDs in both synthetic and real-world testing
+environments, and highlights the specific heavy-workload scenarios where
+this architecture reaches its physical limits.</p>
+<h2 id="understanding-hmb-architecture">Understanding HMB
+Architecture</h2>
+<p>Traditional SSDs use a dedicated onboard DRAM chip to store the Flash
+Translation Layer (FTL) mapping table. This table acts as an index,
+telling the SSD controller exactly where data is physically located on
+the NAND flash.</p>
+<p>DRAM-less SSDs eliminate this chip to reduce manufacturing costs and
+power consumption. Historically, this caused severe performance
+degradation. However, modern NVMe SSDs use Host Memory Buffer (HMB)
+technology to bypass this issue. HMB allows the SSD to borrow a
+minuscule portion—typically around 64MB—of the computer’s main system
+RAM via the PCIe interface to store and access the mapping table.</p>
+<h2 id="synthetic-benchmark-performance">Synthetic Benchmark
+Performance</h2>
+<p>Synthetic benchmarks, such as CrystalDiskMark and ATTO Disk
+Benchmark, test the theoretical maximum speeds of a drive using short,
+intense bursts of data. In these tests, DRAM-less SSDs with HMB perform
+exceptionally well.</p>
+<ul>
+<li><strong>Sequential Read and Write:</strong> HMB drives easily match
+DRAM-equipped drives in sequential tests. Because sequential data is
+written in a continuous line, the mapping table is barely stressed. A
+PCIe 4.0 DRAM-less drive can effortlessly hit top-tier speeds of 5,000
+MB/s to 7,000 MB/s, relying primarily on its SLC cache and fast NAND
+flash.</li>
+<li><strong>Random 4K Read and Write:</strong> Random 4K tests measure
+how fast a drive can locate and process small, scattered files—a task
+heavily reliant on the mapping table. While system RAM accessed over
+PCIe has slightly higher latency than dedicated onboard DRAM, HMB still
+allows these drives to achieve random 4K scores that are within 10% to
+15% of premium SSDs.</li>
+</ul>
+<h2 id="real-world-and-gaming-benchmarks">Real-World and Gaming
+Benchmarks</h2>
+<p>In application-focused benchmarks like PCMark 10 and the 3DMark
+Storage Benchmark, the gap between DRAM-less HMB drives and flagship
+DRAM drives narrows even further.</p>
+<ul>
+<li><strong>Gaming and DirectStorage:</strong> Game loading relies
+mostly on reading data rather than writing it. In gaming benchmarks, HMB
+drives load levels and assets within fractions of a second of high-end
+SSDs. They also fully support Microsoft’s DirectStorage API, showing no
+architectural disadvantage in modern gaming tests.</li>
+<li><strong>System Boot and Productivity:</strong> Benchmarks that
+simulate booting an operating system, launching Adobe applications, or
+opening large Microsoft Office files show virtually no penalty for using
+HMB. The tiny latency increase of fetching the mapping table from the
+PC's RAM is imperceptible in daily computing tasks.</li>
+</ul>
+<h2 id="heavy-workload-benchmarks-where-hmb-struggles">Heavy Workload
+Benchmarks: Where HMB Struggles</h2>
+<p>To see a DRAM-less HMB drive fail in benchmarks, the testing must
+involve sustained, heavy workloads that push the drive past its caching
+limits.</p>
+<ul>
+<li><strong>Sustained Write Tests:</strong> When benchmarking continuous
+file transfers (such as moving a 200GB video file), the drive’s fast
+pseudo-SLC cache eventually fills up. Once full, the SSD must write
+directly to the slower TLC or QLC NAND while simultaneously folding data
+and updating the mapping table. Without dedicated DRAM to juggle these
+tasks, write speeds on HMB drives plummet drastically, sometimes
+dropping below the speed of a mechanical hard drive.</li>
+<li><strong>High Queue Depth Multitasking:</strong> Workstation
+benchmarks that bombard the drive with simultaneous read and write
+requests (high queue depths) expose the bandwidth limits of the HMB
+allocation. Because the SSD only borrows around 64MB of system RAM, the
+entire mapping table cannot fit at once. The drive must constantly swap
+map data in and out of the system RAM, leading to latency spikes and
+lower IOPS (Input/Output Operations Per Second).</li>
+<li><strong>USB Enclosure Testing:</strong> A critical benchmark
+limitation occurs when an NVMe HMB drive is placed inside an external
+USB enclosure. The USB interface does not support the HMB feature.
+Effectively stripped of its access to system RAM, the drive operates as
+a purely DRAM-less device, resulting in crippled benchmark scores and
+sluggish real-world performance.</li>
+</ul>
+<h2 id="the-benchmark-verdict">The Benchmark Verdict</h2>
+<p>In hardware benchmarking, DRAM-less SSDs with HMB prove that onboard
+DRAM is no longer mandatory for high performance in consumer workloads.
+For short-burst synthetic tests, gaming benchmarks, and general
+productivity suites, HMB architecture delivers 85% to 95% of the
+performance of flagship drives at a significantly lower cost. They only
+fall behind in sustained, professional-grade workstation benchmarks
+where massive, continuous data writes are the norm.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-dram-less-ss-ds-with-hmb-perform-in-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

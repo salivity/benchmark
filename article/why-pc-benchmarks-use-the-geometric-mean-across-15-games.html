@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why PC Benchmarks Use the Geometric Mean Across 15+ Games - benchmark</title>
+    <meta name="description" content="When evaluating computer hardware like graphics cards and processors, professional reviewers rely on a combination of a large sample size—typically 15 or more games—and a specific mathematical formula called the geometric mean. This article provides an ov">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-pc-benchmarks-use-the-geometric-mean-across-15-games">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why PC Benchmarks Use the Geometric Mean Across 15+ Games - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-pc-benchmarks-use-the-geometric-mean-across-15-games" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When evaluating computer hardware like graphics cards and processors, professional reviewers rely on a combination of a large sample size—typically 15 or more games—and a specific mathematical formula called the geometric mean. This article provides an ov" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-pc-benchmarks-use-the-geometric-mean-across-15-games">Why PC
+Benchmarks Use the Geometric Mean Across 15+ Games</h1>
+<p>When evaluating computer hardware like graphics cards and processors,
+professional reviewers rely on a combination of a large sample
+size—typically 15 or more games—and a specific mathematical formula
+called the geometric mean. This article provides an overview of why this
+specific methodology is the industry standard. Testing at least 15 games
+ensures that hardware quirks, game engine biases, and API differences
+are smoothed out, while the geometric mean prevents games with naturally
+high frame rates from skewing the overall performance average. Together,
+these practices provide consumers with an accurate, unmanipulated
+single-number metric to compare the relative performance of different
+components.</p>
+<h2 id="the-problem-with-the-standard-average">The Problem with the
+Standard Average</h2>
+<p>To understand why the geometric mean is necessary, you first have to
+look at why the standard average (arithmetic mean) fails in hardware
+benchmarking. The arithmetic mean is calculated by adding up all the
+frame rates from every game tested and dividing that total by the number
+of games.</p>
+<p>This approach is deeply flawed because different games run at vastly
+different frame rates. Consider a benchmark comparing two graphics cards
+across just two games: <em>Counter-Strike 2</em> (an esports title) and
+<em>Cyberpunk 2077</em> (a demanding AAA title).</p>
+<ul>
+<li><strong>GPU A</strong> gets 500 FPS in <em>Counter-Strike</em> and
+50 FPS in <em>Cyberpunk</em>. The standard average is 275 FPS.</li>
+<li><strong>GPU B</strong> gets 400 FPS in <em>Counter-Strike</em> (20%
+slower) and 100 FPS in <em>Cyberpunk</em> (100% faster). The standard
+average is 250 FPS.</li>
+</ul>
+<p>If a reviewer uses the standard average, GPU A wins with 275 FPS
+compared to GPU B's 250 FPS. However, this is misleading. GPU B
+literally doubled the performance in the demanding game while only
+losing by 20% in the esports title. Because <em>Counter-Strike</em>
+operates in the hundreds of frames per second, its raw numbers
+completely dominate the standard average, rendering the
+<em>Cyberpunk</em> results mathematically irrelevant.</p>
+<h2 id="how-the-geometric-mean-solves-the-problem">How the Geometric
+Mean Solves the Problem</h2>
+<p>The geometric mean fixes the weighting issue of the standard average.
+Instead of adding the frame rates together, the geometric mean
+multiplies the results of all the games together and then calculates the
+<em>n</em>th root (where <em>n</em> is the number of games tested).</p>
+<p>In practical terms, the geometric mean normalizes the data. It stops
+looking at raw frame rate totals and instead treats every game as an
+equal percentage weight.</p>
+<p>Using the previous example, the geometric mean evaluates the
+<em>ratios</em> of performance. It recognizes a 10% frame rate increase
+in a game running at 60 FPS as having the exact same weight as a 10%
+increase in a game running at 600 FPS. By calculating the geometric mean
+differential across a test suite, reviewers can accurately state that
+one component is "X% faster" than another, without high-framerate
+esports titles distorting the final conclusion.</p>
+<h2 id="why-15-or-more-games-is-the-magic-number">Why 15 or More Games
+is the Magic Number</h2>
+<p>Calculating the geometric mean is only half the battle; the data fed
+into the formula must also be comprehensive. Testing just three to five
+games is insufficient for a reliable hardware review because software
+varies wildly in how it utilizes computer components. Reviewers use 15
+or more games to establish statistical significance and eliminate
+bias.</p>
+<p>Here is why a large game sample size is required:</p>
+<ul>
+<li><strong>Developer and Sponsor Bias:</strong> Many games are
+developed in partnership with AMD, Nvidia, or Intel. A game optimized
+specifically for AMD architectures might perform poorly on equivalent
+Nvidia hardware. Testing 15+ games dilutes the impact of brand-sponsored
+titles.</li>
+<li><strong>Game Engine Diversity:</strong> Different engines (Unreal
+Engine 5, Frostbite, REDengine, id Tech) stress hardware differently.
+Some rely heavily on fast memory, while others care more about raw core
+counts or cache size.</li>
+<li><strong>Graphics APIs:</strong> Older games often use DirectX 11,
+while modern titles utilize DirectX 12 or Vulkan. Hardware architectures
+handle these APIs with varying degrees of efficiency.</li>
+<li><strong>Hardware Bottlenecks:</strong> A small sample size might
+accidentally hide a major flaw. For example, a graphics card with only
+8GB of VRAM might perform brilliantly in 10 older games, but suffer
+massive performance penalties in 5 modern, texture-heavy games. A
+15-game suite exposes these limitations.</li>
+<li><strong>Outlier Mitigation:</strong> Sometimes, a broken game patch
+or a flawed graphics driver causes a specific piece of hardware to
+underperform terribly in one specific title. In a 3-game test, that
+single anomaly ruins the whole review. In a 15-game test, the geometric
+mean absorbs the outlier, keeping the final performance summary
+accurate.</li>
+</ul>
+<p>By combining a broad sample size of 15 or more diverse games with the
+normalizing math of the geometric mean, hardware reviewers protect
+consumers from misleading data. It is the only way to condense complex,
+wildly varying performance metrics into a single, trustworthy percentage
+differential.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-pc-benchmarks-use-the-geometric-mean-across-15-games';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

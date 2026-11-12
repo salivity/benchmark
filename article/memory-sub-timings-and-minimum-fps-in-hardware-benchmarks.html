@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Sub-Timings and Minimum FPS in Hardware Benchmarks - benchmark</title>
+    <meta name="description" content="This article explores how tuning specific memory sub-timings—specifically tRFC, tFAW, and tWR—directly improves minimum frames per second (FPS) in computer hardware benchmarks. While primary RAM timings and clock speeds get the most attention, secondary a">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/memory-sub-timings-and-minimum-fps-in-hardware-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Memory Sub-Timings and Minimum FPS in Hardware Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/memory-sub-timings-and-minimum-fps-in-hardware-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how tuning specific memory sub-timings—specifically tRFC, tFAW, and tWR—directly improves minimum frames per second (FPS) in computer hardware benchmarks. While primary RAM timings and clock speeds get the most attention, secondary a" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="memory-sub-timings-and-minimum-fps-in-hardware-benchmarks">Memory
+Sub-Timings and Minimum FPS in Hardware Benchmarks</h1>
+<p>This article explores how tuning specific memory
+sub-timings—specifically tRFC, tFAW, and tWR—directly improves minimum
+frames per second (FPS) in computer hardware benchmarks. While primary
+RAM timings and clock speeds get the most attention, secondary and
+tertiary sub-timings dictate how efficiently your memory handles rapid
+data requests. Optimizing these values reduces system latency,
+eliminates micro-stutters, and significantly boosts 1% and 0.1% low FPS
+metrics during CPU-intensive workloads.</p>
+<h2 id="the-connection-between-ram-and-minimum-fps">The Connection
+Between RAM and Minimum FPS</h2>
+<p>In hardware benchmarking, average FPS primarily measures GPU
+capability, while minimum FPS (measured as 1% and 0.1% lows) reveals CPU
+and memory bottlenecks. A sudden drop in FPS usually occurs when the CPU
+experiences a "cache miss" and must fetch data directly from the system
+RAM.</p>
+<p>Primary timings like CAS Latency (CL) only control the initial delay
+in a data request. Sub-timings control the internal operations and
+housekeeping of the RAM modules. Tightening (lowering) these sub-timings
+reduces the idle time of the memory controller, feeding data to the CPU
+faster and smoothing out severe frame drops.</p>
+<h2 id="trfc-row-refresh-cycle-time">tRFC (Row Refresh Cycle Time)</h2>
+<p>RAM stores data in microscopic capacitors that slowly lose their
+electrical charge. To prevent data loss, the memory must periodically
+pause operations and refresh these cells. <strong>tRFC</strong> dictates
+the exact number of clock cycles required to complete this refresh
+process.</p>
+<ul>
+<li><strong>The Bottleneck:</strong> While a refresh is occurring, the
+CPU cannot read from or write to that specific memory bank. If the CPU
+requests game data during a refresh cycle, it has to wait, causing a
+frame time spike.</li>
+<li><strong>The Tuning Impact:</strong> Stock XMP/EXPO profiles set tRFC
+very high to ensure stability across low-quality silicon. Manually
+lowering tRFC drastically reduces the "dead time" the CPU spends waiting
+for the RAM to become available. Among all sub-timings, tuning tRFC
+yields the most substantial improvements to 1% low FPS.</li>
+</ul>
+<h2 id="tfaw-four-activate-window">tFAW (Four Activate Window)</h2>
+<p>To prevent power spikes on the memory module, RAM is restricted to a
+maximum of four row activations within a specific rolling timeframe.
+<strong>tFAW</strong> defines the length of this timeframe in clock
+cycles.</p>
+<ul>
+<li><strong>The Bottleneck:</strong> Even if your RAM is fast enough to
+open rows quickly, a high tFAW value will force the memory controller to
+sit idle after the fourth activation until the window expires.</li>
+<li><strong>The Tuning Impact:</strong> Lowering tFAW removes this
+artificial throttle and maximizes command throughput. The optimal value
+for tFAW is typically four times the value of tRRD_S (Row to Row Delay),
+often bottoming out at 16 cycles. In benchmarks, a tight tFAW prevents
+data queues from backing up during chaotic, asset-heavy gaming scenes,
+directly raising the minimum FPS floor.</li>
+</ul>
+<h2 id="twr-write-recovery-time">tWR (Write Recovery Time)</h2>
+<p><strong>tWR</strong> specifies the number of clock cycles that must
+elapse between a valid write operation and the precharging (closing) of
+that memory row. It acts as a safety buffer to guarantee data is
+accurately written before the row is closed and another is opened.</p>
+<ul>
+<li><strong>The Bottleneck:</strong> Benchmark scenarios constantly
+alternate between reading and writing data. A loose (high) tWR delays
+the closing of a row, which consequently delays the opening of the next
+row needed by the CPU.</li>
+<li><strong>The Tuning Impact:</strong> Tightening tWR accelerates the
+transition from writing data to reading new data. This reduction in
+turnaround latency minimizes micro-stutters in games that constantly
+stream new data into memory, directly lifting 0.1% low FPS metrics.</li>
+</ul>
+<h2 id="summary-of-benchmark-results">Summary of Benchmark Results</h2>
+<p>When benchmarking computer hardware, leaving tRFC, tFAW, and tWR on
+automatic settings leaves significant performance on the table. While
+tuning these three sub-timings may only increase average FPS by 2% to
+5%, it frequently improves 1% and 0.1% low FPS by 10% to 20% in
+CPU-bound scenarios. By minimizing refresh delays, removing activation
+bottlenecks, and speeding up write recovery, tuned sub-timings ensure
+the CPU is never starved for data, resulting in flat, consistent frame
+time graphs.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/memory-sub-timings-and-minimum-fps-in-hardware-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

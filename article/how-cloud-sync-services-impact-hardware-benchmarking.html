@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Cloud Sync Services Impact Hardware Benchmarking - benchmark</title>
+    <meta name="description" content="Background cloud synchronization services like Microsoft OneDrive, Dropbox, and Google Drive constantly monitor, index, and transfer files, which can significantly skew computer hardware benchmark results. By consuming vital CPU cycles, occupying system m">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-cloud-sync-services-impact-hardware-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Cloud Sync Services Impact Hardware Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-cloud-sync-services-impact-hardware-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Background cloud synchronization services like Microsoft OneDrive, Dropbox, and Google Drive constantly monitor, index, and transfer files, which can significantly skew computer hardware benchmark results. By consuming vital CPU cycles, occupying system m" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-cloud-sync-services-impact-hardware-benchmarking">How Cloud
+Sync Services Impact Hardware Benchmarking</h1>
+<p>Background cloud synchronization services like Microsoft OneDrive,
+Dropbox, and Google Drive constantly monitor, index, and transfer files,
+which can significantly skew computer hardware benchmark results. By
+consuming vital CPU cycles, occupying system memory, and utilizing
+storage bandwidth, these applications introduce performance overhead
+that leads to artificially low and inconsistent scores. This article
+explains the exact ways cloud sync tools interfere with CPU, storage,
+and memory testing, and why disabling them is mandatory for accurate
+hardware evaluation.</p>
+<h2 id="cpu-resource-contention">CPU Resource Contention</h2>
+<p>Cloud sync applications do much more than just upload and download
+data. They continuously scan the local file system for changes,
+calculate file hashes to detect modifications, and compress or encrypt
+data before transmission.</p>
+<p>During a CPU benchmark like Cinebench or Geekbench, the testing
+software attempts to utilize 100% of the processor's available threads.
+If OneDrive or Dropbox initiates a file scan or sync operation mid-test,
+the operating system scheduler must divert CPU cycles away from the
+benchmark to handle the cloud service. This results in lower multi-core
+and single-core scores, failing to represent the processor's true
+maximum potential.</p>
+<h2 id="storage-bandwidth-and-iops-degradation">Storage Bandwidth and
+IOPS Degradation</h2>
+<p>Storage benchmarks, such as CrystalDiskMark or 3DMark Storage,
+measure the sequential read/write speeds and Random Input/Output
+Operations Per Second (IOPS) of SSDs and hard drives. Cloud services are
+particularly destructive to these tests.</p>
+<p>Even when not actively downloading large files, sync clients
+constantly read and write small metadata files and logs to the primary
+drive. Furthermore, many benchmarks create temporary test files in the
+user's "Documents" folder. If a service like OneDrive is configured to
+back up the Documents folder automatically, it will immediately attempt
+to read and upload the massive temporary files the benchmark is actively
+trying to write and measure. This creates severe storage contention,
+drastically reducing measured read/write speeds and inflating drive
+latency.</p>
+<h2 id="ram-consumption-and-memory-latency">RAM Consumption and Memory
+Latency</h2>
+<p>While having a cloud client idle in the system tray uses a relatively
+small amount of RAM, active syncing requires significant memory buffers.
+High memory usage by background apps reduces the pool of available RAM
+for memory-intensive benchmarks.</p>
+<p>More importantly, constant background activity utilizes the memory
+bus. When a cloud service transfers data between the storage drive,
+system RAM, and the network controller, it consumes memory bandwidth.
+This interference can lower throughput scores in memory-specific
+benchmarks and negatively impact minimum frame rates (1% and 0.1% lows)
+in gaming benchmarks, which are highly sensitive to system latency.</p>
+<h2 id="network-overhead-and-cpu-interrupts">Network Overhead and CPU
+Interrupts</h2>
+<p>When cloud services actively upload or download data, they generate
+continuous network traffic. Processing this traffic requires the Network
+Interface Card (NIC) to send hardware interrupts to the CPU.</p>
+<p>High volumes of network interrupts force the CPU to pause its current
+workload to process incoming and outgoing data packets. In both
+synthetic benchmarks and real-world gaming tests, this background
+activity causes micro-stuttering and frame time spikes, leading to
+inconsistent benchmark runs that cannot be reliably reproduced.</p>
+<h2 id="how-to-ensure-accurate-benchmarks">How to Ensure Accurate
+Benchmarks</h2>
+<p>To get true, repeatable hardware performance metrics, the testing
+environment must be isolated from background variables. Before running
+any benchmark suite, take the following steps:</p>
+<ul>
+<li><strong>Exit the Application:</strong> Completely quit OneDrive,
+Dropbox, or Google Drive from the system tray so their background
+processes are terminated.</li>
+<li><strong>Verify in Task Manager:</strong> Open the Task Manager (or
+Activity Monitor on macOS) to ensure no residual sync services or
+file-indexing daemons are running in the background.</li>
+<li><strong>Exclude Benchmark Folders:</strong> Ensure that the
+directories used by benchmarking software to store temporary files are
+located on a local path, not inside a synced cloud folder.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-cloud-sync-services-impact-hardware-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

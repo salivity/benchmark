@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heat Cycling Phase-Change Thermal Pads Before Benchmarking - benchmark</title>
+    <meta name="description" content="This article explains why newly applied phase-change thermal pads require thermal cycling before you can accurately benchmark computer hardware. You will learn how phase-change materials transition from a solid to a semi-liquid state, why this process is">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/heat-cycling-phase-change-thermal-pads-before-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Heat Cycling Phase-Change Thermal Pads Before Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/heat-cycling-phase-change-thermal-pads-before-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains why newly applied phase-change thermal pads require thermal cycling before you can accurately benchmark computer hardware. You will learn how phase-change materials transition from a solid to a semi-liquid state, why this process is" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="heat-cycling-phase-change-thermal-pads-before-benchmarking">Heat
+Cycling Phase-Change Thermal Pads Before Benchmarking</h1>
+<p>This article explains why newly applied phase-change thermal pads
+require thermal cycling before you can accurately benchmark computer
+hardware. You will learn how phase-change materials transition from a
+solid to a semi-liquid state, why this process is mandatory to eliminate
+microscopic air gaps and achieve optimal thickness, and how skipping
+this burn-in phase leads to skewed, artificially high temperature
+data.</p>
+<h2 id="how-phase-change-materials-work">How Phase-Change Materials
+Work</h2>
+<p>Unlike traditional thermal paste, which is liquid upon application, a
+phase-change thermal pad (such as Honeywell PTM7950) is completely solid
+at room temperature. It is designed to change its physical state when
+exposed to specific heat thresholds, typically around 45°C to 50°C. Once
+the hardware reaches this temperature, the pad softens and transitions
+into a viscous, paste-like fluid. When the hardware cools down, the
+material returns to a solid state.</p>
+<h2 id="eliminating-microscopic-air-gaps">Eliminating Microscopic Air
+Gaps</h2>
+<p>To the naked eye, a processor die and a cooler’s heatsink look
+completely flat. At a microscopic level, however, both surfaces are
+covered in valleys, peaks, and imperfections.</p>
+<p>When you first install a solid phase-change pad, it merely rests on
+top of these microscopic peaks. Underneath the pad, tiny pockets of air
+remain trapped in the valleys. Because air is a poor conductor of heat,
+these pockets act as thermal insulators. Running the hardware through a
+heat cycle melts the pad, allowing the liquefied material to flow into
+every microscopic valley and push out the trapped air.</p>
+<h2 id="achieving-optimal-bond-line-thickness">Achieving Optimal Bond
+Line Thickness</h2>
+<p>Bond line thickness (BLT) refers to the distance between the heat
+source (CPU or GPU) and the heatsink. For the best possible heat
+transfer, this gap needs to be as thin as possible while still
+preventing direct metal-to-metal contact if there are air gaps.</p>
+<p>Out of the box, a phase-change pad is relatively thick. During the
+first few heat cycles, the combination of the pad melting and the
+mounting pressure from the heatsink squeezes excess material out from
+the center. This thins the pad down to the minimum thickness required,
+significantly reducing thermal resistance. Once the system cools, the
+pad solidifies in this newly thinned, optimal shape.</p>
+<h2 id="the-consequence-of-immediate-benchmarking">The Consequence of
+Immediate Benchmarking</h2>
+<p>Benchmarking hardware immediately after applying a phase-change pad
+measures the performance of an unconditioned material. Because the pad
+has not yet thinned out or purged the insulating air pockets, heat
+transfer is inefficient.</p>
+<p>If you run a benchmark right away, you will likely see rapid
+temperature spikes, premature thermal throttling, and lower clock
+speeds. A single short benchmark might get the pad hot enough to begin
+melting, meaning the thermal conductivity is actively changing
+<em>during</em> the test. This renders the benchmark data useless
+because the baseline is shifting in real-time.</p>
+<h2 id="how-to-properly-heat-cycle-the-pad">How to Properly Heat Cycle
+the Pad</h2>
+<p>To prepare the hardware for accurate benchmarking, you must
+intentionally trigger the phase-change process a few times:</p>
+<ol type="1">
+<li><strong>Heat Up:</strong> Run a demanding workload, such as a stress
+test or a heavy game, to push the component's temperature well above
+60°C for 15 to 30 minutes. This ensures the pad fully liquefies and
+spreads under the heatsink's pressure.</li>
+<li><strong>Cool Down:</strong> Shut down the workload and let the
+computer idle, or turn it off completely, allowing the component to
+return to room temperature. This lets the pad solidify into its new,
+thinner form.</li>
+<li><strong>Repeat:</strong> Perform this heating and cooling cycle
+three to five times.</li>
+</ol>
+<p>Once these cycles are complete, the phase-change pad will have
+reached its final physical state, providing the stable and maximum
+thermal conductivity required for accurate hardware benchmarking.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/heat-cycling-phase-change-thermal-pads-before-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

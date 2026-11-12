@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Reviewers Log CPU Package and Motherboard Socket Power - benchmark</title>
+    <meta name="description" content="Hardware reviewers track both CPU package power and motherboard socket power during benchmarks to ensure measurement accuracy, calculate Voltage Regulator Module (VRM) efficiency losses, and expose motherboard telemetry manipulation. Relying on a single p">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/why-reviewers-log-cpu-package-and-motherboard-socket-power">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Reviewers Log CPU Package and Motherboard Socket Power - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/why-reviewers-log-cpu-package-and-motherboard-socket-power" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Hardware reviewers track both CPU package power and motherboard socket power during benchmarks to ensure measurement accuracy, calculate Voltage Regulator Module (VRM) efficiency losses, and expose motherboard telemetry manipulation. Relying on a single p" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-reviewers-log-cpu-package-and-motherboard-socket-power">Why
+Reviewers Log CPU Package and Motherboard Socket Power</h1>
+<p>Hardware reviewers track both CPU package power and motherboard
+socket power during benchmarks to ensure measurement accuracy, calculate
+Voltage Regulator Module (VRM) efficiency losses, and expose motherboard
+telemetry manipulation. Relying on a single power metric often leads to
+misleading conclusions about a processor's true energy consumption,
+thermal output, and performance efficiency. By comparing
+software-reported package power against physically measured socket
+power, testers provide a complete and honest picture of a system's
+real-world power demands.</p>
+<h2 id="understanding-the-two-metrics">Understanding the Two
+Metrics</h2>
+<p>To understand why both are logged, it is necessary to know how each
+metric is gathered.</p>
+<p><strong>CPU Package Power</strong> is a software-reported number.
+Modern processors from Intel and AMD have built-in sensors and
+algorithms that estimate how much power the entire CPU package (cores,
+cache, and integrated controllers) is consuming at any given
+millisecond. Software tools read this data directly from the CPU's
+internal telemetry.</p>
+<p><strong>Motherboard Socket Power</strong> (often measured via the
+EPS12V cables) is a hardware-measured number. Reviewers use specialized
+inline power measurement tools—such as ElmorLabs PMD or
+Powenetics—placed physically between the power supply and the
+motherboard's CPU power connectors. This measures the actual electrical
+current flowing toward the processor socket before it hits the
+motherboard's power delivery system.</p>
+<h2 id="accounting-for-vrm-efficiency-losses">Accounting for VRM
+Efficiency Losses</h2>
+<p>Power from the power supply enters the motherboard at 12 volts, which
+is far too high for a modern processor. The motherboard's Voltage
+Regulator Module (VRM) steps this voltage down to roughly 1.0 to 1.4
+volts.</p>
+<p>This conversion process is not 100% efficient; some energy is
+inevitably lost as heat radiating from the VRM components.</p>
+<ul>
+<li><strong>CPU Package Power</strong> only measures the power that
+successfully reaches the processor.</li>
+<li><strong>Motherboard Socket Power</strong> measures the power the CPU
+uses <em>plus</em> the power wasted as heat by the VRMs.</li>
+</ul>
+<p>By logging both numbers, reviewers can calculate the exact efficiency
+of a motherboard's power delivery system. If Socket Power is 250W and
+Package Power is 200W, the reviewer knows that 50W of energy is being
+lost as heat inside the motherboard's VRMs.</p>
+<h2 id="detecting-telemetry-manipulation">Detecting Telemetry
+Manipulation</h2>
+<p>A major reason reviewers must use physical hardware measurements
+alongside software logs is that software can be tricked.</p>
+<p>A CPU relies on the motherboard to tell it how much power it is
+drawing. If a processor hits its programmed power limit, it will stop
+boosting its clock speeds to prevent overheating. In the past, some
+motherboard manufacturers intentionally altered their boards' telemetry
+calibration to underreport power draw to the CPU.</p>
+<p>For example, a motherboard might tell the CPU it is only using 150W
+(Package Power) when it is actually pulling 200W (Socket Power). The
+CPU, believing it still has thermal and power headroom, continues to
+boost to higher speeds. While this makes the motherboard look faster in
+benchmarks, it secretly voids power limits and increases heat. Logging
+both metrics immediately exposes this manipulation, as the gap between
+package power and socket power becomes abnormally large.</p>
+<h2 id="accurate-thermal-and-power-supply-testing">Accurate Thermal and
+Power Supply Testing</h2>
+<p>When testing CPU coolers, reviewers need to know the exact thermal
+load a processor generates. If a reviewer relies solely on
+software-reported CPU package power, a motherboard with skewed telemetry
+will ruin the test results by making a cooler look worse than it
+actually is, because the CPU is secretly outputting more heat than the
+software claims.</p>
+<p>Furthermore, consumers rely on reviews to choose the right Power
+Supply Unit (PSU). Software-reported package power does not account for
+transient spikes or VRM inefficiency. Measuring power directly at the
+socket gives reviewers the true wattage demanded from the PSU, allowing
+them to make accurate hardware recommendations.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/why-reviewers-log-cpu-package-and-motherboard-socket-power';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

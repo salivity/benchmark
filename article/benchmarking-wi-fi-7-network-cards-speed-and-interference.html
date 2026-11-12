@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking Wi-Fi 7 Network Cards: Speed and Interference - benchmark</title>
+    <meta name="description" content="Benchmarking Wi-Fi 7 (802.11be) network interface cards (NICs) requires specialized testing methodologies to evaluate their multi-gigabit speeds and advanced noise-mitigation capabilities. This article provides a straightforward breakdown of how hardware">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/benchmarking-wi-fi-7-network-cards-speed-and-interference">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Benchmarking Wi-Fi 7 Network Cards: Speed and Interference - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/benchmarking-wi-fi-7-network-cards-speed-and-interference" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Benchmarking Wi-Fi 7 (802.11be) network interface cards (NICs) requires specialized testing methodologies to evaluate their multi-gigabit speeds and advanced noise-mitigation capabilities. This article provides a straightforward breakdown of how hardware" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="benchmarking-wi-fi-7-network-cards-speed-and-interference">Benchmarking
+Wi-Fi 7 Network Cards: Speed and Interference</h1>
+<p>Benchmarking Wi-Fi 7 (802.11be) network interface cards (NICs)
+requires specialized testing methodologies to evaluate their
+multi-gigabit speeds and advanced noise-mitigation capabilities. This
+article provides a straightforward breakdown of how hardware reviewers
+and engineers set up controlled environments, utilize network traffic
+generation software, and inject artificial radio frequency noise to
+accurately measure the real-world throughput and interference resilience
+of Wi-Fi 7 computer hardware.</p>
+<h3 id="the-baseline-testing-environment">The Baseline Testing
+Environment</h3>
+<p>Before any data is measured, testers must eliminate external
+variables. Because standard office or home environments are flooded with
+unpredictable wireless signals, professional benchmarking takes place
+inside an RF (Radio Frequency) isolation chamber. This Faraday-like
+enclosure blocks all outside wireless interference.</p>
+<p>The physical testbed requires specific hardware to prevent
+bottlenecks:</p>
+<ul>
+<li><strong>The Client PC:</strong> A computer equipped with a PCIe 4.0
+or 5.0 slot to house the Wi-Fi 7 networking card.</li>
+<li><strong>The Reference Access Point:</strong> A commercial-grade
+Wi-Fi 7 router.</li>
+<li><strong>The Server:</strong> A secondary computer connected directly
+to the router via a 10 Gigabit (10GbE) or 25 Gigabit Ethernet port.
+Because Wi-Fi 7 can easily exceed 2.5 Gbps, standard Ethernet ports will
+bottleneck the wireless results.</li>
+</ul>
+<h3 id="how-throughput-testing-works">How Throughput Testing Works</h3>
+<p>Throughput testing measures the maximum amount of actual data (often
+called "goodput") the network card can transmit and receive over a
+specific period.</p>
+<p><strong>Traffic Generation</strong> Testers do not transfer standard
+files to measure speed, as hard drive read/write speeds can skew the
+results. Instead, they use command-line tools like
+<strong>iPerf3</strong> or commercial software like <strong>Keysight
+IxChariot</strong>. These programs generate synthetic TCP and UDP data
+packets directly from the system's RAM, blasting them across the
+wireless link to measure the absolute limit of the network card.</p>
+<p><strong>Testing Wi-Fi 7 Specific Features</strong> To hit peak
+throughput, testers configure the network card and router to utilize
+three core Wi-Fi 7 technologies:</p>
+<ol type="1">
+<li><strong>320 MHz Channels:</strong> Testers bind the 6 GHz band to
+its widest setting (double the width of Wi-Fi 6E) to test maximum data
+capacity.</li>
+<li><strong>4K-QAM (4096-Quadrature Amplitude Modulation):</strong> This
+packs 20% more data into the same signal compared to Wi-Fi 6. Testers
+verify this works by placing the card at a very close range to the
+router.</li>
+<li><strong>Multi-Link Operation (MLO):</strong> MLO allows a Wi-Fi 7
+card to connect to two bands simultaneously (such as 5 GHz and 6 GHz)
+and combine their speeds. Testers run multi-stream TCP tests to ensure
+the card's drivers can successfully aggregate both bands into a single,
+massive data pipe.</li>
+</ol>
+<p><strong>Simulating Distance (Attenuation)</strong> Instead of walking
+a desktop PC down a hallway to test range, testers connect the Wi-Fi 7
+card’s antenna ports directly to the router using coaxial cables fitted
+with programmable <strong>RF attenuators</strong>. Attenuators
+artificially weaken the wireless signal in precise decibel (dB) steps.
+By running iPerf3 at 0 dB, 15 dB, 30 dB, and 45 dB of attenuation,
+testers can accurately graph how the card’s throughput degrades over
+simulated distances.</p>
+<h3 id="how-interference-testing-works">How Interference Testing
+Works</h3>
+<p>Wi-Fi 7 relies on massive 320 MHz channels, which makes it highly
+susceptible to frequency overlap from neighboring networks. Interference
+testing measures how well a network card maintains speed and low latency
+when the airwaves are congested.</p>
+<p><strong>Injecting Controlled Noise</strong> Inside the RF chamber,
+testers introduce a third piece of hardware: an Arbitrary Waveform
+Generator (AWG) or a secondary group of routers. These devices are
+programmed to broadcast continuous, competing wireless traffic on the
+same channels the Wi-Fi 7 card is trying to use.</p>
+<p><strong>Benchmarking Preamble Puncturing</strong> In older Wi-Fi
+standards, if interference occurred on a small part of a wide channel,
+the rest of the channel became unusable. Wi-Fi 7 introduces
+<strong>Preamble Puncturing</strong>, which allows the network card to
+slice out the noisy part of the frequency and keep using the rest.</p>
+<p>To benchmark this, testers follow a strict process:</p>
+<ol type="1">
+<li>They establish a 320 MHz connection and measure the baseline
+throughput.</li>
+<li>They use a noise generator to blast heavy interference onto a narrow
+20 MHz or 40 MHz section inside that 320 MHz channel.</li>
+<li>They measure the throughput again. A well-engineered Wi-Fi 7 card
+will detect the noise, "puncture" (block) that specific 20 MHz
+sub-channel, and maintain 85% to 90% of its original speed. A poorly
+optimized card will drop the wide channel entirely, cutting speeds by
+half or more.</li>
+</ol>
+<p><strong>Testing MLO Failover and Latency</strong> Interference
+affects more than just raw download speeds; it ruins connection
+stability. Testers evaluate MLO's ability to handle interference by
+flooding the 5 GHz band with noise while leaving the 6 GHz band
+clean.</p>
+<p>During this test, the benchmark software measures
+<strong>jitter</strong> (fluctuations in ping) and <strong>packet
+loss</strong>. A successful Wi-Fi 7 card will instantly recognize the
+interference on the 5 GHz band and seamlessly route the data packets
+over to the clean 6 GHz band in real-time, resulting in zero dropped
+packets and a flat, stable latency graph.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/benchmarking-wi-fi-7-network-cards-speed-and-interference';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

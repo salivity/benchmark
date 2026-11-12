@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCMark 10 Applications Battery Rundown Testing Methodology - benchmark</title>
+    <meta name="description" content="This article outlines the standardized methodology for benchmarking laptop battery life using the PCMark 10 Applications battery rundown test. It covers the essential steps required to achieve accurate and repeatable results, including system preparation,">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/pc-mark-10-applications-battery-rundown-testing-methodology">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="PCMark 10 Applications Battery Rundown Testing Methodology - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/pc-mark-10-applications-battery-rundown-testing-methodology" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article outlines the standardized methodology for benchmarking laptop battery life using the PCMark 10 Applications battery rundown test. It covers the essential steps required to achieve accurate and repeatable results, including system preparation," />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="pcmark-10-applications-battery-rundown-testing-methodology">PCMark
+10 Applications Battery Rundown Testing Methodology</h1>
+<p>This article outlines the standardized methodology for benchmarking
+laptop battery life using the PCMark 10 Applications battery rundown
+test. It covers the essential steps required to achieve accurate and
+repeatable results, including system preparation, hardware calibration,
+software prerequisites, test execution, and data retrieval. By following
+this guide, hardware testers can reliably measure a computer's battery
+longevity under realistic productivity workloads.</p>
+<h2 id="software-prerequisites">Software Prerequisites</h2>
+<p>Unlike standard synthetic benchmarks, the PCMark 10 Applications test
+uses real-world software to measure battery drain. Before beginning, you
+must install the following:</p>
+<ul>
+<li><strong>PCMark 10:</strong> You must have the Professional Edition
+(or a version that explicitly includes the Battery Life benchmark suite)
+installed and updated to the latest version.</li>
+<li><strong>Microsoft Office:</strong> A licensed and activated version
+of Microsoft Office (2013 or newer) is required. Word, Excel, and
+PowerPoint must be installed, opened at least once, and have all initial
+setup prompts dismissed.</li>
+<li><strong>Microsoft Edge:</strong> Ensure the browser is installed,
+updated, and has had its first-run experience completed.</li>
+</ul>
+<h2 id="system-preparation">System Preparation</h2>
+<p>To ensure the benchmark measures only the intended workload, the
+operating system must be stabilized to prevent background
+interruptions.</p>
+<ol type="1">
+<li><strong>Update the System:</strong> Install all pending Windows
+updates and hardware drivers (especially GPU and chipset drivers).
+Reboot the system to finalize installations.</li>
+<li><strong>Disable Background Processes:</strong> Close and disable all
+non-essential third-party applications in the system tray, such as cloud
+storage sync clients (OneDrive, Dropbox), game launchers (Steam), and
+communication tools.</li>
+<li><strong>Pause Security Scans:</strong> Temporarily disable scheduled
+antivirus scans and Windows Update automatic downloads so they do not
+trigger during the test and skew the CPU usage.</li>
+<li><strong>Clear Temp Files:</strong> Ensure the primary storage drive
+has at least 20GB of free space for temporary benchmark files.</li>
+</ol>
+<h2 id="hardware-and-power-calibration">Hardware and Power
+Calibration</h2>
+<p>Screen brightness and power states are the largest variables in
+battery testing. They must be strictly controlled for apples-to-apples
+comparisons across different hardware.</p>
+<ul>
+<li><strong>Calibrate Display Brightness:</strong> Use a colorimeter or
+luminance meter to set the display brightness to a standardized level,
+typically 150 nits or 200 nits.</li>
+<li><strong>Disable Adaptive Brightness:</strong> Turn off Windows
+adaptive brightness, Content Adaptive Brightness Control (CABC) in
+graphics control panels, and any ambient light sensors.</li>
+<li><strong>Configure Windows Power Settings:</strong>
+<ul>
+<li>Set the Windows Power Mode to "Balanced" or the manufacturer’s
+default out-of-the-box profile.</li>
+<li>Set "Turn off the display" to <strong>Never</strong> when on battery
+power.</li>
+<li>Set "Put the computer to sleep" to <strong>Never</strong> when on
+battery power.</li>
+<li>Set the critical battery action to <strong>Hibernate</strong> at 5%
+(or the lowest level the OS allows).</li>
+<li>Disable the Windows "Battery Saver" mode so the screen does not
+automatically dim at 20% capacity.</li>
+</ul></li>
+<li><strong>Keyboard Backlight:</strong> Turn off the keyboard backlight
+completely.</li>
+<li><strong>Peripherals and Audio:</strong> Unplug all external USB
+devices, mice, and drives. Mute the system audio.</li>
+<li><strong>Network State:</strong> Either enable Airplane Mode or
+connect to a local Wi-Fi network that has no internet access. This
+standardizes radio power draw while preventing random background
+internet traffic.</li>
+</ul>
+<h2 id="executing-the-benchmark">Executing the Benchmark</h2>
+<p>Once the system is calibrated and prepared, follow these steps to run
+the rundown test:</p>
+<ol type="1">
+<li><strong>Charge to Full:</strong> Plug in the AC adapter and charge
+the laptop battery until it reaches 100% capacity. Leave it plugged in
+for an additional 30 minutes to ensure the battery cells are fully
+saturated.</li>
+<li><strong>Launch PCMark 10:</strong> Open the application and navigate
+to the <strong>Benchmarks</strong> tab.</li>
+<li><strong>Select the Test:</strong> Choose <strong>Battery
+Life</strong> from the menu, and select the
+<strong>Applications</strong> profile.</li>
+<li><strong>Start the Run:</strong> Click the <strong>Run</strong>
+button. Immediately unplug the AC power adapter when prompted (or right
+before clicking Run, depending on the software version prompt).</li>
+<li><strong>Leave the System Unattended:</strong> The benchmark will now
+loop continuously. A single loop takes roughly 10 minutes, cycling
+through tasks in Word, Excel, PowerPoint, and Edge, followed by a brief
+idle period. Do not touch the mouse or keyboard while the test is
+active.</li>
+</ol>
+<h2 id="collecting-the-results">Collecting the Results</h2>
+<p>The test will automatically repeat the workload loop until the
+battery depletes to its critical threshold (usually 5% or lower) and
+forces the system into hibernation or shutdown.</p>
+<ol type="1">
+<li><strong>Reconnect Power:</strong> Plug the AC adapter back into the
+laptop and turn the system on.</li>
+<li><strong>Recover the Data:</strong> Once Windows boots, open PCMark
+10. The software automatically saves the progress after every completed
+loop.</li>
+<li><strong>Record the Metrics:</strong> PCMark 10 will compile the
+interrupted run data and display the final results. Record the two
+primary metrics provided:
+<ul>
+<li><strong>Battery Life Duration:</strong> Expressed in hours and
+minutes, indicating how long the system lasted.</li>
+<li><strong>Overall Performance Score:</strong> Indicates how fast the
+system completed the Office and Edge tasks while running on battery
+power, revealing if the hardware throttles performance when
+unplugged.</li>
+</ul></li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/pc-mark-10-applications-battery-rundown-testing-methodology';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

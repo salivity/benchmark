@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Browser Extensions Skew WebGL and JavaScript Benchmarks - benchmark</title>
+    <meta name="description" content="Browser extensions and ad-blockers significantly distort the results of WebGL and JavaScript hardware benchmarks. While these tools improve daily browsing, they actively interfere with performance testing by consuming vital CPU and memory resources, injec">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-browser-extensions-skew-web-gl-and-java-script-benchmarks">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Browser Extensions Skew WebGL and JavaScript Benchmarks - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-browser-extensions-skew-web-gl-and-java-script-benchmarks" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Browser extensions and ad-blockers significantly distort the results of WebGL and JavaScript hardware benchmarks. While these tools improve daily browsing, they actively interfere with performance testing by consuming vital CPU and memory resources, injec" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-browser-extensions-skew-webgl-and-javascript-benchmarks">How
+Browser Extensions Skew WebGL and JavaScript Benchmarks</h1>
+<p>Browser extensions and ad-blockers significantly distort the results
+of WebGL and JavaScript hardware benchmarks. While these tools improve
+daily browsing, they actively interfere with performance testing by
+consuming vital CPU and memory resources, injecting foreign code into
+web pages, and restricting hardware access to protect user privacy. This
+article explains the specific ways extensions degrade benchmark scores
+and how to configure your browser for accurate hardware testing.</p>
+<h3 id="cpu-and-ram-overhead">CPU and RAM Overhead</h3>
+<p>Extensions are essentially small programs running constantly in the
+background of your browser. Each active extension consumes system memory
+(RAM) and uses CPU cycles to monitor browser activity. Because
+JavaScript benchmarks rely heavily on single-core CPU performance and
+fast memory access, background tasks from extensions steal processing
+power away from the test. This resource contention results in
+artificially lower CPU and memory scores.</p>
+<h3 id="code-injection-and-dom-interference">Code Injection and DOM
+Interference</h3>
+<p>Many extensions—particularly ad-blockers, password managers, and
+grammar checkers—work by injecting their own JavaScript into every
+webpage you visit. They constantly scan and modify the Document Object
+Model (DOM) to do their jobs.</p>
+<p>When you run a JavaScript benchmark that tests how fast your computer
+can render and manipulate webpage elements, these extensions attempt to
+scan the benchmark's rapid changes in real-time. This creates a massive
+software bottleneck, drastically slowing down execution times and
+ruining the validity of the test.</p>
+<h3 id="privacy-spoofing-and-webgl-throttling">Privacy Spoofing and
+WebGL Throttling</h3>
+<p>Privacy-focused extensions and advanced ad-blockers often target
+WebGL because malicious websites can use it for "browser fingerprinting"
+to track users. To protect your identity, these extensions may block the
+WebGL API, limit its capabilities, or feed it fake hardware data.</p>
+<p>If you run a WebGL graphics benchmark with these extensions active,
+several issues can occur:</p>
+<ul>
+<li>The benchmark may fail to load entirely.</li>
+<li>The browser may be forced into "software rendering," using your CPU
+instead of your dedicated GPU.</li>
+<li>Frame rates may be artificially capped to hide your monitor's true
+refresh rate and GPU power.</li>
+</ul>
+<h3 id="network-request-interception">Network Request Interception</h3>
+<p>WebGL benchmarks frequently load heavy assets, such as 3D models,
+complex shaders, and high-resolution textures. Ad-blockers work by
+intercepting every network request a page makes and comparing it against
+massive filter lists containing tens of thousands of rules. This
+inspection process adds latency to every asset the benchmark fetches,
+skewing load-time metrics and causing initial frame drops during
+graphics tests.</p>
+<h3 id="garbage-collection-stutters">Garbage Collection Stutters</h3>
+<p>JavaScript uses automatic memory management known as garbage
+collection, which periodically pauses tasks to clear out unused data
+from your RAM. Because extensions generate extra data in the browser's
+memory, the garbage collector is forced to run more frequently. When
+garbage collection triggers in the middle of a WebGL or JavaScript test,
+it briefly pauses the benchmark, causing noticeable frame stutters and
+reducing your overall score.</p>
+<h3 id="how-to-benchmark-accurately">How to Benchmark Accurately</h3>
+<p>To measure your hardware's true performance, you must isolate the
+benchmark from all extension interference. Follow these steps before
+testing:</p>
+<ol type="1">
+<li><strong>Use Private/Incognito Mode:</strong> Open an Incognito or
+Private window. By default, most browsers disable extensions in this
+mode, though you should verify in your extension settings that none are
+manually allowed to run in private windows.</li>
+<li><strong>Create a Clean Browser Profile:</strong> For the most
+accurate results, create a new user profile within your browser. Do not
+sign into a sync account, do not install any extensions, and leave all
+settings at their defaults. Use this profile exclusively for
+benchmarking.</li>
+<li><strong>Disable Built-in Blockers:</strong> Browsers like Brave,
+Opera, and Vivaldi have built-in ad and tracker blockers. You must
+temporarily disable these native shields on the benchmark's webpage to
+prevent them from interfering with the test scripts.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-browser-extensions-skew-web-gl-and-java-script-benchmarks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How MFAA and DLAA Impact GPU Workloads in Benchmarking - benchmark</title>
+    <meta name="description" content="This article explores how Multi-Frame Sample Anti-Aliasing (MFAA) and Deep Learning Anti-Aliasing (DLAA) alter GPU workloads during hardware benchmarking. It examines the specific hardware components these technologies utilize, how they shift processing b">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/how-mfaa-and-dlaa-impact-gpu-workloads-in-benchmarking">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How MFAA and DLAA Impact GPU Workloads in Benchmarking - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/how-mfaa-and-dlaa-impact-gpu-workloads-in-benchmarking" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Multi-Frame Sample Anti-Aliasing (MFAA) and Deep Learning Anti-Aliasing (DLAA) alter GPU workloads during hardware benchmarking. It examines the specific hardware components these technologies utilize, how they shift processing b" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-mfaa-and-dlaa-impact-gpu-workloads-in-benchmarking">How MFAA
+and DLAA Impact GPU Workloads in Benchmarking</h1>
+<p>This article explores how Multi-Frame Sample Anti-Aliasing (MFAA) and
+Deep Learning Anti-Aliasing (DLAA) alter GPU workloads during hardware
+benchmarking. It examines the specific hardware components these
+technologies utilize, how they shift processing burdens away from
+traditional rendering pipelines, and what these changes mean for
+accurately measuring and comparing graphics card performance.</p>
+<h2 id="the-baseline-traditional-anti-aliasing-workloads">The Baseline:
+Traditional Anti-Aliasing Workloads</h2>
+<p>To understand how MFAA and DLAA change the GPU workload, it is
+necessary to look at traditional anti-aliasing. Standard methods like
+Multisample Anti-Aliasing (MSAA) remove jagged edges by sampling
+multiple points within a single pixel on the same frame.</p>
+<p>In a benchmark, MSAA places a massive burden on a GPU’s Render Output
+Units (ROPs) and consumes significant Video RAM (VRAM) bandwidth. It
+tests the brute-force rasterization and memory throughput of the
+graphics card. Temporal Anti-Aliasing (TAA) is lighter, using data from
+previous frames via standard shader cores, which balances the load
+across the GPU's primary processing units.</p>
+<h2 id="how-mfaa-alters-the-gpu-workload">How MFAA Alters the GPU
+Workload</h2>
+<p>Multi-Frame Sample Anti-Aliasing (MFAA) is designed to deliver the
+visual quality of 4x MSAA at roughly the performance cost of 2x MSAA.
+Instead of taking four samples per pixel in a single frame, MFAA takes
+two samples per pixel and alternates the sampling pattern across
+consecutive frames, blending them together.</p>
+<p>When enabled in a benchmark, MFAA changes the GPU workload in the
+following ways:</p>
+<ul>
+<li><strong>Reduced VRAM Bandwidth Usage:</strong> Because the GPU only
+processes half the samples per frame compared to standard MSAA, memory
+bandwidth bottlenecks are significantly reduced.</li>
+<li><strong>Lower ROP Utilization:</strong> The Render Output Units have
+less data to write per frame, freeing up resources and increasing the
+overall frame rate.</li>
+<li><strong>Increased Temporal Filtering Load:</strong> The GPU must run
+a synthesis filter to blend the alternating frames. This adds a minor
+compute workload to the shader cores, though it is much lighter than the
+MSAA workload it replaces.</li>
+</ul>
+<p>In benchmarking, enabling MFAA shifts the test away from raw memory
+throughput. A GPU with a narrow memory bus will score disproportionately
+higher with MFAA enabled than it would under standard MSAA testing.</p>
+<h2 id="how-dlaa-alters-the-gpu-workload">How DLAA Alters the GPU
+Workload</h2>
+<p>Deep Learning Anti-Aliasing (DLAA) takes a completely different
+approach. Unlike DLSS, which renders a game at a lower resolution and
+uses AI to upscale it, DLAA renders the game at its native resolution
+and uses artificial intelligence exclusively to smooth out the
+edges.</p>
+<p>Enabling DLAA in a benchmark fundamentally changes which parts of the
+GPU are being stressed:</p>
+<ul>
+<li><strong>Activation of Tensor Cores:</strong> Traditional
+anti-aliasing leaves a GPU’s dedicated AI hardware (Tensor Cores)
+completely idle. DLAA offloads the anti-aliasing pass from the standard
+shader cores to the Tensor Cores.</li>
+<li><strong>Shared Power Budget:</strong> Because the Tensor Cores are
+now active alongside the standard shading and rasterization units, the
+GPU draws more power. In benchmarks, this can cause the GPU to hit its
+power or thermal limits faster, potentially lowering the boost clock
+speeds of the main graphics cores.</li>
+<li><strong>Motion Vector Processing:</strong> DLAA requires the game
+engine to generate motion vectors and feed them into the AI model, which
+adds a slight overhead to the standard rendering pipeline before the
+Tensor Cores take over.</li>
+</ul>
+<p>In a benchmark environment, DLAA generally results in lower frame
+rates than standard TAA because the AI processing at native resolution
+is computationally heavy. However, it shifts the bottleneck from
+standard shader execution to AI compute throughput.</p>
+<h2 id="impact-on-hardware-benchmarking-standards">Impact on Hardware
+Benchmarking Standards</h2>
+<p>The primary goal of benchmarking computer hardware is to isolate
+variables and measure raw performance across different devices. Both
+MFAA and DLAA complicate this process.</p>
+<p>First, both technologies are proprietary to Nvidia. You cannot use
+them to benchmark an AMD or Intel graphics card. If a reviewer tests an
+Nvidia GPU with DLAA or MFAA enabled and compares it to an AMD GPU using
+MSAA or TAA, the benchmark is invalid because the GPUs are executing
+entirely different workloads.</p>
+<p>Second, these technologies mask hardware weaknesses. MFAA hides
+memory bandwidth limitations, while DLAA utilizes specialized silicon
+(Tensor Cores) that exists outside the traditional rendering
+pipeline.</p>
+<p>For accurate hardware benchmarking, MFAA and DLAA should only be used
+when specifically testing the efficiency of Nvidia's proprietary
+features or evaluating image quality. For measuring raw GPU rendering
+performance, benchmarks must rely on hardware-agnostic settings like TAA
+or MSAA to ensure the workload remains strictly on the shaders, ROPs,
+and memory bus.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/how-mfaa-and-dlaa-impact-gpu-workloads-in-benchmarking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

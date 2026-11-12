@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validating Voltage Regulation with an Oscilloscope - benchmark</title>
+    <meta name="description" content="This article explores the critical role of an oscilloscope in validating voltage regulation during computer hardware benchmarking. Unlike standard software monitoring tools or basic multimeters, an oscilloscope captures high-speed electrical signals in re">
+    <link rel="canonical" href="https://salivity.github.io/benchmark/article/validating-voltage-regulation-with-an-oscilloscope">
+    <link rel="search" type="application/opensearchdescription+xml" title="benchmark" href="/benchmark/opensearch.xml">
+    <link rel="icon" href="/benchmark/favicon.ico">
+    <link rel="stylesheet" href="/benchmark/css/style.css">
+    <link media="print" rel="stylesheet" href="/benchmark/css/print.css">
+    <script src="/benchmark/js/fuse.min.js"></script>
+    <script src="/benchmark/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Validating Voltage Regulation with an Oscilloscope - benchmark" />
+    <meta property="og:url" content="https://salivity.github.io/benchmark/article/validating-voltage-regulation-with-an-oscilloscope" />
+    <meta property="og:image" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/benchmark/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the critical role of an oscilloscope in validating voltage regulation during computer hardware benchmarking. Unlike standard software monitoring tools or basic multimeters, an oscilloscope captures high-speed electrical signals in re" />
+    <link rel="manifest" href="/benchmark/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/benchmark/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>benchmark</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/benchmark/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="validating-voltage-regulation-with-an-oscilloscope">Validating
+Voltage Regulation with an Oscilloscope</h1>
+<p>This article explores the critical role of an oscilloscope in
+validating voltage regulation during computer hardware benchmarking.
+Unlike standard software monitoring tools or basic multimeters, an
+oscilloscope captures high-speed electrical signals in real time. Below,
+you will learn how this tool measures transient responses, identifies
+voltage ripple, and verifies load-line calibration to ensure system
+stability and hardware longevity under extreme workloads.</p>
+<h3 id="why-software-and-multimeters-fall-short">Why Software and
+Multimeters Fall Short</h3>
+<p>During a hardware benchmark, a processor's power demands change in
+microseconds. Onboard motherboard sensors, software monitoring
+utilities, and handheld digital multimeters cannot keep up with this
+speed. They only report average voltages, polling data a few times per
+second.</p>
+<p>An oscilloscope solves this by sampling electrical signals millions
+or billions of times per second. It graphs voltage over time, allowing
+testers to see the exact, uninterrupted behavior of the Voltage
+Regulator Module (VRM) and Power Supply Unit (PSU) under stress.</p>
+<h3 id="capturing-transient-responses">Capturing Transient
+Responses</h3>
+<p>Benchmarks frequently force a CPU or GPU to jump from an idle state
+to a 100% workload instantly, and vice versa. Because VRMs cannot react
+at the speed of light, these sudden changes cause brief, extreme voltage
+fluctuations known as transients.</p>
+<p>An oscilloscope is mandatory for measuring two types of transient
+events:</p>
+<ul>
+<li><strong>Undershoot:</strong> When a heavy load is suddenly applied,
+the voltage drops rapidly before the VRM can supply more power. If the
+voltage drops below the processor's minimum operating threshold, the
+system crashes.</li>
+<li><strong>Overshoot:</strong> When a heavy load suddenly stops, the
+VRM is briefly supplying too much power, causing a voltage spike. If the
+spike is too high, it can instantly degrade or destroy the silicon.</li>
+</ul>
+<p>Software cannot detect transient spikes or drops because they last
+only microseconds. Hardware validators use oscilloscopes with the
+"trigger" function enabled to catch and measure these exact moments
+during a benchmark transition.</p>
+<h3 id="analyzing-voltage-ripple-and-noise">Analyzing Voltage Ripple and
+Noise</h3>
+<p>Computer components require clean Direct Current (DC) power, which
+should ideally appear as a completely flat line on a graph. However,
+because PSUs and VRMs rapidly switch power on and off to regulate
+voltage, they introduce small AC fluctuations into the DC line. This is
+called voltage ripple.</p>
+<p>Excessive ripple causes instability, reduces overclocking headroom,
+and forces components to run hotter. By connecting an oscilloscope probe
+directly to the power delivery capacitors on a motherboard or graphics
+card, a tester can view the waveform of the power. The oscilloscope
+measures the "peak-to-peak" voltage of the ripple, instantly validating
+whether the PSU and VRM capacitors are filtering the power within safe
+industry specifications (such as the ATX standard).</p>
+<h3 id="tuning-load-line-calibration-llc">Tuning Load-Line Calibration
+(LLC)</h3>
+<p>When a processor is placed under a sustained benchmark load, its
+voltage naturally drops. This is an intentional design feature called
+"Vdroop," which creates a safety buffer to prevent transient
+overshoot.</p>
+<p>Motherboards feature a setting called Load-Line Calibration (LLC) to
+counteract Vdroop and keep voltages higher during heavy workloads. While
+software might show that an aggressive LLC setting produces a rock-solid
+voltage under load, an oscilloscope often reveals a hidden danger. High
+LLC settings frequently cause massive, invisible voltage overshoots the
+exact microsecond a benchmark ends.</p>
+<p>By using an oscilloscope, hardware testers can visually observe the
+trade-off between Vdroop and transient spikes, allowing them to validate
+the safest, most stable LLC setting for sustained benchmarking.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/benchmark/article/validating-voltage-regulation-with-an-oscilloscope';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/benchmark/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/benchmark/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>
